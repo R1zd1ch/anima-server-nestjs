@@ -1,0 +1,21 @@
+model User {
+  id String @id @default(uuid())
+
+  email    String @unique
+  password String
+
+  displayName String
+  picture     String?
+
+  role               UserRole @default(REGULAR)
+  isVerified         Boolean  @default(false) @map("is_verified")
+  isTwoFactorEnabled Boolean  @default(false) @map("is_two_factor_enabled")
+
+  method   AuthMethod @default(CREDENTIALS)
+  accounts Account[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}

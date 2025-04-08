@@ -1,0 +1,59 @@
+model Anime {
+  id             Int       @id
+  name           String
+  russian        String?
+  image          Json
+  url            String
+  kind           String
+  score          String
+  status         String
+  episodes       Int
+  aired_on       DateTime?
+  released_on    DateTime?
+  rating         String
+  english        String[]
+  synonyms       String[]
+  thread_id      Int
+  topic_id       Int
+  myanimelist_id Int
+  updated_at     DateTime  @updatedAt
+  fansubbers     String[]
+  fandubbers     String[]
+  licensors      String[]
+  genres         String[]
+  studios        String[]
+  videos         String[]
+  screenshots    String[]
+
+  @@map("anime")
+}
+
+model Anime_draft {
+  id             Int       @id
+  name           String
+  russian        String?
+  image          Json
+  url            String
+  kind           String
+  score          String
+  status         String
+  episodes       Int
+  aired_on       DateTime?
+  released_on    DateTime?
+  rating         String
+  english        String[]
+  synonyms       String[]
+  thread_id      Int
+  topic_id       Int
+  myanimelist_id Int
+  updated_at     DateTime  @updatedAt
+  fansubbers     String[]
+  fandubbers     String[]
+  licensors      String[]
+  genres         String[]
+  studios        String[]
+  videos         String[]
+  screenshots    String[]
+
+  @@map("anime_draft")
+}
