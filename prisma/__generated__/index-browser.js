@@ -17,12 +17,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.5.0
- * Query Engine version: 173f8d54f8d52e692c7e27e72a88314ec7aeff60
+ * Prisma Client JS version: 6.6.0
+ * Query Engine version: f676762280b54cd07c770017ed3711ddde35f37a
  */
 Prisma.prismaVersion = {
-  client: "6.5.0",
-  engine: "173f8d54f8d52e692c7e27e72a88314ec7aeff60"
+  client: "6.6.0",
+  engine: "f676762280b54cd07c770017ed3711ddde35f37a"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -117,6 +117,114 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.AccountScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  provider: 'provider',
+  refreshToken: 'refreshToken',
+  accessToken: 'accessToken',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
+exports.Prisma.AnimeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  russian: 'russian',
+  image: 'image',
+  url: 'url',
+  kind: 'kind',
+  score: 'score',
+  status: 'status',
+  episodes: 'episodes',
+  episodes_aired: 'episodes_aired',
+  aired_on: 'aired_on',
+  released_on: 'released_on',
+  rating: 'rating',
+  english: 'english',
+  synonyms: 'synonyms',
+  license_name_ru: 'license_name_ru',
+  duration: 'duration',
+  description: 'description',
+  franchise: 'franchise',
+  favoured: 'favoured',
+  anons: 'anons',
+  ongoing: 'ongoing',
+  thread_id: 'thread_id',
+  topic_id: 'topic_id',
+  myanimelist_id: 'myanimelist_id',
+  next_episode_at: 'next_episode_at',
+  fansubbers: 'fansubbers',
+  fandubbers: 'fandubbers',
+  licensors: 'licensors',
+  genres: 'genres',
+  studios: 'studios',
+  videos: 'videos',
+  screenshots: 'screenshots',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.Anime_draftScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  russian: 'russian',
+  image: 'image',
+  url: 'url',
+  kind: 'kind',
+  score: 'score',
+  status: 'status',
+  episodes: 'episodes',
+  episodes_aired: 'episodes_aired',
+  aired_on: 'aired_on',
+  released_on: 'released_on',
+  rating: 'rating',
+  english: 'english',
+  synonyms: 'synonyms',
+  license_name_ru: 'license_name_ru',
+  duration: 'duration',
+  description: 'description',
+  franchise: 'franchise',
+  favoured: 'favoured',
+  anons: 'anons',
+  ongoing: 'ongoing',
+  thread_id: 'thread_id',
+  topic_id: 'topic_id',
+  myanimelist_id: 'myanimelist_id',
+  next_episode_at: 'next_episode_at',
+  fansubbers: 'fansubbers',
+  fandubbers: 'fandubbers',
+  licensors: 'licensors',
+  genres: 'genres',
+  studios: 'studios',
+  videos: 'videos',
+  screenshots: 'screenshots',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.ParsingSessionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  status: 'status',
+  lastProcessedPage: 'lastProcessedPage',
+  processedPages: 'processedPages',
+  processedItems: 'processedItems',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TokenScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  token: 'token',
+  type: 'type',
+  expiresIn: 'expiresIn',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -131,30 +239,13 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.AccountScalarFieldEnum = {
-  id: 'id',
-  type: 'type',
-  provider: 'provider',
-  refreshToken: 'refreshToken',
-  accessToken: 'accessToken',
-  expiresAt: 'expiresAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  userId: 'userId'
-};
-
-exports.Prisma.TokenScalarFieldEnum = {
-  id: 'id',
-  email: 'email',
-  token: 'token',
-  type: 'type',
-  expiresIn: 'expiresIn',
-  createdAt: 'createdAt'
-};
-
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -166,6 +257,18 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+exports.TokenType = exports.$Enums.TokenType = {
+  VERIFICATION: 'VERIFICATION',
+  TWO_FACTOR: 'TWO_FACTOR',
+  PASSWORD_RESET: 'PASSWORD_RESET'
+};
+
 exports.UserRole = exports.$Enums.UserRole = {
   REGULAR: 'REGULAR',
   ADMIN: 'ADMIN'
@@ -177,16 +280,13 @@ exports.AuthMethod = exports.$Enums.AuthMethod = {
   YANDEX: 'YANDEX'
 };
 
-exports.TokenType = exports.$Enums.TokenType = {
-  VERIFICATION: 'VERIFICATION',
-  TWO_FACTOR: 'TWO_FACTOR',
-  PASSWORD_RESET: 'PASSWORD_RESET'
-};
-
 exports.Prisma.ModelName = {
-  User: 'User',
   Account: 'Account',
-  Token: 'Token'
+  Anime: 'Anime',
+  Anime_draft: 'Anime_draft',
+  ParsingSession: 'ParsingSession',
+  Token: 'Token',
+  User: 'User'
 };
 
 /**
@@ -206,7 +306,7 @@ class PrismaClient {
         } else {
           message = 'PrismaClient is unable to run in this browser environment, or has been bundled for the browser (running in `' + runtime.prettyName + '`).'
         }
-        
+
         message += `
 If this is unexpected, please open an issue: https://pris.ly/prisma-prisma-bug-report`
 

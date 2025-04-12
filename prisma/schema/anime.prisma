@@ -1,59 +1,85 @@
 model Anime {
-  id             Int       @id
-  name           String
-  russian        String?
-  image          Json
-  url            String
-  kind           String
-  score          String
-  status         String
-  episodes       Int
-  aired_on       DateTime?
-  released_on    DateTime?
-  rating         String
-  english        String[]
-  synonyms       String[]
-  thread_id      Int
-  topic_id       Int
-  myanimelist_id Int
-  updated_at     DateTime  @updatedAt
-  fansubbers     String[]
-  fandubbers     String[]
-  licensors      String[]
-  genres         String[]
-  studios        String[]
-  videos         String[]
-  screenshots    String[]
+  id              Int       @id
+  name            String
+  russian         String?
+  image           Json
+  url             String?
+  kind            String?
+  score           String?
+  status          String?
+  episodes        Int?
+  episodes_aired  Int?
+  aired_on        DateTime?
+  released_on     DateTime?
+  rating          String?
+  english         String[]
+  synonyms        String[]
+  license_name_ru String?
+  duration        Int       @default(0)
+  description     String?
+  franchise       String?
+  favoured        Boolean   @default(false)
+  anons           Boolean   @default(false)
+  ongoing         Boolean   @default(false)
+  thread_id       Int?
+  topic_id        Int?
+  myanimelist_id  Int?
+  next_episode_at DateTime?
+  fansubbers      String[]
+  fandubbers      String[]
+  licensors       String[]
+  genres          String[]
+  studios         String[]
+  videos          String[]
+  screenshots     String[]
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
 
+  @@index([status])
+  @@index([kind])
+  @@index([rating])
   @@map("anime")
 }
 
 model Anime_draft {
-  id             Int       @id
-  name           String
-  russian        String?
-  image          Json
-  url            String
-  kind           String
-  score          String
-  status         String
-  episodes       Int
-  aired_on       DateTime?
-  released_on    DateTime?
-  rating         String
-  english        String[]
-  synonyms       String[]
-  thread_id      Int
-  topic_id       Int
-  myanimelist_id Int
-  updated_at     DateTime  @updatedAt
-  fansubbers     String[]
-  fandubbers     String[]
-  licensors      String[]
-  genres         String[]
-  studios        String[]
-  videos         String[]
-  screenshots    String[]
+  id              Int       @id
+  name            String
+  russian         String?
+  image           Json
+  url             String?
+  kind            String?
+  score           String?
+  status          String?
+  episodes        Int?
+  episodes_aired  Int?
+  aired_on        DateTime?
+  released_on     DateTime?
+  rating          String?
+  english         String[]
+  synonyms        String[]
+  license_name_ru String?
+  duration        Int       @default(0)
+  description     String?
+  franchise       String?
+  favoured        Boolean   @default(false)
+  anons           Boolean   @default(false)
+  ongoing         Boolean   @default(false)
+  thread_id       Int?
+  topic_id        Int?
+  myanimelist_id  Int?
+  next_episode_at DateTime?
+  fansubbers      String[]
+  fandubbers      String[]
+  licensors       String[]
+  genres          String[]
+  studios         String[]
+  videos          String[]
+  screenshots     String[]
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
 
+  @@index([status])
+  @@index([kind])
+  @@index([rating])
   @@map("anime_draft")
 }

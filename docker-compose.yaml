@@ -13,6 +13,11 @@ services:
       - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks:
       - backend
 
@@ -25,6 +30,58 @@ services:
     command: redis-server --requirepass ${REDIS_PASSWORD}
     volumes:
       - redis_data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - backend
+
+  main_service:
+    container_name: main_app
+    build:
+      context: .
+      dockerfile: apps/server/dockerfile
+      args:
+        SERVICE: server
+    ports:
+      - '${APPLICATION_PORT}:${APPLICATION_PORT}'
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_HOST=db # Изменено с localhost на db
+      - REDIS_HOST=redis # Изменено с localhost на redis
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - backend
+
+  microservice_update_anime:
+    container_name: microservice_update_anime
+    build:
+      context: .
+      dockerfile: apps/update-anime/dockerfile
+      args:
+        SERVICE: update-anime
+    ports:
+      - '${APPLICATION_UPDATE_ANIME_PORT}:${APPLICATION_UPDATE_ANIME_PORT}'
+      - '5501:5501'
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_HOST=db
+      - REDIS_HOST=redis
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      main_service:
+        condition: service_started
     networks:
       - backend
 

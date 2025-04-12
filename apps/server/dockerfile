@@ -1,0 +1,54 @@
+FROM oven/bun:1-slim AS builder
+
+WORKDIR /app
+
+COPY package.json bun.lock* ./
+
+RUN bun install
+
+COPY prisma/schema ./prisma/schema/
+
+RUN bunx prisma generate --schema ./prisma/schema
+
+COPY . .
+
+RUN bun run build
+
+CMD ["sh", "-c", "bunx prisma migrate deploy --schema ./prisma/schema && bun run start"]
+
+
+
+# # --------- Stage 1: Build ---------
+# FROM oven/bun:1-slim AS builder
+
+# ARG SERVICE
+# WORKDIR /app
+
+# COPY package.json bun.lock* ./
+# RUN bun install
+
+# COPY .env .env
+# COPY prisma ./prisma
+# COPY apps/${SERVICE} ./apps/${SERVICE}
+# # COPY libs ./libs
+# COPY nest-cli.json ./
+# COPY tsconfig*.json ./
+
+# RUN bunx prisma generate --schema ./prisma/schema
+# RUN bun run build ${SERVICE}
+
+# # --------- Stage 2: Runtime ---------
+# FROM oven/bun:1-slim
+
+# ARG SERVICE
+# WORKDIR /app
+
+# COPY package.json bun.lock* ./
+# RUN bun install
+
+# COPY .env .env
+# COPY prisma ./prisma
+# COPY --from=builder /app/dist/apps/${SERVICE} ./dist
+
+# CMD ["sh", "-c", "bunx prisma migrate deploy --schema ./prisma/schema && bun run start"]
+

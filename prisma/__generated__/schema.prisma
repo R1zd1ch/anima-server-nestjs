@@ -1,3 +1,145 @@
+model Account {
+  id String @id @default(uuid())
+
+  type     String
+  provider String
+
+  refreshToken String? @map("refresh_token")
+  accessToken  String? @map("access_token")
+  expiresAt    Int?    @map("expires_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?  @map("user_id")
+
+  @@map("accounts")
+}
+
+model Anime {
+  id              Int       @id
+  name            String
+  russian         String?
+  image           Json
+  url             String?
+  kind            String?
+  score           String?
+  status          String?
+  episodes        Int?
+  episodes_aired  Int?
+  aired_on        DateTime?
+  released_on     DateTime?
+  rating          String?
+  english         String[]
+  synonyms        String[]
+  license_name_ru String?
+  duration        Int       @default(0)
+  description     String?
+  franchise       String?
+  favoured        Boolean   @default(false)
+  anons           Boolean   @default(false)
+  ongoing         Boolean   @default(false)
+  thread_id       Int?
+  topic_id        Int?
+  myanimelist_id  Int?
+  next_episode_at DateTime?
+  fansubbers      String[]
+  fandubbers      String[]
+  licensors       String[]
+  genres          String[]
+  studios         String[]
+  videos          String[]
+  screenshots     String[]
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+
+  @@index([status])
+  @@index([kind])
+  @@index([rating])
+  @@map("anime")
+}
+
+model Anime_draft {
+  id              Int       @id
+  name            String
+  russian         String?
+  image           Json
+  url             String?
+  kind            String?
+  score           String?
+  status          String?
+  episodes        Int?
+  episodes_aired  Int?
+  aired_on        DateTime?
+  released_on     DateTime?
+  rating          String?
+  english         String[]
+  synonyms        String[]
+  license_name_ru String?
+  duration        Int       @default(0)
+  description     String?
+  franchise       String?
+  favoured        Boolean   @default(false)
+  anons           Boolean   @default(false)
+  ongoing         Boolean   @default(false)
+  thread_id       Int?
+  topic_id        Int?
+  myanimelist_id  Int?
+  next_episode_at DateTime?
+  fansubbers      String[]
+  fandubbers      String[]
+  licensors       String[]
+  genres          String[]
+  studios         String[]
+  videos          String[]
+  screenshots     String[]
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+
+  @@index([status])
+  @@index([kind])
+  @@index([rating])
+  @@map("anime_draft")
+}
+
+enum UserRole {
+  REGULAR
+  ADMIN
+}
+
+enum AuthMethod {
+  CREDENTIALS
+  GOOGLE
+  YANDEX
+}
+
+enum TokenType {
+  VERIFICATION
+  TWO_FACTOR
+  PASSWORD_RESET
+}
+
+model ParsingSession {
+  id                Int      @id @unique @default(autoincrement())
+  name              String
+  status            String
+  lastProcessedPage Int
+  processedPages    Int
+  processedItems    Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("parsing_session")
+}
+
+enum ParsingSessionStatus {
+  CREATED
+  RUNNING
+  COMPLETED
+  PAUSED
+  FAILED
+}
+
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
@@ -5,13 +147,27 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "./__generated__"
+  provider        = "prisma-client-js"
+  output          = "../__generated__"
+  previewFeatures = ["prismaSchemaFolder"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("POSTGRES_URI")
+}
+
+model Token {
+  id String @id @default(uuid())
+
+  email     String
+  token     String    @unique
+  type      TokenType
+  expiresIn DateTime  @map("expires_in")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("tokens")
 }
 
 model User {
@@ -34,52 +190,4 @@ model User {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("users")
-}
-
-model Account {
-  id String @id @default(uuid())
-
-  type     String
-  provider String
-
-  refreshToken String? @map("refresh_token")
-  accessToken  String? @map("access_token")
-  expiresAt    Int?    @map("expires_at")
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  user      User?    @relation(fields: [userId], references: [id])
-  userId    String?  @map("user_id")
-
-  @@map("accounts")
-}
-
-model Token {
-  id String @id @default(uuid())
-
-  email     String
-  token     String    @unique
-  type      TokenType
-  expiresIn DateTime  @map("expires_in")
-
-  createdAt DateTime @default(now()) @map("created_at")
-
-  @@map("tokens")
-}
-
-enum UserRole {
-  REGULAR
-  ADMIN
-}
-
-enum AuthMethod {
-  CREDENTIALS
-  GOOGLE
-  YANDEX
-}
-
-enum TokenType {
-  VERIFICATION
-  TWO_FACTOR
-  PASSWORD_RESET
 }

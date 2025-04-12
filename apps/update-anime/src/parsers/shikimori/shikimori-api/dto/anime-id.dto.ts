@@ -1,0 +1,47 @@
+export interface ShikimoriAnime {
+  id: number;
+  name: string;
+  russian?: string | null;
+  image: {
+    original: string;
+    preview: string;
+    x96: string;
+    x48: string;
+  };
+  url: string;
+  kind: string;
+  score: string;
+  status: string;
+  episodes: number;
+  episodes_aired: number;
+  aired_on: string | null;
+  released_on: string | null;
+  rating: string | null;
+  english: (string | null)[];
+  japanese: (string | null)[];
+  synonyms: string[];
+  license_name_ru: string | null;
+  duration: number;
+  description: string | null;
+  description_html: string;
+  description_source: string | null;
+  franchise: string | null;
+  favoured: boolean;
+  anons: boolean;
+  ongoing: boolean;
+  thread_id: number;
+  topic_id: number;
+  myanimelist_id: number;
+  rates_scores_stats: any[];
+  rates_statuses_stats: any[];
+  updated_at: string;
+  next_episode_at: string | null;
+  fansubbers: string[];
+  fandubbers: string[];
+  licensors: string[];
+  genres: Array<{ name: string }>;
+  studios: Array<{ name: string }>;
+  videos: Array<{ url: string }>;
+  screenshots: Array<{ original: string }>;
+  user_rate: any | null;
+}
