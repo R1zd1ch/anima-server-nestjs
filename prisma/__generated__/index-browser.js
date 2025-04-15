@@ -131,84 +131,100 @@ exports.Prisma.AccountScalarFieldEnum = {
 
 exports.Prisma.AnimeScalarFieldEnum = {
   id: 'id',
+  malId: 'malId',
+  shikimoriId: 'shikimoriId',
   name: 'name',
-  russian: 'russian',
-  image: 'image',
-  url: 'url',
-  kind: 'kind',
-  score: 'score',
-  status: 'status',
-  episodes: 'episodes',
-  episodes_aired: 'episodes_aired',
-  aired_on: 'aired_on',
-  released_on: 'released_on',
-  rating: 'rating',
-  english: 'english',
-  synonyms: 'synonyms',
-  license_name_ru: 'license_name_ru',
-  duration: 'duration',
   description: 'description',
-  franchise: 'franchise',
-  favoured: 'favoured',
-  anons: 'anons',
-  ongoing: 'ongoing',
-  thread_id: 'thread_id',
-  topic_id: 'topic_id',
-  myanimelist_id: 'myanimelist_id',
-  next_episode_at: 'next_episode_at',
-  fansubbers: 'fansubbers',
-  fandubbers: 'fandubbers',
-  licensors: 'licensors',
-  genres: 'genres',
-  studios: 'studios',
-  videos: 'videos',
-  screenshots: 'screenshots',
-  created_at: 'created_at',
-  updated_at: 'updated_at'
+  russian: 'russian',
+  english: 'english',
+  japanese: 'japanese',
+  synonyms: 'synonyms',
+  status: 'status',
+  kind: 'kind',
+  episodes: 'episodes',
+  episodesAired: 'episodesAired',
+  duration: 'duration',
+  score: 'score',
+  shikimoriScore: 'shikimoriScore',
+  releasedOn: 'releasedOn',
+  shikimoriUrl: 'shikimoriUrl',
+  season: 'season',
+  isCensored: 'isCensored',
+  rating: 'rating',
+  nextEpisodeAt: 'nextEpisodeAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
-exports.Prisma.Anime_draftScalarFieldEnum = {
+exports.Prisma.GenreScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  russian: 'russian',
-  image: 'image',
+  russian: 'russian'
+};
+
+exports.Prisma.StudioScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  imageUrl: 'imageUrl'
+};
+
+exports.Prisma.AnimeStudioScalarFieldEnum = {
+  animeId: 'animeId',
+  studioId: 'studioId'
+};
+
+exports.Prisma.RelatedAnimeScalarFieldEnum = {
+  id: 'id',
+  animeId: 'animeId',
+  relatedAnimeId: 'relatedAnimeId',
+  relationKind: 'relationKind'
+};
+
+exports.Prisma.AnimeGenreScalarFieldEnum = {
+  animeId: 'animeId',
+  genreId: 'genreId'
+};
+
+exports.Prisma.AnimePosterScalarFieldEnum = {
+  id: 'id',
+  shikimoriId: 'shikimoriId',
+  animeId: 'animeId',
+  originalUrl: 'originalUrl',
+  mainUrl: 'mainUrl'
+};
+
+exports.Prisma.AnimeVideoScalarFieldEnum = {
+  animeId: 'animeId',
+  videoId: 'videoId'
+};
+
+exports.Prisma.AnimeScreenshotScalarFieldEnum = {
+  animeId: 'animeId',
+  screenshotId: 'screenshotId'
+};
+
+exports.Prisma.VideoScalarFieldEnum = {
+  id: 'id',
+  shikimoriId: 'shikimoriId',
   url: 'url',
+  name: 'name',
   kind: 'kind',
-  score: 'score',
-  status: 'status',
-  episodes: 'episodes',
-  episodes_aired: 'episodes_aired',
-  aired_on: 'aired_on',
-  released_on: 'released_on',
-  rating: 'rating',
-  english: 'english',
-  synonyms: 'synonyms',
-  license_name_ru: 'license_name_ru',
-  duration: 'duration',
-  description: 'description',
-  franchise: 'franchise',
-  favoured: 'favoured',
-  anons: 'anons',
-  ongoing: 'ongoing',
-  thread_id: 'thread_id',
-  topic_id: 'topic_id',
-  myanimelist_id: 'myanimelist_id',
-  next_episode_at: 'next_episode_at',
-  fansubbers: 'fansubbers',
-  fandubbers: 'fandubbers',
-  licensors: 'licensors',
-  genres: 'genres',
-  studios: 'studios',
-  videos: 'videos',
-  screenshots: 'screenshots',
-  created_at: 'created_at',
-  updated_at: 'updated_at'
+  playerUrl: 'playerUrl',
+  imageUrl: 'imageUrl'
+};
+
+exports.Prisma.ScreenshotsScalarFieldEnum = {
+  id: 'id',
+  shikimoriId: 'shikimoriId',
+  originalUrl: 'originalUrl',
+  x332Url: 'x332Url'
 };
 
 exports.Prisma.ParsingSessionScalarFieldEnum = {
   id: 'id',
   name: 'name',
   status: 'status',
+  type: 'type',
   lastProcessedPage: 'lastProcessedPage',
   processedPages: 'processedPages',
   processedItems: 'processedItems',
@@ -244,10 +260,6 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
-exports.Prisma.JsonNullValueInput = {
-  JsonNull: Prisma.JsonNull
-};
-
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -257,12 +269,67 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
-exports.Prisma.JsonNullValueFilter = {
-  DbNull: Prisma.DbNull,
-  JsonNull: Prisma.JsonNull,
-  AnyNull: Prisma.AnyNull
+exports.AnimeStatus = exports.$Enums.AnimeStatus = {
+  anons: 'anons',
+  ongoing: 'ongoing',
+  released: 'released'
 };
+
+exports.AnimeKind = exports.$Enums.AnimeKind = {
+  tv: 'tv',
+  movie: 'movie',
+  ova: 'ova',
+  ona: 'ona',
+  special: 'special',
+  tv_special: 'tv_special',
+  music: 'music',
+  pv: 'pv',
+  cm: 'cm'
+};
+
+exports.AnimeRating = exports.$Enums.AnimeRating = {
+  none: 'none',
+  g: 'g',
+  pg: 'pg',
+  pg_13: 'pg_13',
+  r: 'r',
+  r_plus: 'r_plus',
+  rx: 'rx'
+};
+
+exports.RelationKind = exports.$Enums.RelationKind = {
+  adaptation: 'adaptation',
+  alternative_setting: 'alternative_setting',
+  alternative_version: 'alternative_version',
+  character: 'character',
+  full_story: 'full_story',
+  other: 'other',
+  parent_story: 'parent_story',
+  prequel: 'prequel',
+  sequel: 'sequel',
+  side_story: 'side_story',
+  spin_off: 'spin_off',
+  summary: 'summary'
+};
+
+exports.VideoKindEnum = exports.$Enums.VideoKindEnum = {
+  pv: 'pv',
+  character_trailer: 'character_trailer',
+  cm: 'cm',
+  op: 'op',
+  ed: 'ed',
+  op_ed_clip: 'op_ed_clip',
+  clip: 'clip',
+  other: 'other',
+  episode_preview: 'episode_preview'
+};
+
+exports.ParsingSessionType = exports.$Enums.ParsingSessionType = {
+  CREATE_DATABASE: 'CREATE_DATABASE',
+  UPDATE_ONGOINGS: 'UPDATE_ONGOINGS',
+  UPDATE_THIS_YEAR: 'UPDATE_THIS_YEAR'
+};
+
 exports.TokenType = exports.$Enums.TokenType = {
   VERIFICATION: 'VERIFICATION',
   TWO_FACTOR: 'TWO_FACTOR',
@@ -283,7 +350,16 @@ exports.AuthMethod = exports.$Enums.AuthMethod = {
 exports.Prisma.ModelName = {
   Account: 'Account',
   Anime: 'Anime',
-  Anime_draft: 'Anime_draft',
+  Genre: 'Genre',
+  Studio: 'Studio',
+  AnimeStudio: 'AnimeStudio',
+  RelatedAnime: 'RelatedAnime',
+  AnimeGenre: 'AnimeGenre',
+  AnimePoster: 'AnimePoster',
+  AnimeVideo: 'AnimeVideo',
+  AnimeScreenshot: 'AnimeScreenshot',
+  Video: 'Video',
+  Screenshots: 'Screenshots',
   ParsingSession: 'ParsingSession',
   Token: 'Token',
   User: 'User'

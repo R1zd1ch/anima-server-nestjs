@@ -1,12 +1,13 @@
 model ParsingSession {
-  id                Int      @id @unique @default(autoincrement())
+  id                Int                @id @unique @default(autoincrement())
   name              String
   status            String
+  type              ParsingSessionType
   lastProcessedPage Int
   processedPages    Int
   processedItems    Int
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
 
   @@map("parsing_session")
 }
@@ -17,4 +18,10 @@ enum ParsingSessionStatus {
   COMPLETED
   PAUSED
   FAILED
+}
+
+enum ParsingSessionType {
+  CREATE_DATABASE
+  UPDATE_ONGOINGS
+  UPDATE_THIS_YEAR
 }

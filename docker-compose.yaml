@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db:
     container_name: postgres
@@ -38,11 +36,27 @@ services:
     networks:
       - backend
 
-  main_service:
-    container_name: main_app
+  nginx:
+    container_name: nginx-gateway
+    image: nginx:latest
+    ports:
+      - '80:80'
+    volumes:
+      - ./nginx.conf.template:/etc/nginx/templates/default.conf.template
+    environment:
+      - APPLICATION_PORT=${APPLICATION_PORT}
+      - APPLICATION_UPDATE_ANIME_PORT=${APPLICATION_UPDATE_ANIME_PORT}
+    depends_on:
+      - auth-microservice
+      - update-anime-microservice
+    networks:
+      - backend
+
+  auth-microservice:
+    container_name: auth-microservice
     build:
       context: .
-      dockerfile: apps/server/dockerfile
+      dockerfile: apps/auth-microservice/dockerfile
       args:
         SERVICE: server
     ports:
@@ -50,8 +64,8 @@ services:
     env_file:
       - .env
     environment:
-      - POSTGRES_HOST=db # Изменено с localhost на db
-      - REDIS_HOST=redis # Изменено с localhost на redis
+      - POSTGRES_HOST=db
+      - REDIS_HOST=redis
     depends_on:
       db:
         condition: service_healthy
@@ -60,11 +74,11 @@ services:
     networks:
       - backend
 
-  microservice_update_anime:
-    container_name: microservice_update_anime
+  update-anime-microservice:
+    container_name: update-anime-microservice
     build:
       context: .
-      dockerfile: apps/update-anime/dockerfile
+      dockerfile: apps/update-anime-microservice/dockerfile
       args:
         SERVICE: update-anime
     ports:
@@ -80,7 +94,7 @@ services:
         condition: service_healthy
       redis:
         condition: service_started
-      main_service:
+      auth-microservice:
         condition: service_started
     networks:
       - backend

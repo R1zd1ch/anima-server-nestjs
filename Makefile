@@ -4,6 +4,4 @@ dev-main:
 
 dev-update-anime:
 	docker start postgres redis
-	bun run start:dev update-anime
-
-
+	bun run start:dev update-anime-microservice

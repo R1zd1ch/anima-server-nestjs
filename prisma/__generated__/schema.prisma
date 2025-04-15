@@ -17,89 +17,204 @@ model Account {
 }
 
 model Anime {
-  id              Int       @id
-  name            String
-  russian         String?
-  image           Json
-  url             String?
-  kind            String?
-  score           String?
-  status          String?
-  episodes        Int?
-  episodes_aired  Int?
-  aired_on        DateTime?
-  released_on     DateTime?
-  rating          String?
-  english         String[]
-  synonyms        String[]
-  license_name_ru String?
-  duration        Int       @default(0)
-  description     String?
-  franchise       String?
-  favoured        Boolean   @default(false)
-  anons           Boolean   @default(false)
-  ongoing         Boolean   @default(false)
-  thread_id       Int?
-  topic_id        Int?
-  myanimelist_id  Int?
-  next_episode_at DateTime?
-  fansubbers      String[]
-  fandubbers      String[]
-  licensors       String[]
-  genres          String[]
-  studios         String[]
-  videos          String[]
-  screenshots     String[]
-  created_at      DateTime  @default(now())
-  updated_at      DateTime  @updatedAt
+  id             String            @id @default(uuid())
+  malId          String?           @unique
+  shikimoriId    String?           @unique
+  name           String
+  description    String?
+  russian        String?
+  english        String?
+  japanese       String?
+  synonyms       String[]
+  status         AnimeStatus       @default(anons)
+  kind           AnimeKind?
+  episodes       Int
+  episodesAired  Int
+  duration       Int?
+  score          Float?
+  shikimoriScore Float?
+  releasedOn     String?
+  shikimoriUrl   String?
+  season         String?
+  poster         AnimePoster[]
+  isCensored     Boolean?
+  rating         AnimeRating?
+  nextEpisodeAt  String?
+  // userRates      UserRate[]
+  studios        AnimeStudio[]
+  related        RelatedAnime[]    @relation("AnimeToRelatedAnime")
+  videos         AnimeVideo[]
+  screenshots    AnimeScreenshot[]
+  genres         AnimeGenre[]
 
-  @@index([status])
-  @@index([kind])
-  @@index([rating])
-  @@map("anime")
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  relatedAnime RelatedAnime[] @relation("RelatedAnimeToAnime")
+
+  @@unique([name, shikimoriId])
+  @@map("animes")
 }
 
-model Anime_draft {
-  id              Int       @id
-  name            String
-  russian         String?
-  image           Json
-  url             String?
-  kind            String?
-  score           String?
-  status          String?
-  episodes        Int?
-  episodes_aired  Int?
-  aired_on        DateTime?
-  released_on     DateTime?
-  rating          String?
-  english         String[]
-  synonyms        String[]
-  license_name_ru String?
-  duration        Int       @default(0)
-  description     String?
-  franchise       String?
-  favoured        Boolean   @default(false)
-  anons           Boolean   @default(false)
-  ongoing         Boolean   @default(false)
-  thread_id       Int?
-  topic_id        Int?
-  myanimelist_id  Int?
-  next_episode_at DateTime?
-  fansubbers      String[]
-  fandubbers      String[]
-  licensors       String[]
-  genres          String[]
-  studios         String[]
-  videos          String[]
-  screenshots     String[]
-  created_at      DateTime  @default(now())
-  updated_at      DateTime  @updatedAt
+model Genre {
+  id      String       @id @default(uuid())
+  name    String       @unique
+  russian String
+  animes  AnimeGenre[]
 
-  @@index([status])
-  @@index([kind])
-  @@index([rating])
-  @@map("anime_draft")
+  @@map("genres")
+}
+
+model Studio {
+  id          String        @id @default(uuid())
+  name        String        @unique
+  imageUrl    String?
+  AnimeStudio AnimeStudio[]
+
+  @@map("studios")
+}
+
+model AnimeStudio {
+  animeId  String
+  studioId String
+  anime    Anime  @relation(fields: [animeId], references: [id])
+  studio   Studio @relation(fields: [studioId], references: [id])
+
+  @@id([animeId, studioId])
+  @@map("anime_studios")
+}
+
+model RelatedAnime {
+  id             String       @id @default(uuid())
+  animeId        String
+  relatedAnimeId String
+  relationKind   RelationKind
+
+  anime   Anime @relation("AnimeToRelatedAnime", fields: [animeId], references: [id])
+  related Anime @relation("RelatedAnimeToAnime", fields: [relatedAnimeId], references: [id])
+
+  @@unique([animeId, relatedAnimeId])
+  @@map("related_animes")
+}
+
+model AnimeGenre {
+  animeId String
+  genreId String
+  anime   Anime  @relation(fields: [animeId], references: [id])
+  genre   Genre  @relation(fields: [genreId], references: [id])
+
+  @@id([animeId, genreId])
+  @@map("anime_genres")
+}
+
+model AnimePoster {
+  id          String  @id @default(uuid())
+  shikimoriId String?
+  animeId     String
+  originalUrl String?
+  mainUrl     String?
+  anime       Anime   @relation(fields: [animeId], references: [id])
+
+  @@map("anime_posters")
+}
+
+model AnimeVideo {
+  animeId String
+  videoId String
+
+  anime Anime @relation(fields: [animeId], references: [id])
+  video Video @relation(fields: [videoId], references: [id])
+
+  @@id([animeId, videoId])
+  @@map("anime_videos")
+}
+
+model AnimeScreenshot {
+  animeId      String
+  screenshotId String
+
+  anime      Anime       @relation(fields: [animeId], references: [id])
+  screenshot Screenshots @relation(fields: [screenshotId], references: [id])
+
+  @@id([animeId, screenshotId])
+  @@map("anime_screenshots")
+}
+
+model Video {
+  id          String        @id @default(uuid())
+  shikimoriId String?       @unique
+  url         String?
+  name        String?
+  kind        VideoKindEnum
+  playerUrl   String?
+  imageUrl    String?
+  animeVideo  AnimeVideo[]
+
+  @@map("videos")
+}
+
+model Screenshots {
+  id              String            @id @default(uuid())
+  shikimoriId     String            @unique
+  originalUrl     String?
+  x332Url         String?
+  animeScreenshot AnimeScreenshot[]
+
+  @@map("screenshots")
+}
+
+enum VideoKindEnum {
+  pv
+  character_trailer
+  cm
+  op
+  ed
+  op_ed_clip
+  clip
+  other
+  episode_preview
+}
+
+enum AnimeStatus {
+  anons
+  ongoing
+  released
+}
+
+enum AnimeKind {
+  tv
+  movie
+  ova
+  ona
+  special
+  tv_special
+  music
+  pv
+  cm
+}
+
+enum AnimeRating {
+  none
+  g
+  pg
+  pg_13
+  r
+  r_plus
+  rx
+}
+
+enum RelationKind {
+  adaptation
+  alternative_setting
+  alternative_version
+  character
+  full_story
+  other
+  parent_story
+  prequel
+  sequel
+  side_story
+  spin_off
+  summary
 }
 
 enum UserRole {
@@ -120,14 +235,15 @@ enum TokenType {
 }
 
 model ParsingSession {
-  id                Int      @id @unique @default(autoincrement())
+  id                Int                @id @unique @default(autoincrement())
   name              String
   status            String
+  type              ParsingSessionType
   lastProcessedPage Int
   processedPages    Int
   processedItems    Int
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
 
   @@map("parsing_session")
 }
@@ -138,6 +254,12 @@ enum ParsingSessionStatus {
   COMPLETED
   PAUSED
   FAILED
+}
+
+enum ParsingSessionType {
+  CREATE_DATABASE
+  UPDATE_ONGOINGS
+  UPDATE_THIS_YEAR
 }
 
 // This is your Prisma schema file,
