@@ -47,8 +47,15 @@ services:
       - APPLICATION_PORT=${APPLICATION_PORT}
       - APPLICATION_UPDATE_ANIME_PORT=${APPLICATION_UPDATE_ANIME_PORT}
     depends_on:
-      - auth-microservice
-      - update-anime-microservice
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      auth-microservice:
+        condition: service_started
+      update-anime-microservice:
+        condition: service_started
+
     networks:
       - backend
 
@@ -56,7 +63,7 @@ services:
     container_name: auth-microservice
     build:
       context: .
-      dockerfile: apps/auth-microservice/dockerfile
+      dockerfile: dockerfile
       args:
         SERVICE: server
     ports:
@@ -64,6 +71,7 @@ services:
     env_file:
       - .env
     environment:
+      - APP_MODE=auth
       - POSTGRES_HOST=db
       - REDIS_HOST=redis
     depends_on:
@@ -78,15 +86,15 @@ services:
     container_name: update-anime-microservice
     build:
       context: .
-      dockerfile: apps/update-anime-microservice/dockerfile
+      dockerfile: dockerfile
       args:
         SERVICE: update-anime
     ports:
       - '${APPLICATION_UPDATE_ANIME_PORT}:${APPLICATION_UPDATE_ANIME_PORT}'
-      - '5501:5501'
     env_file:
       - .env
     environment:
+      - APP_MODE=update-anime
       - POSTGRES_HOST=db
       - REDIS_HOST=redis
     depends_on:
