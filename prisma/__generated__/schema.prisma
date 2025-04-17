@@ -33,6 +33,7 @@ model Anime {
   duration       Int?
   score          Float?
   shikimoriScore Float?
+  airedOn        String?
   releasedOn     String?
   shikimoriUrl   String?
   season         String?
@@ -56,10 +57,11 @@ model Anime {
 }
 
 model Genre {
-  id      String       @id @default(uuid())
-  name    String       @unique
-  russian String
-  animes  AnimeGenre[]
+  id        String       @id @default(uuid())
+  requestId Int          @unique @default(autoincrement())
+  name      String       @unique
+  russian   String
+  animes    AnimeGenre[]
 
   @@map("genres")
 }

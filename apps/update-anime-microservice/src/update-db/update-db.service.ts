@@ -52,6 +52,7 @@ export class UpdateDbService {
       score: animeData.score,
       shikimoriScore: animeData.score,
       releasedOn: animeData.releasedOn.date,
+      airedOn: animeData.airedOn.date,
       shikimoriUrl: animeData.url,
       season: animeData.season,
       isCensored: animeData.isCensored,
@@ -78,6 +79,7 @@ export class UpdateDbService {
       score: animeData.score,
       shikimoriScore: animeData.score,
       releasedOn: animeData.releasedOn.date,
+      airedOn: animeData.airedOn.date,
       shikimoriUrl: animeData.url,
       season: animeData.season,
       isCensored: animeData.isCensored,
@@ -264,6 +266,14 @@ export class UpdateDbService {
       const createPromises = animeData.related.map(async (related) => {
         const shikimoriId = related.id.toString();
 
+        const season = related.anime?.season;
+        if (season && !this.isValidSeason(season)) {
+          this.logger.log(
+            `Skipping anime ${shikimoriId} with invalid season: ${season}`,
+          );
+          return;
+        }
+
         // Генерация уникального имени с хэшем
         const name = related.anime?.name || `Unknown_${randomUUID()}`;
 
@@ -284,8 +294,11 @@ export class UpdateDbService {
 
       await Promise.all(createPromises);
 
-      // Обработка связей
-      const relationPromises = animeData.related.map(async (related) => {
+      const filteredRelations = animeData.related.filter((related) =>
+        this.isValidSeason(related.anime?.season),
+      );
+
+      const relationPromises = filteredRelations.map(async (related) => {
         const relatedAnime = await tx.anime.findUnique({
           where: { shikimoriId: related.id.toString() },
         });
@@ -312,8 +325,6 @@ export class UpdateDbService {
           },
         });
       });
-
-      await Promise.all(relationPromises);
 
       await Promise.all(relationPromises);
     } catch {
@@ -365,5 +376,33 @@ export class UpdateDbService {
     this.logger.debug(`Обработано аниме ${anime.name}`);
 
     return anime;
+  }
+
+  private isValidSeason(season?: string): boolean {
+    if (!season) return false;
+
+    const yearPatterns = [
+      { regex: /_(\d{4})$/, extract: (m: RegExpMatchArray) => parseInt(m[1]) },
+      {
+        regex: /^(\d{4})_(\d{4})$/,
+        extract: (m: RegExpMatchArray) =>
+          Math.min(parseInt(m[1]), parseInt(m[2])),
+      },
+      {
+        regex: /^(\d{3})x$/,
+        extract: (m: RegExpMatchArray) => parseInt(m[1]) * 10,
+      },
+      { regex: /^(\d{4})$/, extract: (m: RegExpMatchArray) => parseInt(m[1]) },
+    ];
+
+    for (const pattern of yearPatterns) {
+      const match = season.match(pattern.regex);
+      if (match) {
+        const year = pattern.extract(match);
+        return year >= 1995;
+      }
+    }
+
+    return false;
   }
 }

@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AnimeMicroserviceModule } from './anime-microservice.module';
 import { ConfigService } from '@nestjs/config';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import IORedis from 'ioredis';
 import { RedisStore } from 'connect-redis';
 import { ms, StringValue } from '../../../shared/lib/utils/ms.util';
@@ -53,6 +53,10 @@ async function bootstrap() {
       }),
     }),
   );
+  app.enableVersioning({
+    type: VersioningType.URI,
+    prefix: 'v',
+  });
 
   await app.listen(config.getOrThrow('ANIME_MICROSERVICE_PORT') ?? 3001);
 }

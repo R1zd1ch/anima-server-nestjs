@@ -3750,6 +3750,7 @@ export namespace Prisma {
     duration: number | null
     score: number | null
     shikimoriScore: number | null
+    airedOn: string | null
     releasedOn: string | null
     shikimoriUrl: string | null
     season: string | null
@@ -3776,6 +3777,7 @@ export namespace Prisma {
     duration: number | null
     score: number | null
     shikimoriScore: number | null
+    airedOn: string | null
     releasedOn: string | null
     shikimoriUrl: string | null
     season: string | null
@@ -3803,6 +3805,7 @@ export namespace Prisma {
     duration: number
     score: number
     shikimoriScore: number
+    airedOn: number
     releasedOn: number
     shikimoriUrl: number
     season: number
@@ -3847,6 +3850,7 @@ export namespace Prisma {
     duration?: true
     score?: true
     shikimoriScore?: true
+    airedOn?: true
     releasedOn?: true
     shikimoriUrl?: true
     season?: true
@@ -3873,6 +3877,7 @@ export namespace Prisma {
     duration?: true
     score?: true
     shikimoriScore?: true
+    airedOn?: true
     releasedOn?: true
     shikimoriUrl?: true
     season?: true
@@ -3900,6 +3905,7 @@ export namespace Prisma {
     duration?: true
     score?: true
     shikimoriScore?: true
+    airedOn?: true
     releasedOn?: true
     shikimoriUrl?: true
     season?: true
@@ -4014,6 +4020,7 @@ export namespace Prisma {
     duration: number | null
     score: number | null
     shikimoriScore: number | null
+    airedOn: string | null
     releasedOn: string | null
     shikimoriUrl: string | null
     season: string | null
@@ -4060,6 +4067,7 @@ export namespace Prisma {
     duration?: boolean
     score?: boolean
     shikimoriScore?: boolean
+    airedOn?: boolean
     releasedOn?: boolean
     shikimoriUrl?: boolean
     season?: boolean
@@ -4095,6 +4103,7 @@ export namespace Prisma {
     duration?: boolean
     score?: boolean
     shikimoriScore?: boolean
+    airedOn?: boolean
     releasedOn?: boolean
     shikimoriUrl?: boolean
     season?: boolean
@@ -4122,6 +4131,7 @@ export namespace Prisma {
     duration?: boolean
     score?: boolean
     shikimoriScore?: boolean
+    airedOn?: boolean
     releasedOn?: boolean
     shikimoriUrl?: boolean
     season?: boolean
@@ -4149,6 +4159,7 @@ export namespace Prisma {
     duration?: boolean
     score?: boolean
     shikimoriScore?: boolean
+    airedOn?: boolean
     releasedOn?: boolean
     shikimoriUrl?: boolean
     season?: boolean
@@ -4159,7 +4170,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type AnimeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "malId" | "shikimoriId" | "name" | "description" | "russian" | "english" | "japanese" | "synonyms" | "status" | "kind" | "episodes" | "episodesAired" | "duration" | "score" | "shikimoriScore" | "releasedOn" | "shikimoriUrl" | "season" | "isCensored" | "rating" | "nextEpisodeAt" | "createdAt" | "updatedAt", ExtArgs["result"]["anime"]>
+  export type AnimeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "malId" | "shikimoriId" | "name" | "description" | "russian" | "english" | "japanese" | "synonyms" | "status" | "kind" | "episodes" | "episodesAired" | "duration" | "score" | "shikimoriScore" | "airedOn" | "releasedOn" | "shikimoriUrl" | "season" | "isCensored" | "rating" | "nextEpisodeAt" | "createdAt" | "updatedAt", ExtArgs["result"]["anime"]>
   export type AnimeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     poster?: boolean | Anime$posterArgs<ExtArgs>
     studios?: boolean | Anime$studiosArgs<ExtArgs>
@@ -4201,6 +4212,7 @@ export namespace Prisma {
       duration: number | null
       score: number | null
       shikimoriScore: number | null
+      airedOn: string | null
       releasedOn: string | null
       shikimoriUrl: string | null
       season: string | null
@@ -4655,6 +4667,7 @@ export namespace Prisma {
     readonly duration: FieldRef<"Anime", 'Int'>
     readonly score: FieldRef<"Anime", 'Float'>
     readonly shikimoriScore: FieldRef<"Anime", 'Float'>
+    readonly airedOn: FieldRef<"Anime", 'String'>
     readonly releasedOn: FieldRef<"Anime", 'String'>
     readonly shikimoriUrl: FieldRef<"Anime", 'String'>
     readonly season: FieldRef<"Anime", 'String'>
@@ -5243,44 +5256,68 @@ export namespace Prisma {
 
   export type AggregateGenre = {
     _count: GenreCountAggregateOutputType | null
+    _avg: GenreAvgAggregateOutputType | null
+    _sum: GenreSumAggregateOutputType | null
     _min: GenreMinAggregateOutputType | null
     _max: GenreMaxAggregateOutputType | null
   }
 
+  export type GenreAvgAggregateOutputType = {
+    requestId: number | null
+  }
+
+  export type GenreSumAggregateOutputType = {
+    requestId: number | null
+  }
+
   export type GenreMinAggregateOutputType = {
     id: string | null
+    requestId: number | null
     name: string | null
     russian: string | null
   }
 
   export type GenreMaxAggregateOutputType = {
     id: string | null
+    requestId: number | null
     name: string | null
     russian: string | null
   }
 
   export type GenreCountAggregateOutputType = {
     id: number
+    requestId: number
     name: number
     russian: number
     _all: number
   }
 
 
+  export type GenreAvgAggregateInputType = {
+    requestId?: true
+  }
+
+  export type GenreSumAggregateInputType = {
+    requestId?: true
+  }
+
   export type GenreMinAggregateInputType = {
     id?: true
+    requestId?: true
     name?: true
     russian?: true
   }
 
   export type GenreMaxAggregateInputType = {
     id?: true
+    requestId?: true
     name?: true
     russian?: true
   }
 
   export type GenreCountAggregateInputType = {
     id?: true
+    requestId?: true
     name?: true
     russian?: true
     _all?: true
@@ -5324,6 +5361,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: GenreAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GenreSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: GenreMinAggregateInputType
@@ -5354,15 +5403,20 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: GenreCountAggregateInputType | true
+    _avg?: GenreAvgAggregateInputType
+    _sum?: GenreSumAggregateInputType
     _min?: GenreMinAggregateInputType
     _max?: GenreMaxAggregateInputType
   }
 
   export type GenreGroupByOutputType = {
     id: string
+    requestId: number
     name: string
     russian: string
     _count: GenreCountAggregateOutputType | null
+    _avg: GenreAvgAggregateOutputType | null
+    _sum: GenreSumAggregateOutputType | null
     _min: GenreMinAggregateOutputType | null
     _max: GenreMaxAggregateOutputType | null
   }
@@ -5383,6 +5437,7 @@ export namespace Prisma {
 
   export type GenreSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    requestId?: boolean
     name?: boolean
     russian?: boolean
     animes?: boolean | Genre$animesArgs<ExtArgs>
@@ -5391,23 +5446,26 @@ export namespace Prisma {
 
   export type GenreSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    requestId?: boolean
     name?: boolean
     russian?: boolean
   }, ExtArgs["result"]["genre"]>
 
   export type GenreSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    requestId?: boolean
     name?: boolean
     russian?: boolean
   }, ExtArgs["result"]["genre"]>
 
   export type GenreSelectScalar = {
     id?: boolean
+    requestId?: boolean
     name?: boolean
     russian?: boolean
   }
 
-  export type GenreOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "russian", ExtArgs["result"]["genre"]>
+  export type GenreOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "requestId" | "name" | "russian", ExtArgs["result"]["genre"]>
   export type GenreInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     animes?: boolean | Genre$animesArgs<ExtArgs>
     _count?: boolean | GenreCountOutputTypeDefaultArgs<ExtArgs>
@@ -5422,6 +5480,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      requestId: number
       name: string
       russian: string
     }, ExtArgs["result"]["genre"]>
@@ -5849,6 +5908,7 @@ export namespace Prisma {
    */
   interface GenreFieldRefs {
     readonly id: FieldRef<"Genre", 'String'>
+    readonly requestId: FieldRef<"Genre", 'Int'>
     readonly name: FieldRef<"Genre", 'String'>
     readonly russian: FieldRef<"Genre", 'String'>
   }
@@ -18992,6 +19052,7 @@ export namespace Prisma {
     duration: 'duration',
     score: 'score',
     shikimoriScore: 'shikimoriScore',
+    airedOn: 'airedOn',
     releasedOn: 'releasedOn',
     shikimoriUrl: 'shikimoriUrl',
     season: 'season',
@@ -19007,6 +19068,7 @@ export namespace Prisma {
 
   export const GenreScalarFieldEnum: {
     id: 'id',
+    requestId: 'requestId',
     name: 'name',
     russian: 'russian'
   };
@@ -19461,6 +19523,7 @@ export namespace Prisma {
     duration?: IntNullableFilter<"Anime"> | number | null
     score?: FloatNullableFilter<"Anime"> | number | null
     shikimoriScore?: FloatNullableFilter<"Anime"> | number | null
+    airedOn?: StringNullableFilter<"Anime"> | string | null
     releasedOn?: StringNullableFilter<"Anime"> | string | null
     shikimoriUrl?: StringNullableFilter<"Anime"> | string | null
     season?: StringNullableFilter<"Anime"> | string | null
@@ -19495,6 +19558,7 @@ export namespace Prisma {
     duration?: SortOrderInput | SortOrder
     score?: SortOrderInput | SortOrder
     shikimoriScore?: SortOrderInput | SortOrder
+    airedOn?: SortOrderInput | SortOrder
     releasedOn?: SortOrderInput | SortOrder
     shikimoriUrl?: SortOrderInput | SortOrder
     season?: SortOrderInput | SortOrder
@@ -19533,6 +19597,7 @@ export namespace Prisma {
     duration?: IntNullableFilter<"Anime"> | number | null
     score?: FloatNullableFilter<"Anime"> | number | null
     shikimoriScore?: FloatNullableFilter<"Anime"> | number | null
+    airedOn?: StringNullableFilter<"Anime"> | string | null
     releasedOn?: StringNullableFilter<"Anime"> | string | null
     shikimoriUrl?: StringNullableFilter<"Anime"> | string | null
     season?: StringNullableFilter<"Anime"> | string | null
@@ -19567,6 +19632,7 @@ export namespace Prisma {
     duration?: SortOrderInput | SortOrder
     score?: SortOrderInput | SortOrder
     shikimoriScore?: SortOrderInput | SortOrder
+    airedOn?: SortOrderInput | SortOrder
     releasedOn?: SortOrderInput | SortOrder
     shikimoriUrl?: SortOrderInput | SortOrder
     season?: SortOrderInput | SortOrder
@@ -19602,6 +19668,7 @@ export namespace Prisma {
     duration?: IntNullableWithAggregatesFilter<"Anime"> | number | null
     score?: FloatNullableWithAggregatesFilter<"Anime"> | number | null
     shikimoriScore?: FloatNullableWithAggregatesFilter<"Anime"> | number | null
+    airedOn?: StringNullableWithAggregatesFilter<"Anime"> | string | null
     releasedOn?: StringNullableWithAggregatesFilter<"Anime"> | string | null
     shikimoriUrl?: StringNullableWithAggregatesFilter<"Anime"> | string | null
     season?: StringNullableWithAggregatesFilter<"Anime"> | string | null
@@ -19617,6 +19684,7 @@ export namespace Prisma {
     OR?: GenreWhereInput[]
     NOT?: GenreWhereInput | GenreWhereInput[]
     id?: StringFilter<"Genre"> | string
+    requestId?: IntFilter<"Genre"> | number
     name?: StringFilter<"Genre"> | string
     russian?: StringFilter<"Genre"> | string
     animes?: AnimeGenreListRelationFilter
@@ -19624,6 +19692,7 @@ export namespace Prisma {
 
   export type GenreOrderByWithRelationInput = {
     id?: SortOrder
+    requestId?: SortOrder
     name?: SortOrder
     russian?: SortOrder
     animes?: AnimeGenreOrderByRelationAggregateInput
@@ -19631,21 +19700,25 @@ export namespace Prisma {
 
   export type GenreWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    requestId?: number
     name?: string
     AND?: GenreWhereInput | GenreWhereInput[]
     OR?: GenreWhereInput[]
     NOT?: GenreWhereInput | GenreWhereInput[]
     russian?: StringFilter<"Genre"> | string
     animes?: AnimeGenreListRelationFilter
-  }, "id" | "name">
+  }, "id" | "requestId" | "name">
 
   export type GenreOrderByWithAggregationInput = {
     id?: SortOrder
+    requestId?: SortOrder
     name?: SortOrder
     russian?: SortOrder
     _count?: GenreCountOrderByAggregateInput
+    _avg?: GenreAvgOrderByAggregateInput
     _max?: GenreMaxOrderByAggregateInput
     _min?: GenreMinOrderByAggregateInput
+    _sum?: GenreSumOrderByAggregateInput
   }
 
   export type GenreScalarWhereWithAggregatesInput = {
@@ -19653,6 +19726,7 @@ export namespace Prisma {
     OR?: GenreScalarWhereWithAggregatesInput[]
     NOT?: GenreScalarWhereWithAggregatesInput | GenreScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Genre"> | string
+    requestId?: IntWithAggregatesFilter<"Genre"> | number
     name?: StringWithAggregatesFilter<"Genre"> | string
     russian?: StringWithAggregatesFilter<"Genre"> | string
   }
@@ -20418,6 +20492,7 @@ export namespace Prisma {
     duration?: number | null
     score?: number | null
     shikimoriScore?: number | null
+    airedOn?: string | null
     releasedOn?: string | null
     shikimoriUrl?: string | null
     season?: string | null
@@ -20452,6 +20527,7 @@ export namespace Prisma {
     duration?: number | null
     score?: number | null
     shikimoriScore?: number | null
+    airedOn?: string | null
     releasedOn?: string | null
     shikimoriUrl?: string | null
     season?: string | null
@@ -20486,6 +20562,7 @@ export namespace Prisma {
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
     releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
     season?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20520,6 +20597,7 @@ export namespace Prisma {
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
     releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
     season?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20554,6 +20632,7 @@ export namespace Prisma {
     duration?: number | null
     score?: number | null
     shikimoriScore?: number | null
+    airedOn?: string | null
     releasedOn?: string | null
     shikimoriUrl?: string | null
     season?: string | null
@@ -20581,6 +20660,7 @@ export namespace Prisma {
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
     releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
     season?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20608,6 +20688,7 @@ export namespace Prisma {
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
     releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
     season?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20620,6 +20701,7 @@ export namespace Prisma {
 
   export type GenreCreateInput = {
     id?: string
+    requestId?: number
     name: string
     russian: string
     animes?: AnimeGenreCreateNestedManyWithoutGenreInput
@@ -20627,6 +20709,7 @@ export namespace Prisma {
 
   export type GenreUncheckedCreateInput = {
     id?: string
+    requestId?: number
     name: string
     russian: string
     animes?: AnimeGenreUncheckedCreateNestedManyWithoutGenreInput
@@ -20641,6 +20724,7 @@ export namespace Prisma {
 
   export type GenreUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    requestId?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     russian?: StringFieldUpdateOperationsInput | string
     animes?: AnimeGenreUncheckedUpdateManyWithoutGenreNestedInput
@@ -20648,6 +20732,7 @@ export namespace Prisma {
 
   export type GenreCreateManyInput = {
     id?: string
+    requestId?: number
     name: string
     russian: string
   }
@@ -20660,6 +20745,7 @@ export namespace Prisma {
 
   export type GenreUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    requestId?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     russian?: StringFieldUpdateOperationsInput | string
   }
@@ -21631,6 +21717,7 @@ export namespace Prisma {
     duration?: SortOrder
     score?: SortOrder
     shikimoriScore?: SortOrder
+    airedOn?: SortOrder
     releasedOn?: SortOrder
     shikimoriUrl?: SortOrder
     season?: SortOrder
@@ -21665,6 +21752,7 @@ export namespace Prisma {
     duration?: SortOrder
     score?: SortOrder
     shikimoriScore?: SortOrder
+    airedOn?: SortOrder
     releasedOn?: SortOrder
     shikimoriUrl?: SortOrder
     season?: SortOrder
@@ -21691,6 +21779,7 @@ export namespace Prisma {
     duration?: SortOrder
     score?: SortOrder
     shikimoriScore?: SortOrder
+    airedOn?: SortOrder
     releasedOn?: SortOrder
     shikimoriUrl?: SortOrder
     season?: SortOrder
@@ -21781,20 +21870,31 @@ export namespace Prisma {
 
   export type GenreCountOrderByAggregateInput = {
     id?: SortOrder
+    requestId?: SortOrder
     name?: SortOrder
     russian?: SortOrder
   }
 
+  export type GenreAvgOrderByAggregateInput = {
+    requestId?: SortOrder
+  }
+
   export type GenreMaxOrderByAggregateInput = {
     id?: SortOrder
+    requestId?: SortOrder
     name?: SortOrder
     russian?: SortOrder
   }
 
   export type GenreMinOrderByAggregateInput = {
     id?: SortOrder
+    requestId?: SortOrder
     name?: SortOrder
     russian?: SortOrder
+  }
+
+  export type GenreSumOrderByAggregateInput = {
+    requestId?: SortOrder
   }
 
   export type StudioCountOrderByAggregateInput = {
@@ -23848,6 +23948,7 @@ export namespace Prisma {
     duration?: number | null
     score?: number | null
     shikimoriScore?: number | null
+    airedOn?: string | null
     releasedOn?: string | null
     shikimoriUrl?: string | null
     season?: string | null
@@ -23881,6 +23982,7 @@ export namespace Prisma {
     duration?: number | null
     score?: number | null
     shikimoriScore?: number | null
+    airedOn?: string | null
     releasedOn?: string | null
     shikimoriUrl?: string | null
     season?: string | null
@@ -23947,6 +24049,7 @@ export namespace Prisma {
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
     releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
     season?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23980,6 +24083,7 @@ export namespace Prisma {
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
     releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
     season?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24036,6 +24140,7 @@ export namespace Prisma {
     duration?: number | null
     score?: number | null
     shikimoriScore?: number | null
+    airedOn?: string | null
     releasedOn?: string | null
     shikimoriUrl?: string | null
     season?: string | null
@@ -24069,6 +24174,7 @@ export namespace Prisma {
     duration?: number | null
     score?: number | null
     shikimoriScore?: number | null
+    airedOn?: string | null
     releasedOn?: string | null
     shikimoriUrl?: string | null
     season?: string | null
@@ -24107,6 +24213,7 @@ export namespace Prisma {
     duration?: number | null
     score?: number | null
     shikimoriScore?: number | null
+    airedOn?: string | null
     releasedOn?: string | null
     shikimoriUrl?: string | null
     season?: string | null
@@ -24140,6 +24247,7 @@ export namespace Prisma {
     duration?: number | null
     score?: number | null
     shikimoriScore?: number | null
+    airedOn?: string | null
     releasedOn?: string | null
     shikimoriUrl?: string | null
     season?: string | null
@@ -24189,6 +24297,7 @@ export namespace Prisma {
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
     releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
     season?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24222,6 +24331,7 @@ export namespace Prisma {
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
     releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
     season?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24266,6 +24376,7 @@ export namespace Prisma {
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
     releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
     season?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24299,6 +24410,7 @@ export namespace Prisma {
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
     releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
     season?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24332,6 +24444,7 @@ export namespace Prisma {
     duration?: number | null
     score?: number | null
     shikimoriScore?: number | null
+    airedOn?: string | null
     releasedOn?: string | null
     shikimoriUrl?: string | null
     season?: string | null
@@ -24365,6 +24478,7 @@ export namespace Prisma {
     duration?: number | null
     score?: number | null
     shikimoriScore?: number | null
+    airedOn?: string | null
     releasedOn?: string | null
     shikimoriUrl?: string | null
     season?: string | null
@@ -24388,12 +24502,14 @@ export namespace Prisma {
 
   export type GenreCreateWithoutAnimesInput = {
     id?: string
+    requestId?: number
     name: string
     russian: string
   }
 
   export type GenreUncheckedCreateWithoutAnimesInput = {
     id?: string
+    requestId?: number
     name: string
     russian: string
   }
@@ -24431,6 +24547,7 @@ export namespace Prisma {
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
     releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
     season?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24464,6 +24581,7 @@ export namespace Prisma {
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
     releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
     season?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24499,6 +24617,7 @@ export namespace Prisma {
 
   export type GenreUncheckedUpdateWithoutAnimesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    requestId?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     russian?: StringFieldUpdateOperationsInput | string
   }
@@ -24520,6 +24639,7 @@ export namespace Prisma {
     duration?: number | null
     score?: number | null
     shikimoriScore?: number | null
+    airedOn?: string | null
     releasedOn?: string | null
     shikimoriUrl?: string | null
     season?: string | null
@@ -24553,6 +24673,7 @@ export namespace Prisma {
     duration?: number | null
     score?: number | null
     shikimoriScore?: number | null
+    airedOn?: string | null
     releasedOn?: string | null
     shikimoriUrl?: string | null
     season?: string | null
@@ -24602,6 +24723,7 @@ export namespace Prisma {
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
     releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
     season?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24635,6 +24757,7 @@ export namespace Prisma {
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
     releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
     season?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24668,6 +24791,7 @@ export namespace Prisma {
     duration?: number | null
     score?: number | null
     shikimoriScore?: number | null
+    airedOn?: string | null
     releasedOn?: string | null
     shikimoriUrl?: string | null
     season?: string | null
@@ -24701,6 +24825,7 @@ export namespace Prisma {
     duration?: number | null
     score?: number | null
     shikimoriScore?: number | null
+    airedOn?: string | null
     releasedOn?: string | null
     shikimoriUrl?: string | null
     season?: string | null
@@ -24775,6 +24900,7 @@ export namespace Prisma {
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
     releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
     season?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24808,6 +24934,7 @@ export namespace Prisma {
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
     releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
     season?: NullableStringFieldUpdateOperationsInput | string | null
@@ -24872,6 +24999,7 @@ export namespace Prisma {
     duration?: number | null
     score?: number | null
     shikimoriScore?: number | null
+    airedOn?: string | null
     releasedOn?: string | null
     shikimoriUrl?: string | null
     season?: string | null
@@ -24905,6 +25033,7 @@ export namespace Prisma {
     duration?: number | null
     score?: number | null
     shikimoriScore?: number | null
+    airedOn?: string | null
     releasedOn?: string | null
     shikimoriUrl?: string | null
     season?: string | null
@@ -24973,6 +25102,7 @@ export namespace Prisma {
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
     releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
     season?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25006,6 +25136,7 @@ export namespace Prisma {
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableFloatFieldUpdateOperationsInput | number | null
     shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
     releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
     season?: NullableStringFieldUpdateOperationsInput | string | null

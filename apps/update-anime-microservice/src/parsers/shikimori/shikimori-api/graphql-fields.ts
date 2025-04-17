@@ -14,8 +14,8 @@ export const animeFields = `
                   episodes
                   episodesAired
                   duration
-                  airedOn { year month day date }
-                  releasedOn { year month day date }
+                  airedOn { date }
+                  releasedOn { date }
                   url
                   season
 

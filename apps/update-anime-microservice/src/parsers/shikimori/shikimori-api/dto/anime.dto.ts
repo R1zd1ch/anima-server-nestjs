@@ -140,6 +140,7 @@ export interface ExternalLink {
 export interface RelatedAnime {
   id: string;
   name: string;
+  season: string | null;
 }
 
 export interface Related {

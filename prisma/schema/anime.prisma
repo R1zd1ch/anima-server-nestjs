@@ -1,20 +1,21 @@
 model Anime {
-  id             String            @id @default(uuid())
-  malId          String?           @unique
-  shikimoriId    String?           @unique
+  id             String             @id @default(uuid())
+  malId          String?            @unique
+  shikimoriId    String?            @unique
   name           String
   description    String?
   russian        String?
   english        String?
   japanese       String?
   synonyms       String[]
-  status         AnimeStatus       @default(anons)
+  status         AnimeStatus        @default(anons)
   kind           AnimeKind?
   episodes       Int
   episodesAired  Int
   duration       Int?
   score          Float?
   shikimoriScore Float?
+  airedOn        String?
   releasedOn     String?
   shikimoriUrl   String?
   season         String?
@@ -24,10 +25,12 @@ model Anime {
   nextEpisodeAt  String?
   // userRates      UserRate[]
   studios        AnimeStudio[]
-  related        RelatedAnime[]    @relation("AnimeToRelatedAnime")
+  related        RelatedAnime[]     @relation("AnimeToRelatedAnime")
   videos         AnimeVideo[]
   screenshots    AnimeScreenshot[]
   genres         AnimeGenre[]
+  theme          AnimeTheme[]
+  demographic    AnimeDemographic[]
 
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
@@ -38,12 +41,33 @@ model Anime {
 }
 
 model Genre {
-  id      String       @id @default(uuid())
-  name    String       @unique
-  russian String
-  animes  AnimeGenre[]
+  id        String       @id @default(uuid())
+  requestId Int          @unique @default(autoincrement())
+  name      String       @unique
+  russian   String
+  animes    AnimeGenre[]
 
   @@map("genres")
+}
+
+model Theme {
+  id        String       @id @default(uuid())
+  requestId Int          @unique @default(autoincrement())
+  name      String       @unique
+  russian   String
+  animes    AnimeTheme[]
+
+  @@map("themes")
+}
+
+model Demographic {
+  id        String             @id @default(uuid())
+  requestId Int                @unique @default(autoincrement())
+  name      String             @unique
+  russian   String
+  animes    AnimeDemographic[]
+
+  @@map("demographics")
 }
 
 model Studio {
@@ -86,6 +110,26 @@ model AnimeGenre {
 
   @@id([animeId, genreId])
   @@map("anime_genres")
+}
+
+model AnimeTheme {
+  animeId String
+  themeId String
+  anime   Anime  @relation(fields: [animeId], references: [id])
+  theme   Theme  @relation(fields: [themeId], references: [id])
+
+  @@id([animeId, themeId])
+  @@map("anime_themes")
+}
+
+model AnimeDemographic {
+  animeId       String
+  demographicId String
+  anime         Anime       @relation(fields: [animeId], references: [id])
+  demographic   Demographic @relation(fields: [demographicId], references: [id])
+
+  @@id([animeId, demographicId])
+  @@map("anime_demographics")
 }
 
 model AnimePoster {

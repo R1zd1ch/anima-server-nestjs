@@ -146,6 +146,7 @@ exports.Prisma.AnimeScalarFieldEnum = {
   duration: 'duration',
   score: 'score',
   shikimoriScore: 'shikimoriScore',
+  airedOn: 'airedOn',
   releasedOn: 'releasedOn',
   shikimoriUrl: 'shikimoriUrl',
   season: 'season',
@@ -158,6 +159,7 @@ exports.Prisma.AnimeScalarFieldEnum = {
 
 exports.Prisma.GenreScalarFieldEnum = {
   id: 'id',
+  requestId: 'requestId',
   name: 'name',
   russian: 'russian'
 };

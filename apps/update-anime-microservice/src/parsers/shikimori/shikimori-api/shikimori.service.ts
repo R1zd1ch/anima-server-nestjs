@@ -61,10 +61,10 @@ export class ShikimoriService {
             animes(
               limit: ${params.limit}, 
               page: ${params.page}, 
-              order: ${params.order ? `${params.order}` : 'null'}, 
-              kind: ${params.kind ? `${params.kind}` : 'null'}, 
-              status: ${params.status ? `"${params.status}"` : 'null'}
-              season: ${params.season ? `${params.season}` : 'null'}
+              order: ${params.order ? `"${params.order}"` : `null`}, 
+              kind: ${params.kind ? `"${params.kind}"` : `null`}, 
+              status: ${params.status ? `"${params.status}"` : `null`},
+              season: ${params.season ? `"${params.season}"` : `"1995_2025"`}
             ) {
               ${animeFields}
             }
