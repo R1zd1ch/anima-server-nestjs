@@ -14,7 +14,7 @@ import SearchAnimeParamsDto from '../shikimori-api/dto/search-anime-params.dto';
 export class ParseShikimoriService {
   private readonly logger = new Logger(ParseShikimoriService.name);
   private readonly BATCH_LIMIT = 50;
-  private readonly BATCH_TIME = 10 * 1000;
+  private readonly BATCH_TIME = 60 * 1000;
   private readonly PARSER_NAME = 'SHIKIMORI';
 
   constructor(
@@ -193,7 +193,8 @@ export class ParseShikimoriService {
       } catch (e) {
         retries--;
         this.logger.error(
-          `Ошибка пачки (страница ${page}), попыток осталось: ${retries}, ${e}`,
+          `Ошибка пачки (страница ${page}), попыток осталось: ${retries}, ${e instanceof Error ? e.message : e}`,
+          e instanceof Error ? e.stack : undefined,
         );
 
         if (retries === 0) {

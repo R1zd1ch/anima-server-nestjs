@@ -22,7 +22,10 @@ import { AuthProviderGuard } from './guards/provider.guard';
 import { ConfigService } from '@nestjs/config';
 import { ProviderService } from '../provider/provider.service';
 
-@Controller('auth')
+@Controller({
+  path: 'auth',
+  version: '1',
+})
 export class AuthController {
   public constructor(
     private readonly authService: AuthService,

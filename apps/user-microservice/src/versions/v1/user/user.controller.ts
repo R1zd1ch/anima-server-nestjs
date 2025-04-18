@@ -13,7 +13,7 @@ import { Authorization } from '../auth/decorators/auth.decorator';
 import { UserRole } from '@prisma/__generated__';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-@Controller('users')
+@Controller({ path: 'users', version: '1' })
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

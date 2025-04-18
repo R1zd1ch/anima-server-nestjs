@@ -1,17 +1,16 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { UserMicroserviceModule } from './user-microservice.module';
 import { ConfigService } from '@nestjs/config';
 import * as cookieParser from 'cookie-parser';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import IORedis from 'ioredis';
 import { RedisStore } from 'connect-redis';
 import * as session from 'express-session';
 import { ms, StringValue } from '../../../shared/lib/utils/ms.util';
 import { parseBoolean } from '../../../shared/lib/utils/parse-boolean.util';
-// import { Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(UserMicroserviceModule);
 
   const config = app.get(ConfigService);
   const redis = new IORedis(config.getOrThrow('REDIS_URI'));
@@ -44,20 +43,15 @@ async function bootstrap() {
     }),
   );
 
-  // app.connectMicroservice({
-  //   transport: Transport.TCP,
-  //   options: {
-  //     host: 'localhost',
-  //     port: 3002,
-  //   },
-  // });
-
-  // app.startAllMicroservices();
-
   app.enableCors({
     origin: [config.getOrThrow('ALLOWED_ORIGIN') as string],
     credentials: true,
     exposedHeaders: ['set-cookie'],
+  });
+
+  app.enableVersioning({
+    type: VersioningType.URI,
+    prefix: 'v',
   });
 
   await app.listen(config.getOrThrow('APPLICATION_PORT') ?? 3000);

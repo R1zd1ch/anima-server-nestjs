@@ -11,7 +11,7 @@ import { ResetPasswordDto } from './dto/reset-password.dto';
 import { Recaptcha } from '@nestlab/google-recaptcha';
 import { NewPasswordDto } from './dto/new-password.dto';
 
-@Controller('auth/password-recovery')
+@Controller({ path: 'auth/password-recovery', version: '1' })
 export class PasswordRecoveryController {
   constructor(
     private readonly passwordRecoveryService: PasswordRecoveryService,

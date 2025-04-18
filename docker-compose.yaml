@@ -46,6 +46,7 @@ services:
     environment:
       - APPLICATION_PORT=${APPLICATION_PORT}
       - APPLICATION_UPDATE_ANIME_PORT=${APPLICATION_UPDATE_ANIME_PORT}
+      - ANIME_MICROSERVICE_PORT=${ANIME_MICROSERVICE_PORT}
     depends_on:
       db:
         condition: service_healthy
@@ -54,6 +55,8 @@ services:
       user-microservice:
         condition: service_started
       update-anime-microservice:
+        condition: service_started
+      anime-microservice:
         condition: service_started
 
     networks:
@@ -128,6 +131,8 @@ services:
       redis:
         condition: service_started
       user-microservice:
+        condition: service_started
+      update-anime-microservice:
         condition: service_started
     networks:
       - backend

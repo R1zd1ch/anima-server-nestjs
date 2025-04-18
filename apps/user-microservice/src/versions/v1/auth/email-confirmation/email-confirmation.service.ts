@@ -1,4 +1,4 @@
-import { PrismaService } from '../../../../../shared/lib/prisma/prisma.service';
+import { PrismaService } from '../../../../../../../shared/lib/prisma/prisma.service';
 import {
   BadRequestException,
   forwardRef,
@@ -10,7 +10,7 @@ import { TokenType } from '@prisma/__generated__';
 import { Request } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { ConfirmationDto } from './dto/confirmation.dro';
-import { MailService } from '../../libs/mail/mail.service';
+import { MailService } from 'apps/user-microservice/src/libs/mail/mail.service';
 import { UserService } from '../../user/user.service';
 import { AuthService } from '../auth.service';
 

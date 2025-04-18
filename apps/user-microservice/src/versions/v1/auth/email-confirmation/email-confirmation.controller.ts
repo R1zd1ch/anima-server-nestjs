@@ -10,7 +10,7 @@ import { EmailConfirmationService } from './email-confirmation.service';
 import { Request } from 'express';
 import { ConfirmationDto } from './dto/confirmation.dro';
 
-@Controller('auth/email-confirmation')
+@Controller({ path: 'auth/email-confirmation', version: '1' })
 export class EmailConfirmationController {
   constructor(
     private readonly emailConfirmationService: EmailConfirmationService,

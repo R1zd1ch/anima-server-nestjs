@@ -14,7 +14,7 @@ import { LoginDto } from './dto/login.dto';
 import { verify } from 'argon2';
 import { ConfigService } from '@nestjs/config';
 import { ProviderService } from '../provider/provider.service';
-import { PrismaService } from '../../../../shared/lib/prisma/prisma.service';
+import { PrismaService } from '../../../../../../shared/lib/prisma/prisma.service';
 import { EmailConfirmationService } from './email-confirmation/email-confirmation.service';
 import { TwoFactorAuthService } from './two-factor-auth/two-factor-auth.service';
 

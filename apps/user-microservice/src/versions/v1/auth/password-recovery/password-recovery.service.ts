@@ -1,5 +1,5 @@
-import { MailService } from '../../libs/mail/mail.service';
-import { PrismaService } from '../../../../../shared/lib/prisma/prisma.service';
+import { MailService } from 'apps/user-microservice/src/libs/mail/mail.service';
+import { PrismaService } from '../../../../../../../shared/lib/prisma/prisma.service';
 import { UserService } from '../../user/user.service';
 import {
   BadRequestException,

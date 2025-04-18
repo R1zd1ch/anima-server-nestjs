@@ -1,4 +1,4 @@
-import { isDev } from '../../../../shared/lib/utils/is-dev.util';
+import { isDev } from 'shared/lib/utils/is-dev.util';
 import { ConfigService } from '@nestjs/config';
 import { GoogleRecaptchaModuleOptions } from '@nestlab/google-recaptcha';
 
