@@ -51,7 +51,7 @@ services:
         condition: service_healthy
       redis:
         condition: service_started
-      auth-microservice:
+      user-microservice:
         condition: service_started
       update-anime-microservice:
         condition: service_started
@@ -59,19 +59,19 @@ services:
     networks:
       - backend
 
-  auth-microservice:
-    container_name: auth-microservice
+  user-microservice:
+    container_name: user-microservice
     build:
       context: .
       dockerfile: dockerfile
       args:
-        SERVICE: server
+        SERVICE: user-microservice
     ports:
       - '${APPLICATION_PORT}:${APPLICATION_PORT}'
     env_file:
       - .env
     environment:
-      - APP_MODE=auth
+      - APP_MODE=user-microservice
       - POSTGRES_HOST=db
       - REDIS_HOST=redis
     depends_on:
@@ -88,13 +88,13 @@ services:
       context: .
       dockerfile: dockerfile
       args:
-        SERVICE: update-anime
+        SERVICE: update-anime-microservice
     ports:
       - '${APPLICATION_UPDATE_ANIME_PORT}:${APPLICATION_UPDATE_ANIME_PORT}'
     env_file:
       - .env
     environment:
-      - APP_MODE=update-anime
+      - APP_MODE=update-anime-microservice
       - POSTGRES_HOST=db
       - REDIS_HOST=redis
     depends_on:
@@ -102,7 +102,32 @@ services:
         condition: service_healthy
       redis:
         condition: service_started
-      auth-microservice:
+      user-microservice:
+        condition: service_started
+    networks:
+      - backend
+
+  anime-microservice:
+    container_name: anime-microservice
+    build:
+      context: .
+      dockerfile: dockerfile
+      args:
+        SERVICE: anime-microservice
+    ports:
+      - '${ANIME_MICROSERVICE_PORT}:${ANIME_MICROSERVICE_PORT}'
+    env_file:
+      - .env
+    environment:
+      - APP_MODE=anime-microservice
+      - POSTGRES_HOST=db
+      - REDIS_HOST=redis
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      user-microservice:
         condition: service_started
     networks:
       - backend

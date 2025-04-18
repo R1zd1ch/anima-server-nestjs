@@ -14,11 +14,6 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
- * Model Account
- * 
- */
-export type Account = $Result.DefaultSelection<Prisma.$AccountPayload>
-/**
  * Model Anime
  * 
  */
@@ -28,6 +23,16 @@ export type Anime = $Result.DefaultSelection<Prisma.$AnimePayload>
  * 
  */
 export type Genre = $Result.DefaultSelection<Prisma.$GenrePayload>
+/**
+ * Model Theme
+ * 
+ */
+export type Theme = $Result.DefaultSelection<Prisma.$ThemePayload>
+/**
+ * Model Demographic
+ * 
+ */
+export type Demographic = $Result.DefaultSelection<Prisma.$DemographicPayload>
 /**
  * Model Studio
  * 
@@ -48,6 +53,16 @@ export type RelatedAnime = $Result.DefaultSelection<Prisma.$RelatedAnimePayload>
  * 
  */
 export type AnimeGenre = $Result.DefaultSelection<Prisma.$AnimeGenrePayload>
+/**
+ * Model AnimeTheme
+ * 
+ */
+export type AnimeTheme = $Result.DefaultSelection<Prisma.$AnimeThemePayload>
+/**
+ * Model AnimeDemographic
+ * 
+ */
+export type AnimeDemographic = $Result.DefaultSelection<Prisma.$AnimeDemographicPayload>
 /**
  * Model AnimePoster
  * 
@@ -74,15 +89,20 @@ export type Video = $Result.DefaultSelection<Prisma.$VideoPayload>
  */
 export type Screenshots = $Result.DefaultSelection<Prisma.$ScreenshotsPayload>
 /**
- * Model ParsingSession
+ * Model Account
  * 
  */
-export type ParsingSession = $Result.DefaultSelection<Prisma.$ParsingSessionPayload>
+export type Account = $Result.DefaultSelection<Prisma.$AccountPayload>
 /**
  * Model Token
  * 
  */
 export type Token = $Result.DefaultSelection<Prisma.$TokenPayload>
+/**
+ * Model ParsingSession
+ * 
+ */
+export type ParsingSession = $Result.DefaultSelection<Prisma.$ParsingSessionPayload>
 /**
  * Model User
  * 
@@ -257,8 +277,8 @@ export const ParsingSessionType: typeof $Enums.ParsingSessionType
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Accounts
- * const accounts = await prisma.account.findMany()
+ * // Fetch zero or more Anime
+ * const anime = await prisma.anime.findMany()
  * ```
  *
  *
@@ -278,8 +298,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Accounts
-   * const accounts = await prisma.account.findMany()
+   * // Fetch zero or more Anime
+   * const anime = await prisma.anime.findMany()
    * ```
    *
    *
@@ -376,16 +396,6 @@ export class PrismaClient<
   }>>
 
       /**
-   * `prisma.account`: Exposes CRUD operations for the **Account** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Accounts
-    * const accounts = await prisma.account.findMany()
-    * ```
-    */
-  get account(): Prisma.AccountDelegate<ExtArgs, ClientOptions>;
-
-  /**
    * `prisma.anime`: Exposes CRUD operations for the **Anime** model.
     * Example usage:
     * ```ts
@@ -404,6 +414,26 @@ export class PrismaClient<
     * ```
     */
   get genre(): Prisma.GenreDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.theme`: Exposes CRUD operations for the **Theme** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Themes
+    * const themes = await prisma.theme.findMany()
+    * ```
+    */
+  get theme(): Prisma.ThemeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.demographic`: Exposes CRUD operations for the **Demographic** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Demographics
+    * const demographics = await prisma.demographic.findMany()
+    * ```
+    */
+  get demographic(): Prisma.DemographicDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.studio`: Exposes CRUD operations for the **Studio** model.
@@ -444,6 +474,26 @@ export class PrismaClient<
     * ```
     */
   get animeGenre(): Prisma.AnimeGenreDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.animeTheme`: Exposes CRUD operations for the **AnimeTheme** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AnimeThemes
+    * const animeThemes = await prisma.animeTheme.findMany()
+    * ```
+    */
+  get animeTheme(): Prisma.AnimeThemeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.animeDemographic`: Exposes CRUD operations for the **AnimeDemographic** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AnimeDemographics
+    * const animeDemographics = await prisma.animeDemographic.findMany()
+    * ```
+    */
+  get animeDemographic(): Prisma.AnimeDemographicDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.animePoster`: Exposes CRUD operations for the **AnimePoster** model.
@@ -496,14 +546,14 @@ export class PrismaClient<
   get screenshots(): Prisma.ScreenshotsDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.parsingSession`: Exposes CRUD operations for the **ParsingSession** model.
+   * `prisma.account`: Exposes CRUD operations for the **Account** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more ParsingSessions
-    * const parsingSessions = await prisma.parsingSession.findMany()
+    * // Fetch zero or more Accounts
+    * const accounts = await prisma.account.findMany()
     * ```
     */
-  get parsingSession(): Prisma.ParsingSessionDelegate<ExtArgs, ClientOptions>;
+  get account(): Prisma.AccountDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.token`: Exposes CRUD operations for the **Token** model.
@@ -514,6 +564,16 @@ export class PrismaClient<
     * ```
     */
   get token(): Prisma.TokenDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.parsingSession`: Exposes CRUD operations for the **ParsingSession** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ParsingSessions
+    * const parsingSessions = await prisma.parsingSession.findMany()
+    * ```
+    */
+  get parsingSession(): Prisma.ParsingSessionDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.user`: Exposes CRUD operations for the **User** model.
@@ -964,20 +1024,24 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Account: 'Account',
     Anime: 'Anime',
     Genre: 'Genre',
+    Theme: 'Theme',
+    Demographic: 'Demographic',
     Studio: 'Studio',
     AnimeStudio: 'AnimeStudio',
     RelatedAnime: 'RelatedAnime',
     AnimeGenre: 'AnimeGenre',
+    AnimeTheme: 'AnimeTheme',
+    AnimeDemographic: 'AnimeDemographic',
     AnimePoster: 'AnimePoster',
     AnimeVideo: 'AnimeVideo',
     AnimeScreenshot: 'AnimeScreenshot',
     Video: 'Video',
     Screenshots: 'Screenshots',
-    ParsingSession: 'ParsingSession',
+    Account: 'Account',
     Token: 'Token',
+    ParsingSession: 'ParsingSession',
     User: 'User'
   };
 
@@ -997,84 +1061,10 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "anime" | "genre" | "studio" | "animeStudio" | "relatedAnime" | "animeGenre" | "animePoster" | "animeVideo" | "animeScreenshot" | "video" | "screenshots" | "parsingSession" | "token" | "user"
+      modelProps: "anime" | "genre" | "theme" | "demographic" | "studio" | "animeStudio" | "relatedAnime" | "animeGenre" | "animeTheme" | "animeDemographic" | "animePoster" | "animeVideo" | "animeScreenshot" | "video" | "screenshots" | "account" | "token" | "parsingSession" | "user"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
-      Account: {
-        payload: Prisma.$AccountPayload<ExtArgs>
-        fields: Prisma.AccountFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.AccountFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.AccountFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountPayload>
-          }
-          findFirst: {
-            args: Prisma.AccountFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.AccountFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountPayload>
-          }
-          findMany: {
-            args: Prisma.AccountFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountPayload>[]
-          }
-          create: {
-            args: Prisma.AccountCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountPayload>
-          }
-          createMany: {
-            args: Prisma.AccountCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.AccountCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountPayload>[]
-          }
-          delete: {
-            args: Prisma.AccountDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountPayload>
-          }
-          update: {
-            args: Prisma.AccountUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountPayload>
-          }
-          deleteMany: {
-            args: Prisma.AccountDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.AccountUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.AccountUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountPayload>[]
-          }
-          upsert: {
-            args: Prisma.AccountUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountPayload>
-          }
-          aggregate: {
-            args: Prisma.AccountAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateAccount>
-          }
-          groupBy: {
-            args: Prisma.AccountGroupByArgs<ExtArgs>
-            result: $Utils.Optional<AccountGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.AccountCountArgs<ExtArgs>
-            result: $Utils.Optional<AccountCountAggregateOutputType> | number
-          }
-        }
-      }
       Anime: {
         payload: Prisma.$AnimePayload<ExtArgs>
         fields: Prisma.AnimeFieldRefs
@@ -1220,6 +1210,154 @@ export namespace Prisma {
           count: {
             args: Prisma.GenreCountArgs<ExtArgs>
             result: $Utils.Optional<GenreCountAggregateOutputType> | number
+          }
+        }
+      }
+      Theme: {
+        payload: Prisma.$ThemePayload<ExtArgs>
+        fields: Prisma.ThemeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ThemeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ThemeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload>
+          }
+          findFirst: {
+            args: Prisma.ThemeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ThemeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload>
+          }
+          findMany: {
+            args: Prisma.ThemeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload>[]
+          }
+          create: {
+            args: Prisma.ThemeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload>
+          }
+          createMany: {
+            args: Prisma.ThemeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ThemeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload>[]
+          }
+          delete: {
+            args: Prisma.ThemeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload>
+          }
+          update: {
+            args: Prisma.ThemeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload>
+          }
+          deleteMany: {
+            args: Prisma.ThemeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ThemeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ThemeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload>[]
+          }
+          upsert: {
+            args: Prisma.ThemeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ThemePayload>
+          }
+          aggregate: {
+            args: Prisma.ThemeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTheme>
+          }
+          groupBy: {
+            args: Prisma.ThemeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ThemeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ThemeCountArgs<ExtArgs>
+            result: $Utils.Optional<ThemeCountAggregateOutputType> | number
+          }
+        }
+      }
+      Demographic: {
+        payload: Prisma.$DemographicPayload<ExtArgs>
+        fields: Prisma.DemographicFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DemographicFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemographicPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DemographicFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemographicPayload>
+          }
+          findFirst: {
+            args: Prisma.DemographicFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemographicPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DemographicFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemographicPayload>
+          }
+          findMany: {
+            args: Prisma.DemographicFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemographicPayload>[]
+          }
+          create: {
+            args: Prisma.DemographicCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemographicPayload>
+          }
+          createMany: {
+            args: Prisma.DemographicCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DemographicCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemographicPayload>[]
+          }
+          delete: {
+            args: Prisma.DemographicDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemographicPayload>
+          }
+          update: {
+            args: Prisma.DemographicUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemographicPayload>
+          }
+          deleteMany: {
+            args: Prisma.DemographicDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DemographicUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DemographicUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemographicPayload>[]
+          }
+          upsert: {
+            args: Prisma.DemographicUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemographicPayload>
+          }
+          aggregate: {
+            args: Prisma.DemographicAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDemographic>
+          }
+          groupBy: {
+            args: Prisma.DemographicGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DemographicGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DemographicCountArgs<ExtArgs>
+            result: $Utils.Optional<DemographicCountAggregateOutputType> | number
           }
         }
       }
@@ -1516,6 +1654,154 @@ export namespace Prisma {
           count: {
             args: Prisma.AnimeGenreCountArgs<ExtArgs>
             result: $Utils.Optional<AnimeGenreCountAggregateOutputType> | number
+          }
+        }
+      }
+      AnimeTheme: {
+        payload: Prisma.$AnimeThemePayload<ExtArgs>
+        fields: Prisma.AnimeThemeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AnimeThemeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeThemePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AnimeThemeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeThemePayload>
+          }
+          findFirst: {
+            args: Prisma.AnimeThemeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeThemePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AnimeThemeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeThemePayload>
+          }
+          findMany: {
+            args: Prisma.AnimeThemeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeThemePayload>[]
+          }
+          create: {
+            args: Prisma.AnimeThemeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeThemePayload>
+          }
+          createMany: {
+            args: Prisma.AnimeThemeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AnimeThemeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeThemePayload>[]
+          }
+          delete: {
+            args: Prisma.AnimeThemeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeThemePayload>
+          }
+          update: {
+            args: Prisma.AnimeThemeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeThemePayload>
+          }
+          deleteMany: {
+            args: Prisma.AnimeThemeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AnimeThemeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AnimeThemeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeThemePayload>[]
+          }
+          upsert: {
+            args: Prisma.AnimeThemeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeThemePayload>
+          }
+          aggregate: {
+            args: Prisma.AnimeThemeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAnimeTheme>
+          }
+          groupBy: {
+            args: Prisma.AnimeThemeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AnimeThemeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AnimeThemeCountArgs<ExtArgs>
+            result: $Utils.Optional<AnimeThemeCountAggregateOutputType> | number
+          }
+        }
+      }
+      AnimeDemographic: {
+        payload: Prisma.$AnimeDemographicPayload<ExtArgs>
+        fields: Prisma.AnimeDemographicFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AnimeDemographicFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeDemographicPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AnimeDemographicFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeDemographicPayload>
+          }
+          findFirst: {
+            args: Prisma.AnimeDemographicFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeDemographicPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AnimeDemographicFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeDemographicPayload>
+          }
+          findMany: {
+            args: Prisma.AnimeDemographicFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeDemographicPayload>[]
+          }
+          create: {
+            args: Prisma.AnimeDemographicCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeDemographicPayload>
+          }
+          createMany: {
+            args: Prisma.AnimeDemographicCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AnimeDemographicCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeDemographicPayload>[]
+          }
+          delete: {
+            args: Prisma.AnimeDemographicDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeDemographicPayload>
+          }
+          update: {
+            args: Prisma.AnimeDemographicUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeDemographicPayload>
+          }
+          deleteMany: {
+            args: Prisma.AnimeDemographicDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AnimeDemographicUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AnimeDemographicUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeDemographicPayload>[]
+          }
+          upsert: {
+            args: Prisma.AnimeDemographicUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AnimeDemographicPayload>
+          }
+          aggregate: {
+            args: Prisma.AnimeDemographicAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAnimeDemographic>
+          }
+          groupBy: {
+            args: Prisma.AnimeDemographicGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AnimeDemographicGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AnimeDemographicCountArgs<ExtArgs>
+            result: $Utils.Optional<AnimeDemographicCountAggregateOutputType> | number
           }
         }
       }
@@ -1889,77 +2175,77 @@ export namespace Prisma {
           }
         }
       }
-      ParsingSession: {
-        payload: Prisma.$ParsingSessionPayload<ExtArgs>
-        fields: Prisma.ParsingSessionFieldRefs
+      Account: {
+        payload: Prisma.$AccountPayload<ExtArgs>
+        fields: Prisma.AccountFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.ParsingSessionFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload> | null
+            args: Prisma.AccountFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.ParsingSessionFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload>
+            args: Prisma.AccountFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountPayload>
           }
           findFirst: {
-            args: Prisma.ParsingSessionFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload> | null
+            args: Prisma.AccountFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.ParsingSessionFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload>
+            args: Prisma.AccountFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountPayload>
           }
           findMany: {
-            args: Prisma.ParsingSessionFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload>[]
+            args: Prisma.AccountFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountPayload>[]
           }
           create: {
-            args: Prisma.ParsingSessionCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload>
+            args: Prisma.AccountCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountPayload>
           }
           createMany: {
-            args: Prisma.ParsingSessionCreateManyArgs<ExtArgs>
+            args: Prisma.AccountCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.ParsingSessionCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload>[]
+            args: Prisma.AccountCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountPayload>[]
           }
           delete: {
-            args: Prisma.ParsingSessionDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload>
+            args: Prisma.AccountDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountPayload>
           }
           update: {
-            args: Prisma.ParsingSessionUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload>
+            args: Prisma.AccountUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountPayload>
           }
           deleteMany: {
-            args: Prisma.ParsingSessionDeleteManyArgs<ExtArgs>
+            args: Prisma.AccountDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.ParsingSessionUpdateManyArgs<ExtArgs>
+            args: Prisma.AccountUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.ParsingSessionUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload>[]
+            args: Prisma.AccountUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountPayload>[]
           }
           upsert: {
-            args: Prisma.ParsingSessionUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload>
+            args: Prisma.AccountUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountPayload>
           }
           aggregate: {
-            args: Prisma.ParsingSessionAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateParsingSession>
+            args: Prisma.AccountAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAccount>
           }
           groupBy: {
-            args: Prisma.ParsingSessionGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ParsingSessionGroupByOutputType>[]
+            args: Prisma.AccountGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AccountGroupByOutputType>[]
           }
           count: {
-            args: Prisma.ParsingSessionCountArgs<ExtArgs>
-            result: $Utils.Optional<ParsingSessionCountAggregateOutputType> | number
+            args: Prisma.AccountCountArgs<ExtArgs>
+            result: $Utils.Optional<AccountCountAggregateOutputType> | number
           }
         }
       }
@@ -2034,6 +2320,80 @@ export namespace Prisma {
           count: {
             args: Prisma.TokenCountArgs<ExtArgs>
             result: $Utils.Optional<TokenCountAggregateOutputType> | number
+          }
+        }
+      }
+      ParsingSession: {
+        payload: Prisma.$ParsingSessionPayload<ExtArgs>
+        fields: Prisma.ParsingSessionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ParsingSessionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ParsingSessionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload>
+          }
+          findFirst: {
+            args: Prisma.ParsingSessionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ParsingSessionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload>
+          }
+          findMany: {
+            args: Prisma.ParsingSessionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload>[]
+          }
+          create: {
+            args: Prisma.ParsingSessionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload>
+          }
+          createMany: {
+            args: Prisma.ParsingSessionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ParsingSessionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload>[]
+          }
+          delete: {
+            args: Prisma.ParsingSessionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload>
+          }
+          update: {
+            args: Prisma.ParsingSessionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload>
+          }
+          deleteMany: {
+            args: Prisma.ParsingSessionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ParsingSessionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ParsingSessionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload>[]
+          }
+          upsert: {
+            args: Prisma.ParsingSessionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParsingSessionPayload>
+          }
+          aggregate: {
+            args: Prisma.ParsingSessionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateParsingSession>
+          }
+          groupBy: {
+            args: Prisma.ParsingSessionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ParsingSessionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ParsingSessionCountArgs<ExtArgs>
+            result: $Utils.Optional<ParsingSessionCountAggregateOutputType> | number
           }
         }
       }
@@ -2195,20 +2555,24 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
-    account?: AccountOmit
     anime?: AnimeOmit
     genre?: GenreOmit
+    theme?: ThemeOmit
+    demographic?: DemographicOmit
     studio?: StudioOmit
     animeStudio?: AnimeStudioOmit
     relatedAnime?: RelatedAnimeOmit
     animeGenre?: AnimeGenreOmit
+    animeTheme?: AnimeThemeOmit
+    animeDemographic?: AnimeDemographicOmit
     animePoster?: AnimePosterOmit
     animeVideo?: AnimeVideoOmit
     animeScreenshot?: AnimeScreenshotOmit
     video?: VideoOmit
     screenshots?: ScreenshotsOmit
-    parsingSession?: ParsingSessionOmit
+    account?: AccountOmit
     token?: TokenOmit
+    parsingSession?: ParsingSessionOmit
     user?: UserOmit
   }
 
@@ -2310,6 +2674,8 @@ export namespace Prisma {
     videos: number
     screenshots: number
     genres: number
+    theme: number
+    demographic: number
     relatedAnime: number
   }
 
@@ -2320,6 +2686,8 @@ export namespace Prisma {
     videos?: boolean | AnimeCountOutputTypeCountVideosArgs
     screenshots?: boolean | AnimeCountOutputTypeCountScreenshotsArgs
     genres?: boolean | AnimeCountOutputTypeCountGenresArgs
+    theme?: boolean | AnimeCountOutputTypeCountThemeArgs
+    demographic?: boolean | AnimeCountOutputTypeCountDemographicArgs
     relatedAnime?: boolean | AnimeCountOutputTypeCountRelatedAnimeArgs
   }
 
@@ -2379,6 +2747,20 @@ export namespace Prisma {
   /**
    * AnimeCountOutputType without action
    */
+  export type AnimeCountOutputTypeCountThemeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AnimeThemeWhereInput
+  }
+
+  /**
+   * AnimeCountOutputType without action
+   */
+  export type AnimeCountOutputTypeCountDemographicArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AnimeDemographicWhereInput
+  }
+
+  /**
+   * AnimeCountOutputType without action
+   */
   export type AnimeCountOutputTypeCountRelatedAnimeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: RelatedAnimeWhereInput
   }
@@ -2412,6 +2794,68 @@ export namespace Prisma {
    */
   export type GenreCountOutputTypeCountAnimesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AnimeGenreWhereInput
+  }
+
+
+  /**
+   * Count Type ThemeCountOutputType
+   */
+
+  export type ThemeCountOutputType = {
+    animes: number
+  }
+
+  export type ThemeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    animes?: boolean | ThemeCountOutputTypeCountAnimesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ThemeCountOutputType without action
+   */
+  export type ThemeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ThemeCountOutputType
+     */
+    select?: ThemeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ThemeCountOutputType without action
+   */
+  export type ThemeCountOutputTypeCountAnimesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AnimeThemeWhereInput
+  }
+
+
+  /**
+   * Count Type DemographicCountOutputType
+   */
+
+  export type DemographicCountOutputType = {
+    animes: number
+  }
+
+  export type DemographicCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    animes?: boolean | DemographicCountOutputTypeCountAnimesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DemographicCountOutputType without action
+   */
+  export type DemographicCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemographicCountOutputType
+     */
+    select?: DemographicCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DemographicCountOutputType without action
+   */
+  export type DemographicCountOutputTypeCountAnimesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AnimeDemographicWhereInput
   }
 
 
@@ -2544,1169 +2988,6 @@ export namespace Prisma {
    */
 
   /**
-   * Model Account
-   */
-
-  export type AggregateAccount = {
-    _count: AccountCountAggregateOutputType | null
-    _avg: AccountAvgAggregateOutputType | null
-    _sum: AccountSumAggregateOutputType | null
-    _min: AccountMinAggregateOutputType | null
-    _max: AccountMaxAggregateOutputType | null
-  }
-
-  export type AccountAvgAggregateOutputType = {
-    expiresAt: number | null
-  }
-
-  export type AccountSumAggregateOutputType = {
-    expiresAt: number | null
-  }
-
-  export type AccountMinAggregateOutputType = {
-    id: string | null
-    type: string | null
-    provider: string | null
-    refreshToken: string | null
-    accessToken: string | null
-    expiresAt: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    userId: string | null
-  }
-
-  export type AccountMaxAggregateOutputType = {
-    id: string | null
-    type: string | null
-    provider: string | null
-    refreshToken: string | null
-    accessToken: string | null
-    expiresAt: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    userId: string | null
-  }
-
-  export type AccountCountAggregateOutputType = {
-    id: number
-    type: number
-    provider: number
-    refreshToken: number
-    accessToken: number
-    expiresAt: number
-    createdAt: number
-    updatedAt: number
-    userId: number
-    _all: number
-  }
-
-
-  export type AccountAvgAggregateInputType = {
-    expiresAt?: true
-  }
-
-  export type AccountSumAggregateInputType = {
-    expiresAt?: true
-  }
-
-  export type AccountMinAggregateInputType = {
-    id?: true
-    type?: true
-    provider?: true
-    refreshToken?: true
-    accessToken?: true
-    expiresAt?: true
-    createdAt?: true
-    updatedAt?: true
-    userId?: true
-  }
-
-  export type AccountMaxAggregateInputType = {
-    id?: true
-    type?: true
-    provider?: true
-    refreshToken?: true
-    accessToken?: true
-    expiresAt?: true
-    createdAt?: true
-    updatedAt?: true
-    userId?: true
-  }
-
-  export type AccountCountAggregateInputType = {
-    id?: true
-    type?: true
-    provider?: true
-    refreshToken?: true
-    accessToken?: true
-    expiresAt?: true
-    createdAt?: true
-    updatedAt?: true
-    userId?: true
-    _all?: true
-  }
-
-  export type AccountAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Account to aggregate.
-     */
-    where?: AccountWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Accounts to fetch.
-     */
-    orderBy?: AccountOrderByWithRelationInput | AccountOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: AccountWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Accounts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Accounts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Accounts
-    **/
-    _count?: true | AccountCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: AccountAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: AccountSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: AccountMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: AccountMaxAggregateInputType
-  }
-
-  export type GetAccountAggregateType<T extends AccountAggregateArgs> = {
-        [P in keyof T & keyof AggregateAccount]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateAccount[P]>
-      : GetScalarType<T[P], AggregateAccount[P]>
-  }
-
-
-
-
-  export type AccountGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AccountWhereInput
-    orderBy?: AccountOrderByWithAggregationInput | AccountOrderByWithAggregationInput[]
-    by: AccountScalarFieldEnum[] | AccountScalarFieldEnum
-    having?: AccountScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: AccountCountAggregateInputType | true
-    _avg?: AccountAvgAggregateInputType
-    _sum?: AccountSumAggregateInputType
-    _min?: AccountMinAggregateInputType
-    _max?: AccountMaxAggregateInputType
-  }
-
-  export type AccountGroupByOutputType = {
-    id: string
-    type: string
-    provider: string
-    refreshToken: string | null
-    accessToken: string | null
-    expiresAt: number | null
-    createdAt: Date
-    updatedAt: Date
-    userId: string | null
-    _count: AccountCountAggregateOutputType | null
-    _avg: AccountAvgAggregateOutputType | null
-    _sum: AccountSumAggregateOutputType | null
-    _min: AccountMinAggregateOutputType | null
-    _max: AccountMaxAggregateOutputType | null
-  }
-
-  type GetAccountGroupByPayload<T extends AccountGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<AccountGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof AccountGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], AccountGroupByOutputType[P]>
-            : GetScalarType<T[P], AccountGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type AccountSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    type?: boolean
-    provider?: boolean
-    refreshToken?: boolean
-    accessToken?: boolean
-    expiresAt?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    userId?: boolean
-    user?: boolean | Account$userArgs<ExtArgs>
-  }, ExtArgs["result"]["account"]>
-
-  export type AccountSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    type?: boolean
-    provider?: boolean
-    refreshToken?: boolean
-    accessToken?: boolean
-    expiresAt?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    userId?: boolean
-    user?: boolean | Account$userArgs<ExtArgs>
-  }, ExtArgs["result"]["account"]>
-
-  export type AccountSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    type?: boolean
-    provider?: boolean
-    refreshToken?: boolean
-    accessToken?: boolean
-    expiresAt?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    userId?: boolean
-    user?: boolean | Account$userArgs<ExtArgs>
-  }, ExtArgs["result"]["account"]>
-
-  export type AccountSelectScalar = {
-    id?: boolean
-    type?: boolean
-    provider?: boolean
-    refreshToken?: boolean
-    accessToken?: boolean
-    expiresAt?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    userId?: boolean
-  }
-
-  export type AccountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "provider" | "refreshToken" | "accessToken" | "expiresAt" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["account"]>
-  export type AccountInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | Account$userArgs<ExtArgs>
-  }
-  export type AccountIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | Account$userArgs<ExtArgs>
-  }
-  export type AccountIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | Account$userArgs<ExtArgs>
-  }
-
-  export type $AccountPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Account"
-    objects: {
-      user: Prisma.$UserPayload<ExtArgs> | null
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      type: string
-      provider: string
-      refreshToken: string | null
-      accessToken: string | null
-      expiresAt: number | null
-      createdAt: Date
-      updatedAt: Date
-      userId: string | null
-    }, ExtArgs["result"]["account"]>
-    composites: {}
-  }
-
-  type AccountGetPayload<S extends boolean | null | undefined | AccountDefaultArgs> = $Result.GetResult<Prisma.$AccountPayload, S>
-
-  type AccountCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<AccountFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: AccountCountAggregateInputType | true
-    }
-
-  export interface AccountDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Account'], meta: { name: 'Account' } }
-    /**
-     * Find zero or one Account that matches the filter.
-     * @param {AccountFindUniqueArgs} args - Arguments to find a Account
-     * @example
-     * // Get one Account
-     * const account = await prisma.account.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends AccountFindUniqueArgs>(args: SelectSubset<T, AccountFindUniqueArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Account that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {AccountFindUniqueOrThrowArgs} args - Arguments to find a Account
-     * @example
-     * // Get one Account
-     * const account = await prisma.account.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends AccountFindUniqueOrThrowArgs>(args: SelectSubset<T, AccountFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Account that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AccountFindFirstArgs} args - Arguments to find a Account
-     * @example
-     * // Get one Account
-     * const account = await prisma.account.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends AccountFindFirstArgs>(args?: SelectSubset<T, AccountFindFirstArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Account that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AccountFindFirstOrThrowArgs} args - Arguments to find a Account
-     * @example
-     * // Get one Account
-     * const account = await prisma.account.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends AccountFindFirstOrThrowArgs>(args?: SelectSubset<T, AccountFindFirstOrThrowArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Accounts that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AccountFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Accounts
-     * const accounts = await prisma.account.findMany()
-     * 
-     * // Get first 10 Accounts
-     * const accounts = await prisma.account.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const accountWithIdOnly = await prisma.account.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends AccountFindManyArgs>(args?: SelectSubset<T, AccountFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Account.
-     * @param {AccountCreateArgs} args - Arguments to create a Account.
-     * @example
-     * // Create one Account
-     * const Account = await prisma.account.create({
-     *   data: {
-     *     // ... data to create a Account
-     *   }
-     * })
-     * 
-     */
-    create<T extends AccountCreateArgs>(args: SelectSubset<T, AccountCreateArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Accounts.
-     * @param {AccountCreateManyArgs} args - Arguments to create many Accounts.
-     * @example
-     * // Create many Accounts
-     * const account = await prisma.account.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends AccountCreateManyArgs>(args?: SelectSubset<T, AccountCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Accounts and returns the data saved in the database.
-     * @param {AccountCreateManyAndReturnArgs} args - Arguments to create many Accounts.
-     * @example
-     * // Create many Accounts
-     * const account = await prisma.account.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Accounts and only return the `id`
-     * const accountWithIdOnly = await prisma.account.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends AccountCreateManyAndReturnArgs>(args?: SelectSubset<T, AccountCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Account.
-     * @param {AccountDeleteArgs} args - Arguments to delete one Account.
-     * @example
-     * // Delete one Account
-     * const Account = await prisma.account.delete({
-     *   where: {
-     *     // ... filter to delete one Account
-     *   }
-     * })
-     * 
-     */
-    delete<T extends AccountDeleteArgs>(args: SelectSubset<T, AccountDeleteArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Account.
-     * @param {AccountUpdateArgs} args - Arguments to update one Account.
-     * @example
-     * // Update one Account
-     * const account = await prisma.account.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends AccountUpdateArgs>(args: SelectSubset<T, AccountUpdateArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Accounts.
-     * @param {AccountDeleteManyArgs} args - Arguments to filter Accounts to delete.
-     * @example
-     * // Delete a few Accounts
-     * const { count } = await prisma.account.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends AccountDeleteManyArgs>(args?: SelectSubset<T, AccountDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Accounts.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AccountUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Accounts
-     * const account = await prisma.account.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends AccountUpdateManyArgs>(args: SelectSubset<T, AccountUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Accounts and returns the data updated in the database.
-     * @param {AccountUpdateManyAndReturnArgs} args - Arguments to update many Accounts.
-     * @example
-     * // Update many Accounts
-     * const account = await prisma.account.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Accounts and only return the `id`
-     * const accountWithIdOnly = await prisma.account.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends AccountUpdateManyAndReturnArgs>(args: SelectSubset<T, AccountUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Account.
-     * @param {AccountUpsertArgs} args - Arguments to update or create a Account.
-     * @example
-     * // Update or create a Account
-     * const account = await prisma.account.upsert({
-     *   create: {
-     *     // ... data to create a Account
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Account we want to update
-     *   }
-     * })
-     */
-    upsert<T extends AccountUpsertArgs>(args: SelectSubset<T, AccountUpsertArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Accounts.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AccountCountArgs} args - Arguments to filter Accounts to count.
-     * @example
-     * // Count the number of Accounts
-     * const count = await prisma.account.count({
-     *   where: {
-     *     // ... the filter for the Accounts we want to count
-     *   }
-     * })
-    **/
-    count<T extends AccountCountArgs>(
-      args?: Subset<T, AccountCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], AccountCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Account.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AccountAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends AccountAggregateArgs>(args: Subset<T, AccountAggregateArgs>): Prisma.PrismaPromise<GetAccountAggregateType<T>>
-
-    /**
-     * Group by Account.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AccountGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends AccountGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: AccountGroupByArgs['orderBy'] }
-        : { orderBy?: AccountGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, AccountGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAccountGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Account model
-   */
-  readonly fields: AccountFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Account.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__AccountClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends Account$userArgs<ExtArgs> = {}>(args?: Subset<T, Account$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Account model
-   */
-  interface AccountFieldRefs {
-    readonly id: FieldRef<"Account", 'String'>
-    readonly type: FieldRef<"Account", 'String'>
-    readonly provider: FieldRef<"Account", 'String'>
-    readonly refreshToken: FieldRef<"Account", 'String'>
-    readonly accessToken: FieldRef<"Account", 'String'>
-    readonly expiresAt: FieldRef<"Account", 'Int'>
-    readonly createdAt: FieldRef<"Account", 'DateTime'>
-    readonly updatedAt: FieldRef<"Account", 'DateTime'>
-    readonly userId: FieldRef<"Account", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Account findUnique
-   */
-  export type AccountFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Account
-     */
-    select?: AccountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Account
-     */
-    omit?: AccountOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountInclude<ExtArgs> | null
-    /**
-     * Filter, which Account to fetch.
-     */
-    where: AccountWhereUniqueInput
-  }
-
-  /**
-   * Account findUniqueOrThrow
-   */
-  export type AccountFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Account
-     */
-    select?: AccountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Account
-     */
-    omit?: AccountOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountInclude<ExtArgs> | null
-    /**
-     * Filter, which Account to fetch.
-     */
-    where: AccountWhereUniqueInput
-  }
-
-  /**
-   * Account findFirst
-   */
-  export type AccountFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Account
-     */
-    select?: AccountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Account
-     */
-    omit?: AccountOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountInclude<ExtArgs> | null
-    /**
-     * Filter, which Account to fetch.
-     */
-    where?: AccountWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Accounts to fetch.
-     */
-    orderBy?: AccountOrderByWithRelationInput | AccountOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Accounts.
-     */
-    cursor?: AccountWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Accounts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Accounts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Accounts.
-     */
-    distinct?: AccountScalarFieldEnum | AccountScalarFieldEnum[]
-  }
-
-  /**
-   * Account findFirstOrThrow
-   */
-  export type AccountFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Account
-     */
-    select?: AccountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Account
-     */
-    omit?: AccountOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountInclude<ExtArgs> | null
-    /**
-     * Filter, which Account to fetch.
-     */
-    where?: AccountWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Accounts to fetch.
-     */
-    orderBy?: AccountOrderByWithRelationInput | AccountOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Accounts.
-     */
-    cursor?: AccountWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Accounts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Accounts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Accounts.
-     */
-    distinct?: AccountScalarFieldEnum | AccountScalarFieldEnum[]
-  }
-
-  /**
-   * Account findMany
-   */
-  export type AccountFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Account
-     */
-    select?: AccountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Account
-     */
-    omit?: AccountOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountInclude<ExtArgs> | null
-    /**
-     * Filter, which Accounts to fetch.
-     */
-    where?: AccountWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Accounts to fetch.
-     */
-    orderBy?: AccountOrderByWithRelationInput | AccountOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Accounts.
-     */
-    cursor?: AccountWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Accounts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Accounts.
-     */
-    skip?: number
-    distinct?: AccountScalarFieldEnum | AccountScalarFieldEnum[]
-  }
-
-  /**
-   * Account create
-   */
-  export type AccountCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Account
-     */
-    select?: AccountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Account
-     */
-    omit?: AccountOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Account.
-     */
-    data: XOR<AccountCreateInput, AccountUncheckedCreateInput>
-  }
-
-  /**
-   * Account createMany
-   */
-  export type AccountCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Accounts.
-     */
-    data: AccountCreateManyInput | AccountCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Account createManyAndReturn
-   */
-  export type AccountCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Account
-     */
-    select?: AccountSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Account
-     */
-    omit?: AccountOmit<ExtArgs> | null
-    /**
-     * The data used to create many Accounts.
-     */
-    data: AccountCreateManyInput | AccountCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Account update
-   */
-  export type AccountUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Account
-     */
-    select?: AccountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Account
-     */
-    omit?: AccountOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Account.
-     */
-    data: XOR<AccountUpdateInput, AccountUncheckedUpdateInput>
-    /**
-     * Choose, which Account to update.
-     */
-    where: AccountWhereUniqueInput
-  }
-
-  /**
-   * Account updateMany
-   */
-  export type AccountUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Accounts.
-     */
-    data: XOR<AccountUpdateManyMutationInput, AccountUncheckedUpdateManyInput>
-    /**
-     * Filter which Accounts to update
-     */
-    where?: AccountWhereInput
-    /**
-     * Limit how many Accounts to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Account updateManyAndReturn
-   */
-  export type AccountUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Account
-     */
-    select?: AccountSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Account
-     */
-    omit?: AccountOmit<ExtArgs> | null
-    /**
-     * The data used to update Accounts.
-     */
-    data: XOR<AccountUpdateManyMutationInput, AccountUncheckedUpdateManyInput>
-    /**
-     * Filter which Accounts to update
-     */
-    where?: AccountWhereInput
-    /**
-     * Limit how many Accounts to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Account upsert
-   */
-  export type AccountUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Account
-     */
-    select?: AccountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Account
-     */
-    omit?: AccountOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Account to update in case it exists.
-     */
-    where: AccountWhereUniqueInput
-    /**
-     * In case the Account found by the `where` argument doesn't exist, create a new Account with this data.
-     */
-    create: XOR<AccountCreateInput, AccountUncheckedCreateInput>
-    /**
-     * In case the Account was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<AccountUpdateInput, AccountUncheckedUpdateInput>
-  }
-
-  /**
-   * Account delete
-   */
-  export type AccountDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Account
-     */
-    select?: AccountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Account
-     */
-    omit?: AccountOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountInclude<ExtArgs> | null
-    /**
-     * Filter which Account to delete.
-     */
-    where: AccountWhereUniqueInput
-  }
-
-  /**
-   * Account deleteMany
-   */
-  export type AccountDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Accounts to delete
-     */
-    where?: AccountWhereInput
-    /**
-     * Limit how many Accounts to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Account.user
-   */
-  export type Account$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    where?: UserWhereInput
-  }
-
-  /**
-   * Account without action
-   */
-  export type AccountDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Account
-     */
-    select?: AccountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Account
-     */
-    omit?: AccountOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Model Anime
    */
 
@@ -3736,6 +3017,7 @@ export namespace Prisma {
 
   export type AnimeMinAggregateOutputType = {
     id: string | null
+    alias: string | null
     malId: string | null
     shikimoriId: string | null
     name: string | null
@@ -3763,6 +3045,7 @@ export namespace Prisma {
 
   export type AnimeMaxAggregateOutputType = {
     id: string | null
+    alias: string | null
     malId: string | null
     shikimoriId: string | null
     name: string | null
@@ -3790,6 +3073,7 @@ export namespace Prisma {
 
   export type AnimeCountAggregateOutputType = {
     id: number
+    alias: number
     malId: number
     shikimoriId: number
     name: number
@@ -3836,6 +3120,7 @@ export namespace Prisma {
 
   export type AnimeMinAggregateInputType = {
     id?: true
+    alias?: true
     malId?: true
     shikimoriId?: true
     name?: true
@@ -3863,6 +3148,7 @@ export namespace Prisma {
 
   export type AnimeMaxAggregateInputType = {
     id?: true
+    alias?: true
     malId?: true
     shikimoriId?: true
     name?: true
@@ -3890,6 +3176,7 @@ export namespace Prisma {
 
   export type AnimeCountAggregateInputType = {
     id?: true
+    alias?: true
     malId?: true
     shikimoriId?: true
     name?: true
@@ -4005,6 +3292,7 @@ export namespace Prisma {
 
   export type AnimeGroupByOutputType = {
     id: string
+    alias: string | null
     malId: string | null
     shikimoriId: string | null
     name: string
@@ -4052,6 +3340,7 @@ export namespace Prisma {
 
   export type AnimeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    alias?: boolean
     malId?: boolean
     shikimoriId?: boolean
     name?: boolean
@@ -4082,12 +3371,15 @@ export namespace Prisma {
     videos?: boolean | Anime$videosArgs<ExtArgs>
     screenshots?: boolean | Anime$screenshotsArgs<ExtArgs>
     genres?: boolean | Anime$genresArgs<ExtArgs>
+    theme?: boolean | Anime$themeArgs<ExtArgs>
+    demographic?: boolean | Anime$demographicArgs<ExtArgs>
     relatedAnime?: boolean | Anime$relatedAnimeArgs<ExtArgs>
     _count?: boolean | AnimeCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["anime"]>
 
   export type AnimeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    alias?: boolean
     malId?: boolean
     shikimoriId?: boolean
     name?: boolean
@@ -4116,6 +3408,7 @@ export namespace Prisma {
 
   export type AnimeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    alias?: boolean
     malId?: boolean
     shikimoriId?: boolean
     name?: boolean
@@ -4144,6 +3437,7 @@ export namespace Prisma {
 
   export type AnimeSelectScalar = {
     id?: boolean
+    alias?: boolean
     malId?: boolean
     shikimoriId?: boolean
     name?: boolean
@@ -4170,7 +3464,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type AnimeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "malId" | "shikimoriId" | "name" | "description" | "russian" | "english" | "japanese" | "synonyms" | "status" | "kind" | "episodes" | "episodesAired" | "duration" | "score" | "shikimoriScore" | "airedOn" | "releasedOn" | "shikimoriUrl" | "season" | "isCensored" | "rating" | "nextEpisodeAt" | "createdAt" | "updatedAt", ExtArgs["result"]["anime"]>
+  export type AnimeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "alias" | "malId" | "shikimoriId" | "name" | "description" | "russian" | "english" | "japanese" | "synonyms" | "status" | "kind" | "episodes" | "episodesAired" | "duration" | "score" | "shikimoriScore" | "airedOn" | "releasedOn" | "shikimoriUrl" | "season" | "isCensored" | "rating" | "nextEpisodeAt" | "createdAt" | "updatedAt", ExtArgs["result"]["anime"]>
   export type AnimeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     poster?: boolean | Anime$posterArgs<ExtArgs>
     studios?: boolean | Anime$studiosArgs<ExtArgs>
@@ -4178,6 +3472,8 @@ export namespace Prisma {
     videos?: boolean | Anime$videosArgs<ExtArgs>
     screenshots?: boolean | Anime$screenshotsArgs<ExtArgs>
     genres?: boolean | Anime$genresArgs<ExtArgs>
+    theme?: boolean | Anime$themeArgs<ExtArgs>
+    demographic?: boolean | Anime$demographicArgs<ExtArgs>
     relatedAnime?: boolean | Anime$relatedAnimeArgs<ExtArgs>
     _count?: boolean | AnimeCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -4193,10 +3489,13 @@ export namespace Prisma {
       videos: Prisma.$AnimeVideoPayload<ExtArgs>[]
       screenshots: Prisma.$AnimeScreenshotPayload<ExtArgs>[]
       genres: Prisma.$AnimeGenrePayload<ExtArgs>[]
+      theme: Prisma.$AnimeThemePayload<ExtArgs>[]
+      demographic: Prisma.$AnimeDemographicPayload<ExtArgs>[]
       relatedAnime: Prisma.$RelatedAnimePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      alias: string | null
       malId: string | null
       shikimoriId: string | null
       name: string
@@ -4621,6 +3920,8 @@ export namespace Prisma {
     videos<T extends Anime$videosArgs<ExtArgs> = {}>(args?: Subset<T, Anime$videosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnimeVideoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     screenshots<T extends Anime$screenshotsArgs<ExtArgs> = {}>(args?: Subset<T, Anime$screenshotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnimeScreenshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     genres<T extends Anime$genresArgs<ExtArgs> = {}>(args?: Subset<T, Anime$genresArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnimeGenrePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    theme<T extends Anime$themeArgs<ExtArgs> = {}>(args?: Subset<T, Anime$themeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnimeThemePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    demographic<T extends Anime$demographicArgs<ExtArgs> = {}>(args?: Subset<T, Anime$demographicArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnimeDemographicPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     relatedAnime<T extends Anime$relatedAnimeArgs<ExtArgs> = {}>(args?: Subset<T, Anime$relatedAnimeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RelatedAnimePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4652,6 +3953,7 @@ export namespace Prisma {
    */
   interface AnimeFieldRefs {
     readonly id: FieldRef<"Anime", 'String'>
+    readonly alias: FieldRef<"Anime", 'String'>
     readonly malId: FieldRef<"Anime", 'String'>
     readonly shikimoriId: FieldRef<"Anime", 'String'>
     readonly name: FieldRef<"Anime", 'String'>
@@ -5205,6 +4507,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AnimeGenreScalarFieldEnum | AnimeGenreScalarFieldEnum[]
+  }
+
+  /**
+   * Anime.theme
+   */
+  export type Anime$themeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeTheme
+     */
+    select?: AnimeThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeTheme
+     */
+    omit?: AnimeThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeThemeInclude<ExtArgs> | null
+    where?: AnimeThemeWhereInput
+    orderBy?: AnimeThemeOrderByWithRelationInput | AnimeThemeOrderByWithRelationInput[]
+    cursor?: AnimeThemeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AnimeThemeScalarFieldEnum | AnimeThemeScalarFieldEnum[]
+  }
+
+  /**
+   * Anime.demographic
+   */
+  export type Anime$demographicArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeDemographic
+     */
+    select?: AnimeDemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeDemographic
+     */
+    omit?: AnimeDemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeDemographicInclude<ExtArgs> | null
+    where?: AnimeDemographicWhereInput
+    orderBy?: AnimeDemographicOrderByWithRelationInput | AnimeDemographicOrderByWithRelationInput[]
+    cursor?: AnimeDemographicWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AnimeDemographicScalarFieldEnum | AnimeDemographicScalarFieldEnum[]
   }
 
   /**
@@ -6338,6 +5688,2188 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: GenreInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Theme
+   */
+
+  export type AggregateTheme = {
+    _count: ThemeCountAggregateOutputType | null
+    _avg: ThemeAvgAggregateOutputType | null
+    _sum: ThemeSumAggregateOutputType | null
+    _min: ThemeMinAggregateOutputType | null
+    _max: ThemeMaxAggregateOutputType | null
+  }
+
+  export type ThemeAvgAggregateOutputType = {
+    requestId: number | null
+  }
+
+  export type ThemeSumAggregateOutputType = {
+    requestId: number | null
+  }
+
+  export type ThemeMinAggregateOutputType = {
+    id: string | null
+    requestId: number | null
+    name: string | null
+    russian: string | null
+  }
+
+  export type ThemeMaxAggregateOutputType = {
+    id: string | null
+    requestId: number | null
+    name: string | null
+    russian: string | null
+  }
+
+  export type ThemeCountAggregateOutputType = {
+    id: number
+    requestId: number
+    name: number
+    russian: number
+    _all: number
+  }
+
+
+  export type ThemeAvgAggregateInputType = {
+    requestId?: true
+  }
+
+  export type ThemeSumAggregateInputType = {
+    requestId?: true
+  }
+
+  export type ThemeMinAggregateInputType = {
+    id?: true
+    requestId?: true
+    name?: true
+    russian?: true
+  }
+
+  export type ThemeMaxAggregateInputType = {
+    id?: true
+    requestId?: true
+    name?: true
+    russian?: true
+  }
+
+  export type ThemeCountAggregateInputType = {
+    id?: true
+    requestId?: true
+    name?: true
+    russian?: true
+    _all?: true
+  }
+
+  export type ThemeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Theme to aggregate.
+     */
+    where?: ThemeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Themes to fetch.
+     */
+    orderBy?: ThemeOrderByWithRelationInput | ThemeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ThemeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Themes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Themes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Themes
+    **/
+    _count?: true | ThemeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ThemeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ThemeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ThemeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ThemeMaxAggregateInputType
+  }
+
+  export type GetThemeAggregateType<T extends ThemeAggregateArgs> = {
+        [P in keyof T & keyof AggregateTheme]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTheme[P]>
+      : GetScalarType<T[P], AggregateTheme[P]>
+  }
+
+
+
+
+  export type ThemeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ThemeWhereInput
+    orderBy?: ThemeOrderByWithAggregationInput | ThemeOrderByWithAggregationInput[]
+    by: ThemeScalarFieldEnum[] | ThemeScalarFieldEnum
+    having?: ThemeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ThemeCountAggregateInputType | true
+    _avg?: ThemeAvgAggregateInputType
+    _sum?: ThemeSumAggregateInputType
+    _min?: ThemeMinAggregateInputType
+    _max?: ThemeMaxAggregateInputType
+  }
+
+  export type ThemeGroupByOutputType = {
+    id: string
+    requestId: number
+    name: string
+    russian: string
+    _count: ThemeCountAggregateOutputType | null
+    _avg: ThemeAvgAggregateOutputType | null
+    _sum: ThemeSumAggregateOutputType | null
+    _min: ThemeMinAggregateOutputType | null
+    _max: ThemeMaxAggregateOutputType | null
+  }
+
+  type GetThemeGroupByPayload<T extends ThemeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ThemeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ThemeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ThemeGroupByOutputType[P]>
+            : GetScalarType<T[P], ThemeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ThemeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    requestId?: boolean
+    name?: boolean
+    russian?: boolean
+    animes?: boolean | Theme$animesArgs<ExtArgs>
+    _count?: boolean | ThemeCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["theme"]>
+
+  export type ThemeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    requestId?: boolean
+    name?: boolean
+    russian?: boolean
+  }, ExtArgs["result"]["theme"]>
+
+  export type ThemeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    requestId?: boolean
+    name?: boolean
+    russian?: boolean
+  }, ExtArgs["result"]["theme"]>
+
+  export type ThemeSelectScalar = {
+    id?: boolean
+    requestId?: boolean
+    name?: boolean
+    russian?: boolean
+  }
+
+  export type ThemeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "requestId" | "name" | "russian", ExtArgs["result"]["theme"]>
+  export type ThemeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    animes?: boolean | Theme$animesArgs<ExtArgs>
+    _count?: boolean | ThemeCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ThemeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ThemeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $ThemePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Theme"
+    objects: {
+      animes: Prisma.$AnimeThemePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      requestId: number
+      name: string
+      russian: string
+    }, ExtArgs["result"]["theme"]>
+    composites: {}
+  }
+
+  type ThemeGetPayload<S extends boolean | null | undefined | ThemeDefaultArgs> = $Result.GetResult<Prisma.$ThemePayload, S>
+
+  type ThemeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ThemeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ThemeCountAggregateInputType | true
+    }
+
+  export interface ThemeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Theme'], meta: { name: 'Theme' } }
+    /**
+     * Find zero or one Theme that matches the filter.
+     * @param {ThemeFindUniqueArgs} args - Arguments to find a Theme
+     * @example
+     * // Get one Theme
+     * const theme = await prisma.theme.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ThemeFindUniqueArgs>(args: SelectSubset<T, ThemeFindUniqueArgs<ExtArgs>>): Prisma__ThemeClient<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Theme that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ThemeFindUniqueOrThrowArgs} args - Arguments to find a Theme
+     * @example
+     * // Get one Theme
+     * const theme = await prisma.theme.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ThemeFindUniqueOrThrowArgs>(args: SelectSubset<T, ThemeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ThemeClient<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Theme that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeFindFirstArgs} args - Arguments to find a Theme
+     * @example
+     * // Get one Theme
+     * const theme = await prisma.theme.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ThemeFindFirstArgs>(args?: SelectSubset<T, ThemeFindFirstArgs<ExtArgs>>): Prisma__ThemeClient<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Theme that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeFindFirstOrThrowArgs} args - Arguments to find a Theme
+     * @example
+     * // Get one Theme
+     * const theme = await prisma.theme.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ThemeFindFirstOrThrowArgs>(args?: SelectSubset<T, ThemeFindFirstOrThrowArgs<ExtArgs>>): Prisma__ThemeClient<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Themes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Themes
+     * const themes = await prisma.theme.findMany()
+     * 
+     * // Get first 10 Themes
+     * const themes = await prisma.theme.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const themeWithIdOnly = await prisma.theme.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ThemeFindManyArgs>(args?: SelectSubset<T, ThemeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Theme.
+     * @param {ThemeCreateArgs} args - Arguments to create a Theme.
+     * @example
+     * // Create one Theme
+     * const Theme = await prisma.theme.create({
+     *   data: {
+     *     // ... data to create a Theme
+     *   }
+     * })
+     * 
+     */
+    create<T extends ThemeCreateArgs>(args: SelectSubset<T, ThemeCreateArgs<ExtArgs>>): Prisma__ThemeClient<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Themes.
+     * @param {ThemeCreateManyArgs} args - Arguments to create many Themes.
+     * @example
+     * // Create many Themes
+     * const theme = await prisma.theme.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ThemeCreateManyArgs>(args?: SelectSubset<T, ThemeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Themes and returns the data saved in the database.
+     * @param {ThemeCreateManyAndReturnArgs} args - Arguments to create many Themes.
+     * @example
+     * // Create many Themes
+     * const theme = await prisma.theme.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Themes and only return the `id`
+     * const themeWithIdOnly = await prisma.theme.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ThemeCreateManyAndReturnArgs>(args?: SelectSubset<T, ThemeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Theme.
+     * @param {ThemeDeleteArgs} args - Arguments to delete one Theme.
+     * @example
+     * // Delete one Theme
+     * const Theme = await prisma.theme.delete({
+     *   where: {
+     *     // ... filter to delete one Theme
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ThemeDeleteArgs>(args: SelectSubset<T, ThemeDeleteArgs<ExtArgs>>): Prisma__ThemeClient<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Theme.
+     * @param {ThemeUpdateArgs} args - Arguments to update one Theme.
+     * @example
+     * // Update one Theme
+     * const theme = await prisma.theme.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ThemeUpdateArgs>(args: SelectSubset<T, ThemeUpdateArgs<ExtArgs>>): Prisma__ThemeClient<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Themes.
+     * @param {ThemeDeleteManyArgs} args - Arguments to filter Themes to delete.
+     * @example
+     * // Delete a few Themes
+     * const { count } = await prisma.theme.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ThemeDeleteManyArgs>(args?: SelectSubset<T, ThemeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Themes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Themes
+     * const theme = await prisma.theme.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ThemeUpdateManyArgs>(args: SelectSubset<T, ThemeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Themes and returns the data updated in the database.
+     * @param {ThemeUpdateManyAndReturnArgs} args - Arguments to update many Themes.
+     * @example
+     * // Update many Themes
+     * const theme = await prisma.theme.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Themes and only return the `id`
+     * const themeWithIdOnly = await prisma.theme.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ThemeUpdateManyAndReturnArgs>(args: SelectSubset<T, ThemeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Theme.
+     * @param {ThemeUpsertArgs} args - Arguments to update or create a Theme.
+     * @example
+     * // Update or create a Theme
+     * const theme = await prisma.theme.upsert({
+     *   create: {
+     *     // ... data to create a Theme
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Theme we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ThemeUpsertArgs>(args: SelectSubset<T, ThemeUpsertArgs<ExtArgs>>): Prisma__ThemeClient<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Themes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeCountArgs} args - Arguments to filter Themes to count.
+     * @example
+     * // Count the number of Themes
+     * const count = await prisma.theme.count({
+     *   where: {
+     *     // ... the filter for the Themes we want to count
+     *   }
+     * })
+    **/
+    count<T extends ThemeCountArgs>(
+      args?: Subset<T, ThemeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ThemeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Theme.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ThemeAggregateArgs>(args: Subset<T, ThemeAggregateArgs>): Prisma.PrismaPromise<GetThemeAggregateType<T>>
+
+    /**
+     * Group by Theme.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ThemeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ThemeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ThemeGroupByArgs['orderBy'] }
+        : { orderBy?: ThemeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ThemeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetThemeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Theme model
+   */
+  readonly fields: ThemeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Theme.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ThemeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    animes<T extends Theme$animesArgs<ExtArgs> = {}>(args?: Subset<T, Theme$animesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnimeThemePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Theme model
+   */
+  interface ThemeFieldRefs {
+    readonly id: FieldRef<"Theme", 'String'>
+    readonly requestId: FieldRef<"Theme", 'Int'>
+    readonly name: FieldRef<"Theme", 'String'>
+    readonly russian: FieldRef<"Theme", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Theme findUnique
+   */
+  export type ThemeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+    /**
+     * Filter, which Theme to fetch.
+     */
+    where: ThemeWhereUniqueInput
+  }
+
+  /**
+   * Theme findUniqueOrThrow
+   */
+  export type ThemeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+    /**
+     * Filter, which Theme to fetch.
+     */
+    where: ThemeWhereUniqueInput
+  }
+
+  /**
+   * Theme findFirst
+   */
+  export type ThemeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+    /**
+     * Filter, which Theme to fetch.
+     */
+    where?: ThemeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Themes to fetch.
+     */
+    orderBy?: ThemeOrderByWithRelationInput | ThemeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Themes.
+     */
+    cursor?: ThemeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Themes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Themes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Themes.
+     */
+    distinct?: ThemeScalarFieldEnum | ThemeScalarFieldEnum[]
+  }
+
+  /**
+   * Theme findFirstOrThrow
+   */
+  export type ThemeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+    /**
+     * Filter, which Theme to fetch.
+     */
+    where?: ThemeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Themes to fetch.
+     */
+    orderBy?: ThemeOrderByWithRelationInput | ThemeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Themes.
+     */
+    cursor?: ThemeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Themes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Themes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Themes.
+     */
+    distinct?: ThemeScalarFieldEnum | ThemeScalarFieldEnum[]
+  }
+
+  /**
+   * Theme findMany
+   */
+  export type ThemeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+    /**
+     * Filter, which Themes to fetch.
+     */
+    where?: ThemeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Themes to fetch.
+     */
+    orderBy?: ThemeOrderByWithRelationInput | ThemeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Themes.
+     */
+    cursor?: ThemeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Themes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Themes.
+     */
+    skip?: number
+    distinct?: ThemeScalarFieldEnum | ThemeScalarFieldEnum[]
+  }
+
+  /**
+   * Theme create
+   */
+  export type ThemeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Theme.
+     */
+    data: XOR<ThemeCreateInput, ThemeUncheckedCreateInput>
+  }
+
+  /**
+   * Theme createMany
+   */
+  export type ThemeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Themes.
+     */
+    data: ThemeCreateManyInput | ThemeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Theme createManyAndReturn
+   */
+  export type ThemeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * The data used to create many Themes.
+     */
+    data: ThemeCreateManyInput | ThemeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Theme update
+   */
+  export type ThemeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Theme.
+     */
+    data: XOR<ThemeUpdateInput, ThemeUncheckedUpdateInput>
+    /**
+     * Choose, which Theme to update.
+     */
+    where: ThemeWhereUniqueInput
+  }
+
+  /**
+   * Theme updateMany
+   */
+  export type ThemeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Themes.
+     */
+    data: XOR<ThemeUpdateManyMutationInput, ThemeUncheckedUpdateManyInput>
+    /**
+     * Filter which Themes to update
+     */
+    where?: ThemeWhereInput
+    /**
+     * Limit how many Themes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Theme updateManyAndReturn
+   */
+  export type ThemeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * The data used to update Themes.
+     */
+    data: XOR<ThemeUpdateManyMutationInput, ThemeUncheckedUpdateManyInput>
+    /**
+     * Filter which Themes to update
+     */
+    where?: ThemeWhereInput
+    /**
+     * Limit how many Themes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Theme upsert
+   */
+  export type ThemeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Theme to update in case it exists.
+     */
+    where: ThemeWhereUniqueInput
+    /**
+     * In case the Theme found by the `where` argument doesn't exist, create a new Theme with this data.
+     */
+    create: XOR<ThemeCreateInput, ThemeUncheckedCreateInput>
+    /**
+     * In case the Theme was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ThemeUpdateInput, ThemeUncheckedUpdateInput>
+  }
+
+  /**
+   * Theme delete
+   */
+  export type ThemeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+    /**
+     * Filter which Theme to delete.
+     */
+    where: ThemeWhereUniqueInput
+  }
+
+  /**
+   * Theme deleteMany
+   */
+  export type ThemeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Themes to delete
+     */
+    where?: ThemeWhereInput
+    /**
+     * Limit how many Themes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Theme.animes
+   */
+  export type Theme$animesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeTheme
+     */
+    select?: AnimeThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeTheme
+     */
+    omit?: AnimeThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeThemeInclude<ExtArgs> | null
+    where?: AnimeThemeWhereInput
+    orderBy?: AnimeThemeOrderByWithRelationInput | AnimeThemeOrderByWithRelationInput[]
+    cursor?: AnimeThemeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AnimeThemeScalarFieldEnum | AnimeThemeScalarFieldEnum[]
+  }
+
+  /**
+   * Theme without action
+   */
+  export type ThemeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Theme
+     */
+    select?: ThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Theme
+     */
+    omit?: ThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ThemeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Demographic
+   */
+
+  export type AggregateDemographic = {
+    _count: DemographicCountAggregateOutputType | null
+    _avg: DemographicAvgAggregateOutputType | null
+    _sum: DemographicSumAggregateOutputType | null
+    _min: DemographicMinAggregateOutputType | null
+    _max: DemographicMaxAggregateOutputType | null
+  }
+
+  export type DemographicAvgAggregateOutputType = {
+    requestId: number | null
+  }
+
+  export type DemographicSumAggregateOutputType = {
+    requestId: number | null
+  }
+
+  export type DemographicMinAggregateOutputType = {
+    id: string | null
+    requestId: number | null
+    name: string | null
+    russian: string | null
+  }
+
+  export type DemographicMaxAggregateOutputType = {
+    id: string | null
+    requestId: number | null
+    name: string | null
+    russian: string | null
+  }
+
+  export type DemographicCountAggregateOutputType = {
+    id: number
+    requestId: number
+    name: number
+    russian: number
+    _all: number
+  }
+
+
+  export type DemographicAvgAggregateInputType = {
+    requestId?: true
+  }
+
+  export type DemographicSumAggregateInputType = {
+    requestId?: true
+  }
+
+  export type DemographicMinAggregateInputType = {
+    id?: true
+    requestId?: true
+    name?: true
+    russian?: true
+  }
+
+  export type DemographicMaxAggregateInputType = {
+    id?: true
+    requestId?: true
+    name?: true
+    russian?: true
+  }
+
+  export type DemographicCountAggregateInputType = {
+    id?: true
+    requestId?: true
+    name?: true
+    russian?: true
+    _all?: true
+  }
+
+  export type DemographicAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Demographic to aggregate.
+     */
+    where?: DemographicWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Demographics to fetch.
+     */
+    orderBy?: DemographicOrderByWithRelationInput | DemographicOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DemographicWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Demographics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Demographics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Demographics
+    **/
+    _count?: true | DemographicCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DemographicAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DemographicSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DemographicMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DemographicMaxAggregateInputType
+  }
+
+  export type GetDemographicAggregateType<T extends DemographicAggregateArgs> = {
+        [P in keyof T & keyof AggregateDemographic]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDemographic[P]>
+      : GetScalarType<T[P], AggregateDemographic[P]>
+  }
+
+
+
+
+  export type DemographicGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DemographicWhereInput
+    orderBy?: DemographicOrderByWithAggregationInput | DemographicOrderByWithAggregationInput[]
+    by: DemographicScalarFieldEnum[] | DemographicScalarFieldEnum
+    having?: DemographicScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DemographicCountAggregateInputType | true
+    _avg?: DemographicAvgAggregateInputType
+    _sum?: DemographicSumAggregateInputType
+    _min?: DemographicMinAggregateInputType
+    _max?: DemographicMaxAggregateInputType
+  }
+
+  export type DemographicGroupByOutputType = {
+    id: string
+    requestId: number
+    name: string
+    russian: string
+    _count: DemographicCountAggregateOutputType | null
+    _avg: DemographicAvgAggregateOutputType | null
+    _sum: DemographicSumAggregateOutputType | null
+    _min: DemographicMinAggregateOutputType | null
+    _max: DemographicMaxAggregateOutputType | null
+  }
+
+  type GetDemographicGroupByPayload<T extends DemographicGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DemographicGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DemographicGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DemographicGroupByOutputType[P]>
+            : GetScalarType<T[P], DemographicGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DemographicSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    requestId?: boolean
+    name?: boolean
+    russian?: boolean
+    animes?: boolean | Demographic$animesArgs<ExtArgs>
+    _count?: boolean | DemographicCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["demographic"]>
+
+  export type DemographicSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    requestId?: boolean
+    name?: boolean
+    russian?: boolean
+  }, ExtArgs["result"]["demographic"]>
+
+  export type DemographicSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    requestId?: boolean
+    name?: boolean
+    russian?: boolean
+  }, ExtArgs["result"]["demographic"]>
+
+  export type DemographicSelectScalar = {
+    id?: boolean
+    requestId?: boolean
+    name?: boolean
+    russian?: boolean
+  }
+
+  export type DemographicOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "requestId" | "name" | "russian", ExtArgs["result"]["demographic"]>
+  export type DemographicInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    animes?: boolean | Demographic$animesArgs<ExtArgs>
+    _count?: boolean | DemographicCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type DemographicIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type DemographicIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $DemographicPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Demographic"
+    objects: {
+      animes: Prisma.$AnimeDemographicPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      requestId: number
+      name: string
+      russian: string
+    }, ExtArgs["result"]["demographic"]>
+    composites: {}
+  }
+
+  type DemographicGetPayload<S extends boolean | null | undefined | DemographicDefaultArgs> = $Result.GetResult<Prisma.$DemographicPayload, S>
+
+  type DemographicCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DemographicFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DemographicCountAggregateInputType | true
+    }
+
+  export interface DemographicDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Demographic'], meta: { name: 'Demographic' } }
+    /**
+     * Find zero or one Demographic that matches the filter.
+     * @param {DemographicFindUniqueArgs} args - Arguments to find a Demographic
+     * @example
+     * // Get one Demographic
+     * const demographic = await prisma.demographic.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DemographicFindUniqueArgs>(args: SelectSubset<T, DemographicFindUniqueArgs<ExtArgs>>): Prisma__DemographicClient<$Result.GetResult<Prisma.$DemographicPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Demographic that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DemographicFindUniqueOrThrowArgs} args - Arguments to find a Demographic
+     * @example
+     * // Get one Demographic
+     * const demographic = await prisma.demographic.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DemographicFindUniqueOrThrowArgs>(args: SelectSubset<T, DemographicFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DemographicClient<$Result.GetResult<Prisma.$DemographicPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Demographic that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemographicFindFirstArgs} args - Arguments to find a Demographic
+     * @example
+     * // Get one Demographic
+     * const demographic = await prisma.demographic.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DemographicFindFirstArgs>(args?: SelectSubset<T, DemographicFindFirstArgs<ExtArgs>>): Prisma__DemographicClient<$Result.GetResult<Prisma.$DemographicPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Demographic that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemographicFindFirstOrThrowArgs} args - Arguments to find a Demographic
+     * @example
+     * // Get one Demographic
+     * const demographic = await prisma.demographic.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DemographicFindFirstOrThrowArgs>(args?: SelectSubset<T, DemographicFindFirstOrThrowArgs<ExtArgs>>): Prisma__DemographicClient<$Result.GetResult<Prisma.$DemographicPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Demographics that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemographicFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Demographics
+     * const demographics = await prisma.demographic.findMany()
+     * 
+     * // Get first 10 Demographics
+     * const demographics = await prisma.demographic.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const demographicWithIdOnly = await prisma.demographic.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DemographicFindManyArgs>(args?: SelectSubset<T, DemographicFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemographicPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Demographic.
+     * @param {DemographicCreateArgs} args - Arguments to create a Demographic.
+     * @example
+     * // Create one Demographic
+     * const Demographic = await prisma.demographic.create({
+     *   data: {
+     *     // ... data to create a Demographic
+     *   }
+     * })
+     * 
+     */
+    create<T extends DemographicCreateArgs>(args: SelectSubset<T, DemographicCreateArgs<ExtArgs>>): Prisma__DemographicClient<$Result.GetResult<Prisma.$DemographicPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Demographics.
+     * @param {DemographicCreateManyArgs} args - Arguments to create many Demographics.
+     * @example
+     * // Create many Demographics
+     * const demographic = await prisma.demographic.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DemographicCreateManyArgs>(args?: SelectSubset<T, DemographicCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Demographics and returns the data saved in the database.
+     * @param {DemographicCreateManyAndReturnArgs} args - Arguments to create many Demographics.
+     * @example
+     * // Create many Demographics
+     * const demographic = await prisma.demographic.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Demographics and only return the `id`
+     * const demographicWithIdOnly = await prisma.demographic.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DemographicCreateManyAndReturnArgs>(args?: SelectSubset<T, DemographicCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemographicPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Demographic.
+     * @param {DemographicDeleteArgs} args - Arguments to delete one Demographic.
+     * @example
+     * // Delete one Demographic
+     * const Demographic = await prisma.demographic.delete({
+     *   where: {
+     *     // ... filter to delete one Demographic
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DemographicDeleteArgs>(args: SelectSubset<T, DemographicDeleteArgs<ExtArgs>>): Prisma__DemographicClient<$Result.GetResult<Prisma.$DemographicPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Demographic.
+     * @param {DemographicUpdateArgs} args - Arguments to update one Demographic.
+     * @example
+     * // Update one Demographic
+     * const demographic = await prisma.demographic.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DemographicUpdateArgs>(args: SelectSubset<T, DemographicUpdateArgs<ExtArgs>>): Prisma__DemographicClient<$Result.GetResult<Prisma.$DemographicPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Demographics.
+     * @param {DemographicDeleteManyArgs} args - Arguments to filter Demographics to delete.
+     * @example
+     * // Delete a few Demographics
+     * const { count } = await prisma.demographic.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DemographicDeleteManyArgs>(args?: SelectSubset<T, DemographicDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Demographics.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemographicUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Demographics
+     * const demographic = await prisma.demographic.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DemographicUpdateManyArgs>(args: SelectSubset<T, DemographicUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Demographics and returns the data updated in the database.
+     * @param {DemographicUpdateManyAndReturnArgs} args - Arguments to update many Demographics.
+     * @example
+     * // Update many Demographics
+     * const demographic = await prisma.demographic.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Demographics and only return the `id`
+     * const demographicWithIdOnly = await prisma.demographic.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DemographicUpdateManyAndReturnArgs>(args: SelectSubset<T, DemographicUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemographicPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Demographic.
+     * @param {DemographicUpsertArgs} args - Arguments to update or create a Demographic.
+     * @example
+     * // Update or create a Demographic
+     * const demographic = await prisma.demographic.upsert({
+     *   create: {
+     *     // ... data to create a Demographic
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Demographic we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DemographicUpsertArgs>(args: SelectSubset<T, DemographicUpsertArgs<ExtArgs>>): Prisma__DemographicClient<$Result.GetResult<Prisma.$DemographicPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Demographics.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemographicCountArgs} args - Arguments to filter Demographics to count.
+     * @example
+     * // Count the number of Demographics
+     * const count = await prisma.demographic.count({
+     *   where: {
+     *     // ... the filter for the Demographics we want to count
+     *   }
+     * })
+    **/
+    count<T extends DemographicCountArgs>(
+      args?: Subset<T, DemographicCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DemographicCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Demographic.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemographicAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DemographicAggregateArgs>(args: Subset<T, DemographicAggregateArgs>): Prisma.PrismaPromise<GetDemographicAggregateType<T>>
+
+    /**
+     * Group by Demographic.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemographicGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DemographicGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DemographicGroupByArgs['orderBy'] }
+        : { orderBy?: DemographicGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DemographicGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDemographicGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Demographic model
+   */
+  readonly fields: DemographicFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Demographic.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DemographicClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    animes<T extends Demographic$animesArgs<ExtArgs> = {}>(args?: Subset<T, Demographic$animesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnimeDemographicPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Demographic model
+   */
+  interface DemographicFieldRefs {
+    readonly id: FieldRef<"Demographic", 'String'>
+    readonly requestId: FieldRef<"Demographic", 'Int'>
+    readonly name: FieldRef<"Demographic", 'String'>
+    readonly russian: FieldRef<"Demographic", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Demographic findUnique
+   */
+  export type DemographicFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Demographic
+     */
+    select?: DemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Demographic
+     */
+    omit?: DemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemographicInclude<ExtArgs> | null
+    /**
+     * Filter, which Demographic to fetch.
+     */
+    where: DemographicWhereUniqueInput
+  }
+
+  /**
+   * Demographic findUniqueOrThrow
+   */
+  export type DemographicFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Demographic
+     */
+    select?: DemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Demographic
+     */
+    omit?: DemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemographicInclude<ExtArgs> | null
+    /**
+     * Filter, which Demographic to fetch.
+     */
+    where: DemographicWhereUniqueInput
+  }
+
+  /**
+   * Demographic findFirst
+   */
+  export type DemographicFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Demographic
+     */
+    select?: DemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Demographic
+     */
+    omit?: DemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemographicInclude<ExtArgs> | null
+    /**
+     * Filter, which Demographic to fetch.
+     */
+    where?: DemographicWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Demographics to fetch.
+     */
+    orderBy?: DemographicOrderByWithRelationInput | DemographicOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Demographics.
+     */
+    cursor?: DemographicWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Demographics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Demographics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Demographics.
+     */
+    distinct?: DemographicScalarFieldEnum | DemographicScalarFieldEnum[]
+  }
+
+  /**
+   * Demographic findFirstOrThrow
+   */
+  export type DemographicFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Demographic
+     */
+    select?: DemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Demographic
+     */
+    omit?: DemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemographicInclude<ExtArgs> | null
+    /**
+     * Filter, which Demographic to fetch.
+     */
+    where?: DemographicWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Demographics to fetch.
+     */
+    orderBy?: DemographicOrderByWithRelationInput | DemographicOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Demographics.
+     */
+    cursor?: DemographicWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Demographics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Demographics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Demographics.
+     */
+    distinct?: DemographicScalarFieldEnum | DemographicScalarFieldEnum[]
+  }
+
+  /**
+   * Demographic findMany
+   */
+  export type DemographicFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Demographic
+     */
+    select?: DemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Demographic
+     */
+    omit?: DemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemographicInclude<ExtArgs> | null
+    /**
+     * Filter, which Demographics to fetch.
+     */
+    where?: DemographicWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Demographics to fetch.
+     */
+    orderBy?: DemographicOrderByWithRelationInput | DemographicOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Demographics.
+     */
+    cursor?: DemographicWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Demographics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Demographics.
+     */
+    skip?: number
+    distinct?: DemographicScalarFieldEnum | DemographicScalarFieldEnum[]
+  }
+
+  /**
+   * Demographic create
+   */
+  export type DemographicCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Demographic
+     */
+    select?: DemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Demographic
+     */
+    omit?: DemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemographicInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Demographic.
+     */
+    data: XOR<DemographicCreateInput, DemographicUncheckedCreateInput>
+  }
+
+  /**
+   * Demographic createMany
+   */
+  export type DemographicCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Demographics.
+     */
+    data: DemographicCreateManyInput | DemographicCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Demographic createManyAndReturn
+   */
+  export type DemographicCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Demographic
+     */
+    select?: DemographicSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Demographic
+     */
+    omit?: DemographicOmit<ExtArgs> | null
+    /**
+     * The data used to create many Demographics.
+     */
+    data: DemographicCreateManyInput | DemographicCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Demographic update
+   */
+  export type DemographicUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Demographic
+     */
+    select?: DemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Demographic
+     */
+    omit?: DemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemographicInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Demographic.
+     */
+    data: XOR<DemographicUpdateInput, DemographicUncheckedUpdateInput>
+    /**
+     * Choose, which Demographic to update.
+     */
+    where: DemographicWhereUniqueInput
+  }
+
+  /**
+   * Demographic updateMany
+   */
+  export type DemographicUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Demographics.
+     */
+    data: XOR<DemographicUpdateManyMutationInput, DemographicUncheckedUpdateManyInput>
+    /**
+     * Filter which Demographics to update
+     */
+    where?: DemographicWhereInput
+    /**
+     * Limit how many Demographics to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Demographic updateManyAndReturn
+   */
+  export type DemographicUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Demographic
+     */
+    select?: DemographicSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Demographic
+     */
+    omit?: DemographicOmit<ExtArgs> | null
+    /**
+     * The data used to update Demographics.
+     */
+    data: XOR<DemographicUpdateManyMutationInput, DemographicUncheckedUpdateManyInput>
+    /**
+     * Filter which Demographics to update
+     */
+    where?: DemographicWhereInput
+    /**
+     * Limit how many Demographics to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Demographic upsert
+   */
+  export type DemographicUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Demographic
+     */
+    select?: DemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Demographic
+     */
+    omit?: DemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemographicInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Demographic to update in case it exists.
+     */
+    where: DemographicWhereUniqueInput
+    /**
+     * In case the Demographic found by the `where` argument doesn't exist, create a new Demographic with this data.
+     */
+    create: XOR<DemographicCreateInput, DemographicUncheckedCreateInput>
+    /**
+     * In case the Demographic was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DemographicUpdateInput, DemographicUncheckedUpdateInput>
+  }
+
+  /**
+   * Demographic delete
+   */
+  export type DemographicDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Demographic
+     */
+    select?: DemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Demographic
+     */
+    omit?: DemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemographicInclude<ExtArgs> | null
+    /**
+     * Filter which Demographic to delete.
+     */
+    where: DemographicWhereUniqueInput
+  }
+
+  /**
+   * Demographic deleteMany
+   */
+  export type DemographicDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Demographics to delete
+     */
+    where?: DemographicWhereInput
+    /**
+     * Limit how many Demographics to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Demographic.animes
+   */
+  export type Demographic$animesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeDemographic
+     */
+    select?: AnimeDemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeDemographic
+     */
+    omit?: AnimeDemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeDemographicInclude<ExtArgs> | null
+    where?: AnimeDemographicWhereInput
+    orderBy?: AnimeDemographicOrderByWithRelationInput | AnimeDemographicOrderByWithRelationInput[]
+    cursor?: AnimeDemographicWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AnimeDemographicScalarFieldEnum | AnimeDemographicScalarFieldEnum[]
+  }
+
+  /**
+   * Demographic without action
+   */
+  export type DemographicDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Demographic
+     */
+    select?: DemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Demographic
+     */
+    omit?: DemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DemographicInclude<ExtArgs> | null
   }
 
 
@@ -10489,6 +12021,2060 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: AnimeGenreInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AnimeTheme
+   */
+
+  export type AggregateAnimeTheme = {
+    _count: AnimeThemeCountAggregateOutputType | null
+    _min: AnimeThemeMinAggregateOutputType | null
+    _max: AnimeThemeMaxAggregateOutputType | null
+  }
+
+  export type AnimeThemeMinAggregateOutputType = {
+    animeId: string | null
+    themeId: string | null
+  }
+
+  export type AnimeThemeMaxAggregateOutputType = {
+    animeId: string | null
+    themeId: string | null
+  }
+
+  export type AnimeThemeCountAggregateOutputType = {
+    animeId: number
+    themeId: number
+    _all: number
+  }
+
+
+  export type AnimeThemeMinAggregateInputType = {
+    animeId?: true
+    themeId?: true
+  }
+
+  export type AnimeThemeMaxAggregateInputType = {
+    animeId?: true
+    themeId?: true
+  }
+
+  export type AnimeThemeCountAggregateInputType = {
+    animeId?: true
+    themeId?: true
+    _all?: true
+  }
+
+  export type AnimeThemeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AnimeTheme to aggregate.
+     */
+    where?: AnimeThemeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AnimeThemes to fetch.
+     */
+    orderBy?: AnimeThemeOrderByWithRelationInput | AnimeThemeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AnimeThemeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AnimeThemes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AnimeThemes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AnimeThemes
+    **/
+    _count?: true | AnimeThemeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AnimeThemeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AnimeThemeMaxAggregateInputType
+  }
+
+  export type GetAnimeThemeAggregateType<T extends AnimeThemeAggregateArgs> = {
+        [P in keyof T & keyof AggregateAnimeTheme]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAnimeTheme[P]>
+      : GetScalarType<T[P], AggregateAnimeTheme[P]>
+  }
+
+
+
+
+  export type AnimeThemeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AnimeThemeWhereInput
+    orderBy?: AnimeThemeOrderByWithAggregationInput | AnimeThemeOrderByWithAggregationInput[]
+    by: AnimeThemeScalarFieldEnum[] | AnimeThemeScalarFieldEnum
+    having?: AnimeThemeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AnimeThemeCountAggregateInputType | true
+    _min?: AnimeThemeMinAggregateInputType
+    _max?: AnimeThemeMaxAggregateInputType
+  }
+
+  export type AnimeThemeGroupByOutputType = {
+    animeId: string
+    themeId: string
+    _count: AnimeThemeCountAggregateOutputType | null
+    _min: AnimeThemeMinAggregateOutputType | null
+    _max: AnimeThemeMaxAggregateOutputType | null
+  }
+
+  type GetAnimeThemeGroupByPayload<T extends AnimeThemeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AnimeThemeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AnimeThemeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AnimeThemeGroupByOutputType[P]>
+            : GetScalarType<T[P], AnimeThemeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AnimeThemeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    animeId?: boolean
+    themeId?: boolean
+    anime?: boolean | AnimeDefaultArgs<ExtArgs>
+    theme?: boolean | ThemeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["animeTheme"]>
+
+  export type AnimeThemeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    animeId?: boolean
+    themeId?: boolean
+    anime?: boolean | AnimeDefaultArgs<ExtArgs>
+    theme?: boolean | ThemeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["animeTheme"]>
+
+  export type AnimeThemeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    animeId?: boolean
+    themeId?: boolean
+    anime?: boolean | AnimeDefaultArgs<ExtArgs>
+    theme?: boolean | ThemeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["animeTheme"]>
+
+  export type AnimeThemeSelectScalar = {
+    animeId?: boolean
+    themeId?: boolean
+  }
+
+  export type AnimeThemeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"animeId" | "themeId", ExtArgs["result"]["animeTheme"]>
+  export type AnimeThemeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    anime?: boolean | AnimeDefaultArgs<ExtArgs>
+    theme?: boolean | ThemeDefaultArgs<ExtArgs>
+  }
+  export type AnimeThemeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    anime?: boolean | AnimeDefaultArgs<ExtArgs>
+    theme?: boolean | ThemeDefaultArgs<ExtArgs>
+  }
+  export type AnimeThemeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    anime?: boolean | AnimeDefaultArgs<ExtArgs>
+    theme?: boolean | ThemeDefaultArgs<ExtArgs>
+  }
+
+  export type $AnimeThemePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AnimeTheme"
+    objects: {
+      anime: Prisma.$AnimePayload<ExtArgs>
+      theme: Prisma.$ThemePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      animeId: string
+      themeId: string
+    }, ExtArgs["result"]["animeTheme"]>
+    composites: {}
+  }
+
+  type AnimeThemeGetPayload<S extends boolean | null | undefined | AnimeThemeDefaultArgs> = $Result.GetResult<Prisma.$AnimeThemePayload, S>
+
+  type AnimeThemeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AnimeThemeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AnimeThemeCountAggregateInputType | true
+    }
+
+  export interface AnimeThemeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AnimeTheme'], meta: { name: 'AnimeTheme' } }
+    /**
+     * Find zero or one AnimeTheme that matches the filter.
+     * @param {AnimeThemeFindUniqueArgs} args - Arguments to find a AnimeTheme
+     * @example
+     * // Get one AnimeTheme
+     * const animeTheme = await prisma.animeTheme.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AnimeThemeFindUniqueArgs>(args: SelectSubset<T, AnimeThemeFindUniqueArgs<ExtArgs>>): Prisma__AnimeThemeClient<$Result.GetResult<Prisma.$AnimeThemePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AnimeTheme that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AnimeThemeFindUniqueOrThrowArgs} args - Arguments to find a AnimeTheme
+     * @example
+     * // Get one AnimeTheme
+     * const animeTheme = await prisma.animeTheme.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AnimeThemeFindUniqueOrThrowArgs>(args: SelectSubset<T, AnimeThemeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AnimeThemeClient<$Result.GetResult<Prisma.$AnimeThemePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AnimeTheme that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AnimeThemeFindFirstArgs} args - Arguments to find a AnimeTheme
+     * @example
+     * // Get one AnimeTheme
+     * const animeTheme = await prisma.animeTheme.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AnimeThemeFindFirstArgs>(args?: SelectSubset<T, AnimeThemeFindFirstArgs<ExtArgs>>): Prisma__AnimeThemeClient<$Result.GetResult<Prisma.$AnimeThemePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AnimeTheme that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AnimeThemeFindFirstOrThrowArgs} args - Arguments to find a AnimeTheme
+     * @example
+     * // Get one AnimeTheme
+     * const animeTheme = await prisma.animeTheme.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AnimeThemeFindFirstOrThrowArgs>(args?: SelectSubset<T, AnimeThemeFindFirstOrThrowArgs<ExtArgs>>): Prisma__AnimeThemeClient<$Result.GetResult<Prisma.$AnimeThemePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AnimeThemes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AnimeThemeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AnimeThemes
+     * const animeThemes = await prisma.animeTheme.findMany()
+     * 
+     * // Get first 10 AnimeThemes
+     * const animeThemes = await prisma.animeTheme.findMany({ take: 10 })
+     * 
+     * // Only select the `animeId`
+     * const animeThemeWithAnimeIdOnly = await prisma.animeTheme.findMany({ select: { animeId: true } })
+     * 
+     */
+    findMany<T extends AnimeThemeFindManyArgs>(args?: SelectSubset<T, AnimeThemeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnimeThemePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AnimeTheme.
+     * @param {AnimeThemeCreateArgs} args - Arguments to create a AnimeTheme.
+     * @example
+     * // Create one AnimeTheme
+     * const AnimeTheme = await prisma.animeTheme.create({
+     *   data: {
+     *     // ... data to create a AnimeTheme
+     *   }
+     * })
+     * 
+     */
+    create<T extends AnimeThemeCreateArgs>(args: SelectSubset<T, AnimeThemeCreateArgs<ExtArgs>>): Prisma__AnimeThemeClient<$Result.GetResult<Prisma.$AnimeThemePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AnimeThemes.
+     * @param {AnimeThemeCreateManyArgs} args - Arguments to create many AnimeThemes.
+     * @example
+     * // Create many AnimeThemes
+     * const animeTheme = await prisma.animeTheme.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AnimeThemeCreateManyArgs>(args?: SelectSubset<T, AnimeThemeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AnimeThemes and returns the data saved in the database.
+     * @param {AnimeThemeCreateManyAndReturnArgs} args - Arguments to create many AnimeThemes.
+     * @example
+     * // Create many AnimeThemes
+     * const animeTheme = await prisma.animeTheme.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AnimeThemes and only return the `animeId`
+     * const animeThemeWithAnimeIdOnly = await prisma.animeTheme.createManyAndReturn({
+     *   select: { animeId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AnimeThemeCreateManyAndReturnArgs>(args?: SelectSubset<T, AnimeThemeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnimeThemePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AnimeTheme.
+     * @param {AnimeThemeDeleteArgs} args - Arguments to delete one AnimeTheme.
+     * @example
+     * // Delete one AnimeTheme
+     * const AnimeTheme = await prisma.animeTheme.delete({
+     *   where: {
+     *     // ... filter to delete one AnimeTheme
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AnimeThemeDeleteArgs>(args: SelectSubset<T, AnimeThemeDeleteArgs<ExtArgs>>): Prisma__AnimeThemeClient<$Result.GetResult<Prisma.$AnimeThemePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AnimeTheme.
+     * @param {AnimeThemeUpdateArgs} args - Arguments to update one AnimeTheme.
+     * @example
+     * // Update one AnimeTheme
+     * const animeTheme = await prisma.animeTheme.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AnimeThemeUpdateArgs>(args: SelectSubset<T, AnimeThemeUpdateArgs<ExtArgs>>): Prisma__AnimeThemeClient<$Result.GetResult<Prisma.$AnimeThemePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AnimeThemes.
+     * @param {AnimeThemeDeleteManyArgs} args - Arguments to filter AnimeThemes to delete.
+     * @example
+     * // Delete a few AnimeThemes
+     * const { count } = await prisma.animeTheme.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AnimeThemeDeleteManyArgs>(args?: SelectSubset<T, AnimeThemeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AnimeThemes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AnimeThemeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AnimeThemes
+     * const animeTheme = await prisma.animeTheme.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AnimeThemeUpdateManyArgs>(args: SelectSubset<T, AnimeThemeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AnimeThemes and returns the data updated in the database.
+     * @param {AnimeThemeUpdateManyAndReturnArgs} args - Arguments to update many AnimeThemes.
+     * @example
+     * // Update many AnimeThemes
+     * const animeTheme = await prisma.animeTheme.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AnimeThemes and only return the `animeId`
+     * const animeThemeWithAnimeIdOnly = await prisma.animeTheme.updateManyAndReturn({
+     *   select: { animeId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AnimeThemeUpdateManyAndReturnArgs>(args: SelectSubset<T, AnimeThemeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnimeThemePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AnimeTheme.
+     * @param {AnimeThemeUpsertArgs} args - Arguments to update or create a AnimeTheme.
+     * @example
+     * // Update or create a AnimeTheme
+     * const animeTheme = await prisma.animeTheme.upsert({
+     *   create: {
+     *     // ... data to create a AnimeTheme
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AnimeTheme we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AnimeThemeUpsertArgs>(args: SelectSubset<T, AnimeThemeUpsertArgs<ExtArgs>>): Prisma__AnimeThemeClient<$Result.GetResult<Prisma.$AnimeThemePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AnimeThemes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AnimeThemeCountArgs} args - Arguments to filter AnimeThemes to count.
+     * @example
+     * // Count the number of AnimeThemes
+     * const count = await prisma.animeTheme.count({
+     *   where: {
+     *     // ... the filter for the AnimeThemes we want to count
+     *   }
+     * })
+    **/
+    count<T extends AnimeThemeCountArgs>(
+      args?: Subset<T, AnimeThemeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AnimeThemeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AnimeTheme.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AnimeThemeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AnimeThemeAggregateArgs>(args: Subset<T, AnimeThemeAggregateArgs>): Prisma.PrismaPromise<GetAnimeThemeAggregateType<T>>
+
+    /**
+     * Group by AnimeTheme.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AnimeThemeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AnimeThemeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AnimeThemeGroupByArgs['orderBy'] }
+        : { orderBy?: AnimeThemeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AnimeThemeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAnimeThemeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AnimeTheme model
+   */
+  readonly fields: AnimeThemeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AnimeTheme.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AnimeThemeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    anime<T extends AnimeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AnimeDefaultArgs<ExtArgs>>): Prisma__AnimeClient<$Result.GetResult<Prisma.$AnimePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    theme<T extends ThemeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ThemeDefaultArgs<ExtArgs>>): Prisma__ThemeClient<$Result.GetResult<Prisma.$ThemePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AnimeTheme model
+   */
+  interface AnimeThemeFieldRefs {
+    readonly animeId: FieldRef<"AnimeTheme", 'String'>
+    readonly themeId: FieldRef<"AnimeTheme", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AnimeTheme findUnique
+   */
+  export type AnimeThemeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeTheme
+     */
+    select?: AnimeThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeTheme
+     */
+    omit?: AnimeThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeThemeInclude<ExtArgs> | null
+    /**
+     * Filter, which AnimeTheme to fetch.
+     */
+    where: AnimeThemeWhereUniqueInput
+  }
+
+  /**
+   * AnimeTheme findUniqueOrThrow
+   */
+  export type AnimeThemeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeTheme
+     */
+    select?: AnimeThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeTheme
+     */
+    omit?: AnimeThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeThemeInclude<ExtArgs> | null
+    /**
+     * Filter, which AnimeTheme to fetch.
+     */
+    where: AnimeThemeWhereUniqueInput
+  }
+
+  /**
+   * AnimeTheme findFirst
+   */
+  export type AnimeThemeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeTheme
+     */
+    select?: AnimeThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeTheme
+     */
+    omit?: AnimeThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeThemeInclude<ExtArgs> | null
+    /**
+     * Filter, which AnimeTheme to fetch.
+     */
+    where?: AnimeThemeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AnimeThemes to fetch.
+     */
+    orderBy?: AnimeThemeOrderByWithRelationInput | AnimeThemeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AnimeThemes.
+     */
+    cursor?: AnimeThemeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AnimeThemes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AnimeThemes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AnimeThemes.
+     */
+    distinct?: AnimeThemeScalarFieldEnum | AnimeThemeScalarFieldEnum[]
+  }
+
+  /**
+   * AnimeTheme findFirstOrThrow
+   */
+  export type AnimeThemeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeTheme
+     */
+    select?: AnimeThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeTheme
+     */
+    omit?: AnimeThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeThemeInclude<ExtArgs> | null
+    /**
+     * Filter, which AnimeTheme to fetch.
+     */
+    where?: AnimeThemeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AnimeThemes to fetch.
+     */
+    orderBy?: AnimeThemeOrderByWithRelationInput | AnimeThemeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AnimeThemes.
+     */
+    cursor?: AnimeThemeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AnimeThemes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AnimeThemes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AnimeThemes.
+     */
+    distinct?: AnimeThemeScalarFieldEnum | AnimeThemeScalarFieldEnum[]
+  }
+
+  /**
+   * AnimeTheme findMany
+   */
+  export type AnimeThemeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeTheme
+     */
+    select?: AnimeThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeTheme
+     */
+    omit?: AnimeThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeThemeInclude<ExtArgs> | null
+    /**
+     * Filter, which AnimeThemes to fetch.
+     */
+    where?: AnimeThemeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AnimeThemes to fetch.
+     */
+    orderBy?: AnimeThemeOrderByWithRelationInput | AnimeThemeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AnimeThemes.
+     */
+    cursor?: AnimeThemeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AnimeThemes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AnimeThemes.
+     */
+    skip?: number
+    distinct?: AnimeThemeScalarFieldEnum | AnimeThemeScalarFieldEnum[]
+  }
+
+  /**
+   * AnimeTheme create
+   */
+  export type AnimeThemeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeTheme
+     */
+    select?: AnimeThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeTheme
+     */
+    omit?: AnimeThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeThemeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AnimeTheme.
+     */
+    data: XOR<AnimeThemeCreateInput, AnimeThemeUncheckedCreateInput>
+  }
+
+  /**
+   * AnimeTheme createMany
+   */
+  export type AnimeThemeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AnimeThemes.
+     */
+    data: AnimeThemeCreateManyInput | AnimeThemeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AnimeTheme createManyAndReturn
+   */
+  export type AnimeThemeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeTheme
+     */
+    select?: AnimeThemeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeTheme
+     */
+    omit?: AnimeThemeOmit<ExtArgs> | null
+    /**
+     * The data used to create many AnimeThemes.
+     */
+    data: AnimeThemeCreateManyInput | AnimeThemeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeThemeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AnimeTheme update
+   */
+  export type AnimeThemeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeTheme
+     */
+    select?: AnimeThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeTheme
+     */
+    omit?: AnimeThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeThemeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AnimeTheme.
+     */
+    data: XOR<AnimeThemeUpdateInput, AnimeThemeUncheckedUpdateInput>
+    /**
+     * Choose, which AnimeTheme to update.
+     */
+    where: AnimeThemeWhereUniqueInput
+  }
+
+  /**
+   * AnimeTheme updateMany
+   */
+  export type AnimeThemeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AnimeThemes.
+     */
+    data: XOR<AnimeThemeUpdateManyMutationInput, AnimeThemeUncheckedUpdateManyInput>
+    /**
+     * Filter which AnimeThemes to update
+     */
+    where?: AnimeThemeWhereInput
+    /**
+     * Limit how many AnimeThemes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AnimeTheme updateManyAndReturn
+   */
+  export type AnimeThemeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeTheme
+     */
+    select?: AnimeThemeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeTheme
+     */
+    omit?: AnimeThemeOmit<ExtArgs> | null
+    /**
+     * The data used to update AnimeThemes.
+     */
+    data: XOR<AnimeThemeUpdateManyMutationInput, AnimeThemeUncheckedUpdateManyInput>
+    /**
+     * Filter which AnimeThemes to update
+     */
+    where?: AnimeThemeWhereInput
+    /**
+     * Limit how many AnimeThemes to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeThemeIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AnimeTheme upsert
+   */
+  export type AnimeThemeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeTheme
+     */
+    select?: AnimeThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeTheme
+     */
+    omit?: AnimeThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeThemeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AnimeTheme to update in case it exists.
+     */
+    where: AnimeThemeWhereUniqueInput
+    /**
+     * In case the AnimeTheme found by the `where` argument doesn't exist, create a new AnimeTheme with this data.
+     */
+    create: XOR<AnimeThemeCreateInput, AnimeThemeUncheckedCreateInput>
+    /**
+     * In case the AnimeTheme was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AnimeThemeUpdateInput, AnimeThemeUncheckedUpdateInput>
+  }
+
+  /**
+   * AnimeTheme delete
+   */
+  export type AnimeThemeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeTheme
+     */
+    select?: AnimeThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeTheme
+     */
+    omit?: AnimeThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeThemeInclude<ExtArgs> | null
+    /**
+     * Filter which AnimeTheme to delete.
+     */
+    where: AnimeThemeWhereUniqueInput
+  }
+
+  /**
+   * AnimeTheme deleteMany
+   */
+  export type AnimeThemeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AnimeThemes to delete
+     */
+    where?: AnimeThemeWhereInput
+    /**
+     * Limit how many AnimeThemes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AnimeTheme without action
+   */
+  export type AnimeThemeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeTheme
+     */
+    select?: AnimeThemeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeTheme
+     */
+    omit?: AnimeThemeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeThemeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AnimeDemographic
+   */
+
+  export type AggregateAnimeDemographic = {
+    _count: AnimeDemographicCountAggregateOutputType | null
+    _min: AnimeDemographicMinAggregateOutputType | null
+    _max: AnimeDemographicMaxAggregateOutputType | null
+  }
+
+  export type AnimeDemographicMinAggregateOutputType = {
+    animeId: string | null
+    demographicId: string | null
+  }
+
+  export type AnimeDemographicMaxAggregateOutputType = {
+    animeId: string | null
+    demographicId: string | null
+  }
+
+  export type AnimeDemographicCountAggregateOutputType = {
+    animeId: number
+    demographicId: number
+    _all: number
+  }
+
+
+  export type AnimeDemographicMinAggregateInputType = {
+    animeId?: true
+    demographicId?: true
+  }
+
+  export type AnimeDemographicMaxAggregateInputType = {
+    animeId?: true
+    demographicId?: true
+  }
+
+  export type AnimeDemographicCountAggregateInputType = {
+    animeId?: true
+    demographicId?: true
+    _all?: true
+  }
+
+  export type AnimeDemographicAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AnimeDemographic to aggregate.
+     */
+    where?: AnimeDemographicWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AnimeDemographics to fetch.
+     */
+    orderBy?: AnimeDemographicOrderByWithRelationInput | AnimeDemographicOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AnimeDemographicWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AnimeDemographics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AnimeDemographics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AnimeDemographics
+    **/
+    _count?: true | AnimeDemographicCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AnimeDemographicMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AnimeDemographicMaxAggregateInputType
+  }
+
+  export type GetAnimeDemographicAggregateType<T extends AnimeDemographicAggregateArgs> = {
+        [P in keyof T & keyof AggregateAnimeDemographic]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAnimeDemographic[P]>
+      : GetScalarType<T[P], AggregateAnimeDemographic[P]>
+  }
+
+
+
+
+  export type AnimeDemographicGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AnimeDemographicWhereInput
+    orderBy?: AnimeDemographicOrderByWithAggregationInput | AnimeDemographicOrderByWithAggregationInput[]
+    by: AnimeDemographicScalarFieldEnum[] | AnimeDemographicScalarFieldEnum
+    having?: AnimeDemographicScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AnimeDemographicCountAggregateInputType | true
+    _min?: AnimeDemographicMinAggregateInputType
+    _max?: AnimeDemographicMaxAggregateInputType
+  }
+
+  export type AnimeDemographicGroupByOutputType = {
+    animeId: string
+    demographicId: string
+    _count: AnimeDemographicCountAggregateOutputType | null
+    _min: AnimeDemographicMinAggregateOutputType | null
+    _max: AnimeDemographicMaxAggregateOutputType | null
+  }
+
+  type GetAnimeDemographicGroupByPayload<T extends AnimeDemographicGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AnimeDemographicGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AnimeDemographicGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AnimeDemographicGroupByOutputType[P]>
+            : GetScalarType<T[P], AnimeDemographicGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AnimeDemographicSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    animeId?: boolean
+    demographicId?: boolean
+    anime?: boolean | AnimeDefaultArgs<ExtArgs>
+    demographic?: boolean | DemographicDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["animeDemographic"]>
+
+  export type AnimeDemographicSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    animeId?: boolean
+    demographicId?: boolean
+    anime?: boolean | AnimeDefaultArgs<ExtArgs>
+    demographic?: boolean | DemographicDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["animeDemographic"]>
+
+  export type AnimeDemographicSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    animeId?: boolean
+    demographicId?: boolean
+    anime?: boolean | AnimeDefaultArgs<ExtArgs>
+    demographic?: boolean | DemographicDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["animeDemographic"]>
+
+  export type AnimeDemographicSelectScalar = {
+    animeId?: boolean
+    demographicId?: boolean
+  }
+
+  export type AnimeDemographicOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"animeId" | "demographicId", ExtArgs["result"]["animeDemographic"]>
+  export type AnimeDemographicInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    anime?: boolean | AnimeDefaultArgs<ExtArgs>
+    demographic?: boolean | DemographicDefaultArgs<ExtArgs>
+  }
+  export type AnimeDemographicIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    anime?: boolean | AnimeDefaultArgs<ExtArgs>
+    demographic?: boolean | DemographicDefaultArgs<ExtArgs>
+  }
+  export type AnimeDemographicIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    anime?: boolean | AnimeDefaultArgs<ExtArgs>
+    demographic?: boolean | DemographicDefaultArgs<ExtArgs>
+  }
+
+  export type $AnimeDemographicPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AnimeDemographic"
+    objects: {
+      anime: Prisma.$AnimePayload<ExtArgs>
+      demographic: Prisma.$DemographicPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      animeId: string
+      demographicId: string
+    }, ExtArgs["result"]["animeDemographic"]>
+    composites: {}
+  }
+
+  type AnimeDemographicGetPayload<S extends boolean | null | undefined | AnimeDemographicDefaultArgs> = $Result.GetResult<Prisma.$AnimeDemographicPayload, S>
+
+  type AnimeDemographicCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AnimeDemographicFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AnimeDemographicCountAggregateInputType | true
+    }
+
+  export interface AnimeDemographicDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AnimeDemographic'], meta: { name: 'AnimeDemographic' } }
+    /**
+     * Find zero or one AnimeDemographic that matches the filter.
+     * @param {AnimeDemographicFindUniqueArgs} args - Arguments to find a AnimeDemographic
+     * @example
+     * // Get one AnimeDemographic
+     * const animeDemographic = await prisma.animeDemographic.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AnimeDemographicFindUniqueArgs>(args: SelectSubset<T, AnimeDemographicFindUniqueArgs<ExtArgs>>): Prisma__AnimeDemographicClient<$Result.GetResult<Prisma.$AnimeDemographicPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AnimeDemographic that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AnimeDemographicFindUniqueOrThrowArgs} args - Arguments to find a AnimeDemographic
+     * @example
+     * // Get one AnimeDemographic
+     * const animeDemographic = await prisma.animeDemographic.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AnimeDemographicFindUniqueOrThrowArgs>(args: SelectSubset<T, AnimeDemographicFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AnimeDemographicClient<$Result.GetResult<Prisma.$AnimeDemographicPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AnimeDemographic that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AnimeDemographicFindFirstArgs} args - Arguments to find a AnimeDemographic
+     * @example
+     * // Get one AnimeDemographic
+     * const animeDemographic = await prisma.animeDemographic.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AnimeDemographicFindFirstArgs>(args?: SelectSubset<T, AnimeDemographicFindFirstArgs<ExtArgs>>): Prisma__AnimeDemographicClient<$Result.GetResult<Prisma.$AnimeDemographicPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AnimeDemographic that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AnimeDemographicFindFirstOrThrowArgs} args - Arguments to find a AnimeDemographic
+     * @example
+     * // Get one AnimeDemographic
+     * const animeDemographic = await prisma.animeDemographic.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AnimeDemographicFindFirstOrThrowArgs>(args?: SelectSubset<T, AnimeDemographicFindFirstOrThrowArgs<ExtArgs>>): Prisma__AnimeDemographicClient<$Result.GetResult<Prisma.$AnimeDemographicPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AnimeDemographics that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AnimeDemographicFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AnimeDemographics
+     * const animeDemographics = await prisma.animeDemographic.findMany()
+     * 
+     * // Get first 10 AnimeDemographics
+     * const animeDemographics = await prisma.animeDemographic.findMany({ take: 10 })
+     * 
+     * // Only select the `animeId`
+     * const animeDemographicWithAnimeIdOnly = await prisma.animeDemographic.findMany({ select: { animeId: true } })
+     * 
+     */
+    findMany<T extends AnimeDemographicFindManyArgs>(args?: SelectSubset<T, AnimeDemographicFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnimeDemographicPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AnimeDemographic.
+     * @param {AnimeDemographicCreateArgs} args - Arguments to create a AnimeDemographic.
+     * @example
+     * // Create one AnimeDemographic
+     * const AnimeDemographic = await prisma.animeDemographic.create({
+     *   data: {
+     *     // ... data to create a AnimeDemographic
+     *   }
+     * })
+     * 
+     */
+    create<T extends AnimeDemographicCreateArgs>(args: SelectSubset<T, AnimeDemographicCreateArgs<ExtArgs>>): Prisma__AnimeDemographicClient<$Result.GetResult<Prisma.$AnimeDemographicPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AnimeDemographics.
+     * @param {AnimeDemographicCreateManyArgs} args - Arguments to create many AnimeDemographics.
+     * @example
+     * // Create many AnimeDemographics
+     * const animeDemographic = await prisma.animeDemographic.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AnimeDemographicCreateManyArgs>(args?: SelectSubset<T, AnimeDemographicCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AnimeDemographics and returns the data saved in the database.
+     * @param {AnimeDemographicCreateManyAndReturnArgs} args - Arguments to create many AnimeDemographics.
+     * @example
+     * // Create many AnimeDemographics
+     * const animeDemographic = await prisma.animeDemographic.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AnimeDemographics and only return the `animeId`
+     * const animeDemographicWithAnimeIdOnly = await prisma.animeDemographic.createManyAndReturn({
+     *   select: { animeId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AnimeDemographicCreateManyAndReturnArgs>(args?: SelectSubset<T, AnimeDemographicCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnimeDemographicPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AnimeDemographic.
+     * @param {AnimeDemographicDeleteArgs} args - Arguments to delete one AnimeDemographic.
+     * @example
+     * // Delete one AnimeDemographic
+     * const AnimeDemographic = await prisma.animeDemographic.delete({
+     *   where: {
+     *     // ... filter to delete one AnimeDemographic
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AnimeDemographicDeleteArgs>(args: SelectSubset<T, AnimeDemographicDeleteArgs<ExtArgs>>): Prisma__AnimeDemographicClient<$Result.GetResult<Prisma.$AnimeDemographicPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AnimeDemographic.
+     * @param {AnimeDemographicUpdateArgs} args - Arguments to update one AnimeDemographic.
+     * @example
+     * // Update one AnimeDemographic
+     * const animeDemographic = await prisma.animeDemographic.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AnimeDemographicUpdateArgs>(args: SelectSubset<T, AnimeDemographicUpdateArgs<ExtArgs>>): Prisma__AnimeDemographicClient<$Result.GetResult<Prisma.$AnimeDemographicPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AnimeDemographics.
+     * @param {AnimeDemographicDeleteManyArgs} args - Arguments to filter AnimeDemographics to delete.
+     * @example
+     * // Delete a few AnimeDemographics
+     * const { count } = await prisma.animeDemographic.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AnimeDemographicDeleteManyArgs>(args?: SelectSubset<T, AnimeDemographicDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AnimeDemographics.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AnimeDemographicUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AnimeDemographics
+     * const animeDemographic = await prisma.animeDemographic.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AnimeDemographicUpdateManyArgs>(args: SelectSubset<T, AnimeDemographicUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AnimeDemographics and returns the data updated in the database.
+     * @param {AnimeDemographicUpdateManyAndReturnArgs} args - Arguments to update many AnimeDemographics.
+     * @example
+     * // Update many AnimeDemographics
+     * const animeDemographic = await prisma.animeDemographic.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AnimeDemographics and only return the `animeId`
+     * const animeDemographicWithAnimeIdOnly = await prisma.animeDemographic.updateManyAndReturn({
+     *   select: { animeId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AnimeDemographicUpdateManyAndReturnArgs>(args: SelectSubset<T, AnimeDemographicUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnimeDemographicPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AnimeDemographic.
+     * @param {AnimeDemographicUpsertArgs} args - Arguments to update or create a AnimeDemographic.
+     * @example
+     * // Update or create a AnimeDemographic
+     * const animeDemographic = await prisma.animeDemographic.upsert({
+     *   create: {
+     *     // ... data to create a AnimeDemographic
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AnimeDemographic we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AnimeDemographicUpsertArgs>(args: SelectSubset<T, AnimeDemographicUpsertArgs<ExtArgs>>): Prisma__AnimeDemographicClient<$Result.GetResult<Prisma.$AnimeDemographicPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AnimeDemographics.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AnimeDemographicCountArgs} args - Arguments to filter AnimeDemographics to count.
+     * @example
+     * // Count the number of AnimeDemographics
+     * const count = await prisma.animeDemographic.count({
+     *   where: {
+     *     // ... the filter for the AnimeDemographics we want to count
+     *   }
+     * })
+    **/
+    count<T extends AnimeDemographicCountArgs>(
+      args?: Subset<T, AnimeDemographicCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AnimeDemographicCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AnimeDemographic.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AnimeDemographicAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AnimeDemographicAggregateArgs>(args: Subset<T, AnimeDemographicAggregateArgs>): Prisma.PrismaPromise<GetAnimeDemographicAggregateType<T>>
+
+    /**
+     * Group by AnimeDemographic.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AnimeDemographicGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AnimeDemographicGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AnimeDemographicGroupByArgs['orderBy'] }
+        : { orderBy?: AnimeDemographicGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AnimeDemographicGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAnimeDemographicGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AnimeDemographic model
+   */
+  readonly fields: AnimeDemographicFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AnimeDemographic.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AnimeDemographicClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    anime<T extends AnimeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AnimeDefaultArgs<ExtArgs>>): Prisma__AnimeClient<$Result.GetResult<Prisma.$AnimePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    demographic<T extends DemographicDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DemographicDefaultArgs<ExtArgs>>): Prisma__DemographicClient<$Result.GetResult<Prisma.$DemographicPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AnimeDemographic model
+   */
+  interface AnimeDemographicFieldRefs {
+    readonly animeId: FieldRef<"AnimeDemographic", 'String'>
+    readonly demographicId: FieldRef<"AnimeDemographic", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AnimeDemographic findUnique
+   */
+  export type AnimeDemographicFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeDemographic
+     */
+    select?: AnimeDemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeDemographic
+     */
+    omit?: AnimeDemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeDemographicInclude<ExtArgs> | null
+    /**
+     * Filter, which AnimeDemographic to fetch.
+     */
+    where: AnimeDemographicWhereUniqueInput
+  }
+
+  /**
+   * AnimeDemographic findUniqueOrThrow
+   */
+  export type AnimeDemographicFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeDemographic
+     */
+    select?: AnimeDemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeDemographic
+     */
+    omit?: AnimeDemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeDemographicInclude<ExtArgs> | null
+    /**
+     * Filter, which AnimeDemographic to fetch.
+     */
+    where: AnimeDemographicWhereUniqueInput
+  }
+
+  /**
+   * AnimeDemographic findFirst
+   */
+  export type AnimeDemographicFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeDemographic
+     */
+    select?: AnimeDemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeDemographic
+     */
+    omit?: AnimeDemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeDemographicInclude<ExtArgs> | null
+    /**
+     * Filter, which AnimeDemographic to fetch.
+     */
+    where?: AnimeDemographicWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AnimeDemographics to fetch.
+     */
+    orderBy?: AnimeDemographicOrderByWithRelationInput | AnimeDemographicOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AnimeDemographics.
+     */
+    cursor?: AnimeDemographicWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AnimeDemographics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AnimeDemographics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AnimeDemographics.
+     */
+    distinct?: AnimeDemographicScalarFieldEnum | AnimeDemographicScalarFieldEnum[]
+  }
+
+  /**
+   * AnimeDemographic findFirstOrThrow
+   */
+  export type AnimeDemographicFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeDemographic
+     */
+    select?: AnimeDemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeDemographic
+     */
+    omit?: AnimeDemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeDemographicInclude<ExtArgs> | null
+    /**
+     * Filter, which AnimeDemographic to fetch.
+     */
+    where?: AnimeDemographicWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AnimeDemographics to fetch.
+     */
+    orderBy?: AnimeDemographicOrderByWithRelationInput | AnimeDemographicOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AnimeDemographics.
+     */
+    cursor?: AnimeDemographicWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AnimeDemographics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AnimeDemographics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AnimeDemographics.
+     */
+    distinct?: AnimeDemographicScalarFieldEnum | AnimeDemographicScalarFieldEnum[]
+  }
+
+  /**
+   * AnimeDemographic findMany
+   */
+  export type AnimeDemographicFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeDemographic
+     */
+    select?: AnimeDemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeDemographic
+     */
+    omit?: AnimeDemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeDemographicInclude<ExtArgs> | null
+    /**
+     * Filter, which AnimeDemographics to fetch.
+     */
+    where?: AnimeDemographicWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AnimeDemographics to fetch.
+     */
+    orderBy?: AnimeDemographicOrderByWithRelationInput | AnimeDemographicOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AnimeDemographics.
+     */
+    cursor?: AnimeDemographicWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AnimeDemographics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AnimeDemographics.
+     */
+    skip?: number
+    distinct?: AnimeDemographicScalarFieldEnum | AnimeDemographicScalarFieldEnum[]
+  }
+
+  /**
+   * AnimeDemographic create
+   */
+  export type AnimeDemographicCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeDemographic
+     */
+    select?: AnimeDemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeDemographic
+     */
+    omit?: AnimeDemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeDemographicInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AnimeDemographic.
+     */
+    data: XOR<AnimeDemographicCreateInput, AnimeDemographicUncheckedCreateInput>
+  }
+
+  /**
+   * AnimeDemographic createMany
+   */
+  export type AnimeDemographicCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AnimeDemographics.
+     */
+    data: AnimeDemographicCreateManyInput | AnimeDemographicCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AnimeDemographic createManyAndReturn
+   */
+  export type AnimeDemographicCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeDemographic
+     */
+    select?: AnimeDemographicSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeDemographic
+     */
+    omit?: AnimeDemographicOmit<ExtArgs> | null
+    /**
+     * The data used to create many AnimeDemographics.
+     */
+    data: AnimeDemographicCreateManyInput | AnimeDemographicCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeDemographicIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AnimeDemographic update
+   */
+  export type AnimeDemographicUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeDemographic
+     */
+    select?: AnimeDemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeDemographic
+     */
+    omit?: AnimeDemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeDemographicInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AnimeDemographic.
+     */
+    data: XOR<AnimeDemographicUpdateInput, AnimeDemographicUncheckedUpdateInput>
+    /**
+     * Choose, which AnimeDemographic to update.
+     */
+    where: AnimeDemographicWhereUniqueInput
+  }
+
+  /**
+   * AnimeDemographic updateMany
+   */
+  export type AnimeDemographicUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AnimeDemographics.
+     */
+    data: XOR<AnimeDemographicUpdateManyMutationInput, AnimeDemographicUncheckedUpdateManyInput>
+    /**
+     * Filter which AnimeDemographics to update
+     */
+    where?: AnimeDemographicWhereInput
+    /**
+     * Limit how many AnimeDemographics to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AnimeDemographic updateManyAndReturn
+   */
+  export type AnimeDemographicUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeDemographic
+     */
+    select?: AnimeDemographicSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeDemographic
+     */
+    omit?: AnimeDemographicOmit<ExtArgs> | null
+    /**
+     * The data used to update AnimeDemographics.
+     */
+    data: XOR<AnimeDemographicUpdateManyMutationInput, AnimeDemographicUncheckedUpdateManyInput>
+    /**
+     * Filter which AnimeDemographics to update
+     */
+    where?: AnimeDemographicWhereInput
+    /**
+     * Limit how many AnimeDemographics to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeDemographicIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AnimeDemographic upsert
+   */
+  export type AnimeDemographicUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeDemographic
+     */
+    select?: AnimeDemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeDemographic
+     */
+    omit?: AnimeDemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeDemographicInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AnimeDemographic to update in case it exists.
+     */
+    where: AnimeDemographicWhereUniqueInput
+    /**
+     * In case the AnimeDemographic found by the `where` argument doesn't exist, create a new AnimeDemographic with this data.
+     */
+    create: XOR<AnimeDemographicCreateInput, AnimeDemographicUncheckedCreateInput>
+    /**
+     * In case the AnimeDemographic was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AnimeDemographicUpdateInput, AnimeDemographicUncheckedUpdateInput>
+  }
+
+  /**
+   * AnimeDemographic delete
+   */
+  export type AnimeDemographicDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeDemographic
+     */
+    select?: AnimeDemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeDemographic
+     */
+    omit?: AnimeDemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeDemographicInclude<ExtArgs> | null
+    /**
+     * Filter which AnimeDemographic to delete.
+     */
+    where: AnimeDemographicWhereUniqueInput
+  }
+
+  /**
+   * AnimeDemographic deleteMany
+   */
+  export type AnimeDemographicDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AnimeDemographics to delete
+     */
+    where?: AnimeDemographicWhereInput
+    /**
+     * Limit how many AnimeDemographics to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AnimeDemographic without action
+   */
+  export type AnimeDemographicDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AnimeDemographic
+     */
+    select?: AnimeDemographicSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AnimeDemographic
+     */
+    omit?: AnimeDemographicOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimeDemographicInclude<ExtArgs> | null
   }
 
 
@@ -15758,6 +19344,2177 @@ export namespace Prisma {
 
 
   /**
+   * Model Account
+   */
+
+  export type AggregateAccount = {
+    _count: AccountCountAggregateOutputType | null
+    _avg: AccountAvgAggregateOutputType | null
+    _sum: AccountSumAggregateOutputType | null
+    _min: AccountMinAggregateOutputType | null
+    _max: AccountMaxAggregateOutputType | null
+  }
+
+  export type AccountAvgAggregateOutputType = {
+    expiresAt: number | null
+  }
+
+  export type AccountSumAggregateOutputType = {
+    expiresAt: number | null
+  }
+
+  export type AccountMinAggregateOutputType = {
+    id: string | null
+    type: string | null
+    provider: string | null
+    refreshToken: string | null
+    accessToken: string | null
+    expiresAt: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    userId: string | null
+  }
+
+  export type AccountMaxAggregateOutputType = {
+    id: string | null
+    type: string | null
+    provider: string | null
+    refreshToken: string | null
+    accessToken: string | null
+    expiresAt: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    userId: string | null
+  }
+
+  export type AccountCountAggregateOutputType = {
+    id: number
+    type: number
+    provider: number
+    refreshToken: number
+    accessToken: number
+    expiresAt: number
+    createdAt: number
+    updatedAt: number
+    userId: number
+    _all: number
+  }
+
+
+  export type AccountAvgAggregateInputType = {
+    expiresAt?: true
+  }
+
+  export type AccountSumAggregateInputType = {
+    expiresAt?: true
+  }
+
+  export type AccountMinAggregateInputType = {
+    id?: true
+    type?: true
+    provider?: true
+    refreshToken?: true
+    accessToken?: true
+    expiresAt?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+  }
+
+  export type AccountMaxAggregateInputType = {
+    id?: true
+    type?: true
+    provider?: true
+    refreshToken?: true
+    accessToken?: true
+    expiresAt?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+  }
+
+  export type AccountCountAggregateInputType = {
+    id?: true
+    type?: true
+    provider?: true
+    refreshToken?: true
+    accessToken?: true
+    expiresAt?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type AccountAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Account to aggregate.
+     */
+    where?: AccountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Accounts to fetch.
+     */
+    orderBy?: AccountOrderByWithRelationInput | AccountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AccountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Accounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Accounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Accounts
+    **/
+    _count?: true | AccountCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AccountAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AccountSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AccountMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AccountMaxAggregateInputType
+  }
+
+  export type GetAccountAggregateType<T extends AccountAggregateArgs> = {
+        [P in keyof T & keyof AggregateAccount]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAccount[P]>
+      : GetScalarType<T[P], AggregateAccount[P]>
+  }
+
+
+
+
+  export type AccountGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccountWhereInput
+    orderBy?: AccountOrderByWithAggregationInput | AccountOrderByWithAggregationInput[]
+    by: AccountScalarFieldEnum[] | AccountScalarFieldEnum
+    having?: AccountScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AccountCountAggregateInputType | true
+    _avg?: AccountAvgAggregateInputType
+    _sum?: AccountSumAggregateInputType
+    _min?: AccountMinAggregateInputType
+    _max?: AccountMaxAggregateInputType
+  }
+
+  export type AccountGroupByOutputType = {
+    id: string
+    type: string
+    provider: string
+    refreshToken: string | null
+    accessToken: string | null
+    expiresAt: number | null
+    createdAt: Date
+    updatedAt: Date
+    userId: string | null
+    _count: AccountCountAggregateOutputType | null
+    _avg: AccountAvgAggregateOutputType | null
+    _sum: AccountSumAggregateOutputType | null
+    _min: AccountMinAggregateOutputType | null
+    _max: AccountMaxAggregateOutputType | null
+  }
+
+  type GetAccountGroupByPayload<T extends AccountGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AccountGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AccountGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AccountGroupByOutputType[P]>
+            : GetScalarType<T[P], AccountGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AccountSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    provider?: boolean
+    refreshToken?: boolean
+    accessToken?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    user?: boolean | Account$userArgs<ExtArgs>
+  }, ExtArgs["result"]["account"]>
+
+  export type AccountSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    provider?: boolean
+    refreshToken?: boolean
+    accessToken?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    user?: boolean | Account$userArgs<ExtArgs>
+  }, ExtArgs["result"]["account"]>
+
+  export type AccountSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    provider?: boolean
+    refreshToken?: boolean
+    accessToken?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    user?: boolean | Account$userArgs<ExtArgs>
+  }, ExtArgs["result"]["account"]>
+
+  export type AccountSelectScalar = {
+    id?: boolean
+    type?: boolean
+    provider?: boolean
+    refreshToken?: boolean
+    accessToken?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+  }
+
+  export type AccountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "provider" | "refreshToken" | "accessToken" | "expiresAt" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["account"]>
+  export type AccountInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | Account$userArgs<ExtArgs>
+  }
+  export type AccountIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | Account$userArgs<ExtArgs>
+  }
+  export type AccountIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | Account$userArgs<ExtArgs>
+  }
+
+  export type $AccountPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Account"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      type: string
+      provider: string
+      refreshToken: string | null
+      accessToken: string | null
+      expiresAt: number | null
+      createdAt: Date
+      updatedAt: Date
+      userId: string | null
+    }, ExtArgs["result"]["account"]>
+    composites: {}
+  }
+
+  type AccountGetPayload<S extends boolean | null | undefined | AccountDefaultArgs> = $Result.GetResult<Prisma.$AccountPayload, S>
+
+  type AccountCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AccountFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AccountCountAggregateInputType | true
+    }
+
+  export interface AccountDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Account'], meta: { name: 'Account' } }
+    /**
+     * Find zero or one Account that matches the filter.
+     * @param {AccountFindUniqueArgs} args - Arguments to find a Account
+     * @example
+     * // Get one Account
+     * const account = await prisma.account.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AccountFindUniqueArgs>(args: SelectSubset<T, AccountFindUniqueArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Account that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AccountFindUniqueOrThrowArgs} args - Arguments to find a Account
+     * @example
+     * // Get one Account
+     * const account = await prisma.account.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AccountFindUniqueOrThrowArgs>(args: SelectSubset<T, AccountFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Account that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountFindFirstArgs} args - Arguments to find a Account
+     * @example
+     * // Get one Account
+     * const account = await prisma.account.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AccountFindFirstArgs>(args?: SelectSubset<T, AccountFindFirstArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Account that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountFindFirstOrThrowArgs} args - Arguments to find a Account
+     * @example
+     * // Get one Account
+     * const account = await prisma.account.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AccountFindFirstOrThrowArgs>(args?: SelectSubset<T, AccountFindFirstOrThrowArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Accounts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Accounts
+     * const accounts = await prisma.account.findMany()
+     * 
+     * // Get first 10 Accounts
+     * const accounts = await prisma.account.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const accountWithIdOnly = await prisma.account.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AccountFindManyArgs>(args?: SelectSubset<T, AccountFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Account.
+     * @param {AccountCreateArgs} args - Arguments to create a Account.
+     * @example
+     * // Create one Account
+     * const Account = await prisma.account.create({
+     *   data: {
+     *     // ... data to create a Account
+     *   }
+     * })
+     * 
+     */
+    create<T extends AccountCreateArgs>(args: SelectSubset<T, AccountCreateArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Accounts.
+     * @param {AccountCreateManyArgs} args - Arguments to create many Accounts.
+     * @example
+     * // Create many Accounts
+     * const account = await prisma.account.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AccountCreateManyArgs>(args?: SelectSubset<T, AccountCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Accounts and returns the data saved in the database.
+     * @param {AccountCreateManyAndReturnArgs} args - Arguments to create many Accounts.
+     * @example
+     * // Create many Accounts
+     * const account = await prisma.account.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Accounts and only return the `id`
+     * const accountWithIdOnly = await prisma.account.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AccountCreateManyAndReturnArgs>(args?: SelectSubset<T, AccountCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Account.
+     * @param {AccountDeleteArgs} args - Arguments to delete one Account.
+     * @example
+     * // Delete one Account
+     * const Account = await prisma.account.delete({
+     *   where: {
+     *     // ... filter to delete one Account
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AccountDeleteArgs>(args: SelectSubset<T, AccountDeleteArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Account.
+     * @param {AccountUpdateArgs} args - Arguments to update one Account.
+     * @example
+     * // Update one Account
+     * const account = await prisma.account.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AccountUpdateArgs>(args: SelectSubset<T, AccountUpdateArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Accounts.
+     * @param {AccountDeleteManyArgs} args - Arguments to filter Accounts to delete.
+     * @example
+     * // Delete a few Accounts
+     * const { count } = await prisma.account.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AccountDeleteManyArgs>(args?: SelectSubset<T, AccountDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Accounts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Accounts
+     * const account = await prisma.account.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AccountUpdateManyArgs>(args: SelectSubset<T, AccountUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Accounts and returns the data updated in the database.
+     * @param {AccountUpdateManyAndReturnArgs} args - Arguments to update many Accounts.
+     * @example
+     * // Update many Accounts
+     * const account = await prisma.account.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Accounts and only return the `id`
+     * const accountWithIdOnly = await prisma.account.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AccountUpdateManyAndReturnArgs>(args: SelectSubset<T, AccountUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Account.
+     * @param {AccountUpsertArgs} args - Arguments to update or create a Account.
+     * @example
+     * // Update or create a Account
+     * const account = await prisma.account.upsert({
+     *   create: {
+     *     // ... data to create a Account
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Account we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AccountUpsertArgs>(args: SelectSubset<T, AccountUpsertArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Accounts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountCountArgs} args - Arguments to filter Accounts to count.
+     * @example
+     * // Count the number of Accounts
+     * const count = await prisma.account.count({
+     *   where: {
+     *     // ... the filter for the Accounts we want to count
+     *   }
+     * })
+    **/
+    count<T extends AccountCountArgs>(
+      args?: Subset<T, AccountCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AccountCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Account.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AccountAggregateArgs>(args: Subset<T, AccountAggregateArgs>): Prisma.PrismaPromise<GetAccountAggregateType<T>>
+
+    /**
+     * Group by Account.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AccountGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AccountGroupByArgs['orderBy'] }
+        : { orderBy?: AccountGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AccountGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAccountGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Account model
+   */
+  readonly fields: AccountFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Account.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AccountClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends Account$userArgs<ExtArgs> = {}>(args?: Subset<T, Account$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Account model
+   */
+  interface AccountFieldRefs {
+    readonly id: FieldRef<"Account", 'String'>
+    readonly type: FieldRef<"Account", 'String'>
+    readonly provider: FieldRef<"Account", 'String'>
+    readonly refreshToken: FieldRef<"Account", 'String'>
+    readonly accessToken: FieldRef<"Account", 'String'>
+    readonly expiresAt: FieldRef<"Account", 'Int'>
+    readonly createdAt: FieldRef<"Account", 'DateTime'>
+    readonly updatedAt: FieldRef<"Account", 'DateTime'>
+    readonly userId: FieldRef<"Account", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Account findUnique
+   */
+  export type AccountFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    /**
+     * Filter, which Account to fetch.
+     */
+    where: AccountWhereUniqueInput
+  }
+
+  /**
+   * Account findUniqueOrThrow
+   */
+  export type AccountFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    /**
+     * Filter, which Account to fetch.
+     */
+    where: AccountWhereUniqueInput
+  }
+
+  /**
+   * Account findFirst
+   */
+  export type AccountFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    /**
+     * Filter, which Account to fetch.
+     */
+    where?: AccountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Accounts to fetch.
+     */
+    orderBy?: AccountOrderByWithRelationInput | AccountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Accounts.
+     */
+    cursor?: AccountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Accounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Accounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Accounts.
+     */
+    distinct?: AccountScalarFieldEnum | AccountScalarFieldEnum[]
+  }
+
+  /**
+   * Account findFirstOrThrow
+   */
+  export type AccountFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    /**
+     * Filter, which Account to fetch.
+     */
+    where?: AccountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Accounts to fetch.
+     */
+    orderBy?: AccountOrderByWithRelationInput | AccountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Accounts.
+     */
+    cursor?: AccountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Accounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Accounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Accounts.
+     */
+    distinct?: AccountScalarFieldEnum | AccountScalarFieldEnum[]
+  }
+
+  /**
+   * Account findMany
+   */
+  export type AccountFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    /**
+     * Filter, which Accounts to fetch.
+     */
+    where?: AccountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Accounts to fetch.
+     */
+    orderBy?: AccountOrderByWithRelationInput | AccountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Accounts.
+     */
+    cursor?: AccountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Accounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Accounts.
+     */
+    skip?: number
+    distinct?: AccountScalarFieldEnum | AccountScalarFieldEnum[]
+  }
+
+  /**
+   * Account create
+   */
+  export type AccountCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Account.
+     */
+    data: XOR<AccountCreateInput, AccountUncheckedCreateInput>
+  }
+
+  /**
+   * Account createMany
+   */
+  export type AccountCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Accounts.
+     */
+    data: AccountCreateManyInput | AccountCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Account createManyAndReturn
+   */
+  export type AccountCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * The data used to create many Accounts.
+     */
+    data: AccountCreateManyInput | AccountCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Account update
+   */
+  export type AccountUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Account.
+     */
+    data: XOR<AccountUpdateInput, AccountUncheckedUpdateInput>
+    /**
+     * Choose, which Account to update.
+     */
+    where: AccountWhereUniqueInput
+  }
+
+  /**
+   * Account updateMany
+   */
+  export type AccountUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Accounts.
+     */
+    data: XOR<AccountUpdateManyMutationInput, AccountUncheckedUpdateManyInput>
+    /**
+     * Filter which Accounts to update
+     */
+    where?: AccountWhereInput
+    /**
+     * Limit how many Accounts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Account updateManyAndReturn
+   */
+  export type AccountUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * The data used to update Accounts.
+     */
+    data: XOR<AccountUpdateManyMutationInput, AccountUncheckedUpdateManyInput>
+    /**
+     * Filter which Accounts to update
+     */
+    where?: AccountWhereInput
+    /**
+     * Limit how many Accounts to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Account upsert
+   */
+  export type AccountUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Account to update in case it exists.
+     */
+    where: AccountWhereUniqueInput
+    /**
+     * In case the Account found by the `where` argument doesn't exist, create a new Account with this data.
+     */
+    create: XOR<AccountCreateInput, AccountUncheckedCreateInput>
+    /**
+     * In case the Account was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AccountUpdateInput, AccountUncheckedUpdateInput>
+  }
+
+  /**
+   * Account delete
+   */
+  export type AccountDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    /**
+     * Filter which Account to delete.
+     */
+    where: AccountWhereUniqueInput
+  }
+
+  /**
+   * Account deleteMany
+   */
+  export type AccountDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Accounts to delete
+     */
+    where?: AccountWhereInput
+    /**
+     * Limit how many Accounts to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Account.user
+   */
+  export type Account$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * Account without action
+   */
+  export type AccountDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Token
+   */
+
+  export type AggregateToken = {
+    _count: TokenCountAggregateOutputType | null
+    _min: TokenMinAggregateOutputType | null
+    _max: TokenMaxAggregateOutputType | null
+  }
+
+  export type TokenMinAggregateOutputType = {
+    id: string | null
+    email: string | null
+    token: string | null
+    type: $Enums.TokenType | null
+    expiresIn: Date | null
+    createdAt: Date | null
+  }
+
+  export type TokenMaxAggregateOutputType = {
+    id: string | null
+    email: string | null
+    token: string | null
+    type: $Enums.TokenType | null
+    expiresIn: Date | null
+    createdAt: Date | null
+  }
+
+  export type TokenCountAggregateOutputType = {
+    id: number
+    email: number
+    token: number
+    type: number
+    expiresIn: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type TokenMinAggregateInputType = {
+    id?: true
+    email?: true
+    token?: true
+    type?: true
+    expiresIn?: true
+    createdAt?: true
+  }
+
+  export type TokenMaxAggregateInputType = {
+    id?: true
+    email?: true
+    token?: true
+    type?: true
+    expiresIn?: true
+    createdAt?: true
+  }
+
+  export type TokenCountAggregateInputType = {
+    id?: true
+    email?: true
+    token?: true
+    type?: true
+    expiresIn?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type TokenAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Token to aggregate.
+     */
+    where?: TokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tokens to fetch.
+     */
+    orderBy?: TokenOrderByWithRelationInput | TokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Tokens
+    **/
+    _count?: true | TokenCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TokenMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TokenMaxAggregateInputType
+  }
+
+  export type GetTokenAggregateType<T extends TokenAggregateArgs> = {
+        [P in keyof T & keyof AggregateToken]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateToken[P]>
+      : GetScalarType<T[P], AggregateToken[P]>
+  }
+
+
+
+
+  export type TokenGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TokenWhereInput
+    orderBy?: TokenOrderByWithAggregationInput | TokenOrderByWithAggregationInput[]
+    by: TokenScalarFieldEnum[] | TokenScalarFieldEnum
+    having?: TokenScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TokenCountAggregateInputType | true
+    _min?: TokenMinAggregateInputType
+    _max?: TokenMaxAggregateInputType
+  }
+
+  export type TokenGroupByOutputType = {
+    id: string
+    email: string
+    token: string
+    type: $Enums.TokenType
+    expiresIn: Date
+    createdAt: Date
+    _count: TokenCountAggregateOutputType | null
+    _min: TokenMinAggregateOutputType | null
+    _max: TokenMaxAggregateOutputType | null
+  }
+
+  type GetTokenGroupByPayload<T extends TokenGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TokenGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TokenGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TokenGroupByOutputType[P]>
+            : GetScalarType<T[P], TokenGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TokenSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    token?: boolean
+    type?: boolean
+    expiresIn?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["token"]>
+
+  export type TokenSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    token?: boolean
+    type?: boolean
+    expiresIn?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["token"]>
+
+  export type TokenSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    token?: boolean
+    type?: boolean
+    expiresIn?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["token"]>
+
+  export type TokenSelectScalar = {
+    id?: boolean
+    email?: boolean
+    token?: boolean
+    type?: boolean
+    expiresIn?: boolean
+    createdAt?: boolean
+  }
+
+  export type TokenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "token" | "type" | "expiresIn" | "createdAt", ExtArgs["result"]["token"]>
+
+  export type $TokenPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Token"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      email: string
+      token: string
+      type: $Enums.TokenType
+      expiresIn: Date
+      createdAt: Date
+    }, ExtArgs["result"]["token"]>
+    composites: {}
+  }
+
+  type TokenGetPayload<S extends boolean | null | undefined | TokenDefaultArgs> = $Result.GetResult<Prisma.$TokenPayload, S>
+
+  type TokenCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TokenFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TokenCountAggregateInputType | true
+    }
+
+  export interface TokenDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Token'], meta: { name: 'Token' } }
+    /**
+     * Find zero or one Token that matches the filter.
+     * @param {TokenFindUniqueArgs} args - Arguments to find a Token
+     * @example
+     * // Get one Token
+     * const token = await prisma.token.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TokenFindUniqueArgs>(args: SelectSubset<T, TokenFindUniqueArgs<ExtArgs>>): Prisma__TokenClient<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Token that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TokenFindUniqueOrThrowArgs} args - Arguments to find a Token
+     * @example
+     * // Get one Token
+     * const token = await prisma.token.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TokenFindUniqueOrThrowArgs>(args: SelectSubset<T, TokenFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TokenClient<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Token that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TokenFindFirstArgs} args - Arguments to find a Token
+     * @example
+     * // Get one Token
+     * const token = await prisma.token.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TokenFindFirstArgs>(args?: SelectSubset<T, TokenFindFirstArgs<ExtArgs>>): Prisma__TokenClient<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Token that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TokenFindFirstOrThrowArgs} args - Arguments to find a Token
+     * @example
+     * // Get one Token
+     * const token = await prisma.token.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TokenFindFirstOrThrowArgs>(args?: SelectSubset<T, TokenFindFirstOrThrowArgs<ExtArgs>>): Prisma__TokenClient<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Tokens that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TokenFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Tokens
+     * const tokens = await prisma.token.findMany()
+     * 
+     * // Get first 10 Tokens
+     * const tokens = await prisma.token.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const tokenWithIdOnly = await prisma.token.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TokenFindManyArgs>(args?: SelectSubset<T, TokenFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Token.
+     * @param {TokenCreateArgs} args - Arguments to create a Token.
+     * @example
+     * // Create one Token
+     * const Token = await prisma.token.create({
+     *   data: {
+     *     // ... data to create a Token
+     *   }
+     * })
+     * 
+     */
+    create<T extends TokenCreateArgs>(args: SelectSubset<T, TokenCreateArgs<ExtArgs>>): Prisma__TokenClient<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Tokens.
+     * @param {TokenCreateManyArgs} args - Arguments to create many Tokens.
+     * @example
+     * // Create many Tokens
+     * const token = await prisma.token.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TokenCreateManyArgs>(args?: SelectSubset<T, TokenCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Tokens and returns the data saved in the database.
+     * @param {TokenCreateManyAndReturnArgs} args - Arguments to create many Tokens.
+     * @example
+     * // Create many Tokens
+     * const token = await prisma.token.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Tokens and only return the `id`
+     * const tokenWithIdOnly = await prisma.token.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TokenCreateManyAndReturnArgs>(args?: SelectSubset<T, TokenCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Token.
+     * @param {TokenDeleteArgs} args - Arguments to delete one Token.
+     * @example
+     * // Delete one Token
+     * const Token = await prisma.token.delete({
+     *   where: {
+     *     // ... filter to delete one Token
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TokenDeleteArgs>(args: SelectSubset<T, TokenDeleteArgs<ExtArgs>>): Prisma__TokenClient<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Token.
+     * @param {TokenUpdateArgs} args - Arguments to update one Token.
+     * @example
+     * // Update one Token
+     * const token = await prisma.token.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TokenUpdateArgs>(args: SelectSubset<T, TokenUpdateArgs<ExtArgs>>): Prisma__TokenClient<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Tokens.
+     * @param {TokenDeleteManyArgs} args - Arguments to filter Tokens to delete.
+     * @example
+     * // Delete a few Tokens
+     * const { count } = await prisma.token.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TokenDeleteManyArgs>(args?: SelectSubset<T, TokenDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Tokens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TokenUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Tokens
+     * const token = await prisma.token.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TokenUpdateManyArgs>(args: SelectSubset<T, TokenUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Tokens and returns the data updated in the database.
+     * @param {TokenUpdateManyAndReturnArgs} args - Arguments to update many Tokens.
+     * @example
+     * // Update many Tokens
+     * const token = await prisma.token.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Tokens and only return the `id`
+     * const tokenWithIdOnly = await prisma.token.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TokenUpdateManyAndReturnArgs>(args: SelectSubset<T, TokenUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Token.
+     * @param {TokenUpsertArgs} args - Arguments to update or create a Token.
+     * @example
+     * // Update or create a Token
+     * const token = await prisma.token.upsert({
+     *   create: {
+     *     // ... data to create a Token
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Token we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TokenUpsertArgs>(args: SelectSubset<T, TokenUpsertArgs<ExtArgs>>): Prisma__TokenClient<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Tokens.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TokenCountArgs} args - Arguments to filter Tokens to count.
+     * @example
+     * // Count the number of Tokens
+     * const count = await prisma.token.count({
+     *   where: {
+     *     // ... the filter for the Tokens we want to count
+     *   }
+     * })
+    **/
+    count<T extends TokenCountArgs>(
+      args?: Subset<T, TokenCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TokenCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Token.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TokenAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TokenAggregateArgs>(args: Subset<T, TokenAggregateArgs>): Prisma.PrismaPromise<GetTokenAggregateType<T>>
+
+    /**
+     * Group by Token.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TokenGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TokenGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TokenGroupByArgs['orderBy'] }
+        : { orderBy?: TokenGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TokenGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTokenGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Token model
+   */
+  readonly fields: TokenFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Token.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TokenClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Token model
+   */
+  interface TokenFieldRefs {
+    readonly id: FieldRef<"Token", 'String'>
+    readonly email: FieldRef<"Token", 'String'>
+    readonly token: FieldRef<"Token", 'String'>
+    readonly type: FieldRef<"Token", 'TokenType'>
+    readonly expiresIn: FieldRef<"Token", 'DateTime'>
+    readonly createdAt: FieldRef<"Token", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Token findUnique
+   */
+  export type TokenFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Token
+     */
+    select?: TokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Token
+     */
+    omit?: TokenOmit<ExtArgs> | null
+    /**
+     * Filter, which Token to fetch.
+     */
+    where: TokenWhereUniqueInput
+  }
+
+  /**
+   * Token findUniqueOrThrow
+   */
+  export type TokenFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Token
+     */
+    select?: TokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Token
+     */
+    omit?: TokenOmit<ExtArgs> | null
+    /**
+     * Filter, which Token to fetch.
+     */
+    where: TokenWhereUniqueInput
+  }
+
+  /**
+   * Token findFirst
+   */
+  export type TokenFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Token
+     */
+    select?: TokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Token
+     */
+    omit?: TokenOmit<ExtArgs> | null
+    /**
+     * Filter, which Token to fetch.
+     */
+    where?: TokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tokens to fetch.
+     */
+    orderBy?: TokenOrderByWithRelationInput | TokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Tokens.
+     */
+    cursor?: TokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tokens.
+     */
+    distinct?: TokenScalarFieldEnum | TokenScalarFieldEnum[]
+  }
+
+  /**
+   * Token findFirstOrThrow
+   */
+  export type TokenFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Token
+     */
+    select?: TokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Token
+     */
+    omit?: TokenOmit<ExtArgs> | null
+    /**
+     * Filter, which Token to fetch.
+     */
+    where?: TokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tokens to fetch.
+     */
+    orderBy?: TokenOrderByWithRelationInput | TokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Tokens.
+     */
+    cursor?: TokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tokens.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tokens.
+     */
+    distinct?: TokenScalarFieldEnum | TokenScalarFieldEnum[]
+  }
+
+  /**
+   * Token findMany
+   */
+  export type TokenFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Token
+     */
+    select?: TokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Token
+     */
+    omit?: TokenOmit<ExtArgs> | null
+    /**
+     * Filter, which Tokens to fetch.
+     */
+    where?: TokenWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tokens to fetch.
+     */
+    orderBy?: TokenOrderByWithRelationInput | TokenOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Tokens.
+     */
+    cursor?: TokenWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tokens from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tokens.
+     */
+    skip?: number
+    distinct?: TokenScalarFieldEnum | TokenScalarFieldEnum[]
+  }
+
+  /**
+   * Token create
+   */
+  export type TokenCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Token
+     */
+    select?: TokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Token
+     */
+    omit?: TokenOmit<ExtArgs> | null
+    /**
+     * The data needed to create a Token.
+     */
+    data: XOR<TokenCreateInput, TokenUncheckedCreateInput>
+  }
+
+  /**
+   * Token createMany
+   */
+  export type TokenCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Tokens.
+     */
+    data: TokenCreateManyInput | TokenCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Token createManyAndReturn
+   */
+  export type TokenCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Token
+     */
+    select?: TokenSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Token
+     */
+    omit?: TokenOmit<ExtArgs> | null
+    /**
+     * The data used to create many Tokens.
+     */
+    data: TokenCreateManyInput | TokenCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Token update
+   */
+  export type TokenUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Token
+     */
+    select?: TokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Token
+     */
+    omit?: TokenOmit<ExtArgs> | null
+    /**
+     * The data needed to update a Token.
+     */
+    data: XOR<TokenUpdateInput, TokenUncheckedUpdateInput>
+    /**
+     * Choose, which Token to update.
+     */
+    where: TokenWhereUniqueInput
+  }
+
+  /**
+   * Token updateMany
+   */
+  export type TokenUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Tokens.
+     */
+    data: XOR<TokenUpdateManyMutationInput, TokenUncheckedUpdateManyInput>
+    /**
+     * Filter which Tokens to update
+     */
+    where?: TokenWhereInput
+    /**
+     * Limit how many Tokens to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Token updateManyAndReturn
+   */
+  export type TokenUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Token
+     */
+    select?: TokenSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Token
+     */
+    omit?: TokenOmit<ExtArgs> | null
+    /**
+     * The data used to update Tokens.
+     */
+    data: XOR<TokenUpdateManyMutationInput, TokenUncheckedUpdateManyInput>
+    /**
+     * Filter which Tokens to update
+     */
+    where?: TokenWhereInput
+    /**
+     * Limit how many Tokens to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Token upsert
+   */
+  export type TokenUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Token
+     */
+    select?: TokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Token
+     */
+    omit?: TokenOmit<ExtArgs> | null
+    /**
+     * The filter to search for the Token to update in case it exists.
+     */
+    where: TokenWhereUniqueInput
+    /**
+     * In case the Token found by the `where` argument doesn't exist, create a new Token with this data.
+     */
+    create: XOR<TokenCreateInput, TokenUncheckedCreateInput>
+    /**
+     * In case the Token was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TokenUpdateInput, TokenUncheckedUpdateInput>
+  }
+
+  /**
+   * Token delete
+   */
+  export type TokenDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Token
+     */
+    select?: TokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Token
+     */
+    omit?: TokenOmit<ExtArgs> | null
+    /**
+     * Filter which Token to delete.
+     */
+    where: TokenWhereUniqueInput
+  }
+
+  /**
+   * Token deleteMany
+   */
+  export type TokenDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Tokens to delete
+     */
+    where?: TokenWhereInput
+    /**
+     * Limit how many Tokens to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Token without action
+   */
+  export type TokenDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Token
+     */
+    select?: TokenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Token
+     */
+    omit?: TokenOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model ParsingSession
    */
 
@@ -16847,1014 +22604,6 @@ export namespace Prisma {
      * Omit specific fields from the ParsingSession
      */
     omit?: ParsingSessionOmit<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Token
-   */
-
-  export type AggregateToken = {
-    _count: TokenCountAggregateOutputType | null
-    _min: TokenMinAggregateOutputType | null
-    _max: TokenMaxAggregateOutputType | null
-  }
-
-  export type TokenMinAggregateOutputType = {
-    id: string | null
-    email: string | null
-    token: string | null
-    type: $Enums.TokenType | null
-    expiresIn: Date | null
-    createdAt: Date | null
-  }
-
-  export type TokenMaxAggregateOutputType = {
-    id: string | null
-    email: string | null
-    token: string | null
-    type: $Enums.TokenType | null
-    expiresIn: Date | null
-    createdAt: Date | null
-  }
-
-  export type TokenCountAggregateOutputType = {
-    id: number
-    email: number
-    token: number
-    type: number
-    expiresIn: number
-    createdAt: number
-    _all: number
-  }
-
-
-  export type TokenMinAggregateInputType = {
-    id?: true
-    email?: true
-    token?: true
-    type?: true
-    expiresIn?: true
-    createdAt?: true
-  }
-
-  export type TokenMaxAggregateInputType = {
-    id?: true
-    email?: true
-    token?: true
-    type?: true
-    expiresIn?: true
-    createdAt?: true
-  }
-
-  export type TokenCountAggregateInputType = {
-    id?: true
-    email?: true
-    token?: true
-    type?: true
-    expiresIn?: true
-    createdAt?: true
-    _all?: true
-  }
-
-  export type TokenAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Token to aggregate.
-     */
-    where?: TokenWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Tokens to fetch.
-     */
-    orderBy?: TokenOrderByWithRelationInput | TokenOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: TokenWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Tokens from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Tokens.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Tokens
-    **/
-    _count?: true | TokenCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: TokenMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: TokenMaxAggregateInputType
-  }
-
-  export type GetTokenAggregateType<T extends TokenAggregateArgs> = {
-        [P in keyof T & keyof AggregateToken]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateToken[P]>
-      : GetScalarType<T[P], AggregateToken[P]>
-  }
-
-
-
-
-  export type TokenGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TokenWhereInput
-    orderBy?: TokenOrderByWithAggregationInput | TokenOrderByWithAggregationInput[]
-    by: TokenScalarFieldEnum[] | TokenScalarFieldEnum
-    having?: TokenScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: TokenCountAggregateInputType | true
-    _min?: TokenMinAggregateInputType
-    _max?: TokenMaxAggregateInputType
-  }
-
-  export type TokenGroupByOutputType = {
-    id: string
-    email: string
-    token: string
-    type: $Enums.TokenType
-    expiresIn: Date
-    createdAt: Date
-    _count: TokenCountAggregateOutputType | null
-    _min: TokenMinAggregateOutputType | null
-    _max: TokenMaxAggregateOutputType | null
-  }
-
-  type GetTokenGroupByPayload<T extends TokenGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<TokenGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof TokenGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], TokenGroupByOutputType[P]>
-            : GetScalarType<T[P], TokenGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type TokenSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    email?: boolean
-    token?: boolean
-    type?: boolean
-    expiresIn?: boolean
-    createdAt?: boolean
-  }, ExtArgs["result"]["token"]>
-
-  export type TokenSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    email?: boolean
-    token?: boolean
-    type?: boolean
-    expiresIn?: boolean
-    createdAt?: boolean
-  }, ExtArgs["result"]["token"]>
-
-  export type TokenSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    email?: boolean
-    token?: boolean
-    type?: boolean
-    expiresIn?: boolean
-    createdAt?: boolean
-  }, ExtArgs["result"]["token"]>
-
-  export type TokenSelectScalar = {
-    id?: boolean
-    email?: boolean
-    token?: boolean
-    type?: boolean
-    expiresIn?: boolean
-    createdAt?: boolean
-  }
-
-  export type TokenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "token" | "type" | "expiresIn" | "createdAt", ExtArgs["result"]["token"]>
-
-  export type $TokenPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Token"
-    objects: {}
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      email: string
-      token: string
-      type: $Enums.TokenType
-      expiresIn: Date
-      createdAt: Date
-    }, ExtArgs["result"]["token"]>
-    composites: {}
-  }
-
-  type TokenGetPayload<S extends boolean | null | undefined | TokenDefaultArgs> = $Result.GetResult<Prisma.$TokenPayload, S>
-
-  type TokenCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<TokenFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: TokenCountAggregateInputType | true
-    }
-
-  export interface TokenDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Token'], meta: { name: 'Token' } }
-    /**
-     * Find zero or one Token that matches the filter.
-     * @param {TokenFindUniqueArgs} args - Arguments to find a Token
-     * @example
-     * // Get one Token
-     * const token = await prisma.token.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends TokenFindUniqueArgs>(args: SelectSubset<T, TokenFindUniqueArgs<ExtArgs>>): Prisma__TokenClient<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Token that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {TokenFindUniqueOrThrowArgs} args - Arguments to find a Token
-     * @example
-     * // Get one Token
-     * const token = await prisma.token.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends TokenFindUniqueOrThrowArgs>(args: SelectSubset<T, TokenFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TokenClient<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Token that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TokenFindFirstArgs} args - Arguments to find a Token
-     * @example
-     * // Get one Token
-     * const token = await prisma.token.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends TokenFindFirstArgs>(args?: SelectSubset<T, TokenFindFirstArgs<ExtArgs>>): Prisma__TokenClient<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Token that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TokenFindFirstOrThrowArgs} args - Arguments to find a Token
-     * @example
-     * // Get one Token
-     * const token = await prisma.token.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends TokenFindFirstOrThrowArgs>(args?: SelectSubset<T, TokenFindFirstOrThrowArgs<ExtArgs>>): Prisma__TokenClient<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Tokens that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TokenFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Tokens
-     * const tokens = await prisma.token.findMany()
-     * 
-     * // Get first 10 Tokens
-     * const tokens = await prisma.token.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const tokenWithIdOnly = await prisma.token.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends TokenFindManyArgs>(args?: SelectSubset<T, TokenFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Token.
-     * @param {TokenCreateArgs} args - Arguments to create a Token.
-     * @example
-     * // Create one Token
-     * const Token = await prisma.token.create({
-     *   data: {
-     *     // ... data to create a Token
-     *   }
-     * })
-     * 
-     */
-    create<T extends TokenCreateArgs>(args: SelectSubset<T, TokenCreateArgs<ExtArgs>>): Prisma__TokenClient<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Tokens.
-     * @param {TokenCreateManyArgs} args - Arguments to create many Tokens.
-     * @example
-     * // Create many Tokens
-     * const token = await prisma.token.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends TokenCreateManyArgs>(args?: SelectSubset<T, TokenCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Tokens and returns the data saved in the database.
-     * @param {TokenCreateManyAndReturnArgs} args - Arguments to create many Tokens.
-     * @example
-     * // Create many Tokens
-     * const token = await prisma.token.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Tokens and only return the `id`
-     * const tokenWithIdOnly = await prisma.token.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends TokenCreateManyAndReturnArgs>(args?: SelectSubset<T, TokenCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Token.
-     * @param {TokenDeleteArgs} args - Arguments to delete one Token.
-     * @example
-     * // Delete one Token
-     * const Token = await prisma.token.delete({
-     *   where: {
-     *     // ... filter to delete one Token
-     *   }
-     * })
-     * 
-     */
-    delete<T extends TokenDeleteArgs>(args: SelectSubset<T, TokenDeleteArgs<ExtArgs>>): Prisma__TokenClient<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Token.
-     * @param {TokenUpdateArgs} args - Arguments to update one Token.
-     * @example
-     * // Update one Token
-     * const token = await prisma.token.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends TokenUpdateArgs>(args: SelectSubset<T, TokenUpdateArgs<ExtArgs>>): Prisma__TokenClient<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Tokens.
-     * @param {TokenDeleteManyArgs} args - Arguments to filter Tokens to delete.
-     * @example
-     * // Delete a few Tokens
-     * const { count } = await prisma.token.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends TokenDeleteManyArgs>(args?: SelectSubset<T, TokenDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Tokens.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TokenUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Tokens
-     * const token = await prisma.token.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends TokenUpdateManyArgs>(args: SelectSubset<T, TokenUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Tokens and returns the data updated in the database.
-     * @param {TokenUpdateManyAndReturnArgs} args - Arguments to update many Tokens.
-     * @example
-     * // Update many Tokens
-     * const token = await prisma.token.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Tokens and only return the `id`
-     * const tokenWithIdOnly = await prisma.token.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends TokenUpdateManyAndReturnArgs>(args: SelectSubset<T, TokenUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Token.
-     * @param {TokenUpsertArgs} args - Arguments to update or create a Token.
-     * @example
-     * // Update or create a Token
-     * const token = await prisma.token.upsert({
-     *   create: {
-     *     // ... data to create a Token
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Token we want to update
-     *   }
-     * })
-     */
-    upsert<T extends TokenUpsertArgs>(args: SelectSubset<T, TokenUpsertArgs<ExtArgs>>): Prisma__TokenClient<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Tokens.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TokenCountArgs} args - Arguments to filter Tokens to count.
-     * @example
-     * // Count the number of Tokens
-     * const count = await prisma.token.count({
-     *   where: {
-     *     // ... the filter for the Tokens we want to count
-     *   }
-     * })
-    **/
-    count<T extends TokenCountArgs>(
-      args?: Subset<T, TokenCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], TokenCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Token.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TokenAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends TokenAggregateArgs>(args: Subset<T, TokenAggregateArgs>): Prisma.PrismaPromise<GetTokenAggregateType<T>>
-
-    /**
-     * Group by Token.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TokenGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends TokenGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TokenGroupByArgs['orderBy'] }
-        : { orderBy?: TokenGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, TokenGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTokenGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Token model
-   */
-  readonly fields: TokenFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Token.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__TokenClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Token model
-   */
-  interface TokenFieldRefs {
-    readonly id: FieldRef<"Token", 'String'>
-    readonly email: FieldRef<"Token", 'String'>
-    readonly token: FieldRef<"Token", 'String'>
-    readonly type: FieldRef<"Token", 'TokenType'>
-    readonly expiresIn: FieldRef<"Token", 'DateTime'>
-    readonly createdAt: FieldRef<"Token", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Token findUnique
-   */
-  export type TokenFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Token
-     */
-    select?: TokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Token
-     */
-    omit?: TokenOmit<ExtArgs> | null
-    /**
-     * Filter, which Token to fetch.
-     */
-    where: TokenWhereUniqueInput
-  }
-
-  /**
-   * Token findUniqueOrThrow
-   */
-  export type TokenFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Token
-     */
-    select?: TokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Token
-     */
-    omit?: TokenOmit<ExtArgs> | null
-    /**
-     * Filter, which Token to fetch.
-     */
-    where: TokenWhereUniqueInput
-  }
-
-  /**
-   * Token findFirst
-   */
-  export type TokenFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Token
-     */
-    select?: TokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Token
-     */
-    omit?: TokenOmit<ExtArgs> | null
-    /**
-     * Filter, which Token to fetch.
-     */
-    where?: TokenWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Tokens to fetch.
-     */
-    orderBy?: TokenOrderByWithRelationInput | TokenOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Tokens.
-     */
-    cursor?: TokenWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Tokens from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Tokens.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Tokens.
-     */
-    distinct?: TokenScalarFieldEnum | TokenScalarFieldEnum[]
-  }
-
-  /**
-   * Token findFirstOrThrow
-   */
-  export type TokenFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Token
-     */
-    select?: TokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Token
-     */
-    omit?: TokenOmit<ExtArgs> | null
-    /**
-     * Filter, which Token to fetch.
-     */
-    where?: TokenWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Tokens to fetch.
-     */
-    orderBy?: TokenOrderByWithRelationInput | TokenOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Tokens.
-     */
-    cursor?: TokenWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Tokens from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Tokens.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Tokens.
-     */
-    distinct?: TokenScalarFieldEnum | TokenScalarFieldEnum[]
-  }
-
-  /**
-   * Token findMany
-   */
-  export type TokenFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Token
-     */
-    select?: TokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Token
-     */
-    omit?: TokenOmit<ExtArgs> | null
-    /**
-     * Filter, which Tokens to fetch.
-     */
-    where?: TokenWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Tokens to fetch.
-     */
-    orderBy?: TokenOrderByWithRelationInput | TokenOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Tokens.
-     */
-    cursor?: TokenWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Tokens from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Tokens.
-     */
-    skip?: number
-    distinct?: TokenScalarFieldEnum | TokenScalarFieldEnum[]
-  }
-
-  /**
-   * Token create
-   */
-  export type TokenCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Token
-     */
-    select?: TokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Token
-     */
-    omit?: TokenOmit<ExtArgs> | null
-    /**
-     * The data needed to create a Token.
-     */
-    data: XOR<TokenCreateInput, TokenUncheckedCreateInput>
-  }
-
-  /**
-   * Token createMany
-   */
-  export type TokenCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Tokens.
-     */
-    data: TokenCreateManyInput | TokenCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Token createManyAndReturn
-   */
-  export type TokenCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Token
-     */
-    select?: TokenSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Token
-     */
-    omit?: TokenOmit<ExtArgs> | null
-    /**
-     * The data used to create many Tokens.
-     */
-    data: TokenCreateManyInput | TokenCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Token update
-   */
-  export type TokenUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Token
-     */
-    select?: TokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Token
-     */
-    omit?: TokenOmit<ExtArgs> | null
-    /**
-     * The data needed to update a Token.
-     */
-    data: XOR<TokenUpdateInput, TokenUncheckedUpdateInput>
-    /**
-     * Choose, which Token to update.
-     */
-    where: TokenWhereUniqueInput
-  }
-
-  /**
-   * Token updateMany
-   */
-  export type TokenUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Tokens.
-     */
-    data: XOR<TokenUpdateManyMutationInput, TokenUncheckedUpdateManyInput>
-    /**
-     * Filter which Tokens to update
-     */
-    where?: TokenWhereInput
-    /**
-     * Limit how many Tokens to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Token updateManyAndReturn
-   */
-  export type TokenUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Token
-     */
-    select?: TokenSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Token
-     */
-    omit?: TokenOmit<ExtArgs> | null
-    /**
-     * The data used to update Tokens.
-     */
-    data: XOR<TokenUpdateManyMutationInput, TokenUncheckedUpdateManyInput>
-    /**
-     * Filter which Tokens to update
-     */
-    where?: TokenWhereInput
-    /**
-     * Limit how many Tokens to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Token upsert
-   */
-  export type TokenUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Token
-     */
-    select?: TokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Token
-     */
-    omit?: TokenOmit<ExtArgs> | null
-    /**
-     * The filter to search for the Token to update in case it exists.
-     */
-    where: TokenWhereUniqueInput
-    /**
-     * In case the Token found by the `where` argument doesn't exist, create a new Token with this data.
-     */
-    create: XOR<TokenCreateInput, TokenUncheckedCreateInput>
-    /**
-     * In case the Token was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<TokenUpdateInput, TokenUncheckedUpdateInput>
-  }
-
-  /**
-   * Token delete
-   */
-  export type TokenDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Token
-     */
-    select?: TokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Token
-     */
-    omit?: TokenOmit<ExtArgs> | null
-    /**
-     * Filter which Token to delete.
-     */
-    where: TokenWhereUniqueInput
-  }
-
-  /**
-   * Token deleteMany
-   */
-  export type TokenDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Tokens to delete
-     */
-    where?: TokenWhereInput
-    /**
-     * Limit how many Tokens to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Token without action
-   */
-  export type TokenDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Token
-     */
-    select?: TokenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Token
-     */
-    omit?: TokenOmit<ExtArgs> | null
   }
 
 
@@ -19020,23 +23769,9 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-  export const AccountScalarFieldEnum: {
-    id: 'id',
-    type: 'type',
-    provider: 'provider',
-    refreshToken: 'refreshToken',
-    accessToken: 'accessToken',
-    expiresAt: 'expiresAt',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    userId: 'userId'
-  };
-
-  export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
-
-
   export const AnimeScalarFieldEnum: {
     id: 'id',
+    alias: 'alias',
     malId: 'malId',
     shikimoriId: 'shikimoriId',
     name: 'name',
@@ -19076,6 +23811,26 @@ export namespace Prisma {
   export type GenreScalarFieldEnum = (typeof GenreScalarFieldEnum)[keyof typeof GenreScalarFieldEnum]
 
 
+  export const ThemeScalarFieldEnum: {
+    id: 'id',
+    requestId: 'requestId',
+    name: 'name',
+    russian: 'russian'
+  };
+
+  export type ThemeScalarFieldEnum = (typeof ThemeScalarFieldEnum)[keyof typeof ThemeScalarFieldEnum]
+
+
+  export const DemographicScalarFieldEnum: {
+    id: 'id',
+    requestId: 'requestId',
+    name: 'name',
+    russian: 'russian'
+  };
+
+  export type DemographicScalarFieldEnum = (typeof DemographicScalarFieldEnum)[keyof typeof DemographicScalarFieldEnum]
+
+
   export const StudioScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -19109,6 +23864,22 @@ export namespace Prisma {
   };
 
   export type AnimeGenreScalarFieldEnum = (typeof AnimeGenreScalarFieldEnum)[keyof typeof AnimeGenreScalarFieldEnum]
+
+
+  export const AnimeThemeScalarFieldEnum: {
+    animeId: 'animeId',
+    themeId: 'themeId'
+  };
+
+  export type AnimeThemeScalarFieldEnum = (typeof AnimeThemeScalarFieldEnum)[keyof typeof AnimeThemeScalarFieldEnum]
+
+
+  export const AnimeDemographicScalarFieldEnum: {
+    animeId: 'animeId',
+    demographicId: 'demographicId'
+  };
+
+  export type AnimeDemographicScalarFieldEnum = (typeof AnimeDemographicScalarFieldEnum)[keyof typeof AnimeDemographicScalarFieldEnum]
 
 
   export const AnimePosterScalarFieldEnum: {
@@ -19161,6 +23932,33 @@ export namespace Prisma {
   export type ScreenshotsScalarFieldEnum = (typeof ScreenshotsScalarFieldEnum)[keyof typeof ScreenshotsScalarFieldEnum]
 
 
+  export const AccountScalarFieldEnum: {
+    id: 'id',
+    type: 'type',
+    provider: 'provider',
+    refreshToken: 'refreshToken',
+    accessToken: 'accessToken',
+    expiresAt: 'expiresAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    userId: 'userId'
+  };
+
+  export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
+
+
+  export const TokenScalarFieldEnum: {
+    id: 'id',
+    email: 'email',
+    token: 'token',
+    type: 'type',
+    expiresIn: 'expiresIn',
+    createdAt: 'createdAt'
+  };
+
+  export type TokenScalarFieldEnum = (typeof TokenScalarFieldEnum)[keyof typeof TokenScalarFieldEnum]
+
+
   export const ParsingSessionScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -19174,18 +23972,6 @@ export namespace Prisma {
   };
 
   export type ParsingSessionScalarFieldEnum = (typeof ParsingSessionScalarFieldEnum)[keyof typeof ParsingSessionScalarFieldEnum]
-
-
-  export const TokenScalarFieldEnum: {
-    id: 'id',
-    email: 'email',
-    token: 'token',
-    type: 'type',
-    expiresIn: 'expiresIn',
-    createdAt: 'createdAt'
-  };
-
-  export type TokenScalarFieldEnum = (typeof TokenScalarFieldEnum)[keyof typeof TokenScalarFieldEnum]
 
 
   export const UserScalarFieldEnum: {
@@ -19249,34 +24035,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime'
-   */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime[]'
-   */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-  /**
    * Reference to a field of type 'AnimeStatus'
    */
   export type EnumAnimeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AnimeStatus'>
@@ -19301,6 +24059,20 @@ export namespace Prisma {
    * Reference to a field of type 'AnimeKind[]'
    */
   export type ListEnumAnimeKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AnimeKind[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -19340,6 +24112,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
    * Reference to a field of type 'RelationKind'
    */
   export type EnumRelationKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RelationKind'>
@@ -19368,20 +24154,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'ParsingSessionType'
-   */
-  export type EnumParsingSessionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ParsingSessionType'>
-    
-
-
-  /**
-   * Reference to a field of type 'ParsingSessionType[]'
-   */
-  export type ListEnumParsingSessionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ParsingSessionType[]'>
-    
-
-
-  /**
    * Reference to a field of type 'TokenType'
    */
   export type EnumTokenTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TokenType'>
@@ -19392,6 +24164,20 @@ export namespace Prisma {
    * Reference to a field of type 'TokenType[]'
    */
   export type ListEnumTokenTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TokenType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ParsingSessionType'
+   */
+  export type EnumParsingSessionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ParsingSessionType'>
+    
+
+
+  /**
+   * Reference to a field of type 'ParsingSessionType[]'
+   */
+  export type ListEnumParsingSessionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ParsingSessionType[]'>
     
 
 
@@ -19426,88 +24212,12 @@ export namespace Prisma {
    */
 
 
-  export type AccountWhereInput = {
-    AND?: AccountWhereInput | AccountWhereInput[]
-    OR?: AccountWhereInput[]
-    NOT?: AccountWhereInput | AccountWhereInput[]
-    id?: StringFilter<"Account"> | string
-    type?: StringFilter<"Account"> | string
-    provider?: StringFilter<"Account"> | string
-    refreshToken?: StringNullableFilter<"Account"> | string | null
-    accessToken?: StringNullableFilter<"Account"> | string | null
-    expiresAt?: IntNullableFilter<"Account"> | number | null
-    createdAt?: DateTimeFilter<"Account"> | Date | string
-    updatedAt?: DateTimeFilter<"Account"> | Date | string
-    userId?: StringNullableFilter<"Account"> | string | null
-    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-  }
-
-  export type AccountOrderByWithRelationInput = {
-    id?: SortOrder
-    type?: SortOrder
-    provider?: SortOrder
-    refreshToken?: SortOrderInput | SortOrder
-    accessToken?: SortOrderInput | SortOrder
-    expiresAt?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrderInput | SortOrder
-    user?: UserOrderByWithRelationInput
-  }
-
-  export type AccountWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: AccountWhereInput | AccountWhereInput[]
-    OR?: AccountWhereInput[]
-    NOT?: AccountWhereInput | AccountWhereInput[]
-    type?: StringFilter<"Account"> | string
-    provider?: StringFilter<"Account"> | string
-    refreshToken?: StringNullableFilter<"Account"> | string | null
-    accessToken?: StringNullableFilter<"Account"> | string | null
-    expiresAt?: IntNullableFilter<"Account"> | number | null
-    createdAt?: DateTimeFilter<"Account"> | Date | string
-    updatedAt?: DateTimeFilter<"Account"> | Date | string
-    userId?: StringNullableFilter<"Account"> | string | null
-    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-  }, "id">
-
-  export type AccountOrderByWithAggregationInput = {
-    id?: SortOrder
-    type?: SortOrder
-    provider?: SortOrder
-    refreshToken?: SortOrderInput | SortOrder
-    accessToken?: SortOrderInput | SortOrder
-    expiresAt?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrderInput | SortOrder
-    _count?: AccountCountOrderByAggregateInput
-    _avg?: AccountAvgOrderByAggregateInput
-    _max?: AccountMaxOrderByAggregateInput
-    _min?: AccountMinOrderByAggregateInput
-    _sum?: AccountSumOrderByAggregateInput
-  }
-
-  export type AccountScalarWhereWithAggregatesInput = {
-    AND?: AccountScalarWhereWithAggregatesInput | AccountScalarWhereWithAggregatesInput[]
-    OR?: AccountScalarWhereWithAggregatesInput[]
-    NOT?: AccountScalarWhereWithAggregatesInput | AccountScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Account"> | string
-    type?: StringWithAggregatesFilter<"Account"> | string
-    provider?: StringWithAggregatesFilter<"Account"> | string
-    refreshToken?: StringNullableWithAggregatesFilter<"Account"> | string | null
-    accessToken?: StringNullableWithAggregatesFilter<"Account"> | string | null
-    expiresAt?: IntNullableWithAggregatesFilter<"Account"> | number | null
-    createdAt?: DateTimeWithAggregatesFilter<"Account"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Account"> | Date | string
-    userId?: StringNullableWithAggregatesFilter<"Account"> | string | null
-  }
-
   export type AnimeWhereInput = {
     AND?: AnimeWhereInput | AnimeWhereInput[]
     OR?: AnimeWhereInput[]
     NOT?: AnimeWhereInput | AnimeWhereInput[]
     id?: StringFilter<"Anime"> | string
+    alias?: StringNullableFilter<"Anime"> | string | null
     malId?: StringNullableFilter<"Anime"> | string | null
     shikimoriId?: StringNullableFilter<"Anime"> | string | null
     name?: StringFilter<"Anime"> | string
@@ -19538,11 +24248,14 @@ export namespace Prisma {
     videos?: AnimeVideoListRelationFilter
     screenshots?: AnimeScreenshotListRelationFilter
     genres?: AnimeGenreListRelationFilter
+    theme?: AnimeThemeListRelationFilter
+    demographic?: AnimeDemographicListRelationFilter
     relatedAnime?: RelatedAnimeListRelationFilter
   }
 
   export type AnimeOrderByWithRelationInput = {
     id?: SortOrder
+    alias?: SortOrderInput | SortOrder
     malId?: SortOrderInput | SortOrder
     shikimoriId?: SortOrderInput | SortOrder
     name?: SortOrder
@@ -19573,6 +24286,8 @@ export namespace Prisma {
     videos?: AnimeVideoOrderByRelationAggregateInput
     screenshots?: AnimeScreenshotOrderByRelationAggregateInput
     genres?: AnimeGenreOrderByRelationAggregateInput
+    theme?: AnimeThemeOrderByRelationAggregateInput
+    demographic?: AnimeDemographicOrderByRelationAggregateInput
     relatedAnime?: RelatedAnimeOrderByRelationAggregateInput
   }
 
@@ -19584,6 +24299,7 @@ export namespace Prisma {
     AND?: AnimeWhereInput | AnimeWhereInput[]
     OR?: AnimeWhereInput[]
     NOT?: AnimeWhereInput | AnimeWhereInput[]
+    alias?: StringNullableFilter<"Anime"> | string | null
     name?: StringFilter<"Anime"> | string
     description?: StringNullableFilter<"Anime"> | string | null
     russian?: StringNullableFilter<"Anime"> | string | null
@@ -19612,11 +24328,14 @@ export namespace Prisma {
     videos?: AnimeVideoListRelationFilter
     screenshots?: AnimeScreenshotListRelationFilter
     genres?: AnimeGenreListRelationFilter
+    theme?: AnimeThemeListRelationFilter
+    demographic?: AnimeDemographicListRelationFilter
     relatedAnime?: RelatedAnimeListRelationFilter
   }, "id" | "malId" | "shikimoriId" | "name_shikimoriId">
 
   export type AnimeOrderByWithAggregationInput = {
     id?: SortOrder
+    alias?: SortOrderInput | SortOrder
     malId?: SortOrderInput | SortOrder
     shikimoriId?: SortOrderInput | SortOrder
     name?: SortOrder
@@ -19653,6 +24372,7 @@ export namespace Prisma {
     OR?: AnimeScalarWhereWithAggregatesInput[]
     NOT?: AnimeScalarWhereWithAggregatesInput | AnimeScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Anime"> | string
+    alias?: StringNullableWithAggregatesFilter<"Anime"> | string | null
     malId?: StringNullableWithAggregatesFilter<"Anime"> | string | null
     shikimoriId?: StringNullableWithAggregatesFilter<"Anime"> | string | null
     name?: StringWithAggregatesFilter<"Anime"> | string
@@ -19729,6 +24449,110 @@ export namespace Prisma {
     requestId?: IntWithAggregatesFilter<"Genre"> | number
     name?: StringWithAggregatesFilter<"Genre"> | string
     russian?: StringWithAggregatesFilter<"Genre"> | string
+  }
+
+  export type ThemeWhereInput = {
+    AND?: ThemeWhereInput | ThemeWhereInput[]
+    OR?: ThemeWhereInput[]
+    NOT?: ThemeWhereInput | ThemeWhereInput[]
+    id?: StringFilter<"Theme"> | string
+    requestId?: IntFilter<"Theme"> | number
+    name?: StringFilter<"Theme"> | string
+    russian?: StringFilter<"Theme"> | string
+    animes?: AnimeThemeListRelationFilter
+  }
+
+  export type ThemeOrderByWithRelationInput = {
+    id?: SortOrder
+    requestId?: SortOrder
+    name?: SortOrder
+    russian?: SortOrder
+    animes?: AnimeThemeOrderByRelationAggregateInput
+  }
+
+  export type ThemeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    requestId?: number
+    name?: string
+    AND?: ThemeWhereInput | ThemeWhereInput[]
+    OR?: ThemeWhereInput[]
+    NOT?: ThemeWhereInput | ThemeWhereInput[]
+    russian?: StringFilter<"Theme"> | string
+    animes?: AnimeThemeListRelationFilter
+  }, "id" | "requestId" | "name">
+
+  export type ThemeOrderByWithAggregationInput = {
+    id?: SortOrder
+    requestId?: SortOrder
+    name?: SortOrder
+    russian?: SortOrder
+    _count?: ThemeCountOrderByAggregateInput
+    _avg?: ThemeAvgOrderByAggregateInput
+    _max?: ThemeMaxOrderByAggregateInput
+    _min?: ThemeMinOrderByAggregateInput
+    _sum?: ThemeSumOrderByAggregateInput
+  }
+
+  export type ThemeScalarWhereWithAggregatesInput = {
+    AND?: ThemeScalarWhereWithAggregatesInput | ThemeScalarWhereWithAggregatesInput[]
+    OR?: ThemeScalarWhereWithAggregatesInput[]
+    NOT?: ThemeScalarWhereWithAggregatesInput | ThemeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Theme"> | string
+    requestId?: IntWithAggregatesFilter<"Theme"> | number
+    name?: StringWithAggregatesFilter<"Theme"> | string
+    russian?: StringWithAggregatesFilter<"Theme"> | string
+  }
+
+  export type DemographicWhereInput = {
+    AND?: DemographicWhereInput | DemographicWhereInput[]
+    OR?: DemographicWhereInput[]
+    NOT?: DemographicWhereInput | DemographicWhereInput[]
+    id?: StringFilter<"Demographic"> | string
+    requestId?: IntFilter<"Demographic"> | number
+    name?: StringFilter<"Demographic"> | string
+    russian?: StringFilter<"Demographic"> | string
+    animes?: AnimeDemographicListRelationFilter
+  }
+
+  export type DemographicOrderByWithRelationInput = {
+    id?: SortOrder
+    requestId?: SortOrder
+    name?: SortOrder
+    russian?: SortOrder
+    animes?: AnimeDemographicOrderByRelationAggregateInput
+  }
+
+  export type DemographicWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    requestId?: number
+    name?: string
+    AND?: DemographicWhereInput | DemographicWhereInput[]
+    OR?: DemographicWhereInput[]
+    NOT?: DemographicWhereInput | DemographicWhereInput[]
+    russian?: StringFilter<"Demographic"> | string
+    animes?: AnimeDemographicListRelationFilter
+  }, "id" | "requestId" | "name">
+
+  export type DemographicOrderByWithAggregationInput = {
+    id?: SortOrder
+    requestId?: SortOrder
+    name?: SortOrder
+    russian?: SortOrder
+    _count?: DemographicCountOrderByAggregateInput
+    _avg?: DemographicAvgOrderByAggregateInput
+    _max?: DemographicMaxOrderByAggregateInput
+    _min?: DemographicMinOrderByAggregateInput
+    _sum?: DemographicSumOrderByAggregateInput
+  }
+
+  export type DemographicScalarWhereWithAggregatesInput = {
+    AND?: DemographicScalarWhereWithAggregatesInput | DemographicScalarWhereWithAggregatesInput[]
+    OR?: DemographicScalarWhereWithAggregatesInput[]
+    NOT?: DemographicScalarWhereWithAggregatesInput | DemographicScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Demographic"> | string
+    requestId?: IntWithAggregatesFilter<"Demographic"> | number
+    name?: StringWithAggregatesFilter<"Demographic"> | string
+    russian?: StringWithAggregatesFilter<"Demographic"> | string
   }
 
   export type StudioWhereInput = {
@@ -19916,6 +24740,94 @@ export namespace Prisma {
     NOT?: AnimeGenreScalarWhereWithAggregatesInput | AnimeGenreScalarWhereWithAggregatesInput[]
     animeId?: StringWithAggregatesFilter<"AnimeGenre"> | string
     genreId?: StringWithAggregatesFilter<"AnimeGenre"> | string
+  }
+
+  export type AnimeThemeWhereInput = {
+    AND?: AnimeThemeWhereInput | AnimeThemeWhereInput[]
+    OR?: AnimeThemeWhereInput[]
+    NOT?: AnimeThemeWhereInput | AnimeThemeWhereInput[]
+    animeId?: StringFilter<"AnimeTheme"> | string
+    themeId?: StringFilter<"AnimeTheme"> | string
+    anime?: XOR<AnimeScalarRelationFilter, AnimeWhereInput>
+    theme?: XOR<ThemeScalarRelationFilter, ThemeWhereInput>
+  }
+
+  export type AnimeThemeOrderByWithRelationInput = {
+    animeId?: SortOrder
+    themeId?: SortOrder
+    anime?: AnimeOrderByWithRelationInput
+    theme?: ThemeOrderByWithRelationInput
+  }
+
+  export type AnimeThemeWhereUniqueInput = Prisma.AtLeast<{
+    animeId_themeId?: AnimeThemeAnimeIdThemeIdCompoundUniqueInput
+    AND?: AnimeThemeWhereInput | AnimeThemeWhereInput[]
+    OR?: AnimeThemeWhereInput[]
+    NOT?: AnimeThemeWhereInput | AnimeThemeWhereInput[]
+    animeId?: StringFilter<"AnimeTheme"> | string
+    themeId?: StringFilter<"AnimeTheme"> | string
+    anime?: XOR<AnimeScalarRelationFilter, AnimeWhereInput>
+    theme?: XOR<ThemeScalarRelationFilter, ThemeWhereInput>
+  }, "animeId_themeId">
+
+  export type AnimeThemeOrderByWithAggregationInput = {
+    animeId?: SortOrder
+    themeId?: SortOrder
+    _count?: AnimeThemeCountOrderByAggregateInput
+    _max?: AnimeThemeMaxOrderByAggregateInput
+    _min?: AnimeThemeMinOrderByAggregateInput
+  }
+
+  export type AnimeThemeScalarWhereWithAggregatesInput = {
+    AND?: AnimeThemeScalarWhereWithAggregatesInput | AnimeThemeScalarWhereWithAggregatesInput[]
+    OR?: AnimeThemeScalarWhereWithAggregatesInput[]
+    NOT?: AnimeThemeScalarWhereWithAggregatesInput | AnimeThemeScalarWhereWithAggregatesInput[]
+    animeId?: StringWithAggregatesFilter<"AnimeTheme"> | string
+    themeId?: StringWithAggregatesFilter<"AnimeTheme"> | string
+  }
+
+  export type AnimeDemographicWhereInput = {
+    AND?: AnimeDemographicWhereInput | AnimeDemographicWhereInput[]
+    OR?: AnimeDemographicWhereInput[]
+    NOT?: AnimeDemographicWhereInput | AnimeDemographicWhereInput[]
+    animeId?: StringFilter<"AnimeDemographic"> | string
+    demographicId?: StringFilter<"AnimeDemographic"> | string
+    anime?: XOR<AnimeScalarRelationFilter, AnimeWhereInput>
+    demographic?: XOR<DemographicScalarRelationFilter, DemographicWhereInput>
+  }
+
+  export type AnimeDemographicOrderByWithRelationInput = {
+    animeId?: SortOrder
+    demographicId?: SortOrder
+    anime?: AnimeOrderByWithRelationInput
+    demographic?: DemographicOrderByWithRelationInput
+  }
+
+  export type AnimeDemographicWhereUniqueInput = Prisma.AtLeast<{
+    animeId_demographicId?: AnimeDemographicAnimeIdDemographicIdCompoundUniqueInput
+    AND?: AnimeDemographicWhereInput | AnimeDemographicWhereInput[]
+    OR?: AnimeDemographicWhereInput[]
+    NOT?: AnimeDemographicWhereInput | AnimeDemographicWhereInput[]
+    animeId?: StringFilter<"AnimeDemographic"> | string
+    demographicId?: StringFilter<"AnimeDemographic"> | string
+    anime?: XOR<AnimeScalarRelationFilter, AnimeWhereInput>
+    demographic?: XOR<DemographicScalarRelationFilter, DemographicWhereInput>
+  }, "animeId_demographicId">
+
+  export type AnimeDemographicOrderByWithAggregationInput = {
+    animeId?: SortOrder
+    demographicId?: SortOrder
+    _count?: AnimeDemographicCountOrderByAggregateInput
+    _max?: AnimeDemographicMaxOrderByAggregateInput
+    _min?: AnimeDemographicMinOrderByAggregateInput
+  }
+
+  export type AnimeDemographicScalarWhereWithAggregatesInput = {
+    AND?: AnimeDemographicScalarWhereWithAggregatesInput | AnimeDemographicScalarWhereWithAggregatesInput[]
+    OR?: AnimeDemographicScalarWhereWithAggregatesInput[]
+    NOT?: AnimeDemographicScalarWhereWithAggregatesInput | AnimeDemographicScalarWhereWithAggregatesInput[]
+    animeId?: StringWithAggregatesFilter<"AnimeDemographic"> | string
+    demographicId?: StringWithAggregatesFilter<"AnimeDemographic"> | string
   }
 
   export type AnimePosterWhereInput = {
@@ -20176,6 +25088,140 @@ export namespace Prisma {
     x332Url?: StringNullableWithAggregatesFilter<"Screenshots"> | string | null
   }
 
+  export type AccountWhereInput = {
+    AND?: AccountWhereInput | AccountWhereInput[]
+    OR?: AccountWhereInput[]
+    NOT?: AccountWhereInput | AccountWhereInput[]
+    id?: StringFilter<"Account"> | string
+    type?: StringFilter<"Account"> | string
+    provider?: StringFilter<"Account"> | string
+    refreshToken?: StringNullableFilter<"Account"> | string | null
+    accessToken?: StringNullableFilter<"Account"> | string | null
+    expiresAt?: IntNullableFilter<"Account"> | number | null
+    createdAt?: DateTimeFilter<"Account"> | Date | string
+    updatedAt?: DateTimeFilter<"Account"> | Date | string
+    userId?: StringNullableFilter<"Account"> | string | null
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }
+
+  export type AccountOrderByWithRelationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    provider?: SortOrder
+    refreshToken?: SortOrderInput | SortOrder
+    accessToken?: SortOrderInput | SortOrder
+    expiresAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type AccountWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AccountWhereInput | AccountWhereInput[]
+    OR?: AccountWhereInput[]
+    NOT?: AccountWhereInput | AccountWhereInput[]
+    type?: StringFilter<"Account"> | string
+    provider?: StringFilter<"Account"> | string
+    refreshToken?: StringNullableFilter<"Account"> | string | null
+    accessToken?: StringNullableFilter<"Account"> | string | null
+    expiresAt?: IntNullableFilter<"Account"> | number | null
+    createdAt?: DateTimeFilter<"Account"> | Date | string
+    updatedAt?: DateTimeFilter<"Account"> | Date | string
+    userId?: StringNullableFilter<"Account"> | string | null
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type AccountOrderByWithAggregationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    provider?: SortOrder
+    refreshToken?: SortOrderInput | SortOrder
+    accessToken?: SortOrderInput | SortOrder
+    expiresAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    _count?: AccountCountOrderByAggregateInput
+    _avg?: AccountAvgOrderByAggregateInput
+    _max?: AccountMaxOrderByAggregateInput
+    _min?: AccountMinOrderByAggregateInput
+    _sum?: AccountSumOrderByAggregateInput
+  }
+
+  export type AccountScalarWhereWithAggregatesInput = {
+    AND?: AccountScalarWhereWithAggregatesInput | AccountScalarWhereWithAggregatesInput[]
+    OR?: AccountScalarWhereWithAggregatesInput[]
+    NOT?: AccountScalarWhereWithAggregatesInput | AccountScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Account"> | string
+    type?: StringWithAggregatesFilter<"Account"> | string
+    provider?: StringWithAggregatesFilter<"Account"> | string
+    refreshToken?: StringNullableWithAggregatesFilter<"Account"> | string | null
+    accessToken?: StringNullableWithAggregatesFilter<"Account"> | string | null
+    expiresAt?: IntNullableWithAggregatesFilter<"Account"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"Account"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Account"> | Date | string
+    userId?: StringNullableWithAggregatesFilter<"Account"> | string | null
+  }
+
+  export type TokenWhereInput = {
+    AND?: TokenWhereInput | TokenWhereInput[]
+    OR?: TokenWhereInput[]
+    NOT?: TokenWhereInput | TokenWhereInput[]
+    id?: StringFilter<"Token"> | string
+    email?: StringFilter<"Token"> | string
+    token?: StringFilter<"Token"> | string
+    type?: EnumTokenTypeFilter<"Token"> | $Enums.TokenType
+    expiresIn?: DateTimeFilter<"Token"> | Date | string
+    createdAt?: DateTimeFilter<"Token"> | Date | string
+  }
+
+  export type TokenOrderByWithRelationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    token?: SortOrder
+    type?: SortOrder
+    expiresIn?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TokenWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    token?: string
+    AND?: TokenWhereInput | TokenWhereInput[]
+    OR?: TokenWhereInput[]
+    NOT?: TokenWhereInput | TokenWhereInput[]
+    email?: StringFilter<"Token"> | string
+    type?: EnumTokenTypeFilter<"Token"> | $Enums.TokenType
+    expiresIn?: DateTimeFilter<"Token"> | Date | string
+    createdAt?: DateTimeFilter<"Token"> | Date | string
+  }, "id" | "token">
+
+  export type TokenOrderByWithAggregationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    token?: SortOrder
+    type?: SortOrder
+    expiresIn?: SortOrder
+    createdAt?: SortOrder
+    _count?: TokenCountOrderByAggregateInput
+    _max?: TokenMaxOrderByAggregateInput
+    _min?: TokenMinOrderByAggregateInput
+  }
+
+  export type TokenScalarWhereWithAggregatesInput = {
+    AND?: TokenScalarWhereWithAggregatesInput | TokenScalarWhereWithAggregatesInput[]
+    OR?: TokenScalarWhereWithAggregatesInput[]
+    NOT?: TokenScalarWhereWithAggregatesInput | TokenScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Token"> | string
+    email?: StringWithAggregatesFilter<"Token"> | string
+    token?: StringWithAggregatesFilter<"Token"> | string
+    type?: EnumTokenTypeWithAggregatesFilter<"Token"> | $Enums.TokenType
+    expiresIn?: DateTimeWithAggregatesFilter<"Token"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"Token"> | Date | string
+  }
+
   export type ParsingSessionWhereInput = {
     AND?: ParsingSessionWhereInput | ParsingSessionWhereInput[]
     OR?: ParsingSessionWhereInput[]
@@ -20248,63 +25294,6 @@ export namespace Prisma {
     processedItems?: IntWithAggregatesFilter<"ParsingSession"> | number
     createdAt?: DateTimeWithAggregatesFilter<"ParsingSession"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ParsingSession"> | Date | string
-  }
-
-  export type TokenWhereInput = {
-    AND?: TokenWhereInput | TokenWhereInput[]
-    OR?: TokenWhereInput[]
-    NOT?: TokenWhereInput | TokenWhereInput[]
-    id?: StringFilter<"Token"> | string
-    email?: StringFilter<"Token"> | string
-    token?: StringFilter<"Token"> | string
-    type?: EnumTokenTypeFilter<"Token"> | $Enums.TokenType
-    expiresIn?: DateTimeFilter<"Token"> | Date | string
-    createdAt?: DateTimeFilter<"Token"> | Date | string
-  }
-
-  export type TokenOrderByWithRelationInput = {
-    id?: SortOrder
-    email?: SortOrder
-    token?: SortOrder
-    type?: SortOrder
-    expiresIn?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type TokenWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    token?: string
-    AND?: TokenWhereInput | TokenWhereInput[]
-    OR?: TokenWhereInput[]
-    NOT?: TokenWhereInput | TokenWhereInput[]
-    email?: StringFilter<"Token"> | string
-    type?: EnumTokenTypeFilter<"Token"> | $Enums.TokenType
-    expiresIn?: DateTimeFilter<"Token"> | Date | string
-    createdAt?: DateTimeFilter<"Token"> | Date | string
-  }, "id" | "token">
-
-  export type TokenOrderByWithAggregationInput = {
-    id?: SortOrder
-    email?: SortOrder
-    token?: SortOrder
-    type?: SortOrder
-    expiresIn?: SortOrder
-    createdAt?: SortOrder
-    _count?: TokenCountOrderByAggregateInput
-    _max?: TokenMaxOrderByAggregateInput
-    _min?: TokenMinOrderByAggregateInput
-  }
-
-  export type TokenScalarWhereWithAggregatesInput = {
-    AND?: TokenScalarWhereWithAggregatesInput | TokenScalarWhereWithAggregatesInput[]
-    OR?: TokenScalarWhereWithAggregatesInput[]
-    NOT?: TokenScalarWhereWithAggregatesInput | TokenScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Token"> | string
-    email?: StringWithAggregatesFilter<"Token"> | string
-    token?: StringWithAggregatesFilter<"Token"> | string
-    type?: EnumTokenTypeWithAggregatesFilter<"Token"> | $Enums.TokenType
-    expiresIn?: DateTimeWithAggregatesFilter<"Token"> | Date | string
-    createdAt?: DateTimeWithAggregatesFilter<"Token"> | Date | string
   }
 
   export type UserWhereInput = {
@@ -20392,91 +25381,9 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
-  export type AccountCreateInput = {
-    id?: string
-    type: string
-    provider: string
-    refreshToken?: string | null
-    accessToken?: string | null
-    expiresAt?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user?: UserCreateNestedOneWithoutAccountsInput
-  }
-
-  export type AccountUncheckedCreateInput = {
-    id?: string
-    type: string
-    provider: string
-    refreshToken?: string | null
-    accessToken?: string | null
-    expiresAt?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId?: string | null
-  }
-
-  export type AccountUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    provider?: StringFieldUpdateOperationsInput | string
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
-    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresAt?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneWithoutAccountsNestedInput
-  }
-
-  export type AccountUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    provider?: StringFieldUpdateOperationsInput | string
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
-    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresAt?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type AccountCreateManyInput = {
-    id?: string
-    type: string
-    provider: string
-    refreshToken?: string | null
-    accessToken?: string | null
-    expiresAt?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId?: string | null
-  }
-
-  export type AccountUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    provider?: StringFieldUpdateOperationsInput | string
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
-    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresAt?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AccountUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    provider?: StringFieldUpdateOperationsInput | string
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
-    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresAt?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
   export type AnimeCreateInput = {
     id?: string
+    alias?: string | null
     malId?: string | null
     shikimoriId?: string | null
     name: string
@@ -20507,11 +25414,14 @@ export namespace Prisma {
     videos?: AnimeVideoCreateNestedManyWithoutAnimeInput
     screenshots?: AnimeScreenshotCreateNestedManyWithoutAnimeInput
     genres?: AnimeGenreCreateNestedManyWithoutAnimeInput
+    theme?: AnimeThemeCreateNestedManyWithoutAnimeInput
+    demographic?: AnimeDemographicCreateNestedManyWithoutAnimeInput
     relatedAnime?: RelatedAnimeCreateNestedManyWithoutRelatedInput
   }
 
   export type AnimeUncheckedCreateInput = {
     id?: string
+    alias?: string | null
     malId?: string | null
     shikimoriId?: string | null
     name: string
@@ -20542,11 +25452,14 @@ export namespace Prisma {
     videos?: AnimeVideoUncheckedCreateNestedManyWithoutAnimeInput
     screenshots?: AnimeScreenshotUncheckedCreateNestedManyWithoutAnimeInput
     genres?: AnimeGenreUncheckedCreateNestedManyWithoutAnimeInput
+    theme?: AnimeThemeUncheckedCreateNestedManyWithoutAnimeInput
+    demographic?: AnimeDemographicUncheckedCreateNestedManyWithoutAnimeInput
     relatedAnime?: RelatedAnimeUncheckedCreateNestedManyWithoutRelatedInput
   }
 
   export type AnimeUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
     malId?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
@@ -20577,11 +25490,14 @@ export namespace Prisma {
     videos?: AnimeVideoUpdateManyWithoutAnimeNestedInput
     screenshots?: AnimeScreenshotUpdateManyWithoutAnimeNestedInput
     genres?: AnimeGenreUpdateManyWithoutAnimeNestedInput
+    theme?: AnimeThemeUpdateManyWithoutAnimeNestedInput
+    demographic?: AnimeDemographicUpdateManyWithoutAnimeNestedInput
     relatedAnime?: RelatedAnimeUpdateManyWithoutRelatedNestedInput
   }
 
   export type AnimeUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
     malId?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
@@ -20612,11 +25528,14 @@ export namespace Prisma {
     videos?: AnimeVideoUncheckedUpdateManyWithoutAnimeNestedInput
     screenshots?: AnimeScreenshotUncheckedUpdateManyWithoutAnimeNestedInput
     genres?: AnimeGenreUncheckedUpdateManyWithoutAnimeNestedInput
+    theme?: AnimeThemeUncheckedUpdateManyWithoutAnimeNestedInput
+    demographic?: AnimeDemographicUncheckedUpdateManyWithoutAnimeNestedInput
     relatedAnime?: RelatedAnimeUncheckedUpdateManyWithoutRelatedNestedInput
   }
 
   export type AnimeCreateManyInput = {
     id?: string
+    alias?: string | null
     malId?: string | null
     shikimoriId?: string | null
     name: string
@@ -20645,6 +25564,7 @@ export namespace Prisma {
 
   export type AnimeUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
     malId?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
@@ -20673,6 +25593,7 @@ export namespace Prisma {
 
   export type AnimeUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
     malId?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
@@ -20744,6 +25665,108 @@ export namespace Prisma {
   }
 
   export type GenreUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    requestId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    russian?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ThemeCreateInput = {
+    id?: string
+    requestId?: number
+    name: string
+    russian: string
+    animes?: AnimeThemeCreateNestedManyWithoutThemeInput
+  }
+
+  export type ThemeUncheckedCreateInput = {
+    id?: string
+    requestId?: number
+    name: string
+    russian: string
+    animes?: AnimeThemeUncheckedCreateNestedManyWithoutThemeInput
+  }
+
+  export type ThemeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    russian?: StringFieldUpdateOperationsInput | string
+    animes?: AnimeThemeUpdateManyWithoutThemeNestedInput
+  }
+
+  export type ThemeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    requestId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    russian?: StringFieldUpdateOperationsInput | string
+    animes?: AnimeThemeUncheckedUpdateManyWithoutThemeNestedInput
+  }
+
+  export type ThemeCreateManyInput = {
+    id?: string
+    requestId?: number
+    name: string
+    russian: string
+  }
+
+  export type ThemeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    russian?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ThemeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    requestId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    russian?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DemographicCreateInput = {
+    id?: string
+    requestId?: number
+    name: string
+    russian: string
+    animes?: AnimeDemographicCreateNestedManyWithoutDemographicInput
+  }
+
+  export type DemographicUncheckedCreateInput = {
+    id?: string
+    requestId?: number
+    name: string
+    russian: string
+    animes?: AnimeDemographicUncheckedCreateNestedManyWithoutDemographicInput
+  }
+
+  export type DemographicUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    russian?: StringFieldUpdateOperationsInput | string
+    animes?: AnimeDemographicUpdateManyWithoutDemographicNestedInput
+  }
+
+  export type DemographicUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    requestId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    russian?: StringFieldUpdateOperationsInput | string
+    animes?: AnimeDemographicUncheckedUpdateManyWithoutDemographicNestedInput
+  }
+
+  export type DemographicCreateManyInput = {
+    id?: string
+    requestId?: number
+    name: string
+    russian: string
+  }
+
+  export type DemographicUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    russian?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DemographicUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     requestId?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
@@ -20909,6 +25932,74 @@ export namespace Prisma {
   export type AnimeGenreUncheckedUpdateManyInput = {
     animeId?: StringFieldUpdateOperationsInput | string
     genreId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AnimeThemeCreateInput = {
+    anime: AnimeCreateNestedOneWithoutThemeInput
+    theme: ThemeCreateNestedOneWithoutAnimesInput
+  }
+
+  export type AnimeThemeUncheckedCreateInput = {
+    animeId: string
+    themeId: string
+  }
+
+  export type AnimeThemeUpdateInput = {
+    anime?: AnimeUpdateOneRequiredWithoutThemeNestedInput
+    theme?: ThemeUpdateOneRequiredWithoutAnimesNestedInput
+  }
+
+  export type AnimeThemeUncheckedUpdateInput = {
+    animeId?: StringFieldUpdateOperationsInput | string
+    themeId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AnimeThemeCreateManyInput = {
+    animeId: string
+    themeId: string
+  }
+
+  export type AnimeThemeUpdateManyMutationInput = {
+
+  }
+
+  export type AnimeThemeUncheckedUpdateManyInput = {
+    animeId?: StringFieldUpdateOperationsInput | string
+    themeId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AnimeDemographicCreateInput = {
+    anime: AnimeCreateNestedOneWithoutDemographicInput
+    demographic: DemographicCreateNestedOneWithoutAnimesInput
+  }
+
+  export type AnimeDemographicUncheckedCreateInput = {
+    animeId: string
+    demographicId: string
+  }
+
+  export type AnimeDemographicUpdateInput = {
+    anime?: AnimeUpdateOneRequiredWithoutDemographicNestedInput
+    demographic?: DemographicUpdateOneRequiredWithoutAnimesNestedInput
+  }
+
+  export type AnimeDemographicUncheckedUpdateInput = {
+    animeId?: StringFieldUpdateOperationsInput | string
+    demographicId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AnimeDemographicCreateManyInput = {
+    animeId: string
+    demographicId: string
+  }
+
+  export type AnimeDemographicUpdateManyMutationInput = {
+
+  }
+
+  export type AnimeDemographicUncheckedUpdateManyInput = {
+    animeId?: StringFieldUpdateOperationsInput | string
+    demographicId?: StringFieldUpdateOperationsInput | string
   }
 
   export type AnimePosterCreateInput = {
@@ -21161,6 +26252,152 @@ export namespace Prisma {
     x332Url?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type AccountCreateInput = {
+    id?: string
+    type: string
+    provider: string
+    refreshToken?: string | null
+    accessToken?: string | null
+    expiresAt?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user?: UserCreateNestedOneWithoutAccountsInput
+  }
+
+  export type AccountUncheckedCreateInput = {
+    id?: string
+    type: string
+    provider: string
+    refreshToken?: string | null
+    accessToken?: string | null
+    expiresAt?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId?: string | null
+  }
+
+  export type AccountUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneWithoutAccountsNestedInput
+  }
+
+  export type AccountUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AccountCreateManyInput = {
+    id?: string
+    type: string
+    provider: string
+    refreshToken?: string | null
+    accessToken?: string | null
+    expiresAt?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId?: string | null
+  }
+
+  export type AccountUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    expiresAt?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TokenCreateInput = {
+    id?: string
+    email: string
+    token: string
+    type: $Enums.TokenType
+    expiresIn: Date | string
+    createdAt?: Date | string
+  }
+
+  export type TokenUncheckedCreateInput = {
+    id?: string
+    email: string
+    token: string
+    type: $Enums.TokenType
+    expiresIn: Date | string
+    createdAt?: Date | string
+  }
+
+  export type TokenUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    type?: EnumTokenTypeFieldUpdateOperationsInput | $Enums.TokenType
+    expiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TokenUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    type?: EnumTokenTypeFieldUpdateOperationsInput | $Enums.TokenType
+    expiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TokenCreateManyInput = {
+    id?: string
+    email: string
+    token: string
+    type: $Enums.TokenType
+    expiresIn: Date | string
+    createdAt?: Date | string
+  }
+
+  export type TokenUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    type?: EnumTokenTypeFieldUpdateOperationsInput | $Enums.TokenType
+    expiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TokenUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    type?: EnumTokenTypeFieldUpdateOperationsInput | $Enums.TokenType
+    expiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ParsingSessionCreateInput = {
     name: string
     status: string
@@ -21240,69 +26477,6 @@ export namespace Prisma {
     processedItems?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TokenCreateInput = {
-    id?: string
-    email: string
-    token: string
-    type: $Enums.TokenType
-    expiresIn: Date | string
-    createdAt?: Date | string
-  }
-
-  export type TokenUncheckedCreateInput = {
-    id?: string
-    email: string
-    token: string
-    type: $Enums.TokenType
-    expiresIn: Date | string
-    createdAt?: Date | string
-  }
-
-  export type TokenUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    type?: EnumTokenTypeFieldUpdateOperationsInput | $Enums.TokenType
-    expiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TokenUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    type?: EnumTokenTypeFieldUpdateOperationsInput | $Enums.TokenType
-    expiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TokenCreateManyInput = {
-    id?: string
-    email: string
-    token: string
-    type: $Enums.TokenType
-    expiresIn: Date | string
-    createdAt?: Date | string
-  }
-
-  export type TokenUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    type?: EnumTokenTypeFieldUpdateOperationsInput | $Enums.TokenType
-    expiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TokenUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    type?: EnumTokenTypeFieldUpdateOperationsInput | $Enums.TokenType
-    expiresIn?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateInput = {
@@ -21437,148 +26611,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type UserNullableScalarRelationFilter = {
-    is?: UserWhereInput | null
-    isNot?: UserWhereInput | null
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
-  }
-
-  export type AccountCountOrderByAggregateInput = {
-    id?: SortOrder
-    type?: SortOrder
-    provider?: SortOrder
-    refreshToken?: SortOrder
-    accessToken?: SortOrder
-    expiresAt?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type AccountAvgOrderByAggregateInput = {
-    expiresAt?: SortOrder
-  }
-
-  export type AccountMaxOrderByAggregateInput = {
-    id?: SortOrder
-    type?: SortOrder
-    provider?: SortOrder
-    refreshToken?: SortOrder
-    accessToken?: SortOrder
-    expiresAt?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type AccountMinOrderByAggregateInput = {
-    id?: SortOrder
-    type?: SortOrder
-    provider?: SortOrder
-    refreshToken?: SortOrder
-    accessToken?: SortOrder
-    expiresAt?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type AccountSumOrderByAggregateInput = {
-    expiresAt?: SortOrder
-  }
-
-  export type StringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
   export type StringNullableListFilter<$PrismaModel = never> = {
     equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     has?: string | StringFieldRefInput<$PrismaModel> | null
@@ -21612,6 +26644,17 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type FloatNullableFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null
     in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
@@ -21633,6 +26676,17 @@ export namespace Prisma {
     in?: $Enums.AnimeRating[] | ListEnumAnimeRatingFieldRefInput<$PrismaModel> | null
     notIn?: $Enums.AnimeRating[] | ListEnumAnimeRatingFieldRefInput<$PrismaModel> | null
     not?: NestedEnumAnimeRatingNullableFilter<$PrismaModel> | $Enums.AnimeRating | null
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type AnimePosterListRelationFilter = {
@@ -21671,6 +26725,23 @@ export namespace Prisma {
     none?: AnimeGenreWhereInput
   }
 
+  export type AnimeThemeListRelationFilter = {
+    every?: AnimeThemeWhereInput
+    some?: AnimeThemeWhereInput
+    none?: AnimeThemeWhereInput
+  }
+
+  export type AnimeDemographicListRelationFilter = {
+    every?: AnimeDemographicWhereInput
+    some?: AnimeDemographicWhereInput
+    none?: AnimeDemographicWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type AnimePosterOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -21695,6 +26766,14 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type AnimeThemeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AnimeDemographicOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type AnimeNameShikimoriIdCompoundUniqueInput = {
     name: string
     shikimoriId: string
@@ -21702,6 +26781,7 @@ export namespace Prisma {
 
   export type AnimeCountOrderByAggregateInput = {
     id?: SortOrder
+    alias?: SortOrder
     malId?: SortOrder
     shikimoriId?: SortOrder
     name?: SortOrder
@@ -21738,6 +26818,7 @@ export namespace Prisma {
 
   export type AnimeMaxOrderByAggregateInput = {
     id?: SortOrder
+    alias?: SortOrder
     malId?: SortOrder
     shikimoriId?: SortOrder
     name?: SortOrder
@@ -21765,6 +26846,7 @@ export namespace Prisma {
 
   export type AnimeMinOrderByAggregateInput = {
     id?: SortOrder
+    alias?: SortOrder
     malId?: SortOrder
     shikimoriId?: SortOrder
     name?: SortOrder
@@ -21796,6 +26878,42 @@ export namespace Prisma {
     duration?: SortOrder
     score?: SortOrder
     shikimoriScore?: SortOrder
+  }
+
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type EnumAnimeStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -21834,6 +26952,22 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
   export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null
     in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
@@ -21868,6 +27002,20 @@ export namespace Prisma {
     _max?: NestedEnumAnimeRatingNullableFilter<$PrismaModel>
   }
 
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type GenreCountOrderByAggregateInput = {
     id?: SortOrder
     requestId?: SortOrder
@@ -21894,6 +27042,64 @@ export namespace Prisma {
   }
 
   export type GenreSumOrderByAggregateInput = {
+    requestId?: SortOrder
+  }
+
+  export type ThemeCountOrderByAggregateInput = {
+    id?: SortOrder
+    requestId?: SortOrder
+    name?: SortOrder
+    russian?: SortOrder
+  }
+
+  export type ThemeAvgOrderByAggregateInput = {
+    requestId?: SortOrder
+  }
+
+  export type ThemeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    requestId?: SortOrder
+    name?: SortOrder
+    russian?: SortOrder
+  }
+
+  export type ThemeMinOrderByAggregateInput = {
+    id?: SortOrder
+    requestId?: SortOrder
+    name?: SortOrder
+    russian?: SortOrder
+  }
+
+  export type ThemeSumOrderByAggregateInput = {
+    requestId?: SortOrder
+  }
+
+  export type DemographicCountOrderByAggregateInput = {
+    id?: SortOrder
+    requestId?: SortOrder
+    name?: SortOrder
+    russian?: SortOrder
+  }
+
+  export type DemographicAvgOrderByAggregateInput = {
+    requestId?: SortOrder
+  }
+
+  export type DemographicMaxOrderByAggregateInput = {
+    id?: SortOrder
+    requestId?: SortOrder
+    name?: SortOrder
+    russian?: SortOrder
+  }
+
+  export type DemographicMinOrderByAggregateInput = {
+    id?: SortOrder
+    requestId?: SortOrder
+    name?: SortOrder
+    russian?: SortOrder
+  }
+
+  export type DemographicSumOrderByAggregateInput = {
     requestId?: SortOrder
   }
 
@@ -22011,6 +27217,56 @@ export namespace Prisma {
   export type AnimeGenreMinOrderByAggregateInput = {
     animeId?: SortOrder
     genreId?: SortOrder
+  }
+
+  export type ThemeScalarRelationFilter = {
+    is?: ThemeWhereInput
+    isNot?: ThemeWhereInput
+  }
+
+  export type AnimeThemeAnimeIdThemeIdCompoundUniqueInput = {
+    animeId: string
+    themeId: string
+  }
+
+  export type AnimeThemeCountOrderByAggregateInput = {
+    animeId?: SortOrder
+    themeId?: SortOrder
+  }
+
+  export type AnimeThemeMaxOrderByAggregateInput = {
+    animeId?: SortOrder
+    themeId?: SortOrder
+  }
+
+  export type AnimeThemeMinOrderByAggregateInput = {
+    animeId?: SortOrder
+    themeId?: SortOrder
+  }
+
+  export type DemographicScalarRelationFilter = {
+    is?: DemographicWhereInput
+    isNot?: DemographicWhereInput
+  }
+
+  export type AnimeDemographicAnimeIdDemographicIdCompoundUniqueInput = {
+    animeId: string
+    demographicId: string
+  }
+
+  export type AnimeDemographicCountOrderByAggregateInput = {
+    animeId?: SortOrder
+    demographicId?: SortOrder
+  }
+
+  export type AnimeDemographicMaxOrderByAggregateInput = {
+    animeId?: SortOrder
+    demographicId?: SortOrder
+  }
+
+  export type AnimeDemographicMinOrderByAggregateInput = {
+    animeId?: SortOrder
+    demographicId?: SortOrder
   }
 
   export type AnimePosterCountOrderByAggregateInput = {
@@ -22155,6 +27411,99 @@ export namespace Prisma {
     x332Url?: SortOrder
   }
 
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type AccountCountOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    provider?: SortOrder
+    refreshToken?: SortOrder
+    accessToken?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type AccountAvgOrderByAggregateInput = {
+    expiresAt?: SortOrder
+  }
+
+  export type AccountMaxOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    provider?: SortOrder
+    refreshToken?: SortOrder
+    accessToken?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type AccountMinOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    provider?: SortOrder
+    refreshToken?: SortOrder
+    accessToken?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type AccountSumOrderByAggregateInput = {
+    expiresAt?: SortOrder
+  }
+
+  export type EnumTokenTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.TokenType | EnumTokenTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TokenType[] | ListEnumTokenTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TokenType[] | ListEnumTokenTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTokenTypeFilter<$PrismaModel> | $Enums.TokenType
+  }
+
+  export type TokenCountOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    token?: SortOrder
+    type?: SortOrder
+    expiresIn?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TokenMaxOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    token?: SortOrder
+    type?: SortOrder
+    expiresIn?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TokenMinOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    token?: SortOrder
+    type?: SortOrder
+    expiresIn?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type EnumTokenTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TokenType | EnumTokenTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TokenType[] | ListEnumTokenTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TokenType[] | ListEnumTokenTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTokenTypeWithAggregatesFilter<$PrismaModel> | $Enums.TokenType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTokenTypeFilter<$PrismaModel>
+    _max?: NestedEnumTokenTypeFilter<$PrismaModel>
+  }
+
   export type EnumParsingSessionTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.ParsingSessionType | EnumParsingSessionTypeFieldRefInput<$PrismaModel>
     in?: $Enums.ParsingSessionType[] | ListEnumParsingSessionTypeFieldRefInput<$PrismaModel>
@@ -22220,50 +27569,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumParsingSessionTypeFilter<$PrismaModel>
     _max?: NestedEnumParsingSessionTypeFilter<$PrismaModel>
-  }
-
-  export type EnumTokenTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.TokenType | EnumTokenTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.TokenType[] | ListEnumTokenTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TokenType[] | ListEnumTokenTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumTokenTypeFilter<$PrismaModel> | $Enums.TokenType
-  }
-
-  export type TokenCountOrderByAggregateInput = {
-    id?: SortOrder
-    email?: SortOrder
-    token?: SortOrder
-    type?: SortOrder
-    expiresIn?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type TokenMaxOrderByAggregateInput = {
-    id?: SortOrder
-    email?: SortOrder
-    token?: SortOrder
-    type?: SortOrder
-    expiresIn?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type TokenMinOrderByAggregateInput = {
-    id?: SortOrder
-    email?: SortOrder
-    token?: SortOrder
-    type?: SortOrder
-    expiresIn?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type EnumTokenTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.TokenType | EnumTokenTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.TokenType[] | ListEnumTokenTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TokenType[] | ListEnumTokenTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumTokenTypeWithAggregatesFilter<$PrismaModel> | $Enums.TokenType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumTokenTypeFilter<$PrismaModel>
-    _max?: NestedEnumTokenTypeFilter<$PrismaModel>
   }
 
   export type EnumUserRoleFilter<$PrismaModel = never> = {
@@ -22365,42 +27670,6 @@ export namespace Prisma {
     _max?: NestedEnumAuthMethodFilter<$PrismaModel>
   }
 
-  export type UserCreateNestedOneWithoutAccountsInput = {
-    create?: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutAccountsInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type StringFieldUpdateOperationsInput = {
-    set?: string
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
-  }
-
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
-  }
-
-  export type UserUpdateOneWithoutAccountsNestedInput = {
-    create?: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutAccountsInput
-    upsert?: UserUpsertWithoutAccountsInput
-    disconnect?: UserWhereInput | boolean
-    delete?: UserWhereInput | boolean
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAccountsInput, UserUpdateWithoutAccountsInput>, UserUncheckedUpdateWithoutAccountsInput>
-  }
-
   export type AnimeCreatesynonymsInput = {
     set: string[]
   }
@@ -22445,6 +27714,20 @@ export namespace Prisma {
     connectOrCreate?: AnimeGenreCreateOrConnectWithoutAnimeInput | AnimeGenreCreateOrConnectWithoutAnimeInput[]
     createMany?: AnimeGenreCreateManyAnimeInputEnvelope
     connect?: AnimeGenreWhereUniqueInput | AnimeGenreWhereUniqueInput[]
+  }
+
+  export type AnimeThemeCreateNestedManyWithoutAnimeInput = {
+    create?: XOR<AnimeThemeCreateWithoutAnimeInput, AnimeThemeUncheckedCreateWithoutAnimeInput> | AnimeThemeCreateWithoutAnimeInput[] | AnimeThemeUncheckedCreateWithoutAnimeInput[]
+    connectOrCreate?: AnimeThemeCreateOrConnectWithoutAnimeInput | AnimeThemeCreateOrConnectWithoutAnimeInput[]
+    createMany?: AnimeThemeCreateManyAnimeInputEnvelope
+    connect?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+  }
+
+  export type AnimeDemographicCreateNestedManyWithoutAnimeInput = {
+    create?: XOR<AnimeDemographicCreateWithoutAnimeInput, AnimeDemographicUncheckedCreateWithoutAnimeInput> | AnimeDemographicCreateWithoutAnimeInput[] | AnimeDemographicUncheckedCreateWithoutAnimeInput[]
+    connectOrCreate?: AnimeDemographicCreateOrConnectWithoutAnimeInput | AnimeDemographicCreateOrConnectWithoutAnimeInput[]
+    createMany?: AnimeDemographicCreateManyAnimeInputEnvelope
+    connect?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
   }
 
   export type RelatedAnimeCreateNestedManyWithoutRelatedInput = {
@@ -22496,11 +27779,33 @@ export namespace Prisma {
     connect?: AnimeGenreWhereUniqueInput | AnimeGenreWhereUniqueInput[]
   }
 
+  export type AnimeThemeUncheckedCreateNestedManyWithoutAnimeInput = {
+    create?: XOR<AnimeThemeCreateWithoutAnimeInput, AnimeThemeUncheckedCreateWithoutAnimeInput> | AnimeThemeCreateWithoutAnimeInput[] | AnimeThemeUncheckedCreateWithoutAnimeInput[]
+    connectOrCreate?: AnimeThemeCreateOrConnectWithoutAnimeInput | AnimeThemeCreateOrConnectWithoutAnimeInput[]
+    createMany?: AnimeThemeCreateManyAnimeInputEnvelope
+    connect?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+  }
+
+  export type AnimeDemographicUncheckedCreateNestedManyWithoutAnimeInput = {
+    create?: XOR<AnimeDemographicCreateWithoutAnimeInput, AnimeDemographicUncheckedCreateWithoutAnimeInput> | AnimeDemographicCreateWithoutAnimeInput[] | AnimeDemographicUncheckedCreateWithoutAnimeInput[]
+    connectOrCreate?: AnimeDemographicCreateOrConnectWithoutAnimeInput | AnimeDemographicCreateOrConnectWithoutAnimeInput[]
+    createMany?: AnimeDemographicCreateManyAnimeInputEnvelope
+    connect?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
+  }
+
   export type RelatedAnimeUncheckedCreateNestedManyWithoutRelatedInput = {
     create?: XOR<RelatedAnimeCreateWithoutRelatedInput, RelatedAnimeUncheckedCreateWithoutRelatedInput> | RelatedAnimeCreateWithoutRelatedInput[] | RelatedAnimeUncheckedCreateWithoutRelatedInput[]
     connectOrCreate?: RelatedAnimeCreateOrConnectWithoutRelatedInput | RelatedAnimeCreateOrConnectWithoutRelatedInput[]
     createMany?: RelatedAnimeCreateManyRelatedInputEnvelope
     connect?: RelatedAnimeWhereUniqueInput | RelatedAnimeWhereUniqueInput[]
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type AnimeUpdatesynonymsInput = {
@@ -22524,6 +27829,14 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type NullableFloatFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
@@ -22538,6 +27851,10 @@ export namespace Prisma {
 
   export type NullableEnumAnimeRatingFieldUpdateOperationsInput = {
     set?: $Enums.AnimeRating | null
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
   export type AnimePosterUpdateManyWithoutAnimeNestedInput = {
@@ -22622,6 +27939,34 @@ export namespace Prisma {
     update?: AnimeGenreUpdateWithWhereUniqueWithoutAnimeInput | AnimeGenreUpdateWithWhereUniqueWithoutAnimeInput[]
     updateMany?: AnimeGenreUpdateManyWithWhereWithoutAnimeInput | AnimeGenreUpdateManyWithWhereWithoutAnimeInput[]
     deleteMany?: AnimeGenreScalarWhereInput | AnimeGenreScalarWhereInput[]
+  }
+
+  export type AnimeThemeUpdateManyWithoutAnimeNestedInput = {
+    create?: XOR<AnimeThemeCreateWithoutAnimeInput, AnimeThemeUncheckedCreateWithoutAnimeInput> | AnimeThemeCreateWithoutAnimeInput[] | AnimeThemeUncheckedCreateWithoutAnimeInput[]
+    connectOrCreate?: AnimeThemeCreateOrConnectWithoutAnimeInput | AnimeThemeCreateOrConnectWithoutAnimeInput[]
+    upsert?: AnimeThemeUpsertWithWhereUniqueWithoutAnimeInput | AnimeThemeUpsertWithWhereUniqueWithoutAnimeInput[]
+    createMany?: AnimeThemeCreateManyAnimeInputEnvelope
+    set?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+    disconnect?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+    delete?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+    connect?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+    update?: AnimeThemeUpdateWithWhereUniqueWithoutAnimeInput | AnimeThemeUpdateWithWhereUniqueWithoutAnimeInput[]
+    updateMany?: AnimeThemeUpdateManyWithWhereWithoutAnimeInput | AnimeThemeUpdateManyWithWhereWithoutAnimeInput[]
+    deleteMany?: AnimeThemeScalarWhereInput | AnimeThemeScalarWhereInput[]
+  }
+
+  export type AnimeDemographicUpdateManyWithoutAnimeNestedInput = {
+    create?: XOR<AnimeDemographicCreateWithoutAnimeInput, AnimeDemographicUncheckedCreateWithoutAnimeInput> | AnimeDemographicCreateWithoutAnimeInput[] | AnimeDemographicUncheckedCreateWithoutAnimeInput[]
+    connectOrCreate?: AnimeDemographicCreateOrConnectWithoutAnimeInput | AnimeDemographicCreateOrConnectWithoutAnimeInput[]
+    upsert?: AnimeDemographicUpsertWithWhereUniqueWithoutAnimeInput | AnimeDemographicUpsertWithWhereUniqueWithoutAnimeInput[]
+    createMany?: AnimeDemographicCreateManyAnimeInputEnvelope
+    set?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
+    disconnect?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
+    delete?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
+    connect?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
+    update?: AnimeDemographicUpdateWithWhereUniqueWithoutAnimeInput | AnimeDemographicUpdateWithWhereUniqueWithoutAnimeInput[]
+    updateMany?: AnimeDemographicUpdateManyWithWhereWithoutAnimeInput | AnimeDemographicUpdateManyWithWhereWithoutAnimeInput[]
+    deleteMany?: AnimeDemographicScalarWhereInput | AnimeDemographicScalarWhereInput[]
   }
 
   export type RelatedAnimeUpdateManyWithoutRelatedNestedInput = {
@@ -22722,6 +28067,34 @@ export namespace Prisma {
     deleteMany?: AnimeGenreScalarWhereInput | AnimeGenreScalarWhereInput[]
   }
 
+  export type AnimeThemeUncheckedUpdateManyWithoutAnimeNestedInput = {
+    create?: XOR<AnimeThemeCreateWithoutAnimeInput, AnimeThemeUncheckedCreateWithoutAnimeInput> | AnimeThemeCreateWithoutAnimeInput[] | AnimeThemeUncheckedCreateWithoutAnimeInput[]
+    connectOrCreate?: AnimeThemeCreateOrConnectWithoutAnimeInput | AnimeThemeCreateOrConnectWithoutAnimeInput[]
+    upsert?: AnimeThemeUpsertWithWhereUniqueWithoutAnimeInput | AnimeThemeUpsertWithWhereUniqueWithoutAnimeInput[]
+    createMany?: AnimeThemeCreateManyAnimeInputEnvelope
+    set?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+    disconnect?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+    delete?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+    connect?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+    update?: AnimeThemeUpdateWithWhereUniqueWithoutAnimeInput | AnimeThemeUpdateWithWhereUniqueWithoutAnimeInput[]
+    updateMany?: AnimeThemeUpdateManyWithWhereWithoutAnimeInput | AnimeThemeUpdateManyWithWhereWithoutAnimeInput[]
+    deleteMany?: AnimeThemeScalarWhereInput | AnimeThemeScalarWhereInput[]
+  }
+
+  export type AnimeDemographicUncheckedUpdateManyWithoutAnimeNestedInput = {
+    create?: XOR<AnimeDemographicCreateWithoutAnimeInput, AnimeDemographicUncheckedCreateWithoutAnimeInput> | AnimeDemographicCreateWithoutAnimeInput[] | AnimeDemographicUncheckedCreateWithoutAnimeInput[]
+    connectOrCreate?: AnimeDemographicCreateOrConnectWithoutAnimeInput | AnimeDemographicCreateOrConnectWithoutAnimeInput[]
+    upsert?: AnimeDemographicUpsertWithWhereUniqueWithoutAnimeInput | AnimeDemographicUpsertWithWhereUniqueWithoutAnimeInput[]
+    createMany?: AnimeDemographicCreateManyAnimeInputEnvelope
+    set?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
+    disconnect?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
+    delete?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
+    connect?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
+    update?: AnimeDemographicUpdateWithWhereUniqueWithoutAnimeInput | AnimeDemographicUpdateWithWhereUniqueWithoutAnimeInput[]
+    updateMany?: AnimeDemographicUpdateManyWithWhereWithoutAnimeInput | AnimeDemographicUpdateManyWithWhereWithoutAnimeInput[]
+    deleteMany?: AnimeDemographicScalarWhereInput | AnimeDemographicScalarWhereInput[]
+  }
+
   export type RelatedAnimeUncheckedUpdateManyWithoutRelatedNestedInput = {
     create?: XOR<RelatedAnimeCreateWithoutRelatedInput, RelatedAnimeUncheckedCreateWithoutRelatedInput> | RelatedAnimeCreateWithoutRelatedInput[] | RelatedAnimeUncheckedCreateWithoutRelatedInput[]
     connectOrCreate?: RelatedAnimeCreateOrConnectWithoutRelatedInput | RelatedAnimeCreateOrConnectWithoutRelatedInput[]
@@ -22776,6 +28149,90 @@ export namespace Prisma {
     update?: AnimeGenreUpdateWithWhereUniqueWithoutGenreInput | AnimeGenreUpdateWithWhereUniqueWithoutGenreInput[]
     updateMany?: AnimeGenreUpdateManyWithWhereWithoutGenreInput | AnimeGenreUpdateManyWithWhereWithoutGenreInput[]
     deleteMany?: AnimeGenreScalarWhereInput | AnimeGenreScalarWhereInput[]
+  }
+
+  export type AnimeThemeCreateNestedManyWithoutThemeInput = {
+    create?: XOR<AnimeThemeCreateWithoutThemeInput, AnimeThemeUncheckedCreateWithoutThemeInput> | AnimeThemeCreateWithoutThemeInput[] | AnimeThemeUncheckedCreateWithoutThemeInput[]
+    connectOrCreate?: AnimeThemeCreateOrConnectWithoutThemeInput | AnimeThemeCreateOrConnectWithoutThemeInput[]
+    createMany?: AnimeThemeCreateManyThemeInputEnvelope
+    connect?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+  }
+
+  export type AnimeThemeUncheckedCreateNestedManyWithoutThemeInput = {
+    create?: XOR<AnimeThemeCreateWithoutThemeInput, AnimeThemeUncheckedCreateWithoutThemeInput> | AnimeThemeCreateWithoutThemeInput[] | AnimeThemeUncheckedCreateWithoutThemeInput[]
+    connectOrCreate?: AnimeThemeCreateOrConnectWithoutThemeInput | AnimeThemeCreateOrConnectWithoutThemeInput[]
+    createMany?: AnimeThemeCreateManyThemeInputEnvelope
+    connect?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+  }
+
+  export type AnimeThemeUpdateManyWithoutThemeNestedInput = {
+    create?: XOR<AnimeThemeCreateWithoutThemeInput, AnimeThemeUncheckedCreateWithoutThemeInput> | AnimeThemeCreateWithoutThemeInput[] | AnimeThemeUncheckedCreateWithoutThemeInput[]
+    connectOrCreate?: AnimeThemeCreateOrConnectWithoutThemeInput | AnimeThemeCreateOrConnectWithoutThemeInput[]
+    upsert?: AnimeThemeUpsertWithWhereUniqueWithoutThemeInput | AnimeThemeUpsertWithWhereUniqueWithoutThemeInput[]
+    createMany?: AnimeThemeCreateManyThemeInputEnvelope
+    set?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+    disconnect?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+    delete?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+    connect?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+    update?: AnimeThemeUpdateWithWhereUniqueWithoutThemeInput | AnimeThemeUpdateWithWhereUniqueWithoutThemeInput[]
+    updateMany?: AnimeThemeUpdateManyWithWhereWithoutThemeInput | AnimeThemeUpdateManyWithWhereWithoutThemeInput[]
+    deleteMany?: AnimeThemeScalarWhereInput | AnimeThemeScalarWhereInput[]
+  }
+
+  export type AnimeThemeUncheckedUpdateManyWithoutThemeNestedInput = {
+    create?: XOR<AnimeThemeCreateWithoutThemeInput, AnimeThemeUncheckedCreateWithoutThemeInput> | AnimeThemeCreateWithoutThemeInput[] | AnimeThemeUncheckedCreateWithoutThemeInput[]
+    connectOrCreate?: AnimeThemeCreateOrConnectWithoutThemeInput | AnimeThemeCreateOrConnectWithoutThemeInput[]
+    upsert?: AnimeThemeUpsertWithWhereUniqueWithoutThemeInput | AnimeThemeUpsertWithWhereUniqueWithoutThemeInput[]
+    createMany?: AnimeThemeCreateManyThemeInputEnvelope
+    set?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+    disconnect?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+    delete?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+    connect?: AnimeThemeWhereUniqueInput | AnimeThemeWhereUniqueInput[]
+    update?: AnimeThemeUpdateWithWhereUniqueWithoutThemeInput | AnimeThemeUpdateWithWhereUniqueWithoutThemeInput[]
+    updateMany?: AnimeThemeUpdateManyWithWhereWithoutThemeInput | AnimeThemeUpdateManyWithWhereWithoutThemeInput[]
+    deleteMany?: AnimeThemeScalarWhereInput | AnimeThemeScalarWhereInput[]
+  }
+
+  export type AnimeDemographicCreateNestedManyWithoutDemographicInput = {
+    create?: XOR<AnimeDemographicCreateWithoutDemographicInput, AnimeDemographicUncheckedCreateWithoutDemographicInput> | AnimeDemographicCreateWithoutDemographicInput[] | AnimeDemographicUncheckedCreateWithoutDemographicInput[]
+    connectOrCreate?: AnimeDemographicCreateOrConnectWithoutDemographicInput | AnimeDemographicCreateOrConnectWithoutDemographicInput[]
+    createMany?: AnimeDemographicCreateManyDemographicInputEnvelope
+    connect?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
+  }
+
+  export type AnimeDemographicUncheckedCreateNestedManyWithoutDemographicInput = {
+    create?: XOR<AnimeDemographicCreateWithoutDemographicInput, AnimeDemographicUncheckedCreateWithoutDemographicInput> | AnimeDemographicCreateWithoutDemographicInput[] | AnimeDemographicUncheckedCreateWithoutDemographicInput[]
+    connectOrCreate?: AnimeDemographicCreateOrConnectWithoutDemographicInput | AnimeDemographicCreateOrConnectWithoutDemographicInput[]
+    createMany?: AnimeDemographicCreateManyDemographicInputEnvelope
+    connect?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
+  }
+
+  export type AnimeDemographicUpdateManyWithoutDemographicNestedInput = {
+    create?: XOR<AnimeDemographicCreateWithoutDemographicInput, AnimeDemographicUncheckedCreateWithoutDemographicInput> | AnimeDemographicCreateWithoutDemographicInput[] | AnimeDemographicUncheckedCreateWithoutDemographicInput[]
+    connectOrCreate?: AnimeDemographicCreateOrConnectWithoutDemographicInput | AnimeDemographicCreateOrConnectWithoutDemographicInput[]
+    upsert?: AnimeDemographicUpsertWithWhereUniqueWithoutDemographicInput | AnimeDemographicUpsertWithWhereUniqueWithoutDemographicInput[]
+    createMany?: AnimeDemographicCreateManyDemographicInputEnvelope
+    set?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
+    disconnect?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
+    delete?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
+    connect?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
+    update?: AnimeDemographicUpdateWithWhereUniqueWithoutDemographicInput | AnimeDemographicUpdateWithWhereUniqueWithoutDemographicInput[]
+    updateMany?: AnimeDemographicUpdateManyWithWhereWithoutDemographicInput | AnimeDemographicUpdateManyWithWhereWithoutDemographicInput[]
+    deleteMany?: AnimeDemographicScalarWhereInput | AnimeDemographicScalarWhereInput[]
+  }
+
+  export type AnimeDemographicUncheckedUpdateManyWithoutDemographicNestedInput = {
+    create?: XOR<AnimeDemographicCreateWithoutDemographicInput, AnimeDemographicUncheckedCreateWithoutDemographicInput> | AnimeDemographicCreateWithoutDemographicInput[] | AnimeDemographicUncheckedCreateWithoutDemographicInput[]
+    connectOrCreate?: AnimeDemographicCreateOrConnectWithoutDemographicInput | AnimeDemographicCreateOrConnectWithoutDemographicInput[]
+    upsert?: AnimeDemographicUpsertWithWhereUniqueWithoutDemographicInput | AnimeDemographicUpsertWithWhereUniqueWithoutDemographicInput[]
+    createMany?: AnimeDemographicCreateManyDemographicInputEnvelope
+    set?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
+    disconnect?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
+    delete?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
+    connect?: AnimeDemographicWhereUniqueInput | AnimeDemographicWhereUniqueInput[]
+    update?: AnimeDemographicUpdateWithWhereUniqueWithoutDemographicInput | AnimeDemographicUpdateWithWhereUniqueWithoutDemographicInput[]
+    updateMany?: AnimeDemographicUpdateManyWithWhereWithoutDemographicInput | AnimeDemographicUpdateManyWithWhereWithoutDemographicInput[]
+    deleteMany?: AnimeDemographicScalarWhereInput | AnimeDemographicScalarWhereInput[]
   }
 
   export type AnimeStudioCreateNestedManyWithoutStudioInput = {
@@ -22906,6 +28363,62 @@ export namespace Prisma {
     upsert?: GenreUpsertWithoutAnimesInput
     connect?: GenreWhereUniqueInput
     update?: XOR<XOR<GenreUpdateToOneWithWhereWithoutAnimesInput, GenreUpdateWithoutAnimesInput>, GenreUncheckedUpdateWithoutAnimesInput>
+  }
+
+  export type AnimeCreateNestedOneWithoutThemeInput = {
+    create?: XOR<AnimeCreateWithoutThemeInput, AnimeUncheckedCreateWithoutThemeInput>
+    connectOrCreate?: AnimeCreateOrConnectWithoutThemeInput
+    connect?: AnimeWhereUniqueInput
+  }
+
+  export type ThemeCreateNestedOneWithoutAnimesInput = {
+    create?: XOR<ThemeCreateWithoutAnimesInput, ThemeUncheckedCreateWithoutAnimesInput>
+    connectOrCreate?: ThemeCreateOrConnectWithoutAnimesInput
+    connect?: ThemeWhereUniqueInput
+  }
+
+  export type AnimeUpdateOneRequiredWithoutThemeNestedInput = {
+    create?: XOR<AnimeCreateWithoutThemeInput, AnimeUncheckedCreateWithoutThemeInput>
+    connectOrCreate?: AnimeCreateOrConnectWithoutThemeInput
+    upsert?: AnimeUpsertWithoutThemeInput
+    connect?: AnimeWhereUniqueInput
+    update?: XOR<XOR<AnimeUpdateToOneWithWhereWithoutThemeInput, AnimeUpdateWithoutThemeInput>, AnimeUncheckedUpdateWithoutThemeInput>
+  }
+
+  export type ThemeUpdateOneRequiredWithoutAnimesNestedInput = {
+    create?: XOR<ThemeCreateWithoutAnimesInput, ThemeUncheckedCreateWithoutAnimesInput>
+    connectOrCreate?: ThemeCreateOrConnectWithoutAnimesInput
+    upsert?: ThemeUpsertWithoutAnimesInput
+    connect?: ThemeWhereUniqueInput
+    update?: XOR<XOR<ThemeUpdateToOneWithWhereWithoutAnimesInput, ThemeUpdateWithoutAnimesInput>, ThemeUncheckedUpdateWithoutAnimesInput>
+  }
+
+  export type AnimeCreateNestedOneWithoutDemographicInput = {
+    create?: XOR<AnimeCreateWithoutDemographicInput, AnimeUncheckedCreateWithoutDemographicInput>
+    connectOrCreate?: AnimeCreateOrConnectWithoutDemographicInput
+    connect?: AnimeWhereUniqueInput
+  }
+
+  export type DemographicCreateNestedOneWithoutAnimesInput = {
+    create?: XOR<DemographicCreateWithoutAnimesInput, DemographicUncheckedCreateWithoutAnimesInput>
+    connectOrCreate?: DemographicCreateOrConnectWithoutAnimesInput
+    connect?: DemographicWhereUniqueInput
+  }
+
+  export type AnimeUpdateOneRequiredWithoutDemographicNestedInput = {
+    create?: XOR<AnimeCreateWithoutDemographicInput, AnimeUncheckedCreateWithoutDemographicInput>
+    connectOrCreate?: AnimeCreateOrConnectWithoutDemographicInput
+    upsert?: AnimeUpsertWithoutDemographicInput
+    connect?: AnimeWhereUniqueInput
+    update?: XOR<XOR<AnimeUpdateToOneWithWhereWithoutDemographicInput, AnimeUpdateWithoutDemographicInput>, AnimeUncheckedUpdateWithoutDemographicInput>
+  }
+
+  export type DemographicUpdateOneRequiredWithoutAnimesNestedInput = {
+    create?: XOR<DemographicCreateWithoutAnimesInput, DemographicUncheckedCreateWithoutAnimesInput>
+    connectOrCreate?: DemographicCreateOrConnectWithoutAnimesInput
+    upsert?: DemographicUpsertWithoutAnimesInput
+    connect?: DemographicWhereUniqueInput
+    update?: XOR<XOR<DemographicUpdateToOneWithWhereWithoutAnimesInput, DemographicUpdateWithoutAnimesInput>, DemographicUncheckedUpdateWithoutAnimesInput>
   }
 
   export type AnimeCreateNestedOneWithoutPosterInput = {
@@ -23066,12 +28579,28 @@ export namespace Prisma {
     deleteMany?: AnimeScreenshotScalarWhereInput | AnimeScreenshotScalarWhereInput[]
   }
 
-  export type EnumParsingSessionTypeFieldUpdateOperationsInput = {
-    set?: $Enums.ParsingSessionType
+  export type UserCreateNestedOneWithoutAccountsInput = {
+    create?: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAccountsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneWithoutAccountsNestedInput = {
+    create?: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAccountsInput
+    upsert?: UserUpsertWithoutAccountsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAccountsInput, UserUpdateWithoutAccountsInput>, UserUncheckedUpdateWithoutAccountsInput>
   }
 
   export type EnumTokenTypeFieldUpdateOperationsInput = {
     set?: $Enums.TokenType
+  }
+
+  export type EnumParsingSessionTypeFieldUpdateOperationsInput = {
+    set?: $Enums.ParsingSessionType
   }
 
   export type AccountCreateNestedManyWithoutUserInput = {
@@ -23156,6 +28685,31 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedEnumAnimeStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.AnimeStatus | EnumAnimeStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AnimeStatus[] | ListEnumAnimeStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AnimeStatus[] | ListEnumAnimeStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumAnimeStatusFilter<$PrismaModel> | $Enums.AnimeStatus
+  }
+
+  export type NestedEnumAnimeKindNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.AnimeKind | EnumAnimeKindFieldRefInput<$PrismaModel> | null
+    in?: $Enums.AnimeKind[] | ListEnumAnimeKindFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.AnimeKind[] | ListEnumAnimeKindFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumAnimeKindNullableFilter<$PrismaModel> | $Enums.AnimeKind | null
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type NestedIntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -23165,6 +28719,29 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type NestedEnumAnimeRatingNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.AnimeRating | EnumAnimeRatingFieldRefInput<$PrismaModel> | null
+    in?: $Enums.AnimeRating[] | ListEnumAnimeRatingFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.AnimeRating[] | ListEnumAnimeRatingFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumAnimeRatingNullableFilter<$PrismaModel> | $Enums.AnimeRating | null
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -23195,17 +28772,6 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -23221,73 +28787,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type NestedEnumAnimeStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.AnimeStatus | EnumAnimeStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.AnimeStatus[] | ListEnumAnimeStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AnimeStatus[] | ListEnumAnimeStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumAnimeStatusFilter<$PrismaModel> | $Enums.AnimeStatus
-  }
-
-  export type NestedEnumAnimeKindNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.AnimeKind | EnumAnimeKindFieldRefInput<$PrismaModel> | null
-    in?: $Enums.AnimeKind[] | ListEnumAnimeKindFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.AnimeKind[] | ListEnumAnimeKindFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumAnimeKindNullableFilter<$PrismaModel> | $Enums.AnimeKind | null
-  }
-
-  export type NestedBoolNullableFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
-  }
-
-  export type NestedEnumAnimeRatingNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.AnimeRating | EnumAnimeRatingFieldRefInput<$PrismaModel> | null
-    in?: $Enums.AnimeRating[] | ListEnumAnimeRatingFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.AnimeRating[] | ListEnumAnimeRatingFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumAnimeRatingNullableFilter<$PrismaModel> | $Enums.AnimeRating | null
   }
 
   export type NestedEnumAnimeStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -23337,6 +28836,22 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
   export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null
     in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
@@ -23369,6 +28884,20 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumAnimeRatingNullableFilter<$PrismaModel>
     _max?: NestedEnumAnimeRatingNullableFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type NestedEnumRelationKindFilter<$PrismaModel = never> = {
@@ -23405,23 +28934,6 @@ export namespace Prisma {
     _max?: NestedEnumVideoKindEnumFilter<$PrismaModel>
   }
 
-  export type NestedEnumParsingSessionTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.ParsingSessionType | EnumParsingSessionTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.ParsingSessionType[] | ListEnumParsingSessionTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ParsingSessionType[] | ListEnumParsingSessionTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumParsingSessionTypeFilter<$PrismaModel> | $Enums.ParsingSessionType
-  }
-
-  export type NestedEnumParsingSessionTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ParsingSessionType | EnumParsingSessionTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.ParsingSessionType[] | ListEnumParsingSessionTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ParsingSessionType[] | ListEnumParsingSessionTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumParsingSessionTypeWithAggregatesFilter<$PrismaModel> | $Enums.ParsingSessionType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumParsingSessionTypeFilter<$PrismaModel>
-    _max?: NestedEnumParsingSessionTypeFilter<$PrismaModel>
-  }
-
   export type NestedEnumTokenTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.TokenType | EnumTokenTypeFieldRefInput<$PrismaModel>
     in?: $Enums.TokenType[] | ListEnumTokenTypeFieldRefInput<$PrismaModel>
@@ -23437,6 +28949,23 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTokenTypeFilter<$PrismaModel>
     _max?: NestedEnumTokenTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumParsingSessionTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ParsingSessionType | EnumParsingSessionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ParsingSessionType[] | ListEnumParsingSessionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ParsingSessionType[] | ListEnumParsingSessionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumParsingSessionTypeFilter<$PrismaModel> | $Enums.ParsingSessionType
+  }
+
+  export type NestedEnumParsingSessionTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ParsingSessionType | EnumParsingSessionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ParsingSessionType[] | ListEnumParsingSessionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ParsingSessionType[] | ListEnumParsingSessionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumParsingSessionTypeWithAggregatesFilter<$PrismaModel> | $Enums.ParsingSessionType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumParsingSessionTypeFilter<$PrismaModel>
+    _max?: NestedEnumParsingSessionTypeFilter<$PrismaModel>
   }
 
   export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
@@ -23484,78 +29013,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumAuthMethodFilter<$PrismaModel>
     _max?: NestedEnumAuthMethodFilter<$PrismaModel>
-  }
-
-  export type UserCreateWithoutAccountsInput = {
-    id?: string
-    email: string
-    password: string
-    displayName: string
-    picture?: string | null
-    role?: $Enums.UserRole
-    isVerified?: boolean
-    isTwoFactorEnabled?: boolean
-    method?: $Enums.AuthMethod
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type UserUncheckedCreateWithoutAccountsInput = {
-    id?: string
-    email: string
-    password: string
-    displayName: string
-    picture?: string | null
-    role?: $Enums.UserRole
-    isVerified?: boolean
-    isTwoFactorEnabled?: boolean
-    method?: $Enums.AuthMethod
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type UserCreateOrConnectWithoutAccountsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
-  }
-
-  export type UserUpsertWithoutAccountsInput = {
-    update: XOR<UserUpdateWithoutAccountsInput, UserUncheckedUpdateWithoutAccountsInput>
-    create: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutAccountsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutAccountsInput, UserUncheckedUpdateWithoutAccountsInput>
-  }
-
-  export type UserUpdateWithoutAccountsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    displayName?: StringFieldUpdateOperationsInput | string
-    picture?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    isTwoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
-    method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserUncheckedUpdateWithoutAccountsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    displayName?: StringFieldUpdateOperationsInput | string
-    picture?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    isTwoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
-    method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AnimePosterCreateWithoutAnimeInput = {
@@ -23673,6 +29130,42 @@ export namespace Prisma {
 
   export type AnimeGenreCreateManyAnimeInputEnvelope = {
     data: AnimeGenreCreateManyAnimeInput | AnimeGenreCreateManyAnimeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AnimeThemeCreateWithoutAnimeInput = {
+    theme: ThemeCreateNestedOneWithoutAnimesInput
+  }
+
+  export type AnimeThemeUncheckedCreateWithoutAnimeInput = {
+    themeId: string
+  }
+
+  export type AnimeThemeCreateOrConnectWithoutAnimeInput = {
+    where: AnimeThemeWhereUniqueInput
+    create: XOR<AnimeThemeCreateWithoutAnimeInput, AnimeThemeUncheckedCreateWithoutAnimeInput>
+  }
+
+  export type AnimeThemeCreateManyAnimeInputEnvelope = {
+    data: AnimeThemeCreateManyAnimeInput | AnimeThemeCreateManyAnimeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AnimeDemographicCreateWithoutAnimeInput = {
+    demographic: DemographicCreateNestedOneWithoutAnimesInput
+  }
+
+  export type AnimeDemographicUncheckedCreateWithoutAnimeInput = {
+    demographicId: string
+  }
+
+  export type AnimeDemographicCreateOrConnectWithoutAnimeInput = {
+    where: AnimeDemographicWhereUniqueInput
+    create: XOR<AnimeDemographicCreateWithoutAnimeInput, AnimeDemographicUncheckedCreateWithoutAnimeInput>
+  }
+
+  export type AnimeDemographicCreateManyAnimeInputEnvelope = {
+    data: AnimeDemographicCreateManyAnimeInput | AnimeDemographicCreateManyAnimeInput[]
     skipDuplicates?: boolean
   }
 
@@ -23847,6 +29340,54 @@ export namespace Prisma {
     genreId?: StringFilter<"AnimeGenre"> | string
   }
 
+  export type AnimeThemeUpsertWithWhereUniqueWithoutAnimeInput = {
+    where: AnimeThemeWhereUniqueInput
+    update: XOR<AnimeThemeUpdateWithoutAnimeInput, AnimeThemeUncheckedUpdateWithoutAnimeInput>
+    create: XOR<AnimeThemeCreateWithoutAnimeInput, AnimeThemeUncheckedCreateWithoutAnimeInput>
+  }
+
+  export type AnimeThemeUpdateWithWhereUniqueWithoutAnimeInput = {
+    where: AnimeThemeWhereUniqueInput
+    data: XOR<AnimeThemeUpdateWithoutAnimeInput, AnimeThemeUncheckedUpdateWithoutAnimeInput>
+  }
+
+  export type AnimeThemeUpdateManyWithWhereWithoutAnimeInput = {
+    where: AnimeThemeScalarWhereInput
+    data: XOR<AnimeThemeUpdateManyMutationInput, AnimeThemeUncheckedUpdateManyWithoutAnimeInput>
+  }
+
+  export type AnimeThemeScalarWhereInput = {
+    AND?: AnimeThemeScalarWhereInput | AnimeThemeScalarWhereInput[]
+    OR?: AnimeThemeScalarWhereInput[]
+    NOT?: AnimeThemeScalarWhereInput | AnimeThemeScalarWhereInput[]
+    animeId?: StringFilter<"AnimeTheme"> | string
+    themeId?: StringFilter<"AnimeTheme"> | string
+  }
+
+  export type AnimeDemographicUpsertWithWhereUniqueWithoutAnimeInput = {
+    where: AnimeDemographicWhereUniqueInput
+    update: XOR<AnimeDemographicUpdateWithoutAnimeInput, AnimeDemographicUncheckedUpdateWithoutAnimeInput>
+    create: XOR<AnimeDemographicCreateWithoutAnimeInput, AnimeDemographicUncheckedCreateWithoutAnimeInput>
+  }
+
+  export type AnimeDemographicUpdateWithWhereUniqueWithoutAnimeInput = {
+    where: AnimeDemographicWhereUniqueInput
+    data: XOR<AnimeDemographicUpdateWithoutAnimeInput, AnimeDemographicUncheckedUpdateWithoutAnimeInput>
+  }
+
+  export type AnimeDemographicUpdateManyWithWhereWithoutAnimeInput = {
+    where: AnimeDemographicScalarWhereInput
+    data: XOR<AnimeDemographicUpdateManyMutationInput, AnimeDemographicUncheckedUpdateManyWithoutAnimeInput>
+  }
+
+  export type AnimeDemographicScalarWhereInput = {
+    AND?: AnimeDemographicScalarWhereInput | AnimeDemographicScalarWhereInput[]
+    OR?: AnimeDemographicScalarWhereInput[]
+    NOT?: AnimeDemographicScalarWhereInput | AnimeDemographicScalarWhereInput[]
+    animeId?: StringFilter<"AnimeDemographic"> | string
+    demographicId?: StringFilter<"AnimeDemographic"> | string
+  }
+
   export type RelatedAnimeUpsertWithWhereUniqueWithoutRelatedInput = {
     where: RelatedAnimeWhereUniqueInput
     update: XOR<RelatedAnimeUpdateWithoutRelatedInput, RelatedAnimeUncheckedUpdateWithoutRelatedInput>
@@ -23897,6 +29438,74 @@ export namespace Prisma {
     data: XOR<AnimeGenreUpdateManyMutationInput, AnimeGenreUncheckedUpdateManyWithoutGenreInput>
   }
 
+  export type AnimeThemeCreateWithoutThemeInput = {
+    anime: AnimeCreateNestedOneWithoutThemeInput
+  }
+
+  export type AnimeThemeUncheckedCreateWithoutThemeInput = {
+    animeId: string
+  }
+
+  export type AnimeThemeCreateOrConnectWithoutThemeInput = {
+    where: AnimeThemeWhereUniqueInput
+    create: XOR<AnimeThemeCreateWithoutThemeInput, AnimeThemeUncheckedCreateWithoutThemeInput>
+  }
+
+  export type AnimeThemeCreateManyThemeInputEnvelope = {
+    data: AnimeThemeCreateManyThemeInput | AnimeThemeCreateManyThemeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AnimeThemeUpsertWithWhereUniqueWithoutThemeInput = {
+    where: AnimeThemeWhereUniqueInput
+    update: XOR<AnimeThemeUpdateWithoutThemeInput, AnimeThemeUncheckedUpdateWithoutThemeInput>
+    create: XOR<AnimeThemeCreateWithoutThemeInput, AnimeThemeUncheckedCreateWithoutThemeInput>
+  }
+
+  export type AnimeThemeUpdateWithWhereUniqueWithoutThemeInput = {
+    where: AnimeThemeWhereUniqueInput
+    data: XOR<AnimeThemeUpdateWithoutThemeInput, AnimeThemeUncheckedUpdateWithoutThemeInput>
+  }
+
+  export type AnimeThemeUpdateManyWithWhereWithoutThemeInput = {
+    where: AnimeThemeScalarWhereInput
+    data: XOR<AnimeThemeUpdateManyMutationInput, AnimeThemeUncheckedUpdateManyWithoutThemeInput>
+  }
+
+  export type AnimeDemographicCreateWithoutDemographicInput = {
+    anime: AnimeCreateNestedOneWithoutDemographicInput
+  }
+
+  export type AnimeDemographicUncheckedCreateWithoutDemographicInput = {
+    animeId: string
+  }
+
+  export type AnimeDemographicCreateOrConnectWithoutDemographicInput = {
+    where: AnimeDemographicWhereUniqueInput
+    create: XOR<AnimeDemographicCreateWithoutDemographicInput, AnimeDemographicUncheckedCreateWithoutDemographicInput>
+  }
+
+  export type AnimeDemographicCreateManyDemographicInputEnvelope = {
+    data: AnimeDemographicCreateManyDemographicInput | AnimeDemographicCreateManyDemographicInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AnimeDemographicUpsertWithWhereUniqueWithoutDemographicInput = {
+    where: AnimeDemographicWhereUniqueInput
+    update: XOR<AnimeDemographicUpdateWithoutDemographicInput, AnimeDemographicUncheckedUpdateWithoutDemographicInput>
+    create: XOR<AnimeDemographicCreateWithoutDemographicInput, AnimeDemographicUncheckedCreateWithoutDemographicInput>
+  }
+
+  export type AnimeDemographicUpdateWithWhereUniqueWithoutDemographicInput = {
+    where: AnimeDemographicWhereUniqueInput
+    data: XOR<AnimeDemographicUpdateWithoutDemographicInput, AnimeDemographicUncheckedUpdateWithoutDemographicInput>
+  }
+
+  export type AnimeDemographicUpdateManyWithWhereWithoutDemographicInput = {
+    where: AnimeDemographicScalarWhereInput
+    data: XOR<AnimeDemographicUpdateManyMutationInput, AnimeDemographicUncheckedUpdateManyWithoutDemographicInput>
+  }
+
   export type AnimeStudioCreateWithoutStudioInput = {
     anime: AnimeCreateNestedOneWithoutStudiosInput
   }
@@ -23933,6 +29542,7 @@ export namespace Prisma {
 
   export type AnimeCreateWithoutStudiosInput = {
     id?: string
+    alias?: string | null
     malId?: string | null
     shikimoriId?: string | null
     name: string
@@ -23962,11 +29572,14 @@ export namespace Prisma {
     videos?: AnimeVideoCreateNestedManyWithoutAnimeInput
     screenshots?: AnimeScreenshotCreateNestedManyWithoutAnimeInput
     genres?: AnimeGenreCreateNestedManyWithoutAnimeInput
+    theme?: AnimeThemeCreateNestedManyWithoutAnimeInput
+    demographic?: AnimeDemographicCreateNestedManyWithoutAnimeInput
     relatedAnime?: RelatedAnimeCreateNestedManyWithoutRelatedInput
   }
 
   export type AnimeUncheckedCreateWithoutStudiosInput = {
     id?: string
+    alias?: string | null
     malId?: string | null
     shikimoriId?: string | null
     name: string
@@ -23996,6 +29609,8 @@ export namespace Prisma {
     videos?: AnimeVideoUncheckedCreateNestedManyWithoutAnimeInput
     screenshots?: AnimeScreenshotUncheckedCreateNestedManyWithoutAnimeInput
     genres?: AnimeGenreUncheckedCreateNestedManyWithoutAnimeInput
+    theme?: AnimeThemeUncheckedCreateNestedManyWithoutAnimeInput
+    demographic?: AnimeDemographicUncheckedCreateNestedManyWithoutAnimeInput
     relatedAnime?: RelatedAnimeUncheckedCreateNestedManyWithoutRelatedInput
   }
 
@@ -24034,6 +29649,7 @@ export namespace Prisma {
 
   export type AnimeUpdateWithoutStudiosInput = {
     id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
     malId?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
@@ -24063,11 +29679,14 @@ export namespace Prisma {
     videos?: AnimeVideoUpdateManyWithoutAnimeNestedInput
     screenshots?: AnimeScreenshotUpdateManyWithoutAnimeNestedInput
     genres?: AnimeGenreUpdateManyWithoutAnimeNestedInput
+    theme?: AnimeThemeUpdateManyWithoutAnimeNestedInput
+    demographic?: AnimeDemographicUpdateManyWithoutAnimeNestedInput
     relatedAnime?: RelatedAnimeUpdateManyWithoutRelatedNestedInput
   }
 
   export type AnimeUncheckedUpdateWithoutStudiosInput = {
     id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
     malId?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
@@ -24097,6 +29716,8 @@ export namespace Prisma {
     videos?: AnimeVideoUncheckedUpdateManyWithoutAnimeNestedInput
     screenshots?: AnimeScreenshotUncheckedUpdateManyWithoutAnimeNestedInput
     genres?: AnimeGenreUncheckedUpdateManyWithoutAnimeNestedInput
+    theme?: AnimeThemeUncheckedUpdateManyWithoutAnimeNestedInput
+    demographic?: AnimeDemographicUncheckedUpdateManyWithoutAnimeNestedInput
     relatedAnime?: RelatedAnimeUncheckedUpdateManyWithoutRelatedNestedInput
   }
 
@@ -24125,6 +29746,7 @@ export namespace Prisma {
 
   export type AnimeCreateWithoutRelatedInput = {
     id?: string
+    alias?: string | null
     malId?: string | null
     shikimoriId?: string | null
     name: string
@@ -24154,11 +29776,14 @@ export namespace Prisma {
     videos?: AnimeVideoCreateNestedManyWithoutAnimeInput
     screenshots?: AnimeScreenshotCreateNestedManyWithoutAnimeInput
     genres?: AnimeGenreCreateNestedManyWithoutAnimeInput
+    theme?: AnimeThemeCreateNestedManyWithoutAnimeInput
+    demographic?: AnimeDemographicCreateNestedManyWithoutAnimeInput
     relatedAnime?: RelatedAnimeCreateNestedManyWithoutRelatedInput
   }
 
   export type AnimeUncheckedCreateWithoutRelatedInput = {
     id?: string
+    alias?: string | null
     malId?: string | null
     shikimoriId?: string | null
     name: string
@@ -24188,6 +29813,8 @@ export namespace Prisma {
     videos?: AnimeVideoUncheckedCreateNestedManyWithoutAnimeInput
     screenshots?: AnimeScreenshotUncheckedCreateNestedManyWithoutAnimeInput
     genres?: AnimeGenreUncheckedCreateNestedManyWithoutAnimeInput
+    theme?: AnimeThemeUncheckedCreateNestedManyWithoutAnimeInput
+    demographic?: AnimeDemographicUncheckedCreateNestedManyWithoutAnimeInput
     relatedAnime?: RelatedAnimeUncheckedCreateNestedManyWithoutRelatedInput
   }
 
@@ -24198,6 +29825,7 @@ export namespace Prisma {
 
   export type AnimeCreateWithoutRelatedAnimeInput = {
     id?: string
+    alias?: string | null
     malId?: string | null
     shikimoriId?: string | null
     name: string
@@ -24228,10 +29856,13 @@ export namespace Prisma {
     videos?: AnimeVideoCreateNestedManyWithoutAnimeInput
     screenshots?: AnimeScreenshotCreateNestedManyWithoutAnimeInput
     genres?: AnimeGenreCreateNestedManyWithoutAnimeInput
+    theme?: AnimeThemeCreateNestedManyWithoutAnimeInput
+    demographic?: AnimeDemographicCreateNestedManyWithoutAnimeInput
   }
 
   export type AnimeUncheckedCreateWithoutRelatedAnimeInput = {
     id?: string
+    alias?: string | null
     malId?: string | null
     shikimoriId?: string | null
     name: string
@@ -24262,6 +29893,8 @@ export namespace Prisma {
     videos?: AnimeVideoUncheckedCreateNestedManyWithoutAnimeInput
     screenshots?: AnimeScreenshotUncheckedCreateNestedManyWithoutAnimeInput
     genres?: AnimeGenreUncheckedCreateNestedManyWithoutAnimeInput
+    theme?: AnimeThemeUncheckedCreateNestedManyWithoutAnimeInput
+    demographic?: AnimeDemographicUncheckedCreateNestedManyWithoutAnimeInput
   }
 
   export type AnimeCreateOrConnectWithoutRelatedAnimeInput = {
@@ -24282,6 +29915,7 @@ export namespace Prisma {
 
   export type AnimeUpdateWithoutRelatedInput = {
     id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
     malId?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
@@ -24311,11 +29945,14 @@ export namespace Prisma {
     videos?: AnimeVideoUpdateManyWithoutAnimeNestedInput
     screenshots?: AnimeScreenshotUpdateManyWithoutAnimeNestedInput
     genres?: AnimeGenreUpdateManyWithoutAnimeNestedInput
+    theme?: AnimeThemeUpdateManyWithoutAnimeNestedInput
+    demographic?: AnimeDemographicUpdateManyWithoutAnimeNestedInput
     relatedAnime?: RelatedAnimeUpdateManyWithoutRelatedNestedInput
   }
 
   export type AnimeUncheckedUpdateWithoutRelatedInput = {
     id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
     malId?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
@@ -24345,6 +29982,8 @@ export namespace Prisma {
     videos?: AnimeVideoUncheckedUpdateManyWithoutAnimeNestedInput
     screenshots?: AnimeScreenshotUncheckedUpdateManyWithoutAnimeNestedInput
     genres?: AnimeGenreUncheckedUpdateManyWithoutAnimeNestedInput
+    theme?: AnimeThemeUncheckedUpdateManyWithoutAnimeNestedInput
+    demographic?: AnimeDemographicUncheckedUpdateManyWithoutAnimeNestedInput
     relatedAnime?: RelatedAnimeUncheckedUpdateManyWithoutRelatedNestedInput
   }
 
@@ -24361,6 +30000,7 @@ export namespace Prisma {
 
   export type AnimeUpdateWithoutRelatedAnimeInput = {
     id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
     malId?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
@@ -24391,10 +30031,13 @@ export namespace Prisma {
     videos?: AnimeVideoUpdateManyWithoutAnimeNestedInput
     screenshots?: AnimeScreenshotUpdateManyWithoutAnimeNestedInput
     genres?: AnimeGenreUpdateManyWithoutAnimeNestedInput
+    theme?: AnimeThemeUpdateManyWithoutAnimeNestedInput
+    demographic?: AnimeDemographicUpdateManyWithoutAnimeNestedInput
   }
 
   export type AnimeUncheckedUpdateWithoutRelatedAnimeInput = {
     id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
     malId?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
@@ -24425,10 +30068,13 @@ export namespace Prisma {
     videos?: AnimeVideoUncheckedUpdateManyWithoutAnimeNestedInput
     screenshots?: AnimeScreenshotUncheckedUpdateManyWithoutAnimeNestedInput
     genres?: AnimeGenreUncheckedUpdateManyWithoutAnimeNestedInput
+    theme?: AnimeThemeUncheckedUpdateManyWithoutAnimeNestedInput
+    demographic?: AnimeDemographicUncheckedUpdateManyWithoutAnimeNestedInput
   }
 
   export type AnimeCreateWithoutGenresInput = {
     id?: string
+    alias?: string | null
     malId?: string | null
     shikimoriId?: string | null
     name: string
@@ -24458,11 +30104,14 @@ export namespace Prisma {
     related?: RelatedAnimeCreateNestedManyWithoutAnimeInput
     videos?: AnimeVideoCreateNestedManyWithoutAnimeInput
     screenshots?: AnimeScreenshotCreateNestedManyWithoutAnimeInput
+    theme?: AnimeThemeCreateNestedManyWithoutAnimeInput
+    demographic?: AnimeDemographicCreateNestedManyWithoutAnimeInput
     relatedAnime?: RelatedAnimeCreateNestedManyWithoutRelatedInput
   }
 
   export type AnimeUncheckedCreateWithoutGenresInput = {
     id?: string
+    alias?: string | null
     malId?: string | null
     shikimoriId?: string | null
     name: string
@@ -24492,6 +30141,8 @@ export namespace Prisma {
     related?: RelatedAnimeUncheckedCreateNestedManyWithoutAnimeInput
     videos?: AnimeVideoUncheckedCreateNestedManyWithoutAnimeInput
     screenshots?: AnimeScreenshotUncheckedCreateNestedManyWithoutAnimeInput
+    theme?: AnimeThemeUncheckedCreateNestedManyWithoutAnimeInput
+    demographic?: AnimeDemographicUncheckedCreateNestedManyWithoutAnimeInput
     relatedAnime?: RelatedAnimeUncheckedCreateNestedManyWithoutRelatedInput
   }
 
@@ -24532,6 +30183,7 @@ export namespace Prisma {
 
   export type AnimeUpdateWithoutGenresInput = {
     id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
     malId?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
@@ -24561,11 +30213,14 @@ export namespace Prisma {
     related?: RelatedAnimeUpdateManyWithoutAnimeNestedInput
     videos?: AnimeVideoUpdateManyWithoutAnimeNestedInput
     screenshots?: AnimeScreenshotUpdateManyWithoutAnimeNestedInput
+    theme?: AnimeThemeUpdateManyWithoutAnimeNestedInput
+    demographic?: AnimeDemographicUpdateManyWithoutAnimeNestedInput
     relatedAnime?: RelatedAnimeUpdateManyWithoutRelatedNestedInput
   }
 
   export type AnimeUncheckedUpdateWithoutGenresInput = {
     id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
     malId?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
@@ -24595,6 +30250,8 @@ export namespace Prisma {
     related?: RelatedAnimeUncheckedUpdateManyWithoutAnimeNestedInput
     videos?: AnimeVideoUncheckedUpdateManyWithoutAnimeNestedInput
     screenshots?: AnimeScreenshotUncheckedUpdateManyWithoutAnimeNestedInput
+    theme?: AnimeThemeUncheckedUpdateManyWithoutAnimeNestedInput
+    demographic?: AnimeDemographicUncheckedUpdateManyWithoutAnimeNestedInput
     relatedAnime?: RelatedAnimeUncheckedUpdateManyWithoutRelatedNestedInput
   }
 
@@ -24622,8 +30279,423 @@ export namespace Prisma {
     russian?: StringFieldUpdateOperationsInput | string
   }
 
+  export type AnimeCreateWithoutThemeInput = {
+    id?: string
+    alias?: string | null
+    malId?: string | null
+    shikimoriId?: string | null
+    name: string
+    description?: string | null
+    russian?: string | null
+    english?: string | null
+    japanese?: string | null
+    synonyms?: AnimeCreatesynonymsInput | string[]
+    status?: $Enums.AnimeStatus
+    kind?: $Enums.AnimeKind | null
+    episodes: number
+    episodesAired: number
+    duration?: number | null
+    score?: number | null
+    shikimoriScore?: number | null
+    airedOn?: string | null
+    releasedOn?: string | null
+    shikimoriUrl?: string | null
+    season?: string | null
+    isCensored?: boolean | null
+    rating?: $Enums.AnimeRating | null
+    nextEpisodeAt?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    poster?: AnimePosterCreateNestedManyWithoutAnimeInput
+    studios?: AnimeStudioCreateNestedManyWithoutAnimeInput
+    related?: RelatedAnimeCreateNestedManyWithoutAnimeInput
+    videos?: AnimeVideoCreateNestedManyWithoutAnimeInput
+    screenshots?: AnimeScreenshotCreateNestedManyWithoutAnimeInput
+    genres?: AnimeGenreCreateNestedManyWithoutAnimeInput
+    demographic?: AnimeDemographicCreateNestedManyWithoutAnimeInput
+    relatedAnime?: RelatedAnimeCreateNestedManyWithoutRelatedInput
+  }
+
+  export type AnimeUncheckedCreateWithoutThemeInput = {
+    id?: string
+    alias?: string | null
+    malId?: string | null
+    shikimoriId?: string | null
+    name: string
+    description?: string | null
+    russian?: string | null
+    english?: string | null
+    japanese?: string | null
+    synonyms?: AnimeCreatesynonymsInput | string[]
+    status?: $Enums.AnimeStatus
+    kind?: $Enums.AnimeKind | null
+    episodes: number
+    episodesAired: number
+    duration?: number | null
+    score?: number | null
+    shikimoriScore?: number | null
+    airedOn?: string | null
+    releasedOn?: string | null
+    shikimoriUrl?: string | null
+    season?: string | null
+    isCensored?: boolean | null
+    rating?: $Enums.AnimeRating | null
+    nextEpisodeAt?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    poster?: AnimePosterUncheckedCreateNestedManyWithoutAnimeInput
+    studios?: AnimeStudioUncheckedCreateNestedManyWithoutAnimeInput
+    related?: RelatedAnimeUncheckedCreateNestedManyWithoutAnimeInput
+    videos?: AnimeVideoUncheckedCreateNestedManyWithoutAnimeInput
+    screenshots?: AnimeScreenshotUncheckedCreateNestedManyWithoutAnimeInput
+    genres?: AnimeGenreUncheckedCreateNestedManyWithoutAnimeInput
+    demographic?: AnimeDemographicUncheckedCreateNestedManyWithoutAnimeInput
+    relatedAnime?: RelatedAnimeUncheckedCreateNestedManyWithoutRelatedInput
+  }
+
+  export type AnimeCreateOrConnectWithoutThemeInput = {
+    where: AnimeWhereUniqueInput
+    create: XOR<AnimeCreateWithoutThemeInput, AnimeUncheckedCreateWithoutThemeInput>
+  }
+
+  export type ThemeCreateWithoutAnimesInput = {
+    id?: string
+    requestId?: number
+    name: string
+    russian: string
+  }
+
+  export type ThemeUncheckedCreateWithoutAnimesInput = {
+    id?: string
+    requestId?: number
+    name: string
+    russian: string
+  }
+
+  export type ThemeCreateOrConnectWithoutAnimesInput = {
+    where: ThemeWhereUniqueInput
+    create: XOR<ThemeCreateWithoutAnimesInput, ThemeUncheckedCreateWithoutAnimesInput>
+  }
+
+  export type AnimeUpsertWithoutThemeInput = {
+    update: XOR<AnimeUpdateWithoutThemeInput, AnimeUncheckedUpdateWithoutThemeInput>
+    create: XOR<AnimeCreateWithoutThemeInput, AnimeUncheckedCreateWithoutThemeInput>
+    where?: AnimeWhereInput
+  }
+
+  export type AnimeUpdateToOneWithWhereWithoutThemeInput = {
+    where?: AnimeWhereInput
+    data: XOR<AnimeUpdateWithoutThemeInput, AnimeUncheckedUpdateWithoutThemeInput>
+  }
+
+  export type AnimeUpdateWithoutThemeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
+    malId?: NullableStringFieldUpdateOperationsInput | string | null
+    shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    russian?: NullableStringFieldUpdateOperationsInput | string | null
+    english?: NullableStringFieldUpdateOperationsInput | string | null
+    japanese?: NullableStringFieldUpdateOperationsInput | string | null
+    synonyms?: AnimeUpdatesynonymsInput | string[]
+    status?: EnumAnimeStatusFieldUpdateOperationsInput | $Enums.AnimeStatus
+    kind?: NullableEnumAnimeKindFieldUpdateOperationsInput | $Enums.AnimeKind | null
+    episodes?: IntFieldUpdateOperationsInput | number
+    episodesAired?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableFloatFieldUpdateOperationsInput | number | null
+    shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
+    releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
+    shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    season?: NullableStringFieldUpdateOperationsInput | string | null
+    isCensored?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    rating?: NullableEnumAnimeRatingFieldUpdateOperationsInput | $Enums.AnimeRating | null
+    nextEpisodeAt?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    poster?: AnimePosterUpdateManyWithoutAnimeNestedInput
+    studios?: AnimeStudioUpdateManyWithoutAnimeNestedInput
+    related?: RelatedAnimeUpdateManyWithoutAnimeNestedInput
+    videos?: AnimeVideoUpdateManyWithoutAnimeNestedInput
+    screenshots?: AnimeScreenshotUpdateManyWithoutAnimeNestedInput
+    genres?: AnimeGenreUpdateManyWithoutAnimeNestedInput
+    demographic?: AnimeDemographicUpdateManyWithoutAnimeNestedInput
+    relatedAnime?: RelatedAnimeUpdateManyWithoutRelatedNestedInput
+  }
+
+  export type AnimeUncheckedUpdateWithoutThemeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
+    malId?: NullableStringFieldUpdateOperationsInput | string | null
+    shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    russian?: NullableStringFieldUpdateOperationsInput | string | null
+    english?: NullableStringFieldUpdateOperationsInput | string | null
+    japanese?: NullableStringFieldUpdateOperationsInput | string | null
+    synonyms?: AnimeUpdatesynonymsInput | string[]
+    status?: EnumAnimeStatusFieldUpdateOperationsInput | $Enums.AnimeStatus
+    kind?: NullableEnumAnimeKindFieldUpdateOperationsInput | $Enums.AnimeKind | null
+    episodes?: IntFieldUpdateOperationsInput | number
+    episodesAired?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableFloatFieldUpdateOperationsInput | number | null
+    shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
+    releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
+    shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    season?: NullableStringFieldUpdateOperationsInput | string | null
+    isCensored?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    rating?: NullableEnumAnimeRatingFieldUpdateOperationsInput | $Enums.AnimeRating | null
+    nextEpisodeAt?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    poster?: AnimePosterUncheckedUpdateManyWithoutAnimeNestedInput
+    studios?: AnimeStudioUncheckedUpdateManyWithoutAnimeNestedInput
+    related?: RelatedAnimeUncheckedUpdateManyWithoutAnimeNestedInput
+    videos?: AnimeVideoUncheckedUpdateManyWithoutAnimeNestedInput
+    screenshots?: AnimeScreenshotUncheckedUpdateManyWithoutAnimeNestedInput
+    genres?: AnimeGenreUncheckedUpdateManyWithoutAnimeNestedInput
+    demographic?: AnimeDemographicUncheckedUpdateManyWithoutAnimeNestedInput
+    relatedAnime?: RelatedAnimeUncheckedUpdateManyWithoutRelatedNestedInput
+  }
+
+  export type ThemeUpsertWithoutAnimesInput = {
+    update: XOR<ThemeUpdateWithoutAnimesInput, ThemeUncheckedUpdateWithoutAnimesInput>
+    create: XOR<ThemeCreateWithoutAnimesInput, ThemeUncheckedCreateWithoutAnimesInput>
+    where?: ThemeWhereInput
+  }
+
+  export type ThemeUpdateToOneWithWhereWithoutAnimesInput = {
+    where?: ThemeWhereInput
+    data: XOR<ThemeUpdateWithoutAnimesInput, ThemeUncheckedUpdateWithoutAnimesInput>
+  }
+
+  export type ThemeUpdateWithoutAnimesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    russian?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ThemeUncheckedUpdateWithoutAnimesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    requestId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    russian?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AnimeCreateWithoutDemographicInput = {
+    id?: string
+    alias?: string | null
+    malId?: string | null
+    shikimoriId?: string | null
+    name: string
+    description?: string | null
+    russian?: string | null
+    english?: string | null
+    japanese?: string | null
+    synonyms?: AnimeCreatesynonymsInput | string[]
+    status?: $Enums.AnimeStatus
+    kind?: $Enums.AnimeKind | null
+    episodes: number
+    episodesAired: number
+    duration?: number | null
+    score?: number | null
+    shikimoriScore?: number | null
+    airedOn?: string | null
+    releasedOn?: string | null
+    shikimoriUrl?: string | null
+    season?: string | null
+    isCensored?: boolean | null
+    rating?: $Enums.AnimeRating | null
+    nextEpisodeAt?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    poster?: AnimePosterCreateNestedManyWithoutAnimeInput
+    studios?: AnimeStudioCreateNestedManyWithoutAnimeInput
+    related?: RelatedAnimeCreateNestedManyWithoutAnimeInput
+    videos?: AnimeVideoCreateNestedManyWithoutAnimeInput
+    screenshots?: AnimeScreenshotCreateNestedManyWithoutAnimeInput
+    genres?: AnimeGenreCreateNestedManyWithoutAnimeInput
+    theme?: AnimeThemeCreateNestedManyWithoutAnimeInput
+    relatedAnime?: RelatedAnimeCreateNestedManyWithoutRelatedInput
+  }
+
+  export type AnimeUncheckedCreateWithoutDemographicInput = {
+    id?: string
+    alias?: string | null
+    malId?: string | null
+    shikimoriId?: string | null
+    name: string
+    description?: string | null
+    russian?: string | null
+    english?: string | null
+    japanese?: string | null
+    synonyms?: AnimeCreatesynonymsInput | string[]
+    status?: $Enums.AnimeStatus
+    kind?: $Enums.AnimeKind | null
+    episodes: number
+    episodesAired: number
+    duration?: number | null
+    score?: number | null
+    shikimoriScore?: number | null
+    airedOn?: string | null
+    releasedOn?: string | null
+    shikimoriUrl?: string | null
+    season?: string | null
+    isCensored?: boolean | null
+    rating?: $Enums.AnimeRating | null
+    nextEpisodeAt?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    poster?: AnimePosterUncheckedCreateNestedManyWithoutAnimeInput
+    studios?: AnimeStudioUncheckedCreateNestedManyWithoutAnimeInput
+    related?: RelatedAnimeUncheckedCreateNestedManyWithoutAnimeInput
+    videos?: AnimeVideoUncheckedCreateNestedManyWithoutAnimeInput
+    screenshots?: AnimeScreenshotUncheckedCreateNestedManyWithoutAnimeInput
+    genres?: AnimeGenreUncheckedCreateNestedManyWithoutAnimeInput
+    theme?: AnimeThemeUncheckedCreateNestedManyWithoutAnimeInput
+    relatedAnime?: RelatedAnimeUncheckedCreateNestedManyWithoutRelatedInput
+  }
+
+  export type AnimeCreateOrConnectWithoutDemographicInput = {
+    where: AnimeWhereUniqueInput
+    create: XOR<AnimeCreateWithoutDemographicInput, AnimeUncheckedCreateWithoutDemographicInput>
+  }
+
+  export type DemographicCreateWithoutAnimesInput = {
+    id?: string
+    requestId?: number
+    name: string
+    russian: string
+  }
+
+  export type DemographicUncheckedCreateWithoutAnimesInput = {
+    id?: string
+    requestId?: number
+    name: string
+    russian: string
+  }
+
+  export type DemographicCreateOrConnectWithoutAnimesInput = {
+    where: DemographicWhereUniqueInput
+    create: XOR<DemographicCreateWithoutAnimesInput, DemographicUncheckedCreateWithoutAnimesInput>
+  }
+
+  export type AnimeUpsertWithoutDemographicInput = {
+    update: XOR<AnimeUpdateWithoutDemographicInput, AnimeUncheckedUpdateWithoutDemographicInput>
+    create: XOR<AnimeCreateWithoutDemographicInput, AnimeUncheckedCreateWithoutDemographicInput>
+    where?: AnimeWhereInput
+  }
+
+  export type AnimeUpdateToOneWithWhereWithoutDemographicInput = {
+    where?: AnimeWhereInput
+    data: XOR<AnimeUpdateWithoutDemographicInput, AnimeUncheckedUpdateWithoutDemographicInput>
+  }
+
+  export type AnimeUpdateWithoutDemographicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
+    malId?: NullableStringFieldUpdateOperationsInput | string | null
+    shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    russian?: NullableStringFieldUpdateOperationsInput | string | null
+    english?: NullableStringFieldUpdateOperationsInput | string | null
+    japanese?: NullableStringFieldUpdateOperationsInput | string | null
+    synonyms?: AnimeUpdatesynonymsInput | string[]
+    status?: EnumAnimeStatusFieldUpdateOperationsInput | $Enums.AnimeStatus
+    kind?: NullableEnumAnimeKindFieldUpdateOperationsInput | $Enums.AnimeKind | null
+    episodes?: IntFieldUpdateOperationsInput | number
+    episodesAired?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableFloatFieldUpdateOperationsInput | number | null
+    shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
+    releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
+    shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    season?: NullableStringFieldUpdateOperationsInput | string | null
+    isCensored?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    rating?: NullableEnumAnimeRatingFieldUpdateOperationsInput | $Enums.AnimeRating | null
+    nextEpisodeAt?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    poster?: AnimePosterUpdateManyWithoutAnimeNestedInput
+    studios?: AnimeStudioUpdateManyWithoutAnimeNestedInput
+    related?: RelatedAnimeUpdateManyWithoutAnimeNestedInput
+    videos?: AnimeVideoUpdateManyWithoutAnimeNestedInput
+    screenshots?: AnimeScreenshotUpdateManyWithoutAnimeNestedInput
+    genres?: AnimeGenreUpdateManyWithoutAnimeNestedInput
+    theme?: AnimeThemeUpdateManyWithoutAnimeNestedInput
+    relatedAnime?: RelatedAnimeUpdateManyWithoutRelatedNestedInput
+  }
+
+  export type AnimeUncheckedUpdateWithoutDemographicInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
+    malId?: NullableStringFieldUpdateOperationsInput | string | null
+    shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    russian?: NullableStringFieldUpdateOperationsInput | string | null
+    english?: NullableStringFieldUpdateOperationsInput | string | null
+    japanese?: NullableStringFieldUpdateOperationsInput | string | null
+    synonyms?: AnimeUpdatesynonymsInput | string[]
+    status?: EnumAnimeStatusFieldUpdateOperationsInput | $Enums.AnimeStatus
+    kind?: NullableEnumAnimeKindFieldUpdateOperationsInput | $Enums.AnimeKind | null
+    episodes?: IntFieldUpdateOperationsInput | number
+    episodesAired?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: NullableFloatFieldUpdateOperationsInput | number | null
+    shikimoriScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    airedOn?: NullableStringFieldUpdateOperationsInput | string | null
+    releasedOn?: NullableStringFieldUpdateOperationsInput | string | null
+    shikimoriUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    season?: NullableStringFieldUpdateOperationsInput | string | null
+    isCensored?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    rating?: NullableEnumAnimeRatingFieldUpdateOperationsInput | $Enums.AnimeRating | null
+    nextEpisodeAt?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    poster?: AnimePosterUncheckedUpdateManyWithoutAnimeNestedInput
+    studios?: AnimeStudioUncheckedUpdateManyWithoutAnimeNestedInput
+    related?: RelatedAnimeUncheckedUpdateManyWithoutAnimeNestedInput
+    videos?: AnimeVideoUncheckedUpdateManyWithoutAnimeNestedInput
+    screenshots?: AnimeScreenshotUncheckedUpdateManyWithoutAnimeNestedInput
+    genres?: AnimeGenreUncheckedUpdateManyWithoutAnimeNestedInput
+    theme?: AnimeThemeUncheckedUpdateManyWithoutAnimeNestedInput
+    relatedAnime?: RelatedAnimeUncheckedUpdateManyWithoutRelatedNestedInput
+  }
+
+  export type DemographicUpsertWithoutAnimesInput = {
+    update: XOR<DemographicUpdateWithoutAnimesInput, DemographicUncheckedUpdateWithoutAnimesInput>
+    create: XOR<DemographicCreateWithoutAnimesInput, DemographicUncheckedCreateWithoutAnimesInput>
+    where?: DemographicWhereInput
+  }
+
+  export type DemographicUpdateToOneWithWhereWithoutAnimesInput = {
+    where?: DemographicWhereInput
+    data: XOR<DemographicUpdateWithoutAnimesInput, DemographicUncheckedUpdateWithoutAnimesInput>
+  }
+
+  export type DemographicUpdateWithoutAnimesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    russian?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DemographicUncheckedUpdateWithoutAnimesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    requestId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    russian?: StringFieldUpdateOperationsInput | string
+  }
+
   export type AnimeCreateWithoutPosterInput = {
     id?: string
+    alias?: string | null
     malId?: string | null
     shikimoriId?: string | null
     name: string
@@ -24653,11 +30725,14 @@ export namespace Prisma {
     videos?: AnimeVideoCreateNestedManyWithoutAnimeInput
     screenshots?: AnimeScreenshotCreateNestedManyWithoutAnimeInput
     genres?: AnimeGenreCreateNestedManyWithoutAnimeInput
+    theme?: AnimeThemeCreateNestedManyWithoutAnimeInput
+    demographic?: AnimeDemographicCreateNestedManyWithoutAnimeInput
     relatedAnime?: RelatedAnimeCreateNestedManyWithoutRelatedInput
   }
 
   export type AnimeUncheckedCreateWithoutPosterInput = {
     id?: string
+    alias?: string | null
     malId?: string | null
     shikimoriId?: string | null
     name: string
@@ -24687,6 +30762,8 @@ export namespace Prisma {
     videos?: AnimeVideoUncheckedCreateNestedManyWithoutAnimeInput
     screenshots?: AnimeScreenshotUncheckedCreateNestedManyWithoutAnimeInput
     genres?: AnimeGenreUncheckedCreateNestedManyWithoutAnimeInput
+    theme?: AnimeThemeUncheckedCreateNestedManyWithoutAnimeInput
+    demographic?: AnimeDemographicUncheckedCreateNestedManyWithoutAnimeInput
     relatedAnime?: RelatedAnimeUncheckedCreateNestedManyWithoutRelatedInput
   }
 
@@ -24708,6 +30785,7 @@ export namespace Prisma {
 
   export type AnimeUpdateWithoutPosterInput = {
     id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
     malId?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
@@ -24737,11 +30815,14 @@ export namespace Prisma {
     videos?: AnimeVideoUpdateManyWithoutAnimeNestedInput
     screenshots?: AnimeScreenshotUpdateManyWithoutAnimeNestedInput
     genres?: AnimeGenreUpdateManyWithoutAnimeNestedInput
+    theme?: AnimeThemeUpdateManyWithoutAnimeNestedInput
+    demographic?: AnimeDemographicUpdateManyWithoutAnimeNestedInput
     relatedAnime?: RelatedAnimeUpdateManyWithoutRelatedNestedInput
   }
 
   export type AnimeUncheckedUpdateWithoutPosterInput = {
     id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
     malId?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
@@ -24771,11 +30852,14 @@ export namespace Prisma {
     videos?: AnimeVideoUncheckedUpdateManyWithoutAnimeNestedInput
     screenshots?: AnimeScreenshotUncheckedUpdateManyWithoutAnimeNestedInput
     genres?: AnimeGenreUncheckedUpdateManyWithoutAnimeNestedInput
+    theme?: AnimeThemeUncheckedUpdateManyWithoutAnimeNestedInput
+    demographic?: AnimeDemographicUncheckedUpdateManyWithoutAnimeNestedInput
     relatedAnime?: RelatedAnimeUncheckedUpdateManyWithoutRelatedNestedInput
   }
 
   export type AnimeCreateWithoutVideosInput = {
     id?: string
+    alias?: string | null
     malId?: string | null
     shikimoriId?: string | null
     name: string
@@ -24805,11 +30889,14 @@ export namespace Prisma {
     related?: RelatedAnimeCreateNestedManyWithoutAnimeInput
     screenshots?: AnimeScreenshotCreateNestedManyWithoutAnimeInput
     genres?: AnimeGenreCreateNestedManyWithoutAnimeInput
+    theme?: AnimeThemeCreateNestedManyWithoutAnimeInput
+    demographic?: AnimeDemographicCreateNestedManyWithoutAnimeInput
     relatedAnime?: RelatedAnimeCreateNestedManyWithoutRelatedInput
   }
 
   export type AnimeUncheckedCreateWithoutVideosInput = {
     id?: string
+    alias?: string | null
     malId?: string | null
     shikimoriId?: string | null
     name: string
@@ -24839,6 +30926,8 @@ export namespace Prisma {
     related?: RelatedAnimeUncheckedCreateNestedManyWithoutAnimeInput
     screenshots?: AnimeScreenshotUncheckedCreateNestedManyWithoutAnimeInput
     genres?: AnimeGenreUncheckedCreateNestedManyWithoutAnimeInput
+    theme?: AnimeThemeUncheckedCreateNestedManyWithoutAnimeInput
+    demographic?: AnimeDemographicUncheckedCreateNestedManyWithoutAnimeInput
     relatedAnime?: RelatedAnimeUncheckedCreateNestedManyWithoutRelatedInput
   }
 
@@ -24885,6 +30974,7 @@ export namespace Prisma {
 
   export type AnimeUpdateWithoutVideosInput = {
     id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
     malId?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
@@ -24914,11 +31004,14 @@ export namespace Prisma {
     related?: RelatedAnimeUpdateManyWithoutAnimeNestedInput
     screenshots?: AnimeScreenshotUpdateManyWithoutAnimeNestedInput
     genres?: AnimeGenreUpdateManyWithoutAnimeNestedInput
+    theme?: AnimeThemeUpdateManyWithoutAnimeNestedInput
+    demographic?: AnimeDemographicUpdateManyWithoutAnimeNestedInput
     relatedAnime?: RelatedAnimeUpdateManyWithoutRelatedNestedInput
   }
 
   export type AnimeUncheckedUpdateWithoutVideosInput = {
     id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
     malId?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
@@ -24948,6 +31041,8 @@ export namespace Prisma {
     related?: RelatedAnimeUncheckedUpdateManyWithoutAnimeNestedInput
     screenshots?: AnimeScreenshotUncheckedUpdateManyWithoutAnimeNestedInput
     genres?: AnimeGenreUncheckedUpdateManyWithoutAnimeNestedInput
+    theme?: AnimeThemeUncheckedUpdateManyWithoutAnimeNestedInput
+    demographic?: AnimeDemographicUncheckedUpdateManyWithoutAnimeNestedInput
     relatedAnime?: RelatedAnimeUncheckedUpdateManyWithoutRelatedNestedInput
   }
 
@@ -24984,6 +31079,7 @@ export namespace Prisma {
 
   export type AnimeCreateWithoutScreenshotsInput = {
     id?: string
+    alias?: string | null
     malId?: string | null
     shikimoriId?: string | null
     name: string
@@ -25013,11 +31109,14 @@ export namespace Prisma {
     related?: RelatedAnimeCreateNestedManyWithoutAnimeInput
     videos?: AnimeVideoCreateNestedManyWithoutAnimeInput
     genres?: AnimeGenreCreateNestedManyWithoutAnimeInput
+    theme?: AnimeThemeCreateNestedManyWithoutAnimeInput
+    demographic?: AnimeDemographicCreateNestedManyWithoutAnimeInput
     relatedAnime?: RelatedAnimeCreateNestedManyWithoutRelatedInput
   }
 
   export type AnimeUncheckedCreateWithoutScreenshotsInput = {
     id?: string
+    alias?: string | null
     malId?: string | null
     shikimoriId?: string | null
     name: string
@@ -25047,6 +31146,8 @@ export namespace Prisma {
     related?: RelatedAnimeUncheckedCreateNestedManyWithoutAnimeInput
     videos?: AnimeVideoUncheckedCreateNestedManyWithoutAnimeInput
     genres?: AnimeGenreUncheckedCreateNestedManyWithoutAnimeInput
+    theme?: AnimeThemeUncheckedCreateNestedManyWithoutAnimeInput
+    demographic?: AnimeDemographicUncheckedCreateNestedManyWithoutAnimeInput
     relatedAnime?: RelatedAnimeUncheckedCreateNestedManyWithoutRelatedInput
   }
 
@@ -25087,6 +31188,7 @@ export namespace Prisma {
 
   export type AnimeUpdateWithoutScreenshotsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
     malId?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
@@ -25116,11 +31218,14 @@ export namespace Prisma {
     related?: RelatedAnimeUpdateManyWithoutAnimeNestedInput
     videos?: AnimeVideoUpdateManyWithoutAnimeNestedInput
     genres?: AnimeGenreUpdateManyWithoutAnimeNestedInput
+    theme?: AnimeThemeUpdateManyWithoutAnimeNestedInput
+    demographic?: AnimeDemographicUpdateManyWithoutAnimeNestedInput
     relatedAnime?: RelatedAnimeUpdateManyWithoutRelatedNestedInput
   }
 
   export type AnimeUncheckedUpdateWithoutScreenshotsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    alias?: NullableStringFieldUpdateOperationsInput | string | null
     malId?: NullableStringFieldUpdateOperationsInput | string | null
     shikimoriId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
@@ -25150,6 +31255,8 @@ export namespace Prisma {
     related?: RelatedAnimeUncheckedUpdateManyWithoutAnimeNestedInput
     videos?: AnimeVideoUncheckedUpdateManyWithoutAnimeNestedInput
     genres?: AnimeGenreUncheckedUpdateManyWithoutAnimeNestedInput
+    theme?: AnimeThemeUncheckedUpdateManyWithoutAnimeNestedInput
+    demographic?: AnimeDemographicUncheckedUpdateManyWithoutAnimeNestedInput
     relatedAnime?: RelatedAnimeUncheckedUpdateManyWithoutRelatedNestedInput
   }
 
@@ -25246,6 +31353,78 @@ export namespace Prisma {
     data: XOR<AnimeScreenshotUpdateManyMutationInput, AnimeScreenshotUncheckedUpdateManyWithoutScreenshotInput>
   }
 
+  export type UserCreateWithoutAccountsInput = {
+    id?: string
+    email: string
+    password: string
+    displayName: string
+    picture?: string | null
+    role?: $Enums.UserRole
+    isVerified?: boolean
+    isTwoFactorEnabled?: boolean
+    method?: $Enums.AuthMethod
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUncheckedCreateWithoutAccountsInput = {
+    id?: string
+    email: string
+    password: string
+    displayName: string
+    picture?: string | null
+    role?: $Enums.UserRole
+    isVerified?: boolean
+    isTwoFactorEnabled?: boolean
+    method?: $Enums.AuthMethod
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserCreateOrConnectWithoutAccountsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
+  }
+
+  export type UserUpsertWithoutAccountsInput = {
+    update: XOR<UserUpdateWithoutAccountsInput, UserUncheckedUpdateWithoutAccountsInput>
+    create: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAccountsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAccountsInput, UserUncheckedUpdateWithoutAccountsInput>
+  }
+
+  export type UserUpdateWithoutAccountsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isTwoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateWithoutAccountsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isTwoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type AccountCreateWithoutUserInput = {
     id?: string
     type: string
@@ -25336,6 +31515,14 @@ export namespace Prisma {
 
   export type AnimeGenreCreateManyAnimeInput = {
     genreId: string
+  }
+
+  export type AnimeThemeCreateManyAnimeInput = {
+    themeId: string
+  }
+
+  export type AnimeDemographicCreateManyAnimeInput = {
+    demographicId: string
   }
 
   export type RelatedAnimeCreateManyRelatedInput = {
@@ -25431,6 +31618,30 @@ export namespace Prisma {
     genreId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type AnimeThemeUpdateWithoutAnimeInput = {
+    theme?: ThemeUpdateOneRequiredWithoutAnimesNestedInput
+  }
+
+  export type AnimeThemeUncheckedUpdateWithoutAnimeInput = {
+    themeId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AnimeThemeUncheckedUpdateManyWithoutAnimeInput = {
+    themeId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AnimeDemographicUpdateWithoutAnimeInput = {
+    demographic?: DemographicUpdateOneRequiredWithoutAnimesNestedInput
+  }
+
+  export type AnimeDemographicUncheckedUpdateWithoutAnimeInput = {
+    demographicId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AnimeDemographicUncheckedUpdateManyWithoutAnimeInput = {
+    demographicId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type RelatedAnimeUpdateWithoutRelatedInput = {
     id?: StringFieldUpdateOperationsInput | string
     relationKind?: EnumRelationKindFieldUpdateOperationsInput | $Enums.RelationKind
@@ -25462,6 +31673,38 @@ export namespace Prisma {
   }
 
   export type AnimeGenreUncheckedUpdateManyWithoutGenreInput = {
+    animeId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AnimeThemeCreateManyThemeInput = {
+    animeId: string
+  }
+
+  export type AnimeThemeUpdateWithoutThemeInput = {
+    anime?: AnimeUpdateOneRequiredWithoutThemeNestedInput
+  }
+
+  export type AnimeThemeUncheckedUpdateWithoutThemeInput = {
+    animeId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AnimeThemeUncheckedUpdateManyWithoutThemeInput = {
+    animeId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AnimeDemographicCreateManyDemographicInput = {
+    animeId: string
+  }
+
+  export type AnimeDemographicUpdateWithoutDemographicInput = {
+    anime?: AnimeUpdateOneRequiredWithoutDemographicNestedInput
+  }
+
+  export type AnimeDemographicUncheckedUpdateWithoutDemographicInput = {
+    animeId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AnimeDemographicUncheckedUpdateManyWithoutDemographicInput = {
     animeId?: StringFieldUpdateOperationsInput | string
   }
 

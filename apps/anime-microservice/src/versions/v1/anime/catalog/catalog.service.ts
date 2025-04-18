@@ -2,6 +2,11 @@ import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from 'shared/lib/prisma/prisma.service';
 import { ReleasesParamsDto } from './dtos/releases-params.dto';
 import { Prisma } from '@prisma/__generated__';
+import {
+  includeAll,
+  includeSmall,
+  shikimoriScoreNotNull,
+} from 'apps/anime-microservice/src/constants';
 
 @Injectable()
 export class CatalogService {
@@ -12,7 +17,9 @@ export class CatalogService {
     try {
       const whereConditions: Prisma.AnimeWhereInput & {
         AND: Prisma.AnimeWhereInput[];
-      } = { AND: [] };
+      } = {
+        AND: [...shikimoriScoreNotNull.AND],
+      };
       let orderBy: Prisma.AnimeOrderByWithRelationInput = { createdAt: 'desc' };
 
       if (params.genres?.length) {
@@ -26,6 +33,31 @@ export class CatalogService {
           },
         });
       }
+
+      if (params.themes?.length) {
+        whereConditions.AND.push({
+          theme: {
+            some: {
+              theme: {
+                requestId: { in: params.themes },
+              },
+            },
+          },
+        });
+      }
+
+      if (params.demographics?.length) {
+        whereConditions.AND.push({
+          demographic: {
+            some: {
+              demographic: {
+                requestId: { in: params.demographics },
+              },
+            },
+          },
+        });
+      }
+
       if (params.types) {
         whereConditions.AND.push({
           kind: {
@@ -85,24 +117,14 @@ export class CatalogService {
         take: params.limit,
         skip: (params.page - 1) * params.limit,
         include: {
-          genres: {
-            include: {
-              genre: true,
-            },
-          },
-
-          studios: {
-            include: {
-              studio: true,
-            },
-          },
-
-          poster: true,
+          ...includeSmall,
         },
         orderBy: {
           ...orderBy,
         },
       });
+
+      this.logger.log(releases.length);
 
       return releases;
     } catch (e) {
@@ -120,31 +142,10 @@ export class CatalogService {
         where: {
           id,
           shikimoriId,
+          ...shikimoriScoreNotNull,
         },
         include: {
-          genres: {
-            include: {
-              genre: true,
-            },
-          },
-          screenshots: {
-            include: {
-              screenshot: true,
-            },
-          },
-          videos: {
-            include: {
-              video: true,
-            },
-          },
-
-          studios: {
-            include: {
-              studio: true,
-            },
-          },
-
-          poster: true,
+          ...includeAll,
         },
       });
       return release;

@@ -46,12 +46,14 @@ export enum AnimeStatus {
 export enum SortParams {
   year_asc = 'year_asc',
   year_desc = 'year_desc',
-  scrore_asc = 'score_asc',
+  score_asc = 'score_asc',
   score_desc = 'score_desc',
   name_asc = 'name_asc',
   name_desc = 'name_desc',
   id_asc = 'id_asc',
   id_desc = 'id_desc',
+  shikimoriScore_asc = 'shikimoriScore_asc',
+  shikimoriScore_desc = 'shikimoriScore_desc',
 }
 
 export class ReleasesParamsDto {
@@ -72,10 +74,28 @@ export class ReleasesParamsDto {
   @IsNumber({}, { each: true })
   @Transform(({ value }) =>
     typeof value === 'string'
-      ? value.split(',').map((v) => parseInt(v, 10))
-      : value,
+      ? value.split(',').map((v: string): number => parseInt(v, 10))
+      : (value as number[]),
   )
   genres?: number[];
+
+  @IsOptional()
+  @IsNumber({}, { each: true })
+  @Transform(({ value }) =>
+    typeof value === 'string'
+      ? value.split(',').map((v: string): number => parseInt(v, 10))
+      : (value as number[]),
+  )
+  demographics?: number[];
+
+  @IsOptional()
+  @IsNumber({}, { each: true })
+  @Transform(({ value }) =>
+    typeof value === 'string'
+      ? value.split(',').map((v: string): number => parseInt(v, 10))
+      : (value as number[]),
+  )
+  themes?: number[];
 
   @IsOptional()
   @IsEnum(AnimeType, { each: true })

@@ -32,11 +32,13 @@ export class UpdateDbService {
     }
   }
 
-  private mapShikimoriToAnimeCreateInput(
+  private async mapShikimoriToAnimeCreateInput(
     animeData: Omit<AnimeFromShikimori, 'created_at' | 'updated_at'>,
-  ): Prisma.AnimeCreateInput {
+  ): Promise<Prisma.AnimeCreateInput> {
+    const alias = await this.getAlias(animeData.url);
     return {
       malId: animeData.malId,
+      alias: alias || null,
       shikimoriId: animeData.id.toString(),
       name: animeData.name,
       description: animeData.description,
@@ -49,7 +51,7 @@ export class UpdateDbService {
       episodes: animeData.episodes,
       episodesAired: animeData.episodesAired,
       duration: animeData.duration,
-      score: animeData.score,
+      score: 0,
       shikimoriScore: animeData.score,
       releasedOn: animeData.releasedOn.date,
       airedOn: animeData.airedOn.date,
@@ -61,11 +63,13 @@ export class UpdateDbService {
     };
   }
 
-  private mapShikimoriToAnimeUpdateInput(
+  private async mapShikimoriToAnimeUpdateInput(
     animeData: Omit<AnimeFromShikimori, 'created_at' | 'updated_at'>,
-  ): Prisma.AnimeUpdateInput {
+  ): Promise<Prisma.AnimeUpdateInput> {
+    const alias = await this.getAlias(animeData.url);
     return {
       name: animeData.name,
+      alias: alias || null,
       description: animeData.description,
       russian: animeData.russian,
       english: animeData.english,
@@ -76,7 +80,6 @@ export class UpdateDbService {
       episodes: animeData.episodes,
       episodesAired: animeData.episodesAired,
       duration: animeData.duration,
-      score: animeData.score,
       shikimoriScore: animeData.score,
       releasedOn: animeData.releasedOn.date,
       airedOn: animeData.airedOn.date,
@@ -220,13 +223,19 @@ export class UpdateDbService {
   ) {
     try {
       if (animeData.genres?.length) {
-        const genreUpserts = animeData.genres.map(async (genre) => {
+        const genreKind = 'genre';
+        const filteredGenres = animeData.genres.filter(
+          (g) => String(g.kind) === genreKind,
+        );
+        if (!filteredGenres.length) return;
+
+        const genreUpserts = filteredGenres.map(async (genre) => {
           if (!genre.name || !genre.russian) return;
 
           return tx.genre.upsert({
             where: { name: genre.name },
             create: { name: genre.name, russian: genre.russian },
-            update: { russian: genre.russian },
+            update: {},
           });
         });
 
@@ -252,6 +261,102 @@ export class UpdateDbService {
         `Произошла ошибка при обработке жанров аниме ${anime.name}`,
       );
       throw new Error('Произошла ошибка при обработке жанров аниме');
+    }
+  }
+
+  private async processDemographics(
+    tx: Prisma.TransactionClient,
+    anime: Anime,
+    animeData: Omit<AnimeFromShikimori, 'created_at' | 'updated_at'>,
+  ) {
+    try {
+      if (animeData.genres?.length) {
+        const genreKind = 'demographic';
+        const filteredDemographic = animeData.genres.filter(
+          (g) => String(g.kind) === genreKind,
+        );
+        if (!filteredDemographic.length) return;
+
+        const demographicUpserts = filteredDemographic.map(async (d) => {
+          if (!d.name || !d.russian) return;
+
+          return tx.demographic.upsert({
+            where: { name: d.name },
+            create: { name: d.name, russian: d.russian },
+            update: {},
+          });
+        });
+
+        const demographics = await Promise.all(demographicUpserts);
+
+        const animeDemographics = demographics.map(async (d) => {
+          return tx.animeDemographic.upsert({
+            where: {
+              animeId_demographicId: {
+                animeId: anime.id,
+                demographicId: d.id,
+              },
+            },
+            create: { demographicId: d.id, animeId: anime.id },
+            update: { demographicId: d.id, animeId: anime.id },
+          });
+        });
+
+        await Promise.all(animeDemographics);
+      }
+    } catch {
+      this.logger.error(
+        `Произошла ошибка при обработке демографии аниме ${anime.name}`,
+      );
+      throw new Error('Произошла ошибка при обработке демографии аниме');
+    }
+  }
+
+  private async processThemes(
+    tx: Prisma.TransactionClient,
+    anime: Anime,
+    animeData: Omit<AnimeFromShikimori, 'created_at' | 'updated_at'>,
+  ) {
+    try {
+      if (animeData.genres?.length) {
+        const genreKind = 'theme';
+        const filteredThemes = animeData.genres.filter(
+          (g) => String(g.kind) === genreKind,
+        );
+        if (!filteredThemes.length) return;
+
+        const themesUpserts = filteredThemes.map(async (t) => {
+          if (!t.name || !t.russian) return;
+
+          return tx.theme.upsert({
+            where: { name: t.name },
+            create: { name: t.name, russian: t.russian },
+            update: {},
+          });
+        });
+
+        const themes = await Promise.all(themesUpserts);
+
+        const animeThemes = themes.map(async (t) => {
+          return tx.animeTheme.upsert({
+            where: {
+              animeId_themeId: {
+                animeId: anime.id,
+                themeId: t.id,
+              },
+            },
+            create: { themeId: t.id, animeId: anime.id },
+            update: { themeId: t.id, animeId: anime.id },
+          });
+        });
+
+        await Promise.all(animeThemes);
+      }
+    } catch {
+      this.logger.error(
+        `Произошла ошибка при обработке тем аниме ${anime.name}`,
+      );
+      throw new Error('Произошла ошибка при обработке тем аниме');
     }
   }
 
@@ -360,8 +465,8 @@ export class UpdateDbService {
   ) {
     const anime = await tx.anime.upsert({
       where: { shikimoriId: animeData.id.toString() },
-      create: this.mapShikimoriToAnimeCreateInput(animeData),
-      update: this.mapShikimoriToAnimeUpdateInput(animeData),
+      create: await this.mapShikimoriToAnimeCreateInput(animeData),
+      update: await this.mapShikimoriToAnimeUpdateInput(animeData),
     });
 
     await Promise.all([
@@ -369,6 +474,8 @@ export class UpdateDbService {
       this.proccessScreenshots(tx, anime, animeData),
       this.processStudios(tx, anime, animeData),
       this.processGenres(tx, anime, animeData),
+      this.processDemographics(tx, anime, animeData),
+      this.processThemes(tx, anime, animeData),
       this.processRelatedAnimes(tx, anime, animeData),
       this.processPosters(tx, anime, animeData),
     ]);
@@ -404,5 +511,23 @@ export class UpdateDbService {
     }
 
     return false;
+  }
+
+  private async getAlias(url: string): Promise<string | null> {
+    await Promise.resolve();
+    try {
+      const pathname = new URL(url).pathname;
+      const lastSegment = pathname.split('/').pop();
+
+      if (!lastSegment) return null;
+
+      const parts = lastSegment.split('-');
+      if (parts.length < 2) return null;
+
+      parts.shift();
+      return parts.join('-');
+    } catch {
+      return null;
+    }
   }
 }

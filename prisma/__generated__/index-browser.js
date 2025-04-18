@@ -117,20 +117,9 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.AccountScalarFieldEnum = {
-  id: 'id',
-  type: 'type',
-  provider: 'provider',
-  refreshToken: 'refreshToken',
-  accessToken: 'accessToken',
-  expiresAt: 'expiresAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  userId: 'userId'
-};
-
 exports.Prisma.AnimeScalarFieldEnum = {
   id: 'id',
+  alias: 'alias',
   malId: 'malId',
   shikimoriId: 'shikimoriId',
   name: 'name',
@@ -164,6 +153,20 @@ exports.Prisma.GenreScalarFieldEnum = {
   russian: 'russian'
 };
 
+exports.Prisma.ThemeScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  name: 'name',
+  russian: 'russian'
+};
+
+exports.Prisma.DemographicScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  name: 'name',
+  russian: 'russian'
+};
+
 exports.Prisma.StudioScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -185,6 +188,16 @@ exports.Prisma.RelatedAnimeScalarFieldEnum = {
 exports.Prisma.AnimeGenreScalarFieldEnum = {
   animeId: 'animeId',
   genreId: 'genreId'
+};
+
+exports.Prisma.AnimeThemeScalarFieldEnum = {
+  animeId: 'animeId',
+  themeId: 'themeId'
+};
+
+exports.Prisma.AnimeDemographicScalarFieldEnum = {
+  animeId: 'animeId',
+  demographicId: 'demographicId'
 };
 
 exports.Prisma.AnimePosterScalarFieldEnum = {
@@ -222,6 +235,27 @@ exports.Prisma.ScreenshotsScalarFieldEnum = {
   x332Url: 'x332Url'
 };
 
+exports.Prisma.AccountScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  provider: 'provider',
+  refreshToken: 'refreshToken',
+  accessToken: 'accessToken',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
+exports.Prisma.TokenScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  token: 'token',
+  type: 'type',
+  expiresIn: 'expiresIn',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.ParsingSessionScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -232,15 +266,6 @@ exports.Prisma.ParsingSessionScalarFieldEnum = {
   processedItems: 'processedItems',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
-};
-
-exports.Prisma.TokenScalarFieldEnum = {
-  id: 'id',
-  email: 'email',
-  token: 'token',
-  type: 'type',
-  expiresIn: 'expiresIn',
-  createdAt: 'createdAt'
 };
 
 exports.Prisma.UserScalarFieldEnum = {
@@ -326,16 +351,16 @@ exports.VideoKindEnum = exports.$Enums.VideoKindEnum = {
   episode_preview: 'episode_preview'
 };
 
-exports.ParsingSessionType = exports.$Enums.ParsingSessionType = {
-  CREATE_DATABASE: 'CREATE_DATABASE',
-  UPDATE_ONGOINGS: 'UPDATE_ONGOINGS',
-  UPDATE_THIS_YEAR: 'UPDATE_THIS_YEAR'
-};
-
 exports.TokenType = exports.$Enums.TokenType = {
   VERIFICATION: 'VERIFICATION',
   TWO_FACTOR: 'TWO_FACTOR',
   PASSWORD_RESET: 'PASSWORD_RESET'
+};
+
+exports.ParsingSessionType = exports.$Enums.ParsingSessionType = {
+  CREATE_DATABASE: 'CREATE_DATABASE',
+  UPDATE_ONGOINGS: 'UPDATE_ONGOINGS',
+  UPDATE_THIS_YEAR: 'UPDATE_THIS_YEAR'
 };
 
 exports.UserRole = exports.$Enums.UserRole = {
@@ -350,20 +375,24 @@ exports.AuthMethod = exports.$Enums.AuthMethod = {
 };
 
 exports.Prisma.ModelName = {
-  Account: 'Account',
   Anime: 'Anime',
   Genre: 'Genre',
+  Theme: 'Theme',
+  Demographic: 'Demographic',
   Studio: 'Studio',
   AnimeStudio: 'AnimeStudio',
   RelatedAnime: 'RelatedAnime',
   AnimeGenre: 'AnimeGenre',
+  AnimeTheme: 'AnimeTheme',
+  AnimeDemographic: 'AnimeDemographic',
   AnimePoster: 'AnimePoster',
   AnimeVideo: 'AnimeVideo',
   AnimeScreenshot: 'AnimeScreenshot',
   Video: 'Video',
   Screenshots: 'Screenshots',
-  ParsingSession: 'ParsingSession',
+  Account: 'Account',
   Token: 'Token',
+  ParsingSession: 'ParsingSession',
   User: 'User'
 };
 

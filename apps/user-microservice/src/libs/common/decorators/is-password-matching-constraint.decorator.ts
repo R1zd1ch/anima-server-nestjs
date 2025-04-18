@@ -4,7 +4,7 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 
-import { RegisterDto } from 'apps/auth-microservice/src/auth/dto/register.dto';
+import { RegisterDto } from 'apps/user-microservice/src/auth/dto/register.dto';
 
 @ValidatorConstraint({ name: 'IsPasswordsMatching', async: false })
 export class IsPasswordsMatchingConstraint

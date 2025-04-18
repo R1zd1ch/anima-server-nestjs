@@ -1,5 +1,6 @@
 model Anime {
   id             String             @id @default(uuid())
+  alias          String?
   malId          String?            @unique
   shikimoriId    String?            @unique
   name           String
