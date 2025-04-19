@@ -1,0 +1,12 @@
+model RelatedAnime {
+  id             String       @id @default(uuid())
+  animeId        String
+  relatedAnimeId String
+  relationKind   RelationKind
+
+  anime   Anime @relation("AnimeToRelatedAnime", fields: [animeId], references: [id])
+  related Anime @relation("RelatedAnimeToAnime", fields: [relatedAnimeId], references: [id])
+
+  @@unique([animeId, relatedAnimeId])
+  @@map("related_animes")
+}

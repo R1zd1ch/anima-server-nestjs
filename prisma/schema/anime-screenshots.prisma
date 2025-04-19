@@ -1,0 +1,20 @@
+model Screenshots {
+  id              String            @id @default(uuid())
+  shikimoriId     String            @unique
+  originalUrl     String?
+  x332Url         String?
+  animeScreenshot AnimeScreenshot[]
+
+  @@map("screenshots")
+}
+
+model AnimeScreenshot {
+  animeId      String
+  screenshotId String
+
+  anime      Anime       @relation(fields: [animeId], references: [id])
+  screenshot Screenshots @relation(fields: [screenshotId], references: [id])
+
+  @@id([animeId, screenshotId])
+  @@map("anime_screenshots")
+}

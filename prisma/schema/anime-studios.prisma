@@ -1,0 +1,18 @@
+model Studio {
+  id          String        @id @default(uuid())
+  name        String        @unique
+  imageUrl    String?
+  AnimeStudio AnimeStudio[]
+
+  @@map("studios")
+}
+
+model AnimeStudio {
+  animeId  String
+  studioId String
+  anime    Anime  @relation(fields: [animeId], references: [id])
+  studio   Studio @relation(fields: [studioId], references: [id])
+
+  @@id([animeId, studioId])
+  @@map("anime_studios")
+}

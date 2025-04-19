@@ -1,0 +1,19 @@
+model Theme {
+  id        String       @id @default(uuid())
+  requestId Int          @unique @default(autoincrement())
+  name      String       @unique
+  russian   String
+  animes    AnimeTheme[]
+
+  @@map("themes")
+}
+
+model AnimeTheme {
+  animeId String
+  themeId String
+  anime   Anime  @relation(fields: [animeId], references: [id])
+  theme   Theme  @relation(fields: [themeId], references: [id])
+
+  @@id([animeId, themeId])
+  @@map("anime_themes")
+}

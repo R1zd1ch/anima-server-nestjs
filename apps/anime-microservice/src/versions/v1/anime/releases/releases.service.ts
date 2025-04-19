@@ -5,7 +5,6 @@ import {
   includeSmall,
   shikimoriScoreNotNull,
 } from 'apps/anime-microservice/src/constants';
-import { getSeasonByDate } from 'apps/anime-microservice/src/libs/utils';
 import { PrismaService } from 'shared/lib/prisma/prisma.service';
 
 @Injectable()
@@ -14,56 +13,24 @@ export class ReleasesService {
   public constructor(private readonly prismaService: PrismaService) {}
 
   public async getLatestReleases(count: number = 10): Promise<Anime[]> {
-    const releases: Anime[] = [];
-    const seasonsOrder = ['winter', 'spring', 'summer', 'fall'];
-    const seasonDate = getSeasonByDate(new Date().toISOString()).split('_');
-    const yearStr = seasonDate[1];
-    let season = seasonDate[0];
-    let year = parseInt(yearStr, 10);
-
     const maxCount = Math.min(Math.max(count, 1), 50);
 
-    while (releases.length < maxCount) {
-      const found = await this.prismaService.anime.findMany({
-        where: {
-          season: `${season}_${year}`,
-          episodes: { gt: 0 },
-          ...shikimoriScoreNotNull,
-        },
-        include: {
-          ...includeSmall,
-        },
-        orderBy: { shikimoriScore: 'desc' },
-      });
+    const releases = await this.prismaService.anime.findMany({
+      where: {
+        airedOn: { not: null },
+        episodes: { gt: 0 },
+        ...shikimoriScoreNotNull,
+      },
+      include: {
+        ...includeSmall,
+      },
+      orderBy: {
+        airedOn: 'desc', // сортировка по дате выхода
+      },
+      take: maxCount,
+    });
 
-      releases.push(...found);
-
-      if (releases.length >= maxCount) break;
-
-      const prevYear = year - 1;
-      for (const prevSeason of seasonsOrder) {
-        const prevFound = await this.prismaService.anime.findMany({
-          where: {
-            season: `${prevSeason}_${prevYear}`,
-            episodes: { gt: 0 },
-            ...shikimoriScoreNotNull,
-          },
-          include: {
-            ...includeSmall,
-          },
-          orderBy: { shikimoriScore: 'desc' },
-        });
-        releases.push(...prevFound);
-        if (releases.length >= maxCount) break;
-      }
-
-      const nextSeasonIdx =
-        (seasonsOrder.indexOf(season) + 1) % seasonsOrder.length;
-      if (nextSeasonIdx === 0) year++;
-      season = seasonsOrder[nextSeasonIdx];
-    }
-
-    return releases.slice(0, maxCount);
+    return releases;
   }
 
   public async getRandomRelease(): Promise<Anime> {

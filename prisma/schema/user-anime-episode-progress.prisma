@@ -1,0 +1,17 @@
+model AnimeEpisodeProgress {
+  userId  String
+  animeId String
+
+  episode   Int
+  timestamp Int
+  isWatched Boolean @default(false)
+
+  anime Anime @relation(fields: [animeId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
+
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  @@id([userId, animeId, episode])
+  @@map("anime_user_progress")
+}

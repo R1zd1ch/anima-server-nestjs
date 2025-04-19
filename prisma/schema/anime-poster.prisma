@@ -1,0 +1,10 @@
+model AnimePoster {
+  id          String  @id @default(uuid())
+  shikimoriId String?
+  animeId     String
+  originalUrl String?
+  mainUrl     String?
+  anime       Anime   @relation(fields: [animeId], references: [id])
+
+  @@map("anime_posters")
+}

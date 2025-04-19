@@ -1,0 +1,43 @@
+model AnimeCollection {
+  id          String  @id @default(uuid())
+  userId      String
+  title       String
+  description String?
+  isPublic    Boolean @default(false)
+
+  user  User                  @relation(fields: [userId], references: [id])
+  items AnimeInCollection[]
+  likes AnimeCollectionLike[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("anime_collection")
+}
+
+model AnimeInCollection {
+  collectionId String
+  animeId      String
+
+  anime      Anime           @relation(fields: [animeId], references: [id])
+  collection AnimeCollection @relation(fields: [collectionId], references: [id])
+
+  note    String?
+  addedAt DateTime @default(now())
+
+  @@id([collectionId, animeId])
+  @@map("anime_in_collection")
+}
+
+model AnimeCollectionLike {
+  userId       String
+  collectionId String
+
+  user        User            @relation(fields: [userId], references: [id])
+  сollection AnimeCollection @relation(fields: [collectionId], references: [id])
+
+  likedAt DateTime @default(now())
+
+  @@id([userId, collectionId])
+  @@map("anime_collection_likes")
+}
