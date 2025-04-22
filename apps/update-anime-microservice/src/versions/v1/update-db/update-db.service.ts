@@ -3,7 +3,7 @@ import { Anime, Prisma } from '@prisma/__generated__';
 import { PrismaService } from 'shared/lib/prisma/prisma.service';
 import { AnimeFromShikimori } from '../parsers/shikimori/shikimori-api/dto/anime.dto';
 import { randomUUID } from 'crypto';
-import { getAlias } from 'apps/update-anime-microservice/lib/utils/get-anime-alias';
+import { getAlias } from 'apps/update-anime-microservice/src/lib/utils/get-anime-alias';
 import { KodikCheckService } from '../check-cdn/kodik-check.service';
 
 @Injectable()

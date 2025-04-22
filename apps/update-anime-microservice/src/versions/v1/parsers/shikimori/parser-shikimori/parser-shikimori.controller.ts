@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { ParseShikimoriService } from './parser-shikimori.service';
 
-@Controller('update-anime/parsers/shikimori')
+@Controller({ version: '1', path: 'update-anime/parsers/shikimori' })
 export class ParseShikimoriController {
   constructor(private readonly parseShikimoriService: ParseShikimoriService) {}
 

@@ -7,11 +7,11 @@ import {
   ParsingSessionType,
 } from '@prisma/__generated__';
 import { AnimeFromShikimori } from '../shikimori-api/dto/anime.dto';
-import { UpdateDbService } from 'apps/update-anime-microservice/src/update-db/update-db.service';
+import { UpdateDbService } from '../../../update-db/update-db.service';
 import SearchAnimeParamsDto from '../shikimori-api/dto/search-anime-params.dto';
-import { KodikCheckService } from 'apps/update-anime-microservice/src/check-cdn/kodik-check.service';
-import { AnilibriaCheckService } from 'apps/update-anime-microservice/src/check-cdn/anilibria-check.service';
-import { getAnimeAliasSync } from 'apps/update-anime-microservice/lib/utils/get-anime-alias';
+import { KodikCheckService } from '../../../check-cdn/kodik-check.service';
+import { AnilibriaCheckService } from '../../../check-cdn/anilibria-check.service';
+import { getAnimeAliasSync } from 'apps/update-anime-microservice/src/lib/utils/get-anime-alias';
 
 @Injectable()
 export class ParseShikimoriService {

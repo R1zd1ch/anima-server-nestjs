@@ -1,7 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ProgressService } from './progress.service';
 
-@Controller('update-anime/parsers/progress')
+@Controller({ version: '1', path: 'update-anime/parsers/progress' })
 export class ProgressController {
   constructor(private readonly progressService: ProgressService) {}
 
