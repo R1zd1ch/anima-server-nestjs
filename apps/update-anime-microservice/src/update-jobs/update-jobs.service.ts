@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { ParseShikimoriService } from '../parsers/shikimori/parser-shikimori/parser-shikimori.service';
 import { ProgressService } from '../parsers/progress/progress.service';
+import { ParsingSessionType } from '@prisma/__generated__';
 
 @Injectable()
 export class UpdateJobsService {
@@ -16,6 +17,16 @@ export class UpdateJobsService {
   @Cron(CronExpression.EVERY_HOUR)
   async updateOngoings() {
     this.logger.log('START UPDATE ONGOINGS');
+
+    const session = await this.progressService.getLatestSession(
+      ParsingSessionType.CREATE_DATABASE,
+    );
+    if (
+      new Date().getTime() - new Date(session.updatedAt).getTime() >
+      this.TIME_TO_UPDATE_RUNNING_SESSION
+    ) {
+      return;
+    }
     await this.parseShikimoriService.startUpdateOngoings();
   }
 

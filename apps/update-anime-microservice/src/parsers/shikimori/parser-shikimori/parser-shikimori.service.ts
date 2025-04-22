@@ -9,6 +9,9 @@ import {
 import { AnimeFromShikimori } from '../shikimori-api/dto/anime.dto';
 import { UpdateDbService } from 'apps/update-anime-microservice/src/update-db/update-db.service';
 import SearchAnimeParamsDto from '../shikimori-api/dto/search-anime-params.dto';
+import { KodikCheckService } from 'apps/update-anime-microservice/src/check-cdn/kodik-check.service';
+import { AnilibriaCheckService } from 'apps/update-anime-microservice/src/check-cdn/anilibria-check.service';
+import { getAnimeAliasSync } from 'apps/update-anime-microservice/lib/utils/get-anime-alias';
 
 @Injectable()
 export class ParseShikimoriService {
@@ -21,6 +24,8 @@ export class ParseShikimoriService {
     private readonly shikimoriService: ShikimoriService,
     private readonly progressService: ProgressService,
     private readonly updateDbService: UpdateDbService,
+    private readonly kodikCheckService: KodikCheckService,
+    private readonly anilibriaCheckService: AnilibriaCheckService,
   ) {}
 
   async startInitParsing() {
@@ -28,7 +33,13 @@ export class ParseShikimoriService {
       limit: this.BATCH_LIMIT,
     };
 
-    await this.startParsing(ParsingSessionType.CREATE_DATABASE, searchParams);
+    this.startParsing(ParsingSessionType.CREATE_DATABASE, searchParams);
+
+    return new Promise((r) =>
+      r({
+        message: 'Полный парсинг начался',
+      }),
+    );
   }
   async startUpdateOngoings() {
     const searchParams = {
@@ -36,7 +47,13 @@ export class ParseShikimoriService {
       status: 'ongoing',
     };
 
-    await this.startParsing(ParsingSessionType.UPDATE_ONGOINGS, searchParams);
+    this.startParsing(ParsingSessionType.UPDATE_ONGOINGS, searchParams);
+
+    return new Promise((r) =>
+      r({
+        message: 'Обновление онгоингов началось',
+      }),
+    );
   }
 
   async startUpdateThisYear() {
@@ -45,7 +62,12 @@ export class ParseShikimoriService {
       season: `${new Date().getFullYear()}`,
     };
 
-    await this.startParsing(ParsingSessionType.UPDATE_THIS_YEAR, searchParams);
+    this.startParsing(ParsingSessionType.UPDATE_THIS_YEAR, searchParams);
+    return new Promise((r) =>
+      r({
+        message: 'Обновление аниме за этот год началось',
+      }),
+    );
   }
 
   async resumeInitParsing() {
@@ -53,7 +75,13 @@ export class ParseShikimoriService {
       limit: this.BATCH_LIMIT,
     };
 
-    await this.resumeParsing(ParsingSessionType.CREATE_DATABASE, searchParams);
+    this.resumeParsing(ParsingSessionType.CREATE_DATABASE, searchParams);
+
+    return new Promise((r) =>
+      r({
+        message: 'Полный парсинг продолжился',
+      }),
+    );
   }
 
   async resumeUpdateOngoings() {
@@ -62,7 +90,13 @@ export class ParseShikimoriService {
       status: 'ongoing',
     };
 
-    await this.resumeParsing(ParsingSessionType.UPDATE_ONGOINGS, searchParams);
+    this.resumeParsing(ParsingSessionType.UPDATE_ONGOINGS, searchParams);
+
+    return new Promise((r) =>
+      r({
+        message: 'Обновление онгоингов продолжилось',
+      }),
+    );
   }
 
   async resumeUpdateThisYear() {
@@ -71,7 +105,13 @@ export class ParseShikimoriService {
       season: `${new Date().getFullYear()}`,
     };
 
-    await this.resumeParsing(ParsingSessionType.UPDATE_THIS_YEAR, searchParams);
+    this.resumeParsing(ParsingSessionType.UPDATE_THIS_YEAR, searchParams);
+
+    return new Promise((r) =>
+      r({
+        message: 'Обновление аниме за этот год продолжилось',
+      }),
+    );
   }
 
   private async startParsing(
@@ -187,7 +227,26 @@ export class ParseShikimoriService {
         this.logger.log(
           `Аниме с пачки (страница ${page}) распаршены, количество: ${animes.length}`,
         );
-        await this.updateDbService.upsertAnimes(animes);
+
+        const kodikCheckResults = await Promise.all(
+          animes.map((anime) =>
+            this.kodikCheckService.checkByShikimoriId(Number(anime.id)),
+          ),
+        );
+
+        const anilibriaCheckResults = await Promise.all(
+          animes.map((anime) =>
+            this.anilibriaCheckService.checkByAlias(
+              getAnimeAliasSync(anime.url),
+            ),
+          ),
+        );
+
+        const checkedAnimes = animes.filter(
+          (anime, index) =>
+            !kodikCheckResults[index] || !anilibriaCheckResults[index],
+        );
+        await this.updateDbService.upsertAnimes(checkedAnimes);
         this.logger.log(`Обработана пачка (страница ${page})`);
         return animes;
       } catch (e) {

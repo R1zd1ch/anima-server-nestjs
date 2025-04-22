@@ -72,9 +72,11 @@ export class AuthController {
   public async connect(@Param('provider') provider: string) {
     const providerInstance = this.providerService.findByService(provider);
 
-    return {
-      url: providerInstance.getAuthUrl(),
-    };
+    return new Promise((resolve) =>
+      resolve({
+        url: providerInstance.getAuthUrl(),
+      }),
+    );
   }
 
   @Post('logout')

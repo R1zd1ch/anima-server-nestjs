@@ -1,66 +1,3 @@
-model Anime {
-  id             String             @id @default(uuid())
-  alias          String?
-  malId          String?            @unique
-  shikimoriId    String?            @unique
-  name           String
-  description    String?
-  russian        String?
-  english        String?
-  japanese       String?
-  synonyms       String[]
-  status         AnimeStatus        @default(anons)
-  kind           AnimeKind?
-  episodes       Int
-  episodesAired  Int
-  duration       Int?
-  score          Float?
-  shikimoriScore Float?
-  airedOn        String?
-  releasedOn     String?
-  shikimoriUrl   String?
-  season         String?
-  poster         AnimePoster[]
-  isCensored     Boolean?
-  rating         AnimeRating?
-  nextEpisodeAt  String?
-  // userRates      UserRate[]
-  studios        AnimeStudio[]
-  related        RelatedAnime[]     @relation("AnimeToRelatedAnime")
-  videos         AnimeVideo[]
-  screenshots    AnimeScreenshot[]
-  genres         AnimeGenre[]
-  theme          AnimeTheme[]
-  demographic    AnimeDemographic[]
-
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  relatedAnime RelatedAnime[] @relation("RelatedAnimeToAnime")
-
-  @@unique([name, shikimoriId])
-  @@map("animes")
-}
-
-model Genre {
-  id        String       @id @default(uuid())
-  requestId Int          @unique @default(autoincrement())
-  name      String       @unique
-  russian   String
-  animes    AnimeGenre[]
-
-  @@map("genres")
-}
-
-model Theme {
-  id        String       @id @default(uuid())
-  requestId Int          @unique @default(autoincrement())
-  name      String       @unique
-  russian   String
-  animes    AnimeTheme[]
-
-  @@map("themes")
-}
-
 model Demographic {
   id        String             @id @default(uuid())
   requestId Int                @unique @default(autoincrement())
@@ -71,58 +8,6 @@ model Demographic {
   @@map("demographics")
 }
 
-model Studio {
-  id          String        @id @default(uuid())
-  name        String        @unique
-  imageUrl    String?
-  AnimeStudio AnimeStudio[]
-
-  @@map("studios")
-}
-
-model AnimeStudio {
-  animeId  String
-  studioId String
-  anime    Anime  @relation(fields: [animeId], references: [id])
-  studio   Studio @relation(fields: [studioId], references: [id])
-
-  @@id([animeId, studioId])
-  @@map("anime_studios")
-}
-
-model RelatedAnime {
-  id             String       @id @default(uuid())
-  animeId        String
-  relatedAnimeId String
-  relationKind   RelationKind
-
-  anime   Anime @relation("AnimeToRelatedAnime", fields: [animeId], references: [id])
-  related Anime @relation("RelatedAnimeToAnime", fields: [relatedAnimeId], references: [id])
-
-  @@unique([animeId, relatedAnimeId])
-  @@map("related_animes")
-}
-
-model AnimeGenre {
-  animeId String
-  genreId String
-  anime   Anime  @relation(fields: [animeId], references: [id])
-  genre   Genre  @relation(fields: [genreId], references: [id])
-
-  @@id([animeId, genreId])
-  @@map("anime_genres")
-}
-
-model AnimeTheme {
-  animeId String
-  themeId String
-  anime   Anime  @relation(fields: [animeId], references: [id])
-  theme   Theme  @relation(fields: [themeId], references: [id])
-
-  @@id([animeId, themeId])
-  @@map("anime_themes")
-}
-
 model AnimeDemographic {
   animeId       String
   demographicId String
@@ -131,62 +16,6 @@ model AnimeDemographic {
 
   @@id([animeId, demographicId])
   @@map("anime_demographics")
-}
-
-model AnimePoster {
-  id          String  @id @default(uuid())
-  shikimoriId String?
-  animeId     String
-  originalUrl String?
-  mainUrl     String?
-  anime       Anime   @relation(fields: [animeId], references: [id])
-
-  @@map("anime_posters")
-}
-
-model AnimeVideo {
-  animeId String
-  videoId String
-
-  anime Anime @relation(fields: [animeId], references: [id])
-  video Video @relation(fields: [videoId], references: [id])
-
-  @@id([animeId, videoId])
-  @@map("anime_videos")
-}
-
-model AnimeScreenshot {
-  animeId      String
-  screenshotId String
-
-  anime      Anime       @relation(fields: [animeId], references: [id])
-  screenshot Screenshots @relation(fields: [screenshotId], references: [id])
-
-  @@id([animeId, screenshotId])
-  @@map("anime_screenshots")
-}
-
-model Video {
-  id          String        @id @default(uuid())
-  shikimoriId String?       @unique
-  url         String?
-  name        String?
-  kind        VideoKindEnum
-  playerUrl   String?
-  imageUrl    String?
-  animeVideo  AnimeVideo[]
-
-  @@map("videos")
-}
-
-model Screenshots {
-  id              String            @id @default(uuid())
-  shikimoriId     String            @unique
-  originalUrl     String?
-  x332Url         String?
-  animeScreenshot AnimeScreenshot[]
-
-  @@map("screenshots")
 }
 
 enum VideoKindEnum {
@@ -242,6 +71,179 @@ enum RelationKind {
   side_story
   spin_off
   summary
+}
+
+model Genre {
+  id        String       @id @default(uuid())
+  requestId Int          @unique @default(autoincrement())
+  name      String       @unique
+  russian   String
+  animes    AnimeGenre[]
+
+  @@map("genres")
+}
+
+model AnimeGenre {
+  animeId String
+  genreId String
+  anime   Anime  @relation(fields: [animeId], references: [id])
+  genre   Genre  @relation(fields: [genreId], references: [id])
+
+  @@id([animeId, genreId])
+  @@map("anime_genres")
+}
+
+model AnimePoster {
+  id          String  @id @default(uuid())
+  shikimoriId String?
+  animeId     String
+  originalUrl String?
+  mainUrl     String?
+  anime       Anime   @relation(fields: [animeId], references: [id])
+
+  @@map("anime_posters")
+}
+
+model RelatedAnime {
+  id             String       @id @default(uuid())
+  animeId        String
+  relatedAnimeId String
+  relationKind   RelationKind
+
+  anime   Anime @relation("AnimeToRelatedAnime", fields: [animeId], references: [id])
+  related Anime @relation("RelatedAnimeToAnime", fields: [relatedAnimeId], references: [id])
+
+  @@unique([animeId, relatedAnimeId])
+  @@map("related_animes")
+}
+
+model Screenshots {
+  id              String            @id @default(uuid())
+  shikimoriId     String            @unique
+  originalUrl     String?
+  x332Url         String?
+  animeScreenshot AnimeScreenshot[]
+
+  @@map("screenshots")
+}
+
+model AnimeScreenshot {
+  animeId      String
+  screenshotId String
+
+  anime      Anime       @relation(fields: [animeId], references: [id])
+  screenshot Screenshots @relation(fields: [screenshotId], references: [id])
+
+  @@id([animeId, screenshotId])
+  @@map("anime_screenshots")
+}
+
+model Studio {
+  id          String        @id @default(uuid())
+  name        String        @unique
+  imageUrl    String?
+  AnimeStudio AnimeStudio[]
+
+  @@map("studios")
+}
+
+model AnimeStudio {
+  animeId  String
+  studioId String
+  anime    Anime  @relation(fields: [animeId], references: [id])
+  studio   Studio @relation(fields: [studioId], references: [id])
+
+  @@id([animeId, studioId])
+  @@map("anime_studios")
+}
+
+model Theme {
+  id        String       @id @default(uuid())
+  requestId Int          @unique @default(autoincrement())
+  name      String       @unique
+  russian   String
+  animes    AnimeTheme[]
+
+  @@map("themes")
+}
+
+model AnimeTheme {
+  animeId String
+  themeId String
+  anime   Anime  @relation(fields: [animeId], references: [id])
+  theme   Theme  @relation(fields: [themeId], references: [id])
+
+  @@id([animeId, themeId])
+  @@map("anime_themes")
+}
+
+model AnimeVideo {
+  animeId String
+  videoId String
+
+  anime Anime @relation(fields: [animeId], references: [id])
+  video Video @relation(fields: [videoId], references: [id])
+
+  @@id([animeId, videoId])
+  @@map("anime_videos")
+}
+
+model Video {
+  id          String        @id @default(uuid())
+  shikimoriId String?       @unique
+  url         String?
+  name        String?
+  kind        VideoKindEnum
+  playerUrl   String?
+  imageUrl    String?
+  animeVideo  AnimeVideo[]
+
+  @@map("videos")
+}
+
+model Anime {
+  id             String             @id @default(uuid())
+  alias          String?
+  malId          String?            @unique
+  shikimoriId    String?            @unique
+  name           String
+  description    String?
+  russian        String?
+  english        String?
+  japanese       String?
+  synonyms       String[]
+  status         AnimeStatus        @default(anons)
+  kind           AnimeKind?
+  episodes       Int
+  episodesAired  Int
+  duration       Int?
+  score          Float?
+  shikimoriScore Float?
+  airedOn        String?
+  releasedOn     String?
+  shikimoriUrl   String?
+  season         String?
+  poster         AnimePoster[]
+  isCensored     Boolean?
+  rating         AnimeRating?
+  nextEpisodeAt  String?
+  // userRates      UserRate[]
+  studios        AnimeStudio[]
+  related        RelatedAnime[]     @relation("AnimeToRelatedAnime")
+  videos         AnimeVideo[]
+  screenshots    AnimeScreenshot[]
+  genres         AnimeGenre[]
+  theme          AnimeTheme[]
+  demographic    AnimeDemographic[]
+
+  createdAt         DateTime               @default(now())
+  updatedAt         DateTime               @updatedAt
+  relatedAnime      RelatedAnime[]         @relation("RelatedAnimeToAnime")
+  userProgress      AnimeEpisodeProgress[]
+  animeInCollection AnimeInCollection[]
+
+  @@unique([name, shikimoriId])
+  @@map("animes")
 }
 
 model Account {
@@ -337,24 +339,103 @@ datasource db {
   url      = env("POSTGRES_URI")
 }
 
+model AnimeCollection {
+  id          String              @id @default(uuid())
+  userId      String
+  title       String
+  description String?
+  isPublic    Boolean             @default(false)
+  type        AnimeCollectionType @default(CUSTOM)
+
+  user  User                  @relation(fields: [userId], references: [id])
+  items AnimeInCollection[]
+  likes AnimeCollectionLike[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("anime_collection")
+}
+
+model AnimeInCollection {
+  collectionId String
+  animeId      String
+
+  anime      Anime           @relation(fields: [animeId], references: [id])
+  collection AnimeCollection @relation(fields: [collectionId], references: [id])
+
+  note    String?
+  addedAt DateTime @default(now())
+
+  @@id([collectionId, animeId])
+  @@map("anime_in_collection")
+}
+
+model AnimeCollectionLike {
+  userId       String
+  collectionId String
+
+  user       User            @relation(fields: [userId], references: [id])
+  collection AnimeCollection @relation(fields: [collectionId], references: [id])
+
+  likedAt DateTime @default(now())
+
+  @@id([userId, collectionId])
+  @@index([collectionId])
+  @@index([userId])
+  @@map("anime_collection_likes")
+}
+
+enum AnimeCollectionType {
+  PLANNED
+  WATCHING
+  COMPLETED
+  DROPPED
+  FAVORITE
+  CUSTOM
+}
+
+model AnimeEpisodeProgress {
+  userId  String
+  animeId String
+
+  episode   Int
+  timestamp Int
+  isWatched Boolean @default(false)
+
+  anime Anime @relation(fields: [animeId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
+
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  @@id([userId, animeId, episode])
+  @@map("anime_user_progress")
+}
+
 model User {
   id String @id @default(uuid())
 
+  username String @unique
   email    String @unique
   password String
 
   displayName String
   picture     String?
 
-  role               UserRole @default(REGULAR)
-  isVerified         Boolean  @default(false) @map("is_verified")
-  isTwoFactorEnabled Boolean  @default(false) @map("is_two_factor_enabled")
-
+  role     UserRole   @default(REGULAR)
   method   AuthMethod @default(CREDENTIALS)
   accounts Account[]
 
+  isVerified         Boolean                @default(false) @map("is_verified")
+  isTwoFactorEnabled Boolean                @default(false) @map("is_two_factor_enabled")
+  animeProgress      AnimeEpisodeProgress[]
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+
+  animeCollection AnimeCollection[]
+  likedCollection AnimeCollectionLike[]
 
   @@map("users")
 }

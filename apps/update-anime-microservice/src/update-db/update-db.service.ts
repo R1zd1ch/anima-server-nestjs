@@ -3,11 +3,16 @@ import { Anime, Prisma } from '@prisma/__generated__';
 import { PrismaService } from 'shared/lib/prisma/prisma.service';
 import { AnimeFromShikimori } from '../parsers/shikimori/shikimori-api/dto/anime.dto';
 import { randomUUID } from 'crypto';
+import { getAlias } from 'apps/update-anime-microservice/lib/utils/get-anime-alias';
+import { KodikCheckService } from '../check-cdn/kodik-check.service';
 
 @Injectable()
 export class UpdateDbService {
   private readonly logger = new Logger(UpdateDbService.name);
-  public constructor(private readonly prismaService: PrismaService) {}
+  public constructor(
+    private readonly prismaService: PrismaService,
+    private readonly kodikCheckService: KodikCheckService,
+  ) {}
 
   async upsertAnimes(
     animes: Omit<AnimeFromShikimori, 'created_at' | 'updated_at'>[],
@@ -35,7 +40,7 @@ export class UpdateDbService {
   private async mapShikimoriToAnimeCreateInput(
     animeData: Omit<AnimeFromShikimori, 'created_at' | 'updated_at'>,
   ): Promise<Prisma.AnimeCreateInput> {
-    const alias = await this.getAlias(animeData.url);
+    const alias = await getAlias(animeData.url);
     return {
       malId: animeData.malId,
       alias: alias || null,
@@ -66,7 +71,7 @@ export class UpdateDbService {
   private async mapShikimoriToAnimeUpdateInput(
     animeData: Omit<AnimeFromShikimori, 'created_at' | 'updated_at'>,
   ): Promise<Prisma.AnimeUpdateInput> {
-    const alias = await this.getAlias(animeData.url);
+    const alias = await getAlias(animeData.url);
     return {
       name: animeData.name,
       alias: alias || null,
@@ -366,22 +371,71 @@ export class UpdateDbService {
     animeData: Omit<AnimeFromShikimori, 'created_at' | 'updated_at'>,
   ) {
     try {
-      if (!animeData.related?.length) return;
+      if (!animeData.related || animeData.related.length === 0) {
+        this.logger.debug('No related animes found', 'processRelatedAnimes');
+        return;
+      }
 
-      const createPromises = animeData.related.map(async (related) => {
+      if (!this.kodikCheckService) {
+        this.logger.error(
+          'kodikCheckService is not initialized',
+          'processRelatedAnimes',
+        );
+        return;
+      }
+
+      const kodikCheckResults = await Promise.all(
+        animeData.related.map(async (relatedAnime) => {
+          const shikimoriId = relatedAnime.anime?.id;
+          if (!shikimoriId) {
+            this.logger.warn(
+              'Invalid related anime data',
+              'processRelatedAnimes',
+            );
+            return false;
+          }
+
+          try {
+            const result = await this.kodikCheckService.checkByShikimoriId(
+              Number(shikimoriId),
+            );
+            if (!result) {
+              this.logger.warn(
+                `⚠️ Не найдено на Kodik: Shikimori ID ${shikimoriId}`,
+              );
+            } else {
+              this.logger.log(
+                `✅ Найдено на Kodik: Shikimori ID ${shikimoriId}`,
+              );
+            }
+            return result;
+          } catch (error) {
+            this.logger.error(
+              `Ошибка при проверке Kodik для ID ${shikimoriId}: ${error}`,
+              'processRelatedAnimes',
+            );
+            return false;
+          }
+        }),
+      );
+
+      // ✅ Сохраняем только те, что найдены на Kodik
+      const checkedAnimes = animeData.related.filter(
+        (anime, index) => kodikCheckResults[index],
+      );
+
+      const createPromises = checkedAnimes.map(async (related) => {
         const shikimoriId = related.id.toString();
-
         const season = related.anime?.season;
+
         if (season && !this.isValidSeason(season)) {
           this.logger.log(
-            `Skipping anime ${shikimoriId} with invalid season: ${season}`,
+            `⏩ Пропускаем ${shikimoriId} — некорректный сезон: ${season}`,
           );
           return;
         }
 
-        // Генерация уникального имени с хэшем
         const name = related.anime?.name || `Unknown_${randomUUID()}`;
-
         return tx.anime.upsert({
           where: { shikimoriId },
           create: {
@@ -399,7 +453,7 @@ export class UpdateDbService {
 
       await Promise.all(createPromises);
 
-      const filteredRelations = animeData.related.filter((related) =>
+      const filteredRelations = checkedAnimes.filter((related) =>
         this.isValidSeason(related.anime?.season),
       );
 
@@ -409,7 +463,7 @@ export class UpdateDbService {
         });
 
         if (!relatedAnime) {
-          this.logger.warn(`Related anime not found: ${related.id}`);
+          this.logger.warn(`⚠️ Related anime не найдено в БД: ${related.id}`);
           return;
         }
 
@@ -432,8 +486,8 @@ export class UpdateDbService {
       });
 
       await Promise.all(relationPromises);
-    } catch {
-      this.logger.error(`Ошибка при обработке связанных аниме`);
+    } catch (error) {
+      this.logger.error(`❌ Ошибка при обработке связанных аниме: ${error}`);
       throw new Error('Ошибка при обработке связанных аниме');
     }
   }
@@ -476,7 +530,7 @@ export class UpdateDbService {
       this.processGenres(tx, anime, animeData),
       this.processDemographics(tx, anime, animeData),
       this.processThemes(tx, anime, animeData),
-      this.processRelatedAnimes(tx, anime, animeData),
+      // this.processRelatedAnimes(tx, anime, animeData),
       this.processPosters(tx, anime, animeData),
     ]);
 
@@ -511,23 +565,5 @@ export class UpdateDbService {
     }
 
     return false;
-  }
-
-  private async getAlias(url: string): Promise<string | null> {
-    await Promise.resolve();
-    try {
-      const pathname = new URL(url).pathname;
-      const lastSegment = pathname.split('/').pop();
-
-      if (!lastSegment) return null;
-
-      const parts = lastSegment.split('-');
-      if (parts.length < 2) return null;
-
-      parts.shift();
-      return parts.join('-');
-    } catch {
-      return null;
-    }
   }
 }

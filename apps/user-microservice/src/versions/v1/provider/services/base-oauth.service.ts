@@ -9,10 +9,12 @@ export class BaseOAuthService {
   public constructor(private readonly options: TypeBaseProviderOptions) {}
 
   protected async extractUserInfo(data: any): Promise<TypeUserInfo> {
-    return {
-      ...data,
-      provider: this.options.name,
-    };
+    return new Promise((res) =>
+      res({
+        ...data,
+        provider: this.options.name,
+      }),
+    );
   }
 
   public getAuthUrl() {
@@ -73,18 +75,18 @@ export class BaseOAuthService {
     });
 
     if (!userRequest.ok) {
-      const userErrorResponse = await userRequest.json();
-
+      await userRequest.json();
       throw new BadRequestException(
         `Не удалось получить данные пользователя с ${this.options.profile_url}`,
       );
     }
 
-    const user = await userRequest.json();
+    const user = (await userRequest.json()) as unknown;
     const userData = await this.extractUserInfo(user);
 
     return {
       ...userData,
+
       access_token: tokenResponse.access_token,
       refresh_token: tokenResponse.refresh_token,
       expires_at: tokenResponse.expires_at || tokenResponse.expires_in,

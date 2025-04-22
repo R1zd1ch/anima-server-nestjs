@@ -47,6 +47,7 @@ services:
       - APPLICATION_PORT=${APPLICATION_PORT}
       - APPLICATION_UPDATE_ANIME_PORT=${APPLICATION_UPDATE_ANIME_PORT}
       - ANIME_MICROSERVICE_PORT=${ANIME_MICROSERVICE_PORT}
+      - RABBIT_MQ_MANAGEMENT_PORT=${RABBIT_MQ_MANAGEMENT_PORT}
     depends_on:
       db:
         condition: service_healthy
@@ -59,6 +60,18 @@ services:
       anime-microservice:
         condition: service_started
 
+    networks:
+      - backend
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - '${RABBIT_MQ_PORT}:${RABBIT_MQ_PORT}'
+      - '${RABBIT_MQ_MANAGEMENT_PORT}:${RABBIT_MQ_MANAGEMENT_PORT}'
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBIT_MQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBIT_MQ_PASSWORD}
     networks:
       - backend
 

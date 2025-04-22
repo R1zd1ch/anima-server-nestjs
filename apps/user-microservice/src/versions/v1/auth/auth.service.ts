@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { RegisterDto } from './dto/register.dto';
-import { AuthMethod, User } from 'prisma/__generated__';
+import { User, AuthMethod } from '@prisma/__generated__';
 import { Request } from 'express-session';
 import { Response } from 'express';
 import { LoginDto } from './dto/login.dto';
@@ -38,6 +38,7 @@ export class AuthService {
     const newUser = await this.userService.create(
       dto.email,
       dto.password,
+      dto.username,
       dto.name,
       '',
       AuthMethod.CREDENTIALS,
@@ -110,12 +111,26 @@ export class AuthService {
       : null;
 
     if (user) {
+      console.log(account);
+      if (!account) {
+        await this.prismaService.account.create({
+          data: {
+            userId: user.id,
+            type: 'oauth',
+            provider: profile.provider,
+            accessToken: profile.access_token,
+            refreshToken: profile.refresh_token,
+            expiresAt: profile.expires_at,
+          },
+        });
+      }
       return this.saveSession(req, user);
     }
 
     user = await this.userService.create(
       profile.email,
       '',
+      profile.email.split('@')[0],
       profile.name,
       profile.picture,
       AuthMethod[profile.provider.toUpperCase()],

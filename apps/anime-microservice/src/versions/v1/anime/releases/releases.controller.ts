@@ -1,5 +1,6 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ReleasesService } from './releases.service';
+import { MessagePattern } from '@nestjs/microservices';
 
 @Controller({
   version: '1',
@@ -10,6 +11,11 @@ export class ReleasesController {
   2;
   @Get('latest')
   public async getLatestReleases(@Query('count') count: number = 10) {
+    return this.releasesService.getLatestReleases(+count);
+  }
+
+  @MessagePattern({ cmd: 'getLatestReleases', version: '1', action: 'get' })
+  public async getLatestReleasesRabbitMQ(@Query('count') count: number = 10) {
     return this.releasesService.getLatestReleases(+count);
   }
 

@@ -1,11 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { AuthMethod } from 'prisma/__generated__';
 import { PrismaService } from '../../../../../../shared/lib/prisma/prisma.service';
 import { hash } from 'argon2';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ClientProxy } from '@nestjs/microservices';
 @Injectable()
 export class UserService {
-  public constructor(private readonly prismaService: PrismaService) {}
+  public constructor(
+    private readonly prismaService: PrismaService,
+    @Inject('ANIME_SERVICE') private animeClient: ClientProxy,
+  ) {}
 
   public async findById(id: string) {
     const user = await this.prismaService.user.findUnique({
@@ -37,9 +41,29 @@ export class UserService {
     return user;
   }
 
+  public async findByUsername(username: string) {
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        username,
+      },
+      include: {
+        accounts: true,
+      },
+    });
+
+    if (!user) {
+      throw new NotFoundException(
+        `Пользователь с username ${username} не найден`,
+      );
+    }
+
+    return user;
+  }
+
   public async create(
     email: string,
     password: string,
+    username: string,
     displayName: string,
     picture: string,
     method: AuthMethod,
@@ -53,16 +77,18 @@ export class UserService {
         email,
         password: password ? await hash(password) : '',
         displayName,
+        username,
         picture,
         method,
         isVerified,
       },
       update: {
         email,
-        password: password ? await hash(password) : '',
-        displayName,
-        picture,
-        method,
+        // password: password ? await hash(password) : '',
+        // displayName,
+        // username,
+        // picture,
+        // method,
         isVerified,
       },
       include: {
@@ -88,5 +114,17 @@ export class UserService {
     });
 
     return updatedUser;
+  }
+
+  public async getLatestAnimes(userId: string) {
+    const animes = await this.animeClient.send(
+      {
+        cmd: 'getLatestReleases',
+        version: '1',
+        action: 'get',
+      },
+      { userId },
+    );
+    return animes;
   }
 }

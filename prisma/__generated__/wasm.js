@@ -117,6 +117,95 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.DemographicScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  name: 'name',
+  russian: 'russian'
+};
+
+exports.Prisma.AnimeDemographicScalarFieldEnum = {
+  animeId: 'animeId',
+  demographicId: 'demographicId'
+};
+
+exports.Prisma.GenreScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  name: 'name',
+  russian: 'russian'
+};
+
+exports.Prisma.AnimeGenreScalarFieldEnum = {
+  animeId: 'animeId',
+  genreId: 'genreId'
+};
+
+exports.Prisma.AnimePosterScalarFieldEnum = {
+  id: 'id',
+  shikimoriId: 'shikimoriId',
+  animeId: 'animeId',
+  originalUrl: 'originalUrl',
+  mainUrl: 'mainUrl'
+};
+
+exports.Prisma.RelatedAnimeScalarFieldEnum = {
+  id: 'id',
+  animeId: 'animeId',
+  relatedAnimeId: 'relatedAnimeId',
+  relationKind: 'relationKind'
+};
+
+exports.Prisma.ScreenshotsScalarFieldEnum = {
+  id: 'id',
+  shikimoriId: 'shikimoriId',
+  originalUrl: 'originalUrl',
+  x332Url: 'x332Url'
+};
+
+exports.Prisma.AnimeScreenshotScalarFieldEnum = {
+  animeId: 'animeId',
+  screenshotId: 'screenshotId'
+};
+
+exports.Prisma.StudioScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  imageUrl: 'imageUrl'
+};
+
+exports.Prisma.AnimeStudioScalarFieldEnum = {
+  animeId: 'animeId',
+  studioId: 'studioId'
+};
+
+exports.Prisma.ThemeScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  name: 'name',
+  russian: 'russian'
+};
+
+exports.Prisma.AnimeThemeScalarFieldEnum = {
+  animeId: 'animeId',
+  themeId: 'themeId'
+};
+
+exports.Prisma.AnimeVideoScalarFieldEnum = {
+  animeId: 'animeId',
+  videoId: 'videoId'
+};
+
+exports.Prisma.VideoScalarFieldEnum = {
+  id: 'id',
+  shikimoriId: 'shikimoriId',
+  url: 'url',
+  name: 'name',
+  kind: 'kind',
+  playerUrl: 'playerUrl',
+  imageUrl: 'imageUrl'
+};
+
 exports.Prisma.AnimeScalarFieldEnum = {
   id: 'id',
   alias: 'alias',
@@ -144,95 +233,6 @@ exports.Prisma.AnimeScalarFieldEnum = {
   nextEpisodeAt: 'nextEpisodeAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
-};
-
-exports.Prisma.GenreScalarFieldEnum = {
-  id: 'id',
-  requestId: 'requestId',
-  name: 'name',
-  russian: 'russian'
-};
-
-exports.Prisma.ThemeScalarFieldEnum = {
-  id: 'id',
-  requestId: 'requestId',
-  name: 'name',
-  russian: 'russian'
-};
-
-exports.Prisma.DemographicScalarFieldEnum = {
-  id: 'id',
-  requestId: 'requestId',
-  name: 'name',
-  russian: 'russian'
-};
-
-exports.Prisma.StudioScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  imageUrl: 'imageUrl'
-};
-
-exports.Prisma.AnimeStudioScalarFieldEnum = {
-  animeId: 'animeId',
-  studioId: 'studioId'
-};
-
-exports.Prisma.RelatedAnimeScalarFieldEnum = {
-  id: 'id',
-  animeId: 'animeId',
-  relatedAnimeId: 'relatedAnimeId',
-  relationKind: 'relationKind'
-};
-
-exports.Prisma.AnimeGenreScalarFieldEnum = {
-  animeId: 'animeId',
-  genreId: 'genreId'
-};
-
-exports.Prisma.AnimeThemeScalarFieldEnum = {
-  animeId: 'animeId',
-  themeId: 'themeId'
-};
-
-exports.Prisma.AnimeDemographicScalarFieldEnum = {
-  animeId: 'animeId',
-  demographicId: 'demographicId'
-};
-
-exports.Prisma.AnimePosterScalarFieldEnum = {
-  id: 'id',
-  shikimoriId: 'shikimoriId',
-  animeId: 'animeId',
-  originalUrl: 'originalUrl',
-  mainUrl: 'mainUrl'
-};
-
-exports.Prisma.AnimeVideoScalarFieldEnum = {
-  animeId: 'animeId',
-  videoId: 'videoId'
-};
-
-exports.Prisma.AnimeScreenshotScalarFieldEnum = {
-  animeId: 'animeId',
-  screenshotId: 'screenshotId'
-};
-
-exports.Prisma.VideoScalarFieldEnum = {
-  id: 'id',
-  shikimoriId: 'shikimoriId',
-  url: 'url',
-  name: 'name',
-  kind: 'kind',
-  playerUrl: 'playerUrl',
-  imageUrl: 'imageUrl'
-};
-
-exports.Prisma.ScreenshotsScalarFieldEnum = {
-  id: 'id',
-  shikimoriId: 'shikimoriId',
-  originalUrl: 'originalUrl',
-  x332Url: 'x332Url'
 };
 
 exports.Prisma.AccountScalarFieldEnum = {
@@ -268,16 +268,51 @@ exports.Prisma.ParsingSessionScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.AnimeCollectionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  description: 'description',
+  isPublic: 'isPublic',
+  type: 'type',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AnimeInCollectionScalarFieldEnum = {
+  collectionId: 'collectionId',
+  animeId: 'animeId',
+  note: 'note',
+  addedAt: 'addedAt'
+};
+
+exports.Prisma.AnimeCollectionLikeScalarFieldEnum = {
+  userId: 'userId',
+  collectionId: 'collectionId',
+  likedAt: 'likedAt'
+};
+
+exports.Prisma.AnimeEpisodeProgressScalarFieldEnum = {
+  userId: 'userId',
+  animeId: 'animeId',
+  episode: 'episode',
+  timestamp: 'timestamp',
+  isWatched: 'isWatched',
+  updatedAt: 'updatedAt',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
+  username: 'username',
   email: 'email',
   password: 'password',
   displayName: 'displayName',
   picture: 'picture',
   role: 'role',
+  method: 'method',
   isVerified: 'isVerified',
   isTwoFactorEnabled: 'isTwoFactorEnabled',
-  method: 'method',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -296,6 +331,33 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.RelationKind = exports.$Enums.RelationKind = {
+  adaptation: 'adaptation',
+  alternative_setting: 'alternative_setting',
+  alternative_version: 'alternative_version',
+  character: 'character',
+  full_story: 'full_story',
+  other: 'other',
+  parent_story: 'parent_story',
+  prequel: 'prequel',
+  sequel: 'sequel',
+  side_story: 'side_story',
+  spin_off: 'spin_off',
+  summary: 'summary'
+};
+
+exports.VideoKindEnum = exports.$Enums.VideoKindEnum = {
+  pv: 'pv',
+  character_trailer: 'character_trailer',
+  cm: 'cm',
+  op: 'op',
+  ed: 'ed',
+  op_ed_clip: 'op_ed_clip',
+  clip: 'clip',
+  other: 'other',
+  episode_preview: 'episode_preview'
+};
+
 exports.AnimeStatus = exports.$Enums.AnimeStatus = {
   anons: 'anons',
   ongoing: 'ongoing',
@@ -324,33 +386,6 @@ exports.AnimeRating = exports.$Enums.AnimeRating = {
   rx: 'rx'
 };
 
-exports.RelationKind = exports.$Enums.RelationKind = {
-  adaptation: 'adaptation',
-  alternative_setting: 'alternative_setting',
-  alternative_version: 'alternative_version',
-  character: 'character',
-  full_story: 'full_story',
-  other: 'other',
-  parent_story: 'parent_story',
-  prequel: 'prequel',
-  sequel: 'sequel',
-  side_story: 'side_story',
-  spin_off: 'spin_off',
-  summary: 'summary'
-};
-
-exports.VideoKindEnum = exports.$Enums.VideoKindEnum = {
-  pv: 'pv',
-  character_trailer: 'character_trailer',
-  cm: 'cm',
-  op: 'op',
-  ed: 'ed',
-  op_ed_clip: 'op_ed_clip',
-  clip: 'clip',
-  other: 'other',
-  episode_preview: 'episode_preview'
-};
-
 exports.TokenType = exports.$Enums.TokenType = {
   VERIFICATION: 'VERIFICATION',
   TWO_FACTOR: 'TWO_FACTOR',
@@ -361,6 +396,15 @@ exports.ParsingSessionType = exports.$Enums.ParsingSessionType = {
   CREATE_DATABASE: 'CREATE_DATABASE',
   UPDATE_ONGOINGS: 'UPDATE_ONGOINGS',
   UPDATE_THIS_YEAR: 'UPDATE_THIS_YEAR'
+};
+
+exports.AnimeCollectionType = exports.$Enums.AnimeCollectionType = {
+  PLANNED: 'PLANNED',
+  WATCHING: 'WATCHING',
+  COMPLETED: 'COMPLETED',
+  DROPPED: 'DROPPED',
+  FAVORITE: 'FAVORITE',
+  CUSTOM: 'CUSTOM'
 };
 
 exports.UserRole = exports.$Enums.UserRole = {
@@ -375,24 +419,28 @@ exports.AuthMethod = exports.$Enums.AuthMethod = {
 };
 
 exports.Prisma.ModelName = {
-  Anime: 'Anime',
-  Genre: 'Genre',
-  Theme: 'Theme',
   Demographic: 'Demographic',
+  AnimeDemographic: 'AnimeDemographic',
+  Genre: 'Genre',
+  AnimeGenre: 'AnimeGenre',
+  AnimePoster: 'AnimePoster',
+  RelatedAnime: 'RelatedAnime',
+  Screenshots: 'Screenshots',
+  AnimeScreenshot: 'AnimeScreenshot',
   Studio: 'Studio',
   AnimeStudio: 'AnimeStudio',
-  RelatedAnime: 'RelatedAnime',
-  AnimeGenre: 'AnimeGenre',
+  Theme: 'Theme',
   AnimeTheme: 'AnimeTheme',
-  AnimeDemographic: 'AnimeDemographic',
-  AnimePoster: 'AnimePoster',
   AnimeVideo: 'AnimeVideo',
-  AnimeScreenshot: 'AnimeScreenshot',
   Video: 'Video',
-  Screenshots: 'Screenshots',
+  Anime: 'Anime',
   Account: 'Account',
   Token: 'Token',
   ParsingSession: 'ParsingSession',
+  AnimeCollection: 'AnimeCollection',
+  AnimeInCollection: 'AnimeInCollection',
+  AnimeCollectionLike: 'AnimeCollectionLike',
+  AnimeEpisodeProgress: 'AnimeEpisodeProgress',
   User: 'User'
 };
 

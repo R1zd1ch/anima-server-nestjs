@@ -1,9 +1,10 @@
 model AnimeCollection {
-  id          String  @id @default(uuid())
+  id          String              @id @default(uuid())
   userId      String
   title       String
   description String?
-  isPublic    Boolean @default(false)
+  isPublic    Boolean             @default(false)
+  type        AnimeCollectionType @default(CUSTOM)
 
   user  User                  @relation(fields: [userId], references: [id])
   items AnimeInCollection[]
@@ -33,11 +34,22 @@ model AnimeCollectionLike {
   userId       String
   collectionId String
 
-  user        User            @relation(fields: [userId], references: [id])
-  сollection AnimeCollection @relation(fields: [collectionId], references: [id])
+  user       User            @relation(fields: [userId], references: [id])
+  collection AnimeCollection @relation(fields: [collectionId], references: [id])
 
   likedAt DateTime @default(now())
 
   @@id([userId, collectionId])
+  @@index([collectionId])
+  @@index([userId])
   @@map("anime_collection_likes")
+}
+
+enum AnimeCollectionType {
+  PLANNED
+  WATCHING
+  COMPLETED
+  DROPPED
+  FAVORITE
+  CUSTOM
 }
