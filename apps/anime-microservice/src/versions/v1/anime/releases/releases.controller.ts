@@ -28,7 +28,7 @@ export class ReleasesController {
   public async getRandomReleases(@Query('count') count: number = 10) {
     return this.releasesService.getRandomReleases(+count);
   }
-
+  // todo rename
   @Get(':aliasOrId')
   async getByAliasOrShikiId(@Param('aliasOrId') aliasOrId: string) {
     const shikimoriId = Number(aliasOrId);

@@ -1,15 +1,12 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { AuthMethod } from 'prisma/__generated__';
 import { PrismaService } from '../../../../../../shared/lib/prisma/prisma.service';
 import { hash } from 'argon2';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ClientProxy } from '@nestjs/microservices';
+
 @Injectable()
 export class UserService {
-  public constructor(
-    private readonly prismaService: PrismaService,
-    @Inject('ANIME_SERVICE') private animeClient: ClientProxy,
-  ) {}
+  public constructor(private readonly prismaService: PrismaService) {}
 
   public async findById(id: string) {
     const user = await this.prismaService.user.findUnique({
@@ -114,17 +111,5 @@ export class UserService {
     });
 
     return updatedUser;
-  }
-
-  public async getLatestAnimes(userId: string) {
-    const animes = await this.animeClient.send(
-      {
-        cmd: 'getLatestReleases',
-        version: '1',
-        action: 'get',
-      },
-      { userId },
-    );
-    return animes;
   }
 }

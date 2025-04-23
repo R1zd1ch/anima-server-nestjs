@@ -4,7 +4,6 @@ import {
   Get,
   HttpCode,
   HttpStatus,
-  Inject,
   Param,
   Patch,
 } from '@nestjs/common';
@@ -13,8 +12,6 @@ import { Authorized } from '../auth/decorators/authorized.decorator';
 import { Authorization } from '../auth/decorators/auth.decorator';
 import { UserRole } from '@prisma/__generated__';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ClientProxy } from '@nestjs/microservices';
-import { firstValueFrom } from 'rxjs';
 
 @Controller({ path: 'users', version: '1' })
 export class UserController {
@@ -42,12 +39,5 @@ export class UserController {
     @Body() dto: UpdateUserDto,
   ) {
     return this.userService.update(userId, dto);
-  }
-
-  @Authorization()
-  @HttpCode(HttpStatus.OK)
-  @Get('animeLatest')
-  public async getLatest(@Authorized('id') userId: string) {
-    return this.userService.getLatestAnimes(userId);
   }
 }

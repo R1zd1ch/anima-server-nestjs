@@ -1,27 +1,36 @@
-// libs/shared/rabbitmq/rabbitmq.module.ts
-import { Global, Module } from '@nestjs/common';
+import { DynamicModule, Global, Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
-const AnimeServiceClient = ClientsModule.registerAsync([
-  {
-    name: 'ANIME_SERVICE',
-    imports: [ConfigModule],
-    useFactory: (config: ConfigService) => ({
-      transport: Transport.RMQ,
-      options: {
-        urls: [config.get<string>('RABBIT_MQ_URI')],
-        queue: 'anime_queue',
-        queueOptions: { durable: false },
-      },
-    }),
-    inject: [ConfigService],
-  },
-]);
+interface RabbitMQModuleOptions {
+  name: string;
+  queue: string;
+}
 
 @Global()
-@Module({
-  imports: [ConfigModule, AnimeServiceClient],
-  exports: [AnimeServiceClient],
-})
-export class RabbitMQModule {}
+@Module({})
+export class RabbitMQModule {
+  static forRoot(options: RabbitMQModuleOptions): DynamicModule {
+    const clientModule = ClientsModule.registerAsync([
+      {
+        name: options.name,
+        imports: [ConfigModule],
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.RMQ,
+          options: {
+            urls: [configService.get<string>('RABBIT_MQ_URI')],
+            queue: options.queue,
+            queueOptions: { durable: false },
+          },
+        }),
+        inject: [ConfigService],
+      },
+    ]);
+
+    return {
+      module: RabbitMQModule,
+      imports: [ConfigModule, clientModule],
+      exports: [clientModule],
+    };
+  }
+}

@@ -3,6 +3,7 @@ import { AnimeMicroserviceModule } from './anime-microservice.module';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AnimeMicroserviceModule);
@@ -33,6 +34,15 @@ async function bootstrap() {
     type: VersioningType.URI,
     prefix: 'v',
   });
+  const configDoc = new DocumentBuilder()
+    .setTitle('NEST JS UPDATE ANIME MISCROSERVICE')
+    .setDescription('API DOCUMENTATION')
+    .setVersion('1.0')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, configDoc);
+
+  SwaggerModule.setup('/docs', app, document);
 
   await app2.listen();
 

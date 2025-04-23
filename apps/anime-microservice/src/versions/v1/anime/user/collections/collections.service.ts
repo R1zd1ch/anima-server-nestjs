@@ -63,7 +63,7 @@ export class CollectionsService {
     this.logger.error(
       `Error in ${method}: ${error instanceof Error ? error.message : 'unknown'}`,
     );
-    return null as T;
+    return [] as T;
   }
 
   private processMetric<T extends string | number>(

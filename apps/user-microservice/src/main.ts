@@ -8,6 +8,7 @@ import { RedisStore } from 'connect-redis';
 import * as session from 'express-session';
 import { ms, StringValue } from '../../../shared/lib/utils/ms.util';
 import { parseBoolean } from '../../../shared/lib/utils/parse-boolean.util';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(UserMicroserviceModule);
@@ -53,6 +54,16 @@ async function bootstrap() {
     type: VersioningType.URI,
     prefix: 'v',
   });
+
+  const configDoc = new DocumentBuilder()
+    .setTitle('NEST JS UPDATE ANIME MISCROSERVICE')
+    .setDescription('API DOCUMENTATION')
+    .setVersion('1.0')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, configDoc);
+
+  SwaggerModule.setup('/docs', app, document);
 
   await app.listen(config.getOrThrow('APPLICATION_PORT') ?? 3000);
 }
