@@ -9,7 +9,6 @@ import { MailModule } from '../../libs/mail/mail.module';
 import { EmailConfirmationModule } from './auth/email-confirmation/email-confirmation.module';
 import { PasswordRecoveryModule } from './auth/password-recovery/password-recovery.module';
 import { TwoFactorAuthModule } from './auth/two-factor-auth/two-factor-auth.module';
-import { TempModule } from './temp/temp.module';
 
 @Module({
   imports: [
@@ -25,7 +24,6 @@ import { TempModule } from './temp/temp.module';
     EmailConfirmationModule,
     PasswordRecoveryModule,
     TwoFactorAuthModule,
-    TempModule,
   ],
 })
 export class V1Module {}
