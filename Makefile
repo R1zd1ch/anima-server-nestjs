@@ -1,6 +1,10 @@
 dev-main: 
 	docker start postgres redis
-	bun run start:dev server
+	bun run start:dev
+
+dev-user:
+	docker start postgres redis
+	bun run start:dev user-microservice
 
 dev-update-anime:
 	docker start postgres redis

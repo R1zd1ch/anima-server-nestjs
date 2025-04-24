@@ -18,9 +18,9 @@ import { Request } from 'express-session';
 import { LoginDto } from './dto/login.dto';
 import { Response } from 'express';
 import { Recaptcha } from '@nestlab/google-recaptcha';
-import { AuthProviderGuard } from './guards/provider.guard';
 import { ConfigService } from '@nestjs/config';
 import { ProviderService } from '../provider/provider.service';
+import { AuthProviderGuard } from './guards/provider.guard';
 
 @Controller({
   path: 'auth',

@@ -1,27 +1,31 @@
-import { MailService } from 'apps/user-microservice/src/libs/mail/mail.service';
+import { MailService } from 'apps/auth-microservice/src/libs/mail/mail.service';
 import { PrismaService } from '../../../../../../../shared/lib/prisma/prisma.service';
-import { UserService } from '../../user/user.service';
 import {
   BadRequestException,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { TokenType } from '@prisma/__generated__';
+import { TokenType, User } from '@prisma/__generated__';
 import { v4 as uuidv4 } from 'uuid';
 import { ResetPasswordDto } from './dto/reset-password.dto';
 import { NewPasswordDto } from './dto/new-password.dto';
 import { hash } from 'argon2';
+import { ClientProxy } from '@nestjs/microservices';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class PasswordRecoveryService {
   public constructor(
+    @Inject('USER_SERVICE') private readonly userClient: ClientProxy,
     private readonly prismaService: PrismaService,
-    private readonly userService: UserService,
     private readonly mailService: MailService,
   ) {}
 
   public async resetPassword(dto: ResetPasswordDto) {
-    const existingUser = await this.userService.findByEmail(dto.email);
+    const existingUser = await firstValueFrom<User>(
+      this.userClient.send({ cmd: 'find-user-by-email' }, dto.email),
+    );
 
     if (!existingUser) {
       throw new NotFoundException('Пользователь не найден');
@@ -57,8 +61,8 @@ export class PasswordRecoveryService {
       throw new BadRequestException('Токен сброса пароля устарел');
     }
 
-    const existingUser = await this.userService.findByEmail(
-      existingToken.email,
+    const existingUser = await firstValueFrom<User>(
+      this.userClient.send({ cmd: 'find-user-by-email' }, existingToken.email),
     );
 
     if (!existingUser) {

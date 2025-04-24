@@ -1,4 +1,4 @@
-import { MailService } from 'apps/user-microservice/src/libs/mail/mail.service';
+import { MailService } from 'apps/auth-microservice/src/libs/mail/mail.service';
 import { PrismaService } from '../../../../../../../shared/lib/prisma/prisma.service';
 import {
   BadRequestException,

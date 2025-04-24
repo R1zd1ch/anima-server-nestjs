@@ -1,5 +1,5 @@
 FROM oven/bun:1-slim AS builder
-ARG SERVICE=user-microservice
+ARG SERVICE=auth-microservice
 
 WORKDIR /app
 
@@ -18,7 +18,7 @@ RUN bun run build ${SERVICE}
 CMD ["./start.sh"]
 
 # FROM oven/bun:1-slim AS runner
-# ARG SERVICE=user-microservice
+# ARG SERVICE=auth-microservice
 
 # WORKDIR /app
 

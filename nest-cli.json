@@ -1,14 +1,14 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/user-microservice/src",
+  "sourceRoot": "apps/auth-microservice/src",
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": "apps/user-microservice/tsconfig.app.json"
+    "tsConfigPath": "apps/auth-microservice/tsconfig.app.json"
   },
   "monorepo": true,
-  "root": "apps/user-microservice",
+  "root": "apps/auth-microservice",
   "projects": {
     "anime-microservice": {
       "type": "application",
@@ -19,15 +19,6 @@
         "tsConfigPath": "apps/anime-microservice/tsconfig.app.json"
       }
     },
-    "user-microservice": {
-      "type": "application",
-      "root": "apps/user-microservice",
-      "entryFile": "main",
-      "sourceRoot": "apps/user-microservice/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/user-microservice/tsconfig.app.json"
-      }
-    },
     "update-anime-microservice": {
       "type": "application",
       "root": "apps/update-anime-microservice",
@@ -35,6 +26,24 @@
       "sourceRoot": "apps/update-anime-microservice/src",
       "compilerOptions": {
         "tsConfigPath": "apps/update-anime-microservice/tsconfig.app.json"
+      }
+    },
+    "auth-microservice": {
+      "type": "application",
+      "root": "apps/auth-microservice",
+      "entryFile": "main",
+      "sourceRoot": "apps/auth-microservice/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/auth-microservice/tsconfig.app.json"
+      }
+    },
+    "user-microservice": {
+      "type": "application",
+      "root": "apps/user-microservice",
+      "entryFile": "main",
+      "sourceRoot": "apps/user-microservice/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/user-microservice/tsconfig.app.json"
       }
     }
   }

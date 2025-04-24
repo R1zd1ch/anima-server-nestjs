@@ -6,7 +6,7 @@ import {
   Validate,
 } from 'class-validator';
 
-import { IsPasswordsMatchingConstraint } from 'apps/user-microservice/src/libs/common/decorators/is-password-matching-constraint.decorator';
+import { IsPasswordsMatchingConstraint } from 'apps/auth-microservice/src/libs/common/decorators/is-password-matching-constraint.decorator';
 
 export class RegisterDto {
   @IsString({ message: 'Имя должно быть строкой.' })

@@ -1,10 +1,10 @@
-import { ProviderService } from '../../provider/provider.service';
 import {
   CanActivate,
   ExecutionContext,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { ProviderService } from 'apps/auth-microservice/src/versions/v1/provider/provider.service';
 import { Observable } from 'rxjs';
 
 @Injectable()

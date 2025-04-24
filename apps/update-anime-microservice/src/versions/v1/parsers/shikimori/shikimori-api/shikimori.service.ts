@@ -18,7 +18,7 @@ export class ShikimoriService {
 
   public constructor(private readonly httpService: HttpService) {
     const configService = new ConfigService();
-    this.baseURL = configService.getOrThrow<string>('SHIKIMORI_BASE_URL');
+    this.baseURL = configService.getOrThrow<string>('SHIKIMORI_BASE_API_URL');
   }
 
   public async getAnimeById(id: string): Promise<AnimeFromShikimori> {

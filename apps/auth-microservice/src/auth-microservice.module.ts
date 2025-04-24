@@ -1,15 +1,18 @@
 import { Module } from '@nestjs/common';
-import { UserModule } from './user/user.module';
+
 import { ConfigModule } from '@nestjs/config';
 import { IS_DEV_ENV } from 'shared/lib/utils/is-dev.util';
+import { PrismaModule } from 'shared/lib/prisma/prisma.module';
+import { getVersionModule } from './libs/utils/get-version-module';
 
 @Module({
   imports: [
-    UserModule,
+    PrismaModule,
     ConfigModule.forRoot({
+      envFilePath: '.env',
       ignoreEnvFile: !IS_DEV_ENV,
-      isGlobal: true,
     }),
+    getVersionModule(),
   ],
 })
-export class V1Module {}
+export class UserMicroserviceModule {}

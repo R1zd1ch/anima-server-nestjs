@@ -24,13 +24,13 @@ async function bootstrap() {
 
   logger.log(
     `UpdateAnimeMicroservice is listening on port ${config.get(
-      'APPLICATION_UPDATE_ANIME_PORT',
+      'UPDATE_ANIME_MICROSERVICE_PORT',
     )}`,
   );
   const document = SwaggerModule.createDocument(app, configDoc);
 
   SwaggerModule.setup('/docs', app, document);
 
-  await app.listen(config.get('APPLICATION_UPDATE_ANIME_PORT'));
+  await app.listen(config.get('UPDATE_ANIME_MICROSERVICE_PORT'));
 }
 bootstrap();

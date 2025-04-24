@@ -6,20 +6,22 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { TokenType } from '@prisma/__generated__';
+import { TokenType, User } from '@prisma/__generated__';
 import { Request } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { ConfirmationDto } from './dto/confirmation.dro';
-import { MailService } from 'apps/user-microservice/src/libs/mail/mail.service';
-import { UserService } from '../../user/user.service';
+import { MailService } from 'apps/auth-microservice/src/libs/mail/mail.service';
+
 import { AuthService } from '../auth.service';
+import { ClientProxy } from '@nestjs/microservices';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class EmailConfirmationService {
   public constructor(
+    @Inject('USER_SERVICE') private readonly userClient: ClientProxy,
     private readonly prismaService: PrismaService,
     private readonly mailService: MailService,
-    private readonly userService: UserService,
     @Inject(forwardRef(() => AuthService))
     private readonly authService: AuthService,
   ) {}
@@ -41,8 +43,8 @@ export class EmailConfirmationService {
       throw new BadRequestException('Токен подтверждения устарел');
     }
 
-    const existingUser = await this.userService.findByEmail(
-      existingToken.email,
+    const existingUser = await firstValueFrom<User>(
+      this.userClient.send({ cmd: 'find-user-by-email' }, existingToken.email),
     );
 
     if (!existingUser) {

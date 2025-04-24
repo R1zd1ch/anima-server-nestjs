@@ -11,8 +11,8 @@ import {
 } from '@nestjs/common';
 import { WatchProgressService } from './watch-progress.service';
 import { ProgressCreateDto } from './dto/create-progress.dto';
-import { Authorization } from '../../../auth/decorators/auth.decorator';
-import { Authorized } from '../../../auth/decorators/authorized.decorator';
+import { Authorization } from 'shared/decorators/auth.decorator';
+import { Authorized } from 'shared/decorators/authorized.decorator';
 
 @Controller({
   version: '1',

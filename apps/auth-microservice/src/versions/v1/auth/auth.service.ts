@@ -1,11 +1,11 @@
 import {
   ConflictException,
+  Inject,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { UserService } from '../user/user.service';
 import { RegisterDto } from './dto/register.dto';
 import { User, AuthMethod } from '@prisma/__generated__';
 import { Request } from 'express-session';
@@ -17,34 +17,45 @@ import { ProviderService } from '../provider/provider.service';
 import { PrismaService } from '../../../../../../shared/lib/prisma/prisma.service';
 import { EmailConfirmationService } from './email-confirmation/email-confirmation.service';
 import { TwoFactorAuthService } from './two-factor-auth/two-factor-auth.service';
+import { ClientProxy } from '@nestjs/microservices';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class AuthService {
   public constructor(
+    @Inject('USER_SERVICE') private readonly userClient: ClientProxy,
     private readonly prismaService: PrismaService,
-    private readonly userService: UserService,
     private readonly configService: ConfigService,
     private readonly providerService: ProviderService,
     private readonly emailConfirmationService: EmailConfirmationService,
     private readonly twoFactorAuthService: TwoFactorAuthService,
   ) {}
   public async register(dto: RegisterDto) {
-    const isExists = await this.userService.findByEmail(dto.email);
+    const isExists = await firstValueFrom<User>(
+      this.userClient.send({ cmd: 'find-user-by-email' }, dto.email),
+    );
+    console.log(isExists);
 
     if (isExists) {
       throw new ConflictException('Пользователь с таким email уже существует');
     }
 
-    const newUser = await this.userService.create(
-      dto.email,
-      dto.password,
-      dto.username,
-      dto.name,
-      '',
-      AuthMethod.CREDENTIALS,
-      false,
+    const newUser = await firstValueFrom<User>(
+      this.userClient.send(
+        {
+          cmd: 'create-user',
+        },
+        {
+          email: dto.email,
+          password: dto.password,
+          username: dto.username,
+          displayName: dto.name,
+          picture: '',
+          method: AuthMethod.CREDENTIALS,
+          isVerified: false,
+        },
+      ),
     );
-
     await this.emailConfirmationService.sendVerificationToken(newUser.email);
 
     return {
@@ -54,7 +65,9 @@ export class AuthService {
   }
 
   public async login(req: Request, dto: LoginDto) {
-    const user = await this.userService.findByEmail(dto.email);
+    const user = await firstValueFrom<User>(
+      this.userClient.send({ cmd: 'find-user-by-email' }, dto.email),
+    );
 
     if (!user || !user.password) {
       throw new NotFoundException('Пользователь не найден');
@@ -107,7 +120,9 @@ export class AuthService {
     });
 
     let user = account?.userId
-      ? await this.userService.findById(account.userId)
+      ? await firstValueFrom<User>(
+          this.userClient.send({ cmd: 'find-user-by-id' }, account.userId),
+        )
       : null;
 
     if (user) {
@@ -127,14 +142,21 @@ export class AuthService {
       return this.saveSession(req, user);
     }
 
-    user = await this.userService.create(
-      profile.email,
-      '',
-      profile.email.split('@')[0],
-      profile.name,
-      profile.picture,
-      AuthMethod[profile.provider.toUpperCase()],
-      true,
+    user = await firstValueFrom<User>(
+      this.userClient.send(
+        {
+          cmd: 'create-user',
+        },
+        {
+          email: profile.email,
+          password: '',
+          username: profile.email.split('@')[0],
+          displayName: profile.name,
+          picture: profile.picture,
+          method: AuthMethod[profile.provider.toUpperCase()],
+          isVerified: true,
+        },
+      ),
     );
 
     if (!account) {
@@ -181,7 +203,7 @@ export class AuthService {
   public async saveSession(req: Request, user: User) {
     return new Promise((resolve, reject) => {
       console.log(req.session);
-      req.session.userId = user.id;
+      req.session.user = user;
       console.log(req.session);
 
       req.session.save((err) => {

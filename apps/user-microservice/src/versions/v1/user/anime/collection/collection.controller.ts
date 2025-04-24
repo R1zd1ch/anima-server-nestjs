@@ -10,8 +10,8 @@ import {
   Put,
 } from '@nestjs/common';
 import { CollectionsService } from './collection.service';
-import { Authorization } from '../../../auth/decorators/auth.decorator';
-import { Authorized } from '../../../auth/decorators/authorized.decorator';
+import { Authorization } from 'shared/decorators/auth.decorator';
+import { Authorized } from 'shared/decorators/authorized.decorator';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
 

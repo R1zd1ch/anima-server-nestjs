@@ -44,16 +44,24 @@ services:
     volumes:
       - ./nginx.conf.template:/etc/nginx/templates/default.conf.template
     environment:
-      - APPLICATION_PORT=${APPLICATION_PORT}
-      - APPLICATION_UPDATE_ANIME_PORT=${APPLICATION_UPDATE_ANIME_PORT}
+      - AUTH_MICROSERVICE_PORT=${AUTH_MICROSERVICE_PORT}
+      - AUTH_MICROSERVICE_HOST=${AUTH_MICROSERVICE_HOST}
+      - UPDATE_ANIME_MICROSERVICE_PORT=${UPDATE_ANIME_MICROSERVICE_PORT}
+      - UPDATE_ANIME_MICROSERVICE_HOST=${UPDATE_ANIME_MICROSERVICE_HOST}
       - ANIME_MICROSERVICE_PORT=${ANIME_MICROSERVICE_PORT}
+      - ANIME_MICROSERVICE_HOST=${ANIME_MICROSERVICE_HOST}
+      - USER_MICROSERVICE_PORT=${USER_MICROSERVICE_PORT}
+      - USER_MICROSERVICE_HOST=${USER_MICROSERVICE_HOST}
+      - APPLICATION_PORT=${APPLICATION_PORT}
+      - APPLICATION_HOST=${APPLICATION_HOST}
       - RABBIT_MQ_MANAGEMENT_PORT=${RABBIT_MQ_MANAGEMENT_PORT}
+      - RABBIT_MQ_HOST=${RABBIT_MQ_HOST}
     depends_on:
       db:
         condition: service_healthy
       redis:
         condition: service_started
-      user-microservice:
+      auth-microservice:
         condition: service_started
       update-anime-microservice:
         condition: service_started
@@ -65,7 +73,7 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management
-    container_name: rabbitmq
+    container_name: ${RABBIT_MQ_HOST}
     ports:
       - '${RABBIT_MQ_PORT}:${RABBIT_MQ_PORT}'
       - '${RABBIT_MQ_MANAGEMENT_PORT}:${RABBIT_MQ_MANAGEMENT_PORT}'
@@ -75,15 +83,41 @@ services:
     networks:
       - backend
 
+  auth-microservice:
+    container_name: ${AUTH_MICROSERVICE_HOST}
+    build:
+      context: .
+      dockerfile: dockerfile
+      args:
+        SERVICE: auth-microservice
+    ports:
+      - '${AUTH_MICROSERVICE_PORT}:${AUTH_MICROSERVICE_PORT}'
+    env_file:
+      - .env
+    environment:
+      - RABBIT_MQ_HOST=rabbitmq
+      - APP_MODE=auth-microservice
+      - POSTGRES_HOST=db
+      - REDIS_HOST=redis
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+    networks:
+      - backend
+
   user-microservice:
-    container_name: user-microservice
+    container_name: ${USER_MICROSERVICE_HOST}
     build:
       context: .
       dockerfile: dockerfile
       args:
         SERVICE: user-microservice
     ports:
-      - '${APPLICATION_PORT}:${APPLICATION_PORT}'
+      - '${USER_MICROSERVICE_PORT}:${USER_MICROSERVICE_PORT}'
     env_file:
       - .env
     environment:
@@ -98,18 +132,20 @@ services:
         condition: service_started
       rabbitmq:
         condition: service_started
+      auth-microservice:
+        condition: service_started
     networks:
       - backend
 
   update-anime-microservice:
-    container_name: update-anime-microservice
+    container_name: ${UPDATE_ANIME_MICROSERVICE_HOST}
     build:
       context: .
       dockerfile: dockerfile
       args:
         SERVICE: update-anime-microservice
     ports:
-      - '${APPLICATION_UPDATE_ANIME_PORT}:${APPLICATION_UPDATE_ANIME_PORT}'
+      - '${UPDATE_ANIME_MICROSERVICE_PORT}:${UPDATE_ANIME_MICROSERVICE_PORT}'
     env_file:
       - .env
     environment:
@@ -124,13 +160,13 @@ services:
         condition: service_started
       rabbitmq:
         condition: service_started
-      user-microservice:
+      auth-microservice:
         condition: service_started
     networks:
       - backend
 
   anime-microservice:
-    container_name: anime-microservice
+    container_name: ${ANIME_MICROSERVICE_HOST}
     build:
       context: .
       dockerfile: dockerfile
@@ -152,7 +188,7 @@ services:
         condition: service_started
       rabbitmq:
         condition: service_started
-      user-microservice:
+      auth-microservice:
         condition: service_started
       update-anime-microservice:
         condition: service_started

@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
-
 import { ConfigModule } from '@nestjs/config';
-import { IS_DEV_ENV } from 'shared/lib/utils/is-dev.util';
 import { PrismaModule } from 'shared/lib/prisma/prisma.module';
-import { getVersionModule } from './libs/utils/get-version-module';
+import { IS_DEV_ENV } from 'shared/lib/utils/is-dev.util';
+import { V1Module } from './versions/v1/v1.module';
 
 @Module({
   imports: [
@@ -12,7 +11,7 @@ import { getVersionModule } from './libs/utils/get-version-module';
       envFilePath: '.env',
       ignoreEnvFile: !IS_DEV_ENV,
     }),
-    getVersionModule(),
+    V1Module,
   ],
 })
 export class UserMicroserviceModule {}
