@@ -94,7 +94,6 @@ export class CatalogService {
 
       if (params.sort) {
         const [field, order] = params.sort.split('_');
-        console.log(field, order);
         if (field && ['asc', 'desc'].includes(order)) {
           orderBy = { [field]: order as Prisma.SortOrder };
         }

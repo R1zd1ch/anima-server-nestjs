@@ -3,6 +3,7 @@ import { UserMicroserviceModule } from './auth-microservice.module';
 import { ConfigService } from '@nestjs/config';
 import * as cookieParser from 'cookie-parser';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
+import { Express } from 'express';
 import IORedis from 'ioredis';
 import { RedisStore } from 'connect-redis';
 import * as session from 'express-session';
@@ -12,12 +13,14 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(UserMicroserviceModule);
-
   const config = app.get(ConfigService);
   const redis = new IORedis(config.getOrThrow('REDIS_URI'));
-  console.log(`Redis connection: ${config.getOrThrow('REDIS_URI')}`);
-  app.use(cookieParser(config.getOrThrow<string>('COOKIES_SECRET')));
 
+  app.use(
+    ((cookieParser as (secret: string) => void) ?? (() => {}))(
+      config.getOrThrow<string>('COOKIES_SECRET'),
+    ),
+  );
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
@@ -45,7 +48,7 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: [config.getOrThrow('ALLOWED_ORIGIN') as string],
+    origin: [config.getOrThrow<string>('ALLOWED_ORIGIN')],
     credentials: true,
     exposedHeaders: ['set-cookie'],
   });
@@ -62,6 +65,11 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, configDoc);
+
+  const httpAdapterInstance = app.getHttpAdapter().getInstance() as Express;
+  httpAdapterInstance.get('/swagger-json', (req, res) => {
+    res.json(document);
+  });
 
   SwaggerModule.setup('/docs', app, document);
 

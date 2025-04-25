@@ -28,7 +28,6 @@ export class GenresController {
     @Query('page') page?: number,
     @Query('limit') limit?: number,
   ) {
-    console.log(requestId, page, limit);
     return this.genresService.getAnimeFromGenre(
       +requestId,
       +page || 1,

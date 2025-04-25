@@ -31,7 +31,6 @@ export class PasswordRecoveryController {
     @Body() dto: NewPasswordDto,
     @Param('token') token: string,
   ) {
-    console.log(token);
     return this.passwordRecoveryService.newPassword(dto, token);
   }
 }

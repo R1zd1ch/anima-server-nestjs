@@ -34,7 +34,6 @@ export class AuthService {
     const isExists = await firstValueFrom<User>(
       this.userClient.send({ cmd: 'find-user-by-email' }, dto.email),
     );
-    console.log(isExists);
 
     if (isExists) {
       throw new ConflictException('Пользователь с таким email уже существует');
@@ -126,7 +125,6 @@ export class AuthService {
       : null;
 
     if (user) {
-      console.log(account);
       if (!account) {
         await this.prismaService.account.create({
           data: {
@@ -202,9 +200,7 @@ export class AuthService {
 
   public async saveSession(req: Request, user: User) {
     return new Promise((resolve, reject) => {
-      console.log(req.session);
       req.session.user = user;
-      console.log(req.session);
 
       req.session.save((err) => {
         if (err) {

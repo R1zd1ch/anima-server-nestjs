@@ -33,6 +33,8 @@
         "node-shikimori": "^2.0.2",
         "reflect-metadata": "^0.2.2",
         "rxjs": "^7.8.1",
+        "swagger-merge": "^0.4.0",
+        "swagger-ui-express": "^5.0.1",
       },
       "devDependencies": {
         "@eslint/eslintrc": "^3.2.0",
@@ -1787,7 +1789,11 @@
 
     "supports-preserve-symlinks-flag": ["supports-preserve-symlinks-flag@1.0.0", "", {}, "sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w=="],
 
+    "swagger-merge": ["swagger-merge@0.4.0", "", {}, "sha512-2/Qw1tP4fpxd9U6vatjupTQEKb1akB9mfh14ItPZ4M77KQ1P60qXEIkbIYrPKWW02G6cpJa00u85tP0zeGXJng=="],
+
     "swagger-ui-dist": ["swagger-ui-dist@5.21.0", "", { "dependencies": { "@scarf/scarf": "=1.4.0" } }, "sha512-E0K3AB6HvQd8yQNSMR7eE5bk+323AUxjtCz/4ZNKiahOlPhPJxqn3UPIGs00cyY/dhrTDJ61L7C/a8u6zhGrZg=="],
+
+    "swagger-ui-express": ["swagger-ui-express@5.0.1", "", { "dependencies": { "swagger-ui-dist": ">=5.0.0" }, "peerDependencies": { "express": ">=4.0.0 || >=5.0.0-beta" } }, "sha512-SrNU3RiBGTLLmFU8GIJdOdanJTl4TOmT27tt3bWWHppqYmAZ6IDuEuBvMU6nZq0zLEe6b/1rACXCgLZqO6ZfrA=="],
 
     "symbol-observable": ["symbol-observable@4.0.0", "", {}, "sha512-b19dMThMV4HVFynSAM1++gBHAbk2Tc/osgLIBZMKsyqh34jb2e8Os7T6ZW/Bt3pJFdBTd2JwAnAAEQV7rSNvcQ=="],
 

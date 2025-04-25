@@ -19,15 +19,6 @@
         "tsConfigPath": "apps/anime-microservice/tsconfig.app.json"
       }
     },
-    "update-anime-microservice": {
-      "type": "application",
-      "root": "apps/update-anime-microservice",
-      "entryFile": "main",
-      "sourceRoot": "apps/update-anime-microservice/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/update-anime-microservice/tsconfig.app.json"
-      }
-    },
     "auth-microservice": {
       "type": "application",
       "root": "apps/auth-microservice",
@@ -35,6 +26,24 @@
       "sourceRoot": "apps/auth-microservice/src",
       "compilerOptions": {
         "tsConfigPath": "apps/auth-microservice/tsconfig.app.json"
+      }
+    },
+    "docs-microservice": {
+      "type": "application",
+      "root": "apps/docs-microservice",
+      "entryFile": "main",
+      "sourceRoot": "apps/docs-microservice/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/docs-microservice/tsconfig.app.json"
+      }
+    },
+    "update-anime-microservice": {
+      "type": "application",
+      "root": "apps/update-anime-microservice",
+      "entryFile": "main",
+      "sourceRoot": "apps/update-anime-microservice/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/update-anime-microservice/tsconfig.app.json"
       }
     },
     "user-microservice": {

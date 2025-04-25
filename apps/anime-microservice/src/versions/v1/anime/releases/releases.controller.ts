@@ -37,8 +37,6 @@ export class ReleasesController {
       return this.releasesService.getByAliasOrShikiId(undefined, shikimoriId);
     }
 
-    console.log(aliasOrId);
-
     return this.releasesService.getByAliasOrShikiId(aliasOrId, undefined);
   }
 }

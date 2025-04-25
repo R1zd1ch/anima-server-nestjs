@@ -9,13 +9,11 @@ export class UserRMQController {
 
   @MessagePattern({ cmd: 'find-user-by-email' })
   async findByEmail(@Payload() email: string) {
-    console.log(email);
     return this.userService.findByEmail(email);
   }
 
   @MessagePattern({ cmd: 'find-user-by-id' })
   async findById(@Payload() userId: string) {
-    console.log(userId);
     return this.userService.findById(userId);
   }
 

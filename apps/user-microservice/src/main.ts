@@ -22,8 +22,6 @@ async function bootstrap() {
     },
   });
 
-  console.log(config.getOrThrow<string>('RABBIT_MQ_URI'));
-
   await app.startAllMicroservices();
   await app.listen(config.getOrThrow<string>('USER_MICROSERVICE_PORT') ?? 3005);
 }
