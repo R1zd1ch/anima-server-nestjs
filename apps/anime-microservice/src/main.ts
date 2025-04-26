@@ -2,8 +2,9 @@ import { NestFactory } from '@nestjs/core';
 import { AnimeMicroserviceModule } from './anime-microservice.module';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { Transport } from '@nestjs/microservices';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { Express } from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AnimeMicroserviceModule);
@@ -18,33 +19,34 @@ async function bootstrap() {
     }),
   );
 
-  const app2 = await NestFactory.createMicroservice<MicroserviceOptions>(
-    AnimeMicroserviceModule,
-    {
-      transport: Transport.RMQ,
-      options: {
-        urls: [config.getOrThrow<string>('RABBIT_MQ_URI')],
-        queue: 'anime_queue',
-        queueOptions: { durable: false },
-      },
+  app.connectMicroservice({
+    transport: Transport.RMQ,
+    options: {
+      urls: [config.getOrThrow<string>('RABBIT_MQ_URI')],
+      queue: 'anime_queue',
+      queueOptions: { durable: false },
     },
-  );
+  });
 
   app.enableVersioning({
     type: VersioningType.URI,
     prefix: 'v',
   });
+
   const configDoc = new DocumentBuilder()
-    .setTitle('NEST JS UPDATE ANIME MISCROSERVICE')
-    .setDescription('API DOCUMENTATION')
-    .setVersion('1.0')
+    .setTitle('Anime microservice')
     .build();
 
   const document = SwaggerModule.createDocument(app, configDoc);
 
-  SwaggerModule.setup('/docs', app, document);
+  const httpAdapterInstance = app.getHttpAdapter().getInstance() as Express;
+  httpAdapterInstance.get('/swagger-json', (req, res) => {
+    res.json(document);
+  });
 
-  await app2.listen();
+  SwaggerModule.setup('docs', app, document);
+
+  await app.startAllMicroservices();
 
   await app.listen(config.getOrThrow('ANIME_MICROSERVICE_PORT') ?? 3001);
 }

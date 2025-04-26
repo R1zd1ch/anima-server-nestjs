@@ -21,7 +21,16 @@ import { Recaptcha } from '@nestlab/google-recaptcha';
 import { ConfigService } from '@nestjs/config';
 import { ProviderService } from '../provider/provider.service';
 import { AuthProviderGuard } from './guards/provider.guard';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
+@ApiTags('Authentication')
 @Controller({
   path: 'auth',
   version: '1',
@@ -35,6 +44,17 @@ export class AuthController {
 
   @Post('register')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Регистрация пользователя' })
+  @ApiResponse({
+    status: 200,
+    description:
+      'Пользователь успешно зарегистрирован. Проверьте свою почту, чтобы подтвердить регистрацию.',
+  })
+  @ApiResponse({
+    status: 409,
+    description: 'Пользователь с таким email уже существует.',
+  })
+  @ApiBody({ type: RegisterDto })
   public async register(@Body() dto: RegisterDto) {
     return await this.authService.register(dto);
   }
@@ -42,6 +62,10 @@ export class AuthController {
   @Recaptcha()
   @Post('login')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Логин пользователя' })
+  @ApiResponse({ status: 200, description: 'Данные пользователя' })
+  @ApiResponse({ status: 404, description: 'Пользователь не найден' })
+  @ApiBody({ type: LoginDto })
   public async login(@Req() req: Request, @Body() dto: LoginDto) {
     return await this.authService.login(req, dto);
   }
@@ -49,6 +73,12 @@ export class AuthController {
   @Get('/oauth/callback/:provider')
   @UseGuards(AuthProviderGuard)
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'OAuth Callback' })
+  @ApiParam({
+    name: 'provider',
+    description: 'OAuth провайдер (например, google)',
+  })
+  @ApiQuery({ name: 'code', description: 'OAuth код авторизации' })
   public async callback(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
@@ -69,6 +99,11 @@ export class AuthController {
   @UseGuards(AuthProviderGuard)
   @Get('/oauth/connect/:provider')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Получение URL для OAuth авторизации' })
+  @ApiParam({
+    name: 'provider',
+    description: 'OAuth провайдер (например, google)',
+  })
   public async connect(@Param('provider') provider: string) {
     const providerInstance = this.providerService.findByService(provider);
 
@@ -81,6 +116,8 @@ export class AuthController {
 
   @Post('logout')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Выход пользователя' })
+  @ApiResponse({ status: 200 })
   public async logout(
     @Req() req: Request,
     @Res({

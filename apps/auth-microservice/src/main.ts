@@ -71,7 +71,7 @@ async function bootstrap() {
     res.json(document);
   });
 
-  SwaggerModule.setup('/docs', app, document);
+  SwaggerModule.setup('docs', app, document);
 
   await app.listen(config.getOrThrow('AUTH_MICROSERVICE_PORT') ?? 3000);
 }

@@ -13,9 +13,11 @@ export class SwaggerService {
 
   public async setup(app: INestApplication) {
     const docs = [];
+    console.log(this.services);
     for (const service of this.services) {
       try {
         const res = await this.httpService.axiosRef.get(service.url);
+        console.log(service.url);
         docs.push(res.data);
         this.logger.log(`Подключен к ${service.name}`);
       } catch {
@@ -31,13 +33,30 @@ export class SwaggerService {
     const mergedDoc = {
       openapi: '3.0.0',
       info: {
-        title: 'API Gateway',
-        description: 'Объединённая документация API',
+        title: 'Anima API Documentation',
+        description: 'API documentation for Anima',
         version: '1.0',
       },
+      servers: [
+        {
+          url: `http://${this.configService.getOrThrow<string>('APPLICATION_HOST')}:${this.configService.getOrThrow<string>('APPLICATION_PORT')}/api`,
+        },
+      ],
       paths: {},
       components: {
         schemas: {},
+        securitySchemes: {
+          CookieAuth: {
+            type: 'apiKey',
+            in: 'cookie',
+            name: this.configService.getOrThrow<string>('SESSION_NAME'),
+          },
+        },
+        security: [
+          {
+            CookieAuth: [],
+          },
+        ],
       },
     };
 

@@ -56,17 +56,17 @@ services:
       - APPLICATION_HOST=${APPLICATION_HOST}
       - RABBIT_MQ_MANAGEMENT_PORT=${RABBIT_MQ_MANAGEMENT_PORT}
       - RABBIT_MQ_HOST=${RABBIT_MQ_HOST}
-    depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_started
-      auth-microservice:
-        condition: service_started
-      update-anime-microservice:
-        condition: service_started
-      anime-microservice:
-        condition: service_started
+    # depends_on:
+    #   db:
+    #     condition: service_healthy
+    #   redis:
+    #     condition: service_started
+    #   auth-microservice:
+    #     condition: service_started
+    #   update-anime-microservice:
+    #     condition: service_started
+    #   anime-microservice:
+    #     condition: service_started
 
     networks:
       - backend

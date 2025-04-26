@@ -1,13 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 
 import { ConfigService } from '@nestjs/config';
-import { Logger, VersioningType } from '@nestjs/common';
+import { VersioningType } from '@nestjs/common';
 import { UpdateAnimeMicroserviceModule } from './update-anime-microservice.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { Express } from 'express';
 
 async function bootstrap() {
-  const logger = new Logger('UpdateAnimeMicroservice');
-
   const app = await NestFactory.create(UpdateAnimeMicroserviceModule);
   const config = app.get(ConfigService);
 
@@ -17,17 +16,15 @@ async function bootstrap() {
   });
 
   const configDoc = new DocumentBuilder()
-    .setTitle('NEST JS UPDATE ANIME MISCROSERVICE')
-    .setDescription('API DOCUMENTATION')
-    .setVersion('1.0')
+    .setTitle('Update Anime microservice')
     .build();
 
-  logger.log(
-    `UpdateAnimeMicroservice is listening on port ${config.get(
-      'UPDATE_ANIME_MICROSERVICE_PORT',
-    )}`,
-  );
   const document = SwaggerModule.createDocument(app, configDoc);
+
+  const httpAdapterInstance = app.getHttpAdapter().getInstance() as Express;
+  httpAdapterInstance.get('/swagger-json', (req, res) => {
+    res.json(document);
+  });
 
   SwaggerModule.setup('/docs', app, document);
 

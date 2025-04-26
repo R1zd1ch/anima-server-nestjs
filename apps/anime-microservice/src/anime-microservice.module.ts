@@ -11,6 +11,7 @@ import { getVersionModule } from './libs/utils/get-version-module';
     ConfigModule.forRoot({
       envFilePath: '.env',
       ignoreEnvFile: !IS_DEV_ENV,
+      expandVariables: true,
     }),
     getVersionModule(), // получаем версию апи
   ],

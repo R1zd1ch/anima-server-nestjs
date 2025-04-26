@@ -1,11 +1,11 @@
 // apps/docs-microservice/src/main.ts
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { DocsModule } from './docs.module';
 import { SwaggerService } from './swagger.service';
 import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(DocsModule);
   const config = app.get(ConfigService);
 
   const swaggerService = app.get(SwaggerService);

@@ -7,6 +7,7 @@ import {
   IsEnum,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 export enum AnimeType {
   tv = 'tv',
@@ -57,12 +58,22 @@ export enum SortParams {
 }
 
 export class ReleasesParamsDto {
+  @ApiProperty({
+    description: 'Номер страницы',
+    default: 1,
+    required: false,
+  })
   @IsOptional()
   @IsNumber()
   @Min(1)
   @Type(() => Number)
   page?: number = 1;
 
+  @ApiProperty({
+    description: 'Количество элементов на странице',
+    default: 20,
+    required: false,
+  })
   @IsOptional()
   @IsNumber()
   @Min(1)
@@ -70,6 +81,11 @@ export class ReleasesParamsDto {
   @Type(() => Number)
   limit?: number = 20;
 
+  @ApiProperty({
+    description: 'Список жанров',
+    required: false,
+    type: [Number],
+  })
   @IsOptional()
   @IsNumber({}, { each: true })
   @Transform(({ value }) =>
@@ -79,6 +95,11 @@ export class ReleasesParamsDto {
   )
   genres?: number[];
 
+  @ApiProperty({
+    description: 'Список демографических категорий',
+    required: false,
+    type: [Number],
+  })
   @IsOptional()
   @IsNumber({}, { each: true })
   @Transform(({ value }) =>
@@ -88,6 +109,11 @@ export class ReleasesParamsDto {
   )
   demographics?: number[];
 
+  @ApiProperty({
+    description: 'Список тем',
+    required: false,
+    type: [Number],
+  })
   @IsOptional()
   @IsNumber({}, { each: true })
   @Transform(({ value }) =>
@@ -97,6 +123,12 @@ export class ReleasesParamsDto {
   )
   themes?: number[];
 
+  @ApiProperty({
+    description: 'Типы аниме (tv, movie, ova и т.д.)',
+    required: false,
+    type: [String],
+    enum: AnimeType,
+  })
   @IsOptional()
   @IsEnum(AnimeType, { each: true })
   @Transform(({ value }: { value: string | string[] }) =>
@@ -104,25 +136,49 @@ export class ReleasesParamsDto {
   )
   types?: AnimeType[];
 
+  @ApiProperty({
+    description: 'Сезон аниме (spring, summer, fall, winter)',
+    required: false,
+    enum: AnimeSeason,
+  })
   @IsOptional()
   @IsEnum(AnimeSeason, { each: true })
   season?: AnimeSeason;
 
+  @ApiProperty({
+    description: 'Минимальный год выпуска аниме',
+    required: false,
+  })
   @IsOptional()
   @IsNumber()
   @Type(() => Number)
   min_year?: number;
 
+  @ApiProperty({
+    description: 'Максимальный год выпуска аниме',
+    required: false,
+  })
   @IsOptional()
   @IsNumber()
   @Type(() => Number)
   max_year?: number;
 
+  @ApiProperty({
+    description: 'Параметры сортировки (например, по году, по оценке)',
+    required: false,
+    enum: SortParams,
+  })
   @IsOptional()
   @IsString()
   @IsEnum(SortParams)
   sort?: string;
 
+  @ApiProperty({
+    description: 'Возрастные рейтинги аниме',
+    required: false,
+    type: [String],
+    enum: AnimeAgeRatings,
+  })
   @IsOptional()
   @IsEnum(AnimeAgeRatings, { each: true })
   @Transform(({ value }: { value: string | string[] }) =>
@@ -130,6 +186,11 @@ export class ReleasesParamsDto {
   )
   age_ratings?: AnimeAgeRatings[];
 
+  @ApiProperty({
+    description: 'Статус аниме (анонс, продолжается, выпущено)',
+    required: false,
+    enum: AnimeStatus,
+  })
   @IsOptional()
   @IsEnum(AnimeStatus)
   status?: AnimeStatus;
