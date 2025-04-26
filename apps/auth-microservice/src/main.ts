@@ -47,11 +47,11 @@ async function bootstrap() {
     }),
   );
 
-  app.enableCors({
-    origin: [config.getOrThrow<string>('ALLOWED_ORIGIN')],
-    credentials: true,
-    exposedHeaders: ['set-cookie'],
-  });
+  // app.enableCors({
+  //   origin: [config.getOrThrow<string>('ALLOWED_ORIGIN')],
+  //   credentials: true,
+  //   exposedHeaders: ['set-cookie'],
+  // });
 
   app.enableVersioning({
     type: VersioningType.URI,

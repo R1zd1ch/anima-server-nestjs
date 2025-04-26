@@ -28,7 +28,7 @@ export class ParseShikimoriService {
     private readonly anilibriaCheckService: AnilibriaCheckService,
   ) {}
 
-  async startInitParsing() {
+  public async startInitParsing() {
     const searchParams = {
       limit: this.BATCH_LIMIT,
     };
@@ -41,7 +41,7 @@ export class ParseShikimoriService {
       }),
     );
   }
-  async startUpdateOngoings() {
+  public async startUpdateOngoings() {
     const searchParams = {
       limit: this.BATCH_LIMIT,
       status: 'ongoing',
@@ -56,7 +56,7 @@ export class ParseShikimoriService {
     );
   }
 
-  async startUpdateThisYear() {
+  public async startUpdateThisYear() {
     const searchParams = {
       limit: this.BATCH_LIMIT,
       season: `${new Date().getFullYear()}`,
@@ -70,7 +70,7 @@ export class ParseShikimoriService {
     );
   }
 
-  async resumeInitParsing() {
+  public async resumeInitParsing() {
     const searchParams = {
       limit: this.BATCH_LIMIT,
     };
@@ -84,7 +84,7 @@ export class ParseShikimoriService {
     );
   }
 
-  async resumeUpdateOngoings() {
+  public async resumeUpdateOngoings() {
     const searchParams = {
       limit: this.BATCH_LIMIT,
       status: 'ongoing',
@@ -99,7 +99,7 @@ export class ParseShikimoriService {
     );
   }
 
-  async resumeUpdateThisYear() {
+  public async resumeUpdateThisYear() {
     const searchParams = {
       limit: this.BATCH_LIMIT,
       season: `${new Date().getFullYear()}`,
@@ -112,6 +112,22 @@ export class ParseShikimoriService {
         message: 'Обновление аниме за этот год продолжилось',
       }),
     );
+  }
+  public async stopParsing(type: ParsingSessionType) {
+    const session = await this.progressService.getLatestSession(type);
+
+    if (!session || session.status !== ParsingSessionStatus.RUNNING) {
+      this.logger.warn('Нет активной сессии для остановки парсинга');
+      return { message: 'Нет активной сессии для остановки парсинга' };
+    }
+
+    await this.progressService.updateStatus(
+      session.id,
+      ParsingSessionStatus.PAUSED,
+    );
+
+    this.logger.log(`Парсинг ${type} принудительно остановлен`);
+    return { message: `Парсинг ${type} успешно остановлен` };
   }
 
   private async startParsing(
@@ -165,6 +181,14 @@ export class ParseShikimoriService {
       let hasMore: boolean = true;
 
       while (hasMore) {
+        const currentStatus = await this.progressService.getSessionStatus(
+          session.id,
+        );
+        if (currentStatus !== ParsingSessionStatus.RUNNING) {
+          this.logger.warn(`Парсинг ${type} прерван, статус: ${currentStatus}`);
+          break;
+        }
+
         const currentPage = await this.progressService.getCurrentPage(
           session.id,
         );
@@ -182,11 +206,15 @@ export class ParseShikimoriService {
           animes_chank.length >= this.BATCH_LIMIT;
       }
 
-      await this.progressService.completeSession(session.id);
-
-      this.logger.log(
-        `Завершение парсинга ${this.PARSER_NAME} по типу ${type}`,
+      const finalStatus = await this.progressService.getSessionStatus(
+        session.id,
       );
+      if (finalStatus === ParsingSessionStatus.RUNNING) {
+        await this.progressService.completeSession(session.id);
+        this.logger.log(
+          `Завершение парсинга ${this.PARSER_NAME} по типу ${type}`,
+        );
+      }
     } catch {
       await this.progressService.updateStatus(
         session.id,

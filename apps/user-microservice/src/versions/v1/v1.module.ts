@@ -9,6 +9,7 @@ import { IS_DEV_ENV } from 'shared/lib/utils/is-dev.util';
     ConfigModule.forRoot({
       ignoreEnvFile: !IS_DEV_ENV,
       isGlobal: true,
+      expandVariables: true,
     }),
   ],
 })

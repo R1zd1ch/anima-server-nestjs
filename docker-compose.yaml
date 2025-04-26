@@ -29,7 +29,7 @@ services:
     volumes:
       - redis_data:/data
     healthcheck:
-      test: ['CMD', 'redis-cli', 'ping']
+      test: ['CMD', 'redis-cli', '-a', '${REDIS_PASSWORD}', 'ping']
       interval: 5s
       timeout: 5s
       retries: 5
@@ -56,18 +56,19 @@ services:
       - APPLICATION_HOST=${APPLICATION_HOST}
       - RABBIT_MQ_MANAGEMENT_PORT=${RABBIT_MQ_MANAGEMENT_PORT}
       - RABBIT_MQ_HOST=${RABBIT_MQ_HOST}
-    # depends_on:
-    #   db:
-    #     condition: service_healthy
-    #   redis:
-    #     condition: service_started
-    #   auth-microservice:
-    #     condition: service_started
-    #   update-anime-microservice:
-    #     condition: service_started
-    #   anime-microservice:
-    #     condition: service_started
-
+      - DOCS_MICROSERVICE_HOST=${DOCS_MICROSERVICE_HOST}
+      - DOCS_MICROSERVICE_PORT=${DOCS_MICROSERVICE_PORT}
+    depends_on:
+      auth-microservice:
+        condition: service_started
+      update-anime-microservice:
+        condition: service_started
+      anime-microservice:
+        condition: service_started
+      user-microservice:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
     networks:
       - backend
 
@@ -126,12 +127,6 @@ services:
       - POSTGRES_HOST=db
       - REDIS_HOST=redis
     depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_started
-      rabbitmq:
-        condition: service_started
       auth-microservice:
         condition: service_started
     networks:
@@ -154,12 +149,6 @@ services:
       - POSTGRES_HOST=db
       - REDIS_HOST=redis
     depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_started
-      rabbitmq:
-        condition: service_started
       auth-microservice:
         condition: service_started
     networks:
@@ -182,15 +171,44 @@ services:
       - POSTGRES_HOST=db
       - REDIS_HOST=redis
     depends_on:
+      auth-microservice:
+        condition: service_started
+      user-microservice:
+        condition: service_started
+      update-anime-microservice:
+        condition: service_started
+    networks:
+      - backend
+
+  docs-microservice:
+    container_name: ${DOCS_MICROSERVICE_HOST}
+    build:
+      context: .
+      dockerfile: dockerfile
+      args:
+        SERVICE: docs-microservice
+    ports:
+      - '${DOCS_MICROSERVICE_PORT}:${DOCS_MICROSERVICE_PORT}'
+    env_file:
+      - .env
+    environment:
+      - APP_MODE=docs-microservice
+    depends_on:
+      auth-microservice:
+        condition: service_started
+      user-microservice:
+        condition: service_started
+      anime-microservice:
+        condition: service_started
+      update-anime-microservice:
+        condition: service_started
       db:
         condition: service_healthy
       redis:
         condition: service_started
       rabbitmq:
         condition: service_started
-      auth-microservice:
-        condition: service_started
-      update-anime-microservice:
+      nginx:
         condition: service_started
     networks:
       - backend

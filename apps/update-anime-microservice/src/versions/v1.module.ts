@@ -8,11 +8,14 @@ import { ShikimoriModule } from './v1/parsers/shikimori/shikimori-api/shikimori.
 import { ProgressModule } from './v1/parsers/progress/progress.module';
 import { UpdateJobsModule } from './v1/update-jobs/update-jobs.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { IS_DEV_ENV } from 'shared/lib/utils/is-dev.util';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      ignoreEnvFile: !IS_DEV_ENV,
+      expandVariables: true,
     }),
     ScheduleModule.forRoot(),
     ParseShikimoriModule,

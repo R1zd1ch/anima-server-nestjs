@@ -11,6 +11,8 @@ elif [ "$APP_MODE" = "anime-microservice" ]; then
   bun run dist/apps/anime-microservice/main
 elif [ "$APP_MODE" = "user-microservice" ]; then
   bun run dist/apps/user-microservice/main
+elif [ "$APP_MODE" = "docs-microservice" ]; then
+  bun run dist/apps/docs-microservice/main
 else
   echo "Unknown APP_MODE: $APP_MODE"
   exit 1

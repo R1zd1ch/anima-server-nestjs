@@ -14,6 +14,7 @@ import { TwoFactorAuthModule } from './auth/two-factor-auth/two-factor-auth.modu
     ConfigModule.forRoot({
       ignoreEnvFile: !IS_DEV_ENV,
       isGlobal: true,
+      expandVariables: true,
     }),
     PrismaModule,
     AuthModule,

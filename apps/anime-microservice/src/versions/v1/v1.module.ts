@@ -8,9 +8,16 @@ import { DemographicModule } from './anime/demographic/demograpghic.module';
 import { ThemesModule } from './anime/themes/themes.module';
 import { UserModule } from './anime/user/user.module';
 import { EpisodesModule } from './anime/episodes/episodes.module';
+import { ConfigModule } from '@nestjs/config';
+import { IS_DEV_ENV } from 'shared/lib/utils/is-dev.util';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      ignoreEnvFile: !IS_DEV_ENV,
+      isGlobal: true,
+      expandVariables: true,
+    }),
     AnimeModule,
     CatalogModule,
     ReferencesModule,

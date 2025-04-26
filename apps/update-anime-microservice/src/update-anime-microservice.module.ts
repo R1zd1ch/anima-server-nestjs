@@ -11,6 +11,7 @@ import { V1Module } from './versions/v1.module';
     ConfigModule.forRoot({
       envFilePath: '.env',
       ignoreEnvFile: !IS_DEV_ENV,
+      expandVariables: true,
     }),
     V1Module,
     // getVersionModule(), // получаем версию апи

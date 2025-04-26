@@ -1,11 +1,77 @@
 server {
+  resolver 127.0.0.11 valid=30s;
 	listen ${APPLICATION_PORT};
 	server_name ${APPLICATION_HOST};
 
-	# main settings
 	client_max_body_size 20M;
 	keepalive_timeout 15s;
 	sendfile on;
+
+  location ~* ^/api/v1/docs(.*)$ {
+    if ($request_method = OPTIONS) {
+      add_header 'Access-Control-Allow-Origin' '*';
+      add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, PATCH, DELETE, OPTIONS';
+      add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, Accept';
+      add_header 'Access-Control-Max-Age' 1728000;
+      add_header 'Content-Length' 0;
+      add_header 'Content-Type' 'text/plain charset=UTF-8';
+      return 204;
+    }
+
+    add_header 'Access-Control-Allow-Origin' '*';
+    add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, PATCH, DELETE, OPTIONS';
+    add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, Accept';
+
+    proxy_pass http://${DOCS_MICROSERVICE_HOST}:${DOCS_MICROSERVICE_PORT}/docs$1;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+  }
+
+	# CORS для всех /api
+	location ~* ^/api/ {
+		if ($request_method = OPTIONS) {
+			add_header 'Access-Control-Allow-Origin' '*';
+			add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, PATCH, DELETE, OPTIONS';
+			add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, Accept';
+			add_header 'Access-Control-Max-Age' 1728000;
+			add_header 'Content-Length' 0;
+			add_header 'Content-Type' 'text/plain charset=UTF-8';
+			return 204;
+		}
+
+		# CORS
+		add_header 'Access-Control-Allow-Origin' '*';
+		add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, PATCH, DELETE, OPTIONS';
+		add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, Accept';
+
+		set $service_host "";
+		if ($uri ~* ^/api/v1/auth) {
+			set $service_host ${AUTH_MICROSERVICE_HOST}:${AUTH_MICROSERVICE_PORT};
+		}
+		if ($uri ~* ^/api/v1/user) {
+			set $service_host ${USER_MICROSERVICE_HOST}:${USER_MICROSERVICE_PORT};
+		}
+		if ($uri ~* ^/api/v1/anime) {
+			set $service_host ${ANIME_MICROSERVICE_HOST}:${ANIME_MICROSERVICE_PORT};
+		}
+		if ($uri ~* ^/api/v1/update-anime) {
+			set $service_host ${UPDATE_ANIME_MICROSERVICE_HOST}:${UPDATE_ANIME_MICROSERVICE_PORT};
+		}
+
+		# rewrite
+    rewrite ^/api/v1/(.*)$ /v1/$1 break;
+
+		# Проксируем на выбранный сервис
+		proxy_pass http://$service_host;
+		proxy_http_version 1.1;
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header X-Forwarded-Proto $scheme;
+	}
 
 	# rabbitmq
 	location /rabbitmq {
@@ -14,65 +80,23 @@ server {
 		proxy_set_header X-Real-IP $remote_addr;
 		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 		proxy_set_header X-Forwarded-Proto $scheme;
-		
+
 		proxy_http_version 1.1;
 		proxy_set_header Upgrade $http_upgrade;
 		proxy_set_header Connection "upgrade";
-		
 		rewrite ^/rabbitmq/(.*)$ /$1 break;
 	}
 
-	# v1
-	# auth-microservice routes
-	location /api/v1/auth {
-		proxy_pass http://${AUTH_MICROSERVICE_HOST}:${AUTH_MICROSERVICE_PORT}/v1/auth;
-		proxy_http_version 1.1;
-		proxy_set_header Host $host;
-		proxy_set_header X-Real-IP $remote_addr;
-		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-		proxy_set_header X-Forwarded-Proto $scheme;
-	}
-
-	location /api/v1/user {
-		proxy_pass http://${AUTH_MICROSERVICE_HOST}:${AUTH_MICROSERVICE_PORT}/v1/user;
-		proxy_http_version 1.1;
-		proxy_set_header Host $host;
-		proxy_set_header X-Real-IP $remote_addr;
-		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-		proxy_set_header X-Forwarded-Proto $scheme;
-	}
-	
-	# update-anime-microservice routes
-	location /api/v1/update-anime {
-		proxy_pass http://${UPDATE_ANIME_MICROSERVICE_HOST}:${UPDATE_ANIME_MICROSERVICE_PORT}/v1/update-anime;
-		proxy_http_version 1.1;
-		proxy_set_header Host $host;
-		proxy_set_header X-Real-IP $remote_addr;
-		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-		proxy_set_header X-Forwarded-Proto $scheme;
-	}
-
-	# anime-microservice routes
-	location /api/v1/anime {
-		proxy_pass http://${ANIME_MICROSERVICE_HOST}:${ANIME_MICROSERVICE_PORT}/v1/anime;
-		proxy_http_version 1.1;
-		proxy_set_header Host $host;
-		proxy_set_header X-Real-IP $remote_addr;
-		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-		proxy_set_header X-Forwarded-Proto $scheme;
-	}
-
-
 	error_page 400 401 403 404 /40x.html;
 	error_page 500 502 503 504 /50x.html;
-	
+
 	location = /40x.html {
-			root /usr/share/nginx/html;
-			internal;
+		root /usr/share/nginx/html;
+		internal;
 	}
-	
+
 	location = /50x.html {
-			root /usr/share/nginx/html;
-			internal;
+		root /usr/share/nginx/html;
+		internal;
 	}
 }

@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { ParseShikimoriService } from './parser-shikimori.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ParsingSessionType } from '@prisma/__generated__';
 
 @ApiTags('Update-anime/Parsers/Shikimori')
 @Controller({ version: '1', path: 'update-anime/parsers/shikimori' })
@@ -87,5 +88,51 @@ export class ParseShikimoriController {
   })
   async resumeUpdateThisYear() {
     return this.parseShikimoriService.resumeUpdateThisYear();
+  }
+
+  @Get('stop-init')
+  @ApiOperation({
+    summary: 'Остановить начальную инициализацию парсинга',
+    description: 'Принудительно останавливает процесс начальной инициализации.',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Парсинг начальной инициализации успешно остановлен.',
+  })
+  async stopInitParsing() {
+    return this.parseShikimoriService.stopParsing(
+      ParsingSessionType.CREATE_DATABASE,
+    );
+  }
+
+  @Get('stop-update-ongoings')
+  @ApiOperation({
+    summary: 'Остановить обновление онгоингов',
+    description: 'Принудительно останавливает процесс обновления онгоингов.',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Обновление онгоингов успешно остановлено.',
+  })
+  async stopUpdateOngoings() {
+    return this.parseShikimoriService.stopParsing(
+      ParsingSessionType.UPDATE_ONGOINGS,
+    );
+  }
+
+  @Get('stop-update-this-year')
+  @ApiOperation({
+    summary: 'Остановить обновление аниме текущего года',
+    description:
+      'Принудительно останавливает процесс обновления текущего года.',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Обновление аниме текущего года успешно остановлено.',
+  })
+  async stopUpdateThisYear() {
+    return this.parseShikimoriService.stopParsing(
+      ParsingSessionType.UPDATE_THIS_YEAR,
+    );
   }
 }

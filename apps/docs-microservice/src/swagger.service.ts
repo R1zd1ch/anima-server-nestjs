@@ -47,8 +47,8 @@ export class SwaggerService {
         schemas: {},
         securitySchemes: {
           CookieAuth: {
-            type: 'apiKey',
-            in: 'cookie',
+            type: 'apiKey' as const,
+            in: 'cookie' as const,
             name: this.configService.getOrThrow<string>('SESSION_NAME'),
           },
         },

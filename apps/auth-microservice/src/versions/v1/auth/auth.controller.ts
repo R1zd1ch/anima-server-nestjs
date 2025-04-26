@@ -63,8 +63,16 @@ export class AuthController {
   @Post('login')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Логин пользователя' })
-  @ApiResponse({ status: 200, description: 'Данные пользователя' })
+  @ApiResponse({
+    status: 200,
+    description:
+      'Данные пользователя или сообщение о двухфакторной аутентификации',
+  })
   @ApiResponse({ status: 404, description: 'Пользователь не найден' })
+  @ApiResponse({
+    status: 401,
+    description: 'Неверный пароль или не подтвержден',
+  })
   @ApiBody({ type: LoginDto })
   public async login(@Req() req: Request, @Body() dto: LoginDto) {
     return await this.authService.login(req, dto);

@@ -1,4 +1,4 @@
-dev-main: 
+dev-auth: 
 	docker start postgres redis
 	bun run start:dev
 
@@ -13,6 +13,10 @@ dev-update-anime:
 dev-anime:
 	docker start postgres redis
 	bun run start:dev anime-microservice
+
+dev-docs: 
+	docker start postgres redis
+	bun run start:dev docs-microservice
 
 rebuild:
 	docker-compose up -d --build

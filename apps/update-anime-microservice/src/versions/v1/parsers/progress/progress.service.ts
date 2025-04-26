@@ -46,6 +46,16 @@ export class ProgressService {
     return session.lastProcessedPage;
   }
 
+  async getSessionStatus(sessionId: number): Promise<ParsingSessionStatus> {
+    const session = await this.prismaService.parsingSession.findUnique({
+      where: {
+        id: sessionId,
+      },
+    });
+
+    return session.status as ParsingSessionStatus;
+  }
+
   async getCurrentStatus(name: string) {
     const session = await this.prismaService.parsingSession.findFirst({
       where: {
