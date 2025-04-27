@@ -16,6 +16,13 @@ export class ThemesController {
     return this.themesService.getThemes();
   }
 
+  @Get('random/:requestId')
+  @ApiOperation({ summary: 'Получить случайное аниме по теме' })
+  @ApiParam({ name: 'requestId', type: Number, example: 5 })
+  public async getRandomAnimeFromTheme(@Param('requestId') requestId: number) {
+    return this.themesService.getRandomAnimeFromTheme(requestId);
+  }
+
   @Get('random')
   @ApiOperation({ summary: 'Получить случайные темы' })
   @ApiQuery({ name: 'count', required: false, type: Number, example: 1 })

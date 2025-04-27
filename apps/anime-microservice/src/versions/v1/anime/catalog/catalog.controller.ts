@@ -16,8 +16,10 @@ export class CatalogController {
   }
 
   @Get('release')
-  @ApiOperation({ summary: 'Получить релиз по ID или Shikimori ID' })
-  @ApiQuery({ name: 'id', required: false, type: String, example: 'naruto' })
+  @ApiOperation({
+    summary: 'Получить релиз по ID или Shikimori ID с эпизодами',
+  })
+  @ApiQuery({ name: 'id', required: false, type: String, example: '5114' })
   @ApiQuery({
     name: 'shikimoriId',
     required: false,

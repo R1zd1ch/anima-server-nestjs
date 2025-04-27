@@ -34,11 +34,11 @@ export class KodikService implements OnModuleInit {
 
   private normalizeResponse(response: SearchResponse) {
     const mainData = {
-      russian: response.results[0].title,
-      name: response.results[0].title_orig,
-      year: response.results[0].year,
-      shikimoriId: response.results[0].shikimori_id.toString(),
-      episodesCount: response.results[0].episodes_count,
+      russian: response.results[0]?.title,
+      name: response.results[0]?.title_orig,
+      year: response.results[0]?.year,
+      shikimoriId: response.results[0]?.shikimori_id.toString(),
+      episodesCount: response.results[0]?.episodes_count,
     };
 
     const translations = response.results.map((result) => {

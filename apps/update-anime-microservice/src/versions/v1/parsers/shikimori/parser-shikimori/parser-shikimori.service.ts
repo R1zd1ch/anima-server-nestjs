@@ -12,12 +12,14 @@ import SearchAnimeParamsDto from '../shikimori-api/dto/search-anime-params.dto';
 import { KodikCheckService } from '../../../check-cdn/kodik-check.service';
 import { AnilibriaCheckService } from '../../../check-cdn/anilibria-check.service';
 import { getAnimeAliasSync } from 'apps/update-anime-microservice/src/lib/utils/get-anime-alias';
+import { ParsingConfig } from './parsing-config';
 
 @Injectable()
 export class ParseShikimoriService {
   private readonly logger = new Logger(ParseShikimoriService.name);
   private readonly BATCH_LIMIT = 50;
   private readonly BATCH_TIME = 60 * 1000;
+  private readonly MAX_RETRIES = 3;
   private readonly PARSER_NAME = 'SHIKIMORI';
 
   constructor(
@@ -28,92 +30,105 @@ export class ParseShikimoriService {
     private readonly anilibriaCheckService: AnilibriaCheckService,
   ) {}
 
-  public async startInitParsing() {
-    const searchParams = {
-      limit: this.BATCH_LIMIT,
-    };
-
-    this.startParsing(ParsingSessionType.CREATE_DATABASE, searchParams);
-
-    return new Promise((r) =>
-      r({
-        message: 'Полный парсинг начался',
-      }),
-    );
-  }
-  public async startUpdateOngoings() {
-    const searchParams = {
-      limit: this.BATCH_LIMIT,
-      status: 'ongoing',
-    };
-
-    this.startParsing(ParsingSessionType.UPDATE_ONGOINGS, searchParams);
-
-    return new Promise((r) =>
-      r({
-        message: 'Обновление онгоингов началось',
-      }),
-    );
-  }
-
-  public async startUpdateThisYear() {
-    const searchParams = {
-      limit: this.BATCH_LIMIT,
-      season: `${new Date().getFullYear()}`,
-    };
-
-    this.startParsing(ParsingSessionType.UPDATE_THIS_YEAR, searchParams);
-    return new Promise((r) =>
-      r({
-        message: 'Обновление аниме за этот год началось',
-      }),
-    );
-  }
-
-  public async resumeInitParsing() {
-    const searchParams = {
-      limit: this.BATCH_LIMIT,
-    };
-
-    this.resumeParsing(ParsingSessionType.CREATE_DATABASE, searchParams);
-
-    return new Promise((r) =>
-      r({
-        message: 'Полный парсинг продолжился',
-      }),
-    );
-  }
-
-  public async resumeUpdateOngoings() {
-    const searchParams = {
-      limit: this.BATCH_LIMIT,
-      status: 'ongoing',
-    };
-
-    this.resumeParsing(ParsingSessionType.UPDATE_ONGOINGS, searchParams);
-
-    return new Promise((r) =>
-      r({
-        message: 'Обновление онгоингов продолжилось',
-      }),
-    );
+  public async handleAction(
+    action:
+      | 'startInitParsing'
+      | 'resumeInitParsing'
+      | 'startUpdateOngoings'
+      | 'resumeUpdateOngoings'
+      | 'startUpdateThisYear'
+      | 'resumeUpdateThisYear'
+      | 'stopInitParsing'
+      | 'stopUpdateOngoings'
+      | 'stopUpdateThisYear',
+  ) {
+    switch (action) {
+      case 'startInitParsing':
+        return await this.handleParsingStart(
+          this.getParsingConfig(
+            ParsingSessionType.CREATE_DATABASE,
+            'Полный парсинг начался',
+          ),
+        );
+      case 'startUpdateOngoings':
+        return await this.handleParsingStart(
+          this.getParsingConfig(
+            ParsingSessionType.UPDATE_ONGOINGS,
+            'Обновление онгоингов началось',
+          ),
+        );
+      case 'startUpdateThisYear':
+        return await this.handleParsingStart(
+          this.getParsingConfig(
+            ParsingSessionType.UPDATE_ONGOINGS,
+            'Обновление аниме за этот год началось',
+          ),
+        );
+      case 'resumeInitParsing':
+        return await this.handleParsingResume(
+          this.getParsingConfig(
+            ParsingSessionType.CREATE_DATABASE,
+            'Полный парсинг продолжился',
+          ),
+        );
+      case 'resumeUpdateOngoings':
+        return await this.handleParsingResume(
+          this.getParsingConfig(
+            ParsingSessionType.UPDATE_ONGOINGS,
+            'Обновление онгоингов продолжилось',
+          ),
+        );
+      case 'resumeUpdateThisYear':
+        return await this.handleParsingResume(
+          this.getParsingConfig(
+            ParsingSessionType.UPDATE_ONGOINGS,
+            'Обновление аниме за этот год продолжилось',
+          ),
+        );
+      case 'stopInitParsing':
+        return await this.stopParsing(ParsingSessionType.CREATE_DATABASE);
+      case 'stopUpdateOngoings':
+        return await this.stopParsing(ParsingSessionType.UPDATE_ONGOINGS);
+      case 'stopUpdateThisYear':
+        return await this.stopParsing(ParsingSessionType.UPDATE_ONGOINGS);
+      default:
+        return null;
+    }
   }
 
-  public async resumeUpdateThisYear() {
-    const searchParams = {
-      limit: this.BATCH_LIMIT,
-      season: `${new Date().getFullYear()}`,
-    };
-
-    this.resumeParsing(ParsingSessionType.UPDATE_THIS_YEAR, searchParams);
-
-    return new Promise((r) =>
-      r({
-        message: 'Обновление аниме за этот год продолжилось',
-      }),
-    );
+  private async handleParsingStart(config: ParsingConfig) {
+    await this.startParsing(config.type, config.searchParams);
+    return config.successMessage;
   }
-  public async stopParsing(type: ParsingSessionType) {
+
+  private async handleParsingResume(config: ParsingConfig) {
+    await this.resumeParsing(config.type, config.searchParams);
+    return config.successMessage;
+  }
+
+  private async startParsing(
+    type: ParsingSessionType,
+    searchParams: SearchAnimeParamsDto,
+  ) {
+    const session = await this.progressService.initializeSession(
+      this.PARSER_NAME,
+      type,
+    );
+
+    return this.handleParsingExecution(session, searchParams, type);
+  }
+
+  private async resumeParsing(
+    type: ParsingSessionType,
+    searchParams: SearchAnimeParamsDto,
+  ) {
+    const session = await this.validateAndGetSession(type);
+    if (!session) return;
+
+    return this.handleParsingExecution(session, searchParams, type);
+  }
+
+  private async stopParsing(type: ParsingSessionType) {
     const session = await this.progressService.getLatestSession(type);
 
     if (!session || session.status !== ParsingSessionStatus.RUNNING) {
@@ -130,28 +145,7 @@ export class ParseShikimoriService {
     return { message: `Парсинг ${type} успешно остановлен` };
   }
 
-  private async startParsing(
-    type: ParsingSessionType,
-    searchParams: SearchAnimeParamsDto,
-  ) {
-    const session = await this.progressService.initializeSession(
-      this.PARSER_NAME,
-      type,
-    );
-
-    await this.progressService.updateStatus(
-      session.id,
-      ParsingSessionStatus.RUNNING,
-    );
-
-    this.logger.log(`Начало парсинга ${this.PARSER_NAME} по типу ${type}`);
-    await this.processParsing(session, searchParams, type);
-  }
-
-  private async resumeParsing(
-    type: ParsingSessionType,
-    searchParams: SearchAnimeParamsDto,
-  ) {
+  private async validateAndGetSession(type: ParsingSessionType) {
     const session = await this.progressService.getLatestSession(type);
 
     if (
@@ -159,17 +153,36 @@ export class ParseShikimoriService {
       session.status === ParsingSessionStatus.COMPLETED ||
       session.status === ParsingSessionStatus.FAILED
     ) {
-      this.logger.warn('Нет активной сессии для возобновления парсинга');
-      return;
+      this.logger.warn(`Нет активной сессии для типа ${type}`);
+      return null;
     }
 
     await this.progressService.updateStatus(
       session.id,
       ParsingSessionStatus.RUNNING,
     );
-    this.logger.log(`Продолжение парсинга ${this.PARSER_NAME} по типу ${type}`);
+    return session;
+  }
 
-    await this.processParsing(session, searchParams, type);
+  private async handleParsingExecution(
+    session: ParsingSession,
+    searchParams: SearchAnimeParamsDto,
+    type: ParsingSessionType,
+  ) {
+    this.logger.log(`Запущен парсинг ${this.PARSER_NAME} по типу ${type}`);
+    try {
+      await this.processParsing(session, searchParams, type);
+    } catch (error) {
+      this.logger.error(
+        `Ошибка парсинга ${type}: ${error instanceof Error ? error.message : error}`,
+        error instanceof Error ? error.stack : undefined,
+      );
+      await this.progressService.updateStatus(
+        session.id,
+        ParsingSessionStatus.FAILED,
+      );
+      throw error;
+    }
   }
 
   private async processParsing(
@@ -179,12 +192,15 @@ export class ParseShikimoriService {
   ) {
     try {
       let hasMore: boolean = true;
+      const activeStatuses: ParsingSessionStatus[] = [
+        ParsingSessionStatus.CREATED,
+        ParsingSessionStatus.RUNNING,
+      ];
 
       while (hasMore) {
-        const currentStatus = await this.progressService.getSessionStatus(
-          session.id,
-        );
-        if (currentStatus !== ParsingSessionStatus.RUNNING) {
+        const currentStatus: ParsingSessionStatus =
+          await this.progressService.getSessionStatus(session.id);
+        if (!currentStatus || !activeStatuses.includes(currentStatus)) {
           this.logger.warn(`Парсинг ${type} прерван, статус: ${currentStatus}`);
           break;
         }
@@ -229,7 +245,7 @@ export class ParseShikimoriService {
     page: number,
     searchParams: SearchAnimeParamsDto,
   ) {
-    let retries = 3;
+    let retries = this.MAX_RETRIES;
     let processedItems = 0;
     const animes = [] as AnimeFromShikimori[];
 
@@ -256,19 +272,20 @@ export class ParseShikimoriService {
           `Аниме с пачки (страница ${page}) распаршены, количество: ${animes.length}`,
         );
 
-        const kodikCheckResults = await Promise.all(
-          animes.map((anime) =>
-            this.kodikCheckService.checkByShikimoriId(Number(anime.id)),
-          ),
-        );
-
-        const anilibriaCheckResults = await Promise.all(
-          animes.map((anime) =>
-            this.anilibriaCheckService.checkByAlias(
-              getAnimeAliasSync(anime.url),
+        const [kodikCheckResults, anilibriaCheckResults] = await Promise.all([
+          Promise.all(
+            animes.map((anime) =>
+              this.kodikCheckService.checkByShikimoriId(Number(anime.id)),
             ),
           ),
-        );
+          Promise.all(
+            animes.map((anime) =>
+              this.anilibriaCheckService.checkByAlias(
+                getAnimeAliasSync(anime.url),
+              ),
+            ),
+          ),
+        ]);
 
         const checkedAnimes = animes.filter(
           (anime, index) =>
@@ -295,5 +312,45 @@ export class ParseShikimoriService {
         await new Promise((resolve) => setTimeout(resolve, this.BATCH_TIME));
       }
     }
+  }
+
+  private getParsingConfig(type: ParsingSessionType, message: string) {
+    switch (type) {
+      case ParsingSessionType.UPDATE_ONGOINGS:
+        return {
+          type: ParsingSessionType.UPDATE_ONGOINGS,
+          searchParams: this.ongoingSearchParams,
+          successMessage: message,
+        };
+      case ParsingSessionType.UPDATE_THIS_YEAR:
+        return {
+          type: ParsingSessionType.UPDATE_THIS_YEAR,
+          searchParams: this.currentYearSearchParams,
+          successMessage: message,
+        };
+      case ParsingSessionType.CREATE_DATABASE:
+        return {
+          type: ParsingSessionType.CREATE_DATABASE,
+          searchParams: this.defaultSearchParams,
+          successMessage: message,
+        };
+      default:
+        return null;
+    }
+  }
+
+  private get defaultSearchParams() {
+    return { limit: this.BATCH_LIMIT };
+  }
+
+  private get ongoingSearchParams() {
+    return { ...this.defaultSearchParams, status: 'ongoing' };
+  }
+
+  private get currentYearSearchParams() {
+    return {
+      ...this.defaultSearchParams,
+      season: `${new Date().getFullYear()}`,
+    };
   }
 }

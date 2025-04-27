@@ -6,107 +6,166 @@ import {
   shikimoriScoreNotNull,
 } from 'apps/anime-microservice/src/constants';
 import { PrismaService } from 'shared/lib/prisma/prisma.service';
+import { EpisodesService } from '../episodes/episodes.service';
 
 @Injectable()
 export class ReleasesService {
   private readonly logger = new Logger(ReleasesService.name);
-  public constructor(private readonly prismaService: PrismaService) {}
+  public constructor(
+    private readonly prismaService: PrismaService,
+    private readonly episodesService: EpisodesService,
+  ) {}
 
   public async getLatestReleases(count: number = 10): Promise<Anime[]> {
-    const maxCount = Math.min(Math.max(count, 1), 50);
+    try {
+      const maxCount = Math.min(Math.max(count, 1), 50);
 
-    const releases = await this.prismaService.anime.findMany({
-      where: {
-        airedOn: { not: null },
-        episodes: { gt: 0 },
-        ...shikimoriScoreNotNull,
-      },
-      include: {
-        ...includeSmall,
-      },
-      orderBy: {
-        airedOn: 'desc', // сортировка по дате выхода
-      },
-      take: maxCount,
-    });
+      const releases = await this.prismaService.anime.findMany({
+        where: {
+          airedOn: { not: null },
+          episodes: { gt: 0 },
+          ...shikimoriScoreNotNull,
+        },
+        include: {
+          ...includeSmall,
+        },
+        orderBy: {
+          airedOn: 'desc',
+        },
+        take: maxCount,
+      });
 
-    return releases;
+      return releases;
+    } catch {
+      this.logger.error('Ошибка получения последних релизов');
+      return [];
+    }
   }
 
-  public async getRandomRelease(): Promise<Anime> {
-    let release: Anime | null = null;
-    const allIds = await this.prismaService.anime.findMany({
-      select: { shikimoriId: true },
-      where: {
-        ...shikimoriScoreNotNull,
-      },
-    });
-
-    while (release === null || release.shikimoriScore === null) {
-      const randomId =
-        allIds[Math.floor(Math.random() * allIds.length)].shikimoriId;
-
-      const randomAnime = await this.prismaService.anime.findUnique({
-        where: { shikimoriId: randomId },
-
-        include: {
-          ...includeAll,
+  public async getRandomRelease(withEpisoded: boolean = false): Promise<Anime> {
+    try {
+      let release: Anime | null = null;
+      const allIds = await this.prismaService.anime.findMany({
+        select: { shikimoriId: true },
+        where: {
+          ...shikimoriScoreNotNull,
         },
       });
 
-      if (randomAnime) {
-        release = randomAnime;
-      }
-    }
+      while (release === null || release.shikimoriScore === null) {
+        const randomId =
+          allIds[Math.floor(Math.random() * allIds.length)].shikimoriId;
 
-    return release;
+        const randomAnime = await this.prismaService.anime.findUnique({
+          where: { shikimoriId: randomId },
+
+          include: {
+            ...includeAll,
+          },
+        });
+
+        if (randomAnime) {
+          release = randomAnime;
+        }
+      }
+
+      if (withEpisoded) {
+        const episodes = await this.episodesService.getEpisodes(
+          release?.alias,
+          Number(release?.shikimoriId || 0),
+        );
+
+        return {
+          ...release,
+          ...episodes,
+        };
+      }
+
+      return release;
+    } catch {
+      this.logger.error('Ошибка получения рандомного релиза');
+      return null;
+    }
   }
 
   public async getRandomReleases(count: number = 2): Promise<Anime[]> {
-    const maxReleases = Math.min(Math.max(count, 1), 20);
+    try {
+      const maxReleases = Math.min(Math.max(count, 1), 20);
 
-    const releases: Anime[] = [];
+      const releases: Anime[] = [];
 
-    for (let i = 0; i < maxReleases; i++) {
-      releases.push(await this.getRandomRelease());
+      for (let i = 0; i < maxReleases; i++) {
+        releases.push(await this.getRandomRelease());
+      }
+
+      return releases;
+    } catch {
+      this.logger.error('Ошибка получения рандомных релизов');
+      return [];
     }
-
-    return releases;
   }
 
   public async getByAliasOrShikiId(
     alias?: string,
     shikimoriId?: number,
-  ): Promise<Anime | []> {
-    if (alias) {
-      return this.prismaService.anime.findFirst({
-        where: {
-          ...shikimoriScoreNotNull,
-          alias: {
-            contains: alias,
-            mode: 'insensitive',
+  ): Promise<Anime | null | (Anime & { episodes: any[] })> {
+    try {
+      if (alias) {
+        const anime = await this.prismaService.anime.findFirst({
+          where: {
+            ...shikimoriScoreNotNull,
+            alias: {
+              contains: alias,
+              mode: 'insensitive',
+            },
           },
-        },
+          include: {
+            ...includeAll,
+          },
+        });
 
-        include: {
-          ...includeAll,
-        },
-      });
+        if (!anime) {
+          return null;
+        }
+
+        const shikiId = Number(anime.shikimoriId || 0);
+        const episodes = await this.episodesService.getEpisodes(alias, shikiId);
+        return {
+          ...anime,
+          ...episodes,
+        };
+      }
+
+      if (shikimoriId) {
+        const anime = await this.prismaService.anime.findUnique({
+          where: {
+            ...shikimoriScoreNotNull,
+            shikimoriId: shikimoriId.toString(),
+          },
+          include: {
+            ...includeAll,
+          },
+        });
+
+        if (!anime) {
+          return null;
+        }
+
+        const episodes = await this.episodesService.getEpisodes(
+          anime.alias,
+          shikimoriId,
+        );
+
+        return {
+          ...anime,
+          ...episodes,
+        };
+      }
+
+      return null;
+    } catch {
+      this.logger.error('Ошибка получения релиза по алиасу или shikimoriId');
+      return null;
     }
-
-    if (shikimoriId) {
-      return this.prismaService.anime.findUnique({
-        where: {
-          ...shikimoriScoreNotNull,
-          shikimoriId: shikimoriId.toString(),
-        },
-
-        include: {
-          ...includeAll,
-        },
-      });
-    }
-
-    return [];
   }
 }

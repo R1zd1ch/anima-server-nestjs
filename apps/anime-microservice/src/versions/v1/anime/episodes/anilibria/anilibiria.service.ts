@@ -18,8 +18,16 @@ export class AnilibriaService {
         `${this.baseUrl}/anime/releases/${alias}`,
       );
 
-      return this.normalizeResponse(response.data, shikimoriId);
+      return this.normalizeResponse(response.data as AnimeData, shikimoriId);
     } catch (e) {
+      if (
+        e instanceof Error &&
+        'response' in e &&
+        (e.response as { status?: number })?.status === 404
+      ) {
+        this.logger.warn(`⚠️ Не найдено на Anilibria: ${alias} (404)`);
+        return null;
+      }
       this.logger.error(
         `Ошибка получения эпизодов с Anilibria: ${e instanceof Error ? e.stack : e}`,
       );

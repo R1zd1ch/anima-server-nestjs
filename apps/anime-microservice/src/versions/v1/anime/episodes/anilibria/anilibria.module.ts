@@ -5,6 +5,6 @@ import { HttpModule } from '@nestjs/axios';
 @Module({
   imports: [HttpModule],
   providers: [AnilibriaService],
-  exports: [AnilibriaService],
+  exports: [AnilibriaService, HttpModule],
 })
 export class AnilibriaModule {}

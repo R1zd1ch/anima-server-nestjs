@@ -1,8 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { ParseShikimoriService } from './parser-shikimori.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ParsingSessionType } from '@prisma/__generated__';
-
 @ApiTags('Update-anime/Parsers/Shikimori')
 @Controller({ version: '1', path: 'update-anime/parsers/shikimori' })
 export class ParseShikimoriController {
@@ -19,7 +17,7 @@ export class ParseShikimoriController {
     description: 'Парсинг начальной инициализации успешно запущен.',
   })
   async getAnimeList() {
-    return this.parseShikimoriService.startInitParsing();
+    return this.parseShikimoriService.handleAction('startInitParsing');
   }
 
   @Get('resume-init')
@@ -32,7 +30,7 @@ export class ParseShikimoriController {
     description: 'Парсинг начальной инициализации успешно возобновлен.',
   })
   async resumeParsing() {
-    return this.parseShikimoriService.resumeInitParsing();
+    return this.parseShikimoriService.handleAction('resumeInitParsing');
   }
 
   @Get('start-update-ongoings')
@@ -46,7 +44,7 @@ export class ParseShikimoriController {
     description: 'Процесс обновления для продолжающихся аниме успешно запущен.',
   })
   async startUpdateOngoings() {
-    return this.parseShikimoriService.startUpdateOngoings();
+    return this.parseShikimoriService.handleAction('startUpdateOngoings');
   }
 
   @Get('resume-update-ongoings')
@@ -60,7 +58,7 @@ export class ParseShikimoriController {
     description: 'Обновление продолжающихся аниме успешно возобновлено.',
   })
   async resumeUpdateOngoings() {
-    return this.parseShikimoriService.resumeUpdateOngoings();
+    return this.parseShikimoriService.handleAction('resumeUpdateOngoings');
   }
 
   @Get('start-update-this-year')
@@ -73,7 +71,7 @@ export class ParseShikimoriController {
     description: 'Процесс обновления аниме текущего года успешно запущен.',
   })
   async startUpdateThisYear() {
-    return this.parseShikimoriService.startUpdateThisYear();
+    return this.parseShikimoriService.handleAction('startUpdateThisYear');
   }
 
   @Get('resume-update-this-year')
@@ -87,7 +85,7 @@ export class ParseShikimoriController {
     description: 'Обновление аниме текущего года успешно возобновлено.',
   })
   async resumeUpdateThisYear() {
-    return this.parseShikimoriService.resumeUpdateThisYear();
+    return this.parseShikimoriService.handleAction('resumeUpdateThisYear');
   }
 
   @Get('stop-init')
@@ -100,9 +98,7 @@ export class ParseShikimoriController {
     description: 'Парсинг начальной инициализации успешно остановлен.',
   })
   async stopInitParsing() {
-    return this.parseShikimoriService.stopParsing(
-      ParsingSessionType.CREATE_DATABASE,
-    );
+    return this.parseShikimoriService.handleAction('stopInitParsing');
   }
 
   @Get('stop-update-ongoings')
@@ -115,9 +111,7 @@ export class ParseShikimoriController {
     description: 'Обновление онгоингов успешно остановлено.',
   })
   async stopUpdateOngoings() {
-    return this.parseShikimoriService.stopParsing(
-      ParsingSessionType.UPDATE_ONGOINGS,
-    );
+    return this.parseShikimoriService.handleAction('stopUpdateOngoings');
   }
 
   @Get('stop-update-this-year')
@@ -131,8 +125,6 @@ export class ParseShikimoriController {
     description: 'Обновление аниме текущего года успешно остановлено.',
   })
   async stopUpdateThisYear() {
-    return this.parseShikimoriService.stopParsing(
-      ParsingSessionType.UPDATE_THIS_YEAR,
-    );
+    return this.parseShikimoriService.handleAction('stopUpdateThisYear');
   }
 }

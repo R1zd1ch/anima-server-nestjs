@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from 'shared/lib/prisma/prisma.service';
 import {
   ageRatings,
@@ -10,6 +10,7 @@ import {
 
 @Injectable()
 export class ReferencesService {
+  private readonly logger = new Logger(ReferencesService.name);
   public constructor(private readonly prismaService: PrismaService) {}
 
   public async getRefernces() {
@@ -35,32 +36,79 @@ export class ReferencesService {
   }
 
   public async getGenres() {
-    return this.prismaService.genre.findMany();
+    try {
+      return this.prismaService.genre.findMany();
+    } catch (error) {
+      this.logger.log(`Ошибка получения жанров: ${error}`);
+      return this.handleError('getGenres', error);
+    }
   }
 
   public async getDemographics() {
-    return this.prismaService.demographic.findMany();
+    try {
+      return this.prismaService.demographic.findMany();
+    } catch (error) {
+      this.logger.log(`Ошибка получения демографии: ${error}`);
+      return this.handleError('getDemographics', error);
+    }
   }
 
   public async getThemes() {
-    return this.prismaService.theme.findMany();
+    try {
+      return this.prismaService.theme.findMany();
+    } catch (error) {
+      this.logger.log(`Ошибка получения тем: ${error}`);
+      return this.handleError('getThemes', error);
+    }
   }
   public async getRatings() {
-    return new Promise((r) => r(ageRatings));
+    try {
+      return new Promise((r) => r(ageRatings));
+    } catch (error) {
+      this.logger.log(`Ошибка получения рейтингов: ${error}`);
+      return this.handleError('getRatings', error);
+    }
   }
 
   public async getSeasons() {
-    return new Promise((r) => r(seasons));
+    try {
+      return new Promise((r) => r(seasons));
+    } catch (error) {
+      this.logger.log(`Ошибка получения сезонов: ${error}`);
+      return this.handleError('getSeasons', error);
+    }
   }
   public async getSortings() {
-    return new Promise((r) => r(sortings));
+    try {
+      return new Promise((r) => r(sortings));
+    } catch (error) {
+      this.logger.log(`Ошибка получения сортировок: ${error}`);
+      return this.handleError('getSortings', error);
+    }
   }
 
   public async getTypes() {
-    return new Promise((r) => r(types));
+    try {
+      return new Promise((r) => r(types));
+    } catch (error) {
+      this.logger.log(`Ошибка получения типов: ${error}`);
+      return this.handleError('getTypes', error);
+    }
   }
 
   public async getYears() {
-    return new Promise((r) => r(years));
+    try {
+      return new Promise((r) => r(years));
+    } catch (error) {
+      this.logger.log(`Ошибка получения лет: ${error}`);
+      return this.handleError('getYears', error);
+    }
+  }
+
+  private handleError(method: string, error: any) {
+    return {
+      error: error instanceof Error ? error.message : 'unknown',
+      method,
+    };
   }
 }

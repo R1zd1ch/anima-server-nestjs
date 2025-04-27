@@ -15,6 +15,12 @@ export class GenresController {
   public async getGenres() {
     return this.genresService.getGenres();
   }
+  @Get('random/:requestId')
+  @ApiOperation({ summary: 'Получить случайный релиз по жанру' })
+  @ApiParam({ name: 'requestId', type: Number, example: 5 })
+  public async getRandomAnimeFromGenre(@Param('requestId') requestId: number) {
+    return this.genresService.getRandomAnimeFromGenre(+requestId);
+  }
 
   @Get('random')
   @ApiOperation({ summary: 'Получить случайный жанр (или несколько)' })

@@ -5,6 +5,6 @@ import { HttpModule } from '@nestjs/axios';
 @Module({
   imports: [HttpModule],
   providers: [KodikService],
-  exports: [KodikService],
+  exports: [KodikService, HttpModule],
 })
 export class KodikModule {}

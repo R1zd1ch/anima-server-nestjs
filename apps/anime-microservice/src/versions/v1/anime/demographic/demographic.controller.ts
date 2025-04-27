@@ -16,6 +16,15 @@ export class DemographicController {
     return this.demographicService.getDemographics();
   }
 
+  @Get('random/:requestId')
+  @ApiOperation({ summary: 'Получить случайное аниме по ID демографии' })
+  @ApiParam({ name: 'requestId', type: Number, example: 4 })
+  public async getRandomAnimeFromDemographic(
+    @Param('requestId') requestId: number,
+  ) {
+    return this.demographicService.getRandomAnimeFromDemographic(+requestId);
+  }
+
   @Get('random')
   @ApiOperation({ summary: 'Получить случайные демографии' })
   @ApiQuery({ name: 'count', required: false, type: Number, example: 1 })

@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { IS_DEV_ENV } from 'shared/lib/utils/is-dev.util';
 import { PrismaModule } from 'shared/lib/prisma/prisma.module';
-import { V1Module } from './versions/v1.module';
+import { getVersionModule } from './lib/utils/get-version-module';
 
 @Module({
   imports: [
@@ -13,8 +13,7 @@ import { V1Module } from './versions/v1.module';
       ignoreEnvFile: !IS_DEV_ENV,
       expandVariables: true,
     }),
-    V1Module,
-    // getVersionModule(), // получаем версию апи
+    getVersionModule(),
   ],
 })
 export class UpdateAnimeMicroserviceModule {}

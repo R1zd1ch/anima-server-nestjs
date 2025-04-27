@@ -27,13 +27,13 @@ export class UpdateJobsService {
     ) {
       return;
     }
-    await this.parseShikimoriService.startUpdateOngoings();
+    await this.parseShikimoriService.handleAction('startUpdateOngoings');
   }
 
   @Cron(CronExpression.EVERY_10_HOURS)
   async updateYearAnime() {
     this.logger.log('START UPDATE THIS YEAR ANIMES');
-    await this.parseShikimoriService.startUpdateThisYear();
+    await this.parseShikimoriService.handleAction('startUpdateThisYear');
   }
 
   @Cron(CronExpression.EVERY_2_HOURS)

@@ -7,11 +7,15 @@ import {
   includeSmall,
   shikimoriScoreNotNull,
 } from 'apps/anime-microservice/src/constants';
+import { EpisodesService } from '../episodes/episodes.service';
 
 @Injectable()
 export class CatalogService {
   private readonly logger = new Logger(CatalogService.name);
-  public constructor(private readonly prismaService: PrismaService) {}
+  public constructor(
+    private readonly prismaService: PrismaService,
+    private readonly episodesService: EpisodesService,
+  ) {}
 
   async getReleases(params: ReleasesParamsDto) {
     try {
@@ -147,7 +151,14 @@ export class CatalogService {
           ...includeAll,
         },
       });
-      return release;
+
+      if (!release) return [];
+
+      const episodes = await this.episodesService.getEpisodes(
+        release.alias,
+        Number(release.shikimoriId || 0),
+      );
+      return { ...release, ...episodes };
     }
 
     return [];
