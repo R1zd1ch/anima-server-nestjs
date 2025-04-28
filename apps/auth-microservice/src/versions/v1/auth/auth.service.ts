@@ -151,7 +151,10 @@ export class AuthService {
           username: profile.email.split('@')[0],
           displayName: profile.name,
           picture: profile.picture,
-          method: AuthMethod[profile.provider.toUpperCase()],
+          method:
+            AuthMethod[
+              profile.provider.toUpperCase() as keyof typeof AuthMethod
+            ] || AuthMethod.CREDENTIALS,
           isVerified: true,
         },
       ),
@@ -182,6 +185,8 @@ export class AuthService {
 
   public async logout(req: Request, res: Response): Promise<void> {
     return new Promise((resolve, reject) => {
+      //ts-ignore
+      //eslint-disable-next-line
       req.session.destroy((err) => {
         if (err) {
           return reject(
@@ -201,8 +206,11 @@ export class AuthService {
   public async saveSession(req: Request, user: User) {
     return new Promise((resolve, reject) => {
       // req.session.user = user;
+      //ts-ignore
+      //eslint-disable-next-line
       req.session.userId = user.id;
-
+      //ts-ignore
+      //eslint-disable-next-line
       req.session.save((err) => {
         if (err) {
           return reject(

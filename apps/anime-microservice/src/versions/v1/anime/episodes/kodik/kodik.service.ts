@@ -1,6 +1,7 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { Client, SearchResponse } from 'kodikwrapper';
+import { KodikResponse, KodikTranslation } from './types/response';
 
 @Injectable()
 export class KodikService implements OnModuleInit {
@@ -13,7 +14,9 @@ export class KodikService implements OnModuleInit {
     this.client = Client.fromToken(await this.getToken());
   }
 
-  public async getEpisodesByShikimoriId(shikimoriId: number) {
+  public async getEpisodesByShikimoriId(
+    shikimoriId: number,
+  ): Promise<KodikResponse | null> {
     try {
       const response = await this.client.search({
         shikimori_id: shikimoriId,
@@ -32,7 +35,7 @@ export class KodikService implements OnModuleInit {
     }
   }
 
-  private normalizeResponse(response: SearchResponse) {
+  private normalizeResponse(response: SearchResponse): KodikResponse {
     const mainData = {
       russian: response.results[0]?.title,
       name: response.results[0]?.title_orig,
@@ -41,7 +44,7 @@ export class KodikService implements OnModuleInit {
       episodesCount: response.results[0]?.episodes_count,
     };
 
-    const translations = response.results.map((result) => {
+    const translations: KodikTranslation[] = response.results.map((result) => {
       const seasonsMap = new Map<
         number,
         {
@@ -87,23 +90,21 @@ export class KodikService implements OnModuleInit {
         .sort((a, b) => a.season - b.season);
 
       return {
-        translation: result.translation as {
-          id: number;
-          title: string;
-          type: string;
-        },
+        translation: result.translation,
         lastEpisode: result.last_episode,
         seasons,
       };
     });
 
     return {
-      ...mainData,
-      translations,
+      kodik: {
+        ...mainData,
+        translations,
+      },
     };
   }
 
-  private async getToken() {
+  private async getToken(): Promise<string> {
     const scriptUrl = 'https://kodik-add.com/add-players.min.js?v=2';
     const data = await this.httpService.axiosRef.get(scriptUrl);
     const responseData = data.data as string;

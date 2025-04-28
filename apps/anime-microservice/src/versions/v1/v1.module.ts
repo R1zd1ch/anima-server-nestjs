@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AnimeModule } from './anime/anime.module';
 import { CatalogModule } from './anime/catalog/catalog.module';
 import { ReferencesModule } from './anime/catalog/references/references.module';
 import { GenresModule } from './anime/genres/genres.module';
@@ -18,7 +17,6 @@ import { IS_DEV_ENV } from 'shared/lib/utils/is-dev.util';
       isGlobal: true,
       expandVariables: true,
     }),
-    AnimeModule,
     CatalogModule,
     ReferencesModule,
     GenresModule,
