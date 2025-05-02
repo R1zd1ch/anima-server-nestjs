@@ -11,8 +11,8 @@ model Demographic {
 model AnimeDemographic {
   animeId       String
   demographicId String
-  anime         Anime       @relation(fields: [animeId], references: [id])
-  demographic   Demographic @relation(fields: [demographicId], references: [id])
+  anime         Anime       @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  demographic   Demographic @relation(fields: [demographicId], references: [id], onDelete: Cascade)
 
   @@id([animeId, demographicId])
   @@map("anime_demographics")
@@ -86,8 +86,8 @@ model Genre {
 model AnimeGenre {
   animeId String
   genreId String
-  anime   Anime  @relation(fields: [animeId], references: [id])
-  genre   Genre  @relation(fields: [genreId], references: [id])
+  anime   Anime  @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  genre   Genre  @relation(fields: [genreId], references: [id], onDelete: Cascade)
 
   @@id([animeId, genreId])
   @@map("anime_genres")
@@ -99,7 +99,7 @@ model AnimePoster {
   animeId     String
   originalUrl String?
   mainUrl     String?
-  anime       Anime   @relation(fields: [animeId], references: [id])
+  anime       Anime   @relation(fields: [animeId], references: [id], onDelete: Cascade)
 
   @@map("anime_posters")
 }
@@ -110,8 +110,8 @@ model RelatedAnime {
   relatedAnimeId String
   relationKind   RelationKind
 
-  anime   Anime @relation("AnimeToRelatedAnime", fields: [animeId], references: [id])
-  related Anime @relation("RelatedAnimeToAnime", fields: [relatedAnimeId], references: [id])
+  anime   Anime @relation("AnimeToRelatedAnime", fields: [animeId], references: [id], onDelete: Cascade)
+  related Anime @relation("RelatedAnimeToAnime", fields: [relatedAnimeId], references: [id], onDelete: Cascade)
 
   @@unique([animeId, relatedAnimeId])
   @@map("related_animes")
@@ -131,8 +131,8 @@ model AnimeScreenshot {
   animeId      String
   screenshotId String
 
-  anime      Anime       @relation(fields: [animeId], references: [id])
-  screenshot Screenshots @relation(fields: [screenshotId], references: [id])
+  anime      Anime       @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  screenshot Screenshots @relation(fields: [screenshotId], references: [id], onDelete: Cascade)
 
   @@id([animeId, screenshotId])
   @@map("anime_screenshots")
@@ -150,8 +150,8 @@ model Studio {
 model AnimeStudio {
   animeId  String
   studioId String
-  anime    Anime  @relation(fields: [animeId], references: [id])
-  studio   Studio @relation(fields: [studioId], references: [id])
+  anime    Anime  @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  studio   Studio @relation(fields: [studioId], references: [id], onDelete: Cascade)
 
   @@id([animeId, studioId])
   @@map("anime_studios")
@@ -170,8 +170,8 @@ model Theme {
 model AnimeTheme {
   animeId String
   themeId String
-  anime   Anime  @relation(fields: [animeId], references: [id])
-  theme   Theme  @relation(fields: [themeId], references: [id])
+  anime   Anime  @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  theme   Theme  @relation(fields: [themeId], references: [id], onDelete: Cascade)
 
   @@id([animeId, themeId])
   @@map("anime_themes")
@@ -181,8 +181,8 @@ model AnimeVideo {
   animeId String
   videoId String
 
-  anime Anime @relation(fields: [animeId], references: [id])
-  video Video @relation(fields: [videoId], references: [id])
+  anime Anime @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
 
   @@id([animeId, videoId])
   @@map("anime_videos")
@@ -241,6 +241,8 @@ model Anime {
   relatedAnime      RelatedAnime[]         @relation("RelatedAnimeToAnime")
   userProgress      AnimeEpisodeProgress[]
   animeInCollection AnimeInCollection[]
+  comments          Comment[]
+  reviews           Review[]
 
   @@unique([name, shikimoriId])
   @@map("animes")
@@ -258,7 +260,7 @@ model Account {
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  user      User?    @relation(fields: [userId], references: [id])
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String?  @map("user_id")
 
   @@map("accounts")
@@ -347,7 +349,7 @@ model AnimeCollection {
   isPublic    Boolean             @default(false)
   type        AnimeCollectionType @default(CUSTOM)
 
-  user  User                  @relation(fields: [userId], references: [id])
+  user  User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
   items AnimeInCollection[]
   likes AnimeCollectionLike[]
 
@@ -361,8 +363,8 @@ model AnimeInCollection {
   collectionId String
   animeId      String
 
-  anime      Anime           @relation(fields: [animeId], references: [id])
-  collection AnimeCollection @relation(fields: [collectionId], references: [id])
+  anime      Anime           @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  collection AnimeCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
 
   note    String?
   addedAt DateTime @default(now())
@@ -375,8 +377,8 @@ model AnimeCollectionLike {
   userId       String
   collectionId String
 
-  user       User            @relation(fields: [userId], references: [id])
-  collection AnimeCollection @relation(fields: [collectionId], references: [id])
+  user       User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  collection AnimeCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
 
   likedAt DateTime @default(now())
 
@@ -395,6 +397,41 @@ enum AnimeCollectionType {
   CUSTOM
 }
 
+model Comment {
+  id      String @id @default(uuid())
+  content String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  anime   Anime?  @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  animeId String?
+
+  episode Int?
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  CommentLike CommentLike[]
+
+  @@map("comments")
+}
+
+model CommentLike {
+  userId    String
+  commentId String
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  likedAt DateTime @default(now())
+
+  @@id([userId, commentId])
+  @@unique([userId, commentId])
+  @@index([commentId])
+  @@index([userId])
+  @@map("comment_likes")
+}
+
 model AnimeEpisodeProgress {
   userId  String
   animeId String
@@ -403,14 +440,45 @@ model AnimeEpisodeProgress {
   timestamp Int
   isWatched Boolean @default(false)
 
-  anime Anime @relation(fields: [animeId], references: [id])
-  user  User  @relation(fields: [userId], references: [id])
+  anime Anime @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
 
   @@id([userId, animeId, episode])
   @@map("anime_user_progress")
+}
+
+model Review {
+  id     String @id @default(uuid())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  anime   Anime  @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  animeId String
+
+  rating    Int
+  content   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, animeId])
+}
+
+model UserSettings {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
+
+  theme      String  @default("system")
+  language   String  @default("en")
+  show18plus Boolean @default(false)
+
+  showActivity    Boolean  @default(true)
+  showAnimeList   Boolean  @default(true)
+  notificationsOn Boolean  @default(true)
+  preferredGenres String[]
 }
 
 model User {
@@ -434,8 +502,12 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  animeCollection AnimeCollection[]
-  likedCollection AnimeCollectionLike[]
+  animeCollection   AnimeCollection[]
+  likedCollection   AnimeCollectionLike[]
+  settings          UserSettings?
+  animeComments     Comment[]
+  animeCommentLikes CommentLike[]
+  animeReview       Review[]
 
   @@map("users")
 }

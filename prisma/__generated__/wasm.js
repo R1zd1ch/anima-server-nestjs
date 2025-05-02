@@ -292,6 +292,22 @@ exports.Prisma.AnimeCollectionLikeScalarFieldEnum = {
   likedAt: 'likedAt'
 };
 
+exports.Prisma.CommentScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  userId: 'userId',
+  animeId: 'animeId',
+  episode: 'episode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CommentLikeScalarFieldEnum = {
+  userId: 'userId',
+  commentId: 'commentId',
+  likedAt: 'likedAt'
+};
+
 exports.Prisma.AnimeEpisodeProgressScalarFieldEnum = {
   userId: 'userId',
   animeId: 'animeId',
@@ -300,6 +316,28 @@ exports.Prisma.AnimeEpisodeProgressScalarFieldEnum = {
   isWatched: 'isWatched',
   updatedAt: 'updatedAt',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.ReviewScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  animeId: 'animeId',
+  rating: 'rating',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserSettingsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  theme: 'theme',
+  language: 'language',
+  show18plus: 'show18plus',
+  showActivity: 'showActivity',
+  showAnimeList: 'showAnimeList',
+  notificationsOn: 'notificationsOn',
+  preferredGenres: 'preferredGenres'
 };
 
 exports.Prisma.UserScalarFieldEnum = {
@@ -440,7 +478,11 @@ exports.Prisma.ModelName = {
   AnimeCollection: 'AnimeCollection',
   AnimeInCollection: 'AnimeInCollection',
   AnimeCollectionLike: 'AnimeCollectionLike',
+  Comment: 'Comment',
+  CommentLike: 'CommentLike',
   AnimeEpisodeProgress: 'AnimeEpisodeProgress',
+  Review: 'Review',
+  UserSettings: 'UserSettings',
   User: 'User'
 };
 

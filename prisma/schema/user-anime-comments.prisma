@@ -1,0 +1,34 @@
+model Comment {
+  id      String @id @default(uuid())
+  content String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  anime   Anime?  @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  animeId String?
+
+  episode Int?
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  CommentLike CommentLike[]
+
+  @@map("comments")
+}
+
+model CommentLike {
+  userId    String
+  commentId String
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  likedAt DateTime @default(now())
+
+  @@id([userId, commentId])
+  @@unique([userId, commentId])
+  @@index([commentId])
+  @@index([userId])
+  @@map("comment_likes")
+}

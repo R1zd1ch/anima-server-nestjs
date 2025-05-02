@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { AuthMethod } from 'prisma/__generated__';
+import { AuthMethod, UserSettings } from 'prisma/__generated__';
 import { PrismaService } from '../../../../../../shared/lib/prisma/prisma.service';
 import { hash } from 'argon2';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -15,6 +15,63 @@ export class UserService {
       },
       include: {
         accounts: true,
+      },
+    });
+
+    if (!user) {
+      throw new NotFoundException(`Пользователь с id ${id} не найден`);
+    }
+
+    return user;
+  }
+
+  public async getUserWithSettings(id: string) {
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        displayName: true,
+        username: true,
+        picture: true,
+        email: true,
+        isTwoFactorEnabled: true,
+      },
+    });
+
+    let settings = await this.prismaService.userSettings.findUnique({
+      where: {
+        userId: id,
+      },
+    });
+
+    if (!user) {
+      throw new NotFoundException(`Пользователь с id ${id} не найден`);
+    }
+
+    if (!settings) {
+      settings = await this.cheackAndCreateSettings(user.id);
+    }
+
+    return {
+      ...user,
+      settings: {
+        ...settings,
+      },
+    };
+  }
+
+  public async getPublicProfile(id: string) {
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        displayName: true,
+        username: true,
+        picture: true,
       },
     });
 
@@ -93,6 +150,8 @@ export class UserService {
       },
     });
 
+    await this.cheackAndCreateSettings(user.id);
+
     return user;
   }
 
@@ -111,5 +170,49 @@ export class UserService {
     });
 
     return updatedUser;
+  }
+
+  public async updateSettings(userId: string, dto: Partial<UserSettings>) {
+    const user = await this.findById(userId);
+
+    const updatedUser = await this.prismaService.userSettings.update({
+      where: {
+        userId: user.id,
+      },
+      data: dto,
+    });
+
+    return updatedUser;
+  }
+
+  private async cheackAndCreateSettings(userId: string) {
+    const settings = await this.prismaService.userSettings.findUnique({
+      where: {
+        userId,
+      },
+    });
+
+    if (!settings) {
+      await this.prismaService.userSettings.create({
+        data: {
+          userId,
+        },
+      });
+      return settings;
+    }
+
+    return settings;
+  }
+
+  public async delete(id: string) {
+    const user = await this.findById(id);
+
+    await this.prismaService.user.delete({
+      where: {
+        id: user.id,
+      },
+    });
+
+    return user;
   }
 }

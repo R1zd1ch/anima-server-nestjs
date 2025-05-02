@@ -2,8 +2,8 @@ model AnimeVideo {
   animeId String
   videoId String
 
-  anime Anime @relation(fields: [animeId], references: [id])
-  video Video @relation(fields: [videoId], references: [id])
+  anime Anime @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
 
   @@id([animeId, videoId])
   @@map("anime_videos")

@@ -6,7 +6,7 @@ model AnimeCollection {
   isPublic    Boolean             @default(false)
   type        AnimeCollectionType @default(CUSTOM)
 
-  user  User                  @relation(fields: [userId], references: [id])
+  user  User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
   items AnimeInCollection[]
   likes AnimeCollectionLike[]
 
@@ -20,8 +20,8 @@ model AnimeInCollection {
   collectionId String
   animeId      String
 
-  anime      Anime           @relation(fields: [animeId], references: [id])
-  collection AnimeCollection @relation(fields: [collectionId], references: [id])
+  anime      Anime           @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  collection AnimeCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
 
   note    String?
   addedAt DateTime @default(now())
@@ -34,8 +34,8 @@ model AnimeCollectionLike {
   userId       String
   collectionId String
 
-  user       User            @relation(fields: [userId], references: [id])
-  collection AnimeCollection @relation(fields: [collectionId], references: [id])
+  user       User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  collection AnimeCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
 
   likedAt DateTime @default(now())
 

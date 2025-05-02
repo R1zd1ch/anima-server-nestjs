@@ -6,8 +6,8 @@ model AnimeEpisodeProgress {
   timestamp Int
   isWatched Boolean @default(false)
 
-  anime Anime @relation(fields: [animeId], references: [id])
-  user  User  @relation(fields: [userId], references: [id])
+  anime Anime @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())

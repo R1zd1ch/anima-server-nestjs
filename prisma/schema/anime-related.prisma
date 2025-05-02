@@ -4,8 +4,8 @@ model RelatedAnime {
   relatedAnimeId String
   relationKind   RelationKind
 
-  anime   Anime @relation("AnimeToRelatedAnime", fields: [animeId], references: [id])
-  related Anime @relation("RelatedAnimeToAnime", fields: [relatedAnimeId], references: [id])
+  anime   Anime @relation("AnimeToRelatedAnime", fields: [animeId], references: [id], onDelete: Cascade)
+  related Anime @relation("RelatedAnimeToAnime", fields: [relatedAnimeId], references: [id], onDelete: Cascade)
 
   @@unique([animeId, relatedAnimeId])
   @@map("related_animes")

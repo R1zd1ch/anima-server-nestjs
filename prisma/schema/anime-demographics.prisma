@@ -11,8 +11,8 @@ model Demographic {
 model AnimeDemographic {
   animeId       String
   demographicId String
-  anime         Anime       @relation(fields: [animeId], references: [id])
-  demographic   Demographic @relation(fields: [demographicId], references: [id])
+  anime         Anime       @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  demographic   Demographic @relation(fields: [demographicId], references: [id], onDelete: Cascade)
 
   @@id([animeId, demographicId])
   @@map("anime_demographics")

@@ -11,8 +11,8 @@ model Theme {
 model AnimeTheme {
   animeId String
   themeId String
-  anime   Anime  @relation(fields: [animeId], references: [id])
-  theme   Theme  @relation(fields: [themeId], references: [id])
+  anime   Anime  @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  theme   Theme  @relation(fields: [themeId], references: [id], onDelete: Cascade)
 
   @@id([animeId, themeId])
   @@map("anime_themes")

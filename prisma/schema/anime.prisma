@@ -38,6 +38,8 @@ model Anime {
   relatedAnime      RelatedAnime[]         @relation("RelatedAnimeToAnime")
   userProgress      AnimeEpisodeProgress[]
   animeInCollection AnimeInCollection[]
+  comments          Comment[]
+  reviews           Review[]
 
   @@unique([name, shikimoriId])
   @@map("animes")
