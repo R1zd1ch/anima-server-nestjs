@@ -4,7 +4,6 @@ ARG SERVICE=auth-microservice
 WORKDIR /app
 
 COPY package.json bun.lock* ./
-
 RUN bun install
 
 COPY prisma/schema ./prisma/schema/
@@ -19,7 +18,6 @@ CMD ["./start.sh"]
 
 # FROM oven/bun:1-slim AS runner
 # ARG SERVICE=auth-microservice
-
 # WORKDIR /app
 
 # COPY --from=builder /app/node_modules ./node_modules

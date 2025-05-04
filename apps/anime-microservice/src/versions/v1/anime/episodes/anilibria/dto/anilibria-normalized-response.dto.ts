@@ -1,6 +1,6 @@
 import {
   IsArray,
-  IsInt,
+  IsNumber,
   IsOptional,
   IsString,
   ValidateNested,
@@ -17,11 +17,11 @@ export class TranslationInfoDto {
 
 export class OpeningDto {
   @IsOptional()
-  @IsInt()
+  @IsNumber()
   stop: number | null;
 
   @IsOptional()
-  @IsInt()
+  @IsNumber()
   start: number | null;
 }
 
@@ -47,7 +47,7 @@ export class EpisodeDto {
   @IsString()
   name: string;
 
-  @IsInt()
+  @IsNumber()
   ordinal: number;
 
   @ValidateNested()
@@ -74,7 +74,7 @@ export class EpisodeDto {
   @IsString()
   hls_1080: string | null;
 
-  @IsInt()
+  @IsNumber()
   duration: number;
 
   @IsOptional()
@@ -88,7 +88,7 @@ export class EpisodeDto {
   @IsString()
   updated_at: string;
 
-  @IsInt()
+  @IsNumber()
   sort_order: number;
 
   @IsOptional()
@@ -97,7 +97,7 @@ export class EpisodeDto {
 }
 
 export class SeasonDto {
-  @IsInt()
+  @IsNumber()
   season: number;
 
   @IsArray()
@@ -111,7 +111,7 @@ export class TranslationDto {
   @Type(() => TranslationInfoDto)
   translation: TranslationInfoDto;
 
-  @IsInt()
+  @IsNumber()
   lastEpisode: number;
 
   @IsArray()
@@ -127,13 +127,13 @@ export class AnilibriaNormalizedDto {
   @IsString()
   name: string;
 
-  @IsInt()
+  @IsNumber()
   year: number;
 
   @IsString()
   shikimoriId: string;
 
-  @IsInt()
+  @IsNumber()
   episodesCount: number;
 
   @IsArray()

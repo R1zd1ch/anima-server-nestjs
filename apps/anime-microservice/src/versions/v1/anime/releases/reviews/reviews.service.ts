@@ -1,4 +1,10 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { PrismaService } from 'shared/lib/prisma/prisma.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
@@ -14,27 +20,120 @@ export class ReviewsService {
     page: number = 1,
   ) {
     try {
-      return this.prismaService.review.findMany({
-        where: {
-          animeId: releaseId,
+      const where = { animeId: releaseId };
+      const [reviews, total] = await Promise.all([
+        this.prismaService.review.findMany({
+          where,
+          include: {
+            user: {
+              select: {
+                id: true,
+                username: true,
+                picture: true,
+              },
+            },
+          },
+          take: limit,
+          skip: (page - 1) * limit,
+          orderBy: {
+            createdAt: 'desc',
+          },
+        }),
+        this.prismaService.review.count({ where }),
+      ]);
+
+      return {
+        data: reviews,
+        meta: {
+          total,
+          page,
+          limit,
+          totalPages: Math.ceil(total / limit),
         },
-        take: limit,
-        skip: (page - 1) * limit,
-      });
+      };
     } catch {
-      this.logger.log(`ошибка получения оценок по id релиза`);
-      return [];
+      this.logger.log(`Ошибка получения оценок по id релиза`);
+      throw new InternalServerErrorException(
+        `Ошибка получения оценок по id релиза`,
+      );
     }
   }
 
   public async createReview(dto: CreateReviewDto) {
     try {
-      return this.prismaService.review.create({
-        data: dto,
-      });
+      return this.prismaService.review.create({ data: dto });
     } catch {
-      this.logger.log(`ошибка создания оценки`);
-      return null;
+      this.logger.log(`Ошибка создания оценки`);
+      throw new InternalServerErrorException(`Ошибка создания оценки`);
+    }
+  }
+
+  public async getUserReviews(
+    userId: string,
+    page: number = 1,
+    limit: number = 10,
+    sortBy: 'newest' | 'oldest' = 'newest',
+  ) {
+    try {
+      const where = { userId };
+
+      const [comments, total] = await Promise.all([
+        this.prismaService.comment.findMany({
+          where,
+          skip: (page - 1) * limit,
+          take: limit,
+          orderBy: {
+            createdAt: sortBy === 'newest' ? 'desc' : 'asc',
+          },
+          include: {
+            user: {
+              select: {
+                id: true,
+                username: true,
+                picture: true,
+              },
+            },
+            anime: {
+              select: {
+                id: true,
+                russian: true,
+                name: true,
+                poster: {
+                  select: { originalUrl: true, mainUrl: true },
+                },
+              },
+            },
+          },
+        }),
+        this.prismaService.comment.count({ where }),
+      ]);
+
+      if (!comments) {
+        return {
+          data: [],
+          meta: {
+            total: 0,
+            page,
+            limit,
+            totalPages: 0,
+          },
+        };
+      }
+
+      return {
+        data: comments,
+        meta: {
+          total,
+          page,
+          limit,
+          totalPages: Math.ceil(total / limit),
+        },
+      };
+    } catch {
+      this.logger.log(`Ошибка получения оценок пользователя`);
+      throw new InternalServerErrorException(
+        'Ошибка получения оценок пользователя',
+      );
     }
   }
 
@@ -49,9 +148,9 @@ export class ReviewsService {
         },
       });
 
-      if (!review) {
-        throw new NotFoundException(`оценка не найдена`);
-      }
+      if (!review) throw new NotFoundException(`Оценка не найдена`);
+      if (dto.userId !== review.userId)
+        throw new UnauthorizedException(`Нельзя обновить чужую оценку`);
 
       return this.prismaService.review.update({
         where: {
@@ -63,12 +162,12 @@ export class ReviewsService {
         data: dto,
       });
     } catch {
-      this.logger.log(`ошибка обновления оценки`);
-      return null;
+      this.logger.log(`Ошибка обновления оценки`);
+      throw new InternalServerErrorException(`Ошибка обновления оценки`);
     }
   }
 
-  public async deleteReview(reviewId: string) {
+  public async deleteReview(userId: string, reviewId: string) {
     try {
       const review = await this.prismaService.review.findUnique({
         where: {
@@ -76,9 +175,10 @@ export class ReviewsService {
         },
       });
 
-      if (!review) {
-        throw new NotFoundException(`оценка не найдена`);
-      }
+      if (!review) throw new NotFoundException(`Оценка не найдена`);
+
+      if (userId !== review.userId)
+        throw new UnauthorizedException(`Нельзя удалить чужую оценку`);
 
       return this.prismaService.review.delete({
         where: {
@@ -86,7 +186,8 @@ export class ReviewsService {
         },
       });
     } catch {
-      this.logger.log(`ошибка удаления оценки`);
+      this.logger.log(`Ошибка удаления оценки`);
+      throw new InternalServerErrorException(`Ошибка удаления оценки`);
     }
   }
 }

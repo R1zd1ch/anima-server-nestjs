@@ -324,12 +324,6 @@ enum ParsingSessionType {
   UPDATE_THIS_YEAR
 }
 
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider        = "prisma-client-js"
   output          = "../__generated__"
@@ -404,10 +398,16 @@ model Comment {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-  anime   Anime?  @relation(fields: [animeId], references: [id], onDelete: Cascade)
-  animeId String?
+  anime      Anime?  @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  animeId    String?
+  likesCount Int     @default(0)
 
   episode Int?
+
+  parentId String?
+  parent   Comment? @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+
+  replies Comment[] @relation("CommentReplies")
 
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
@@ -475,10 +475,11 @@ model UserSettings {
   language   String  @default("en")
   show18plus Boolean @default(false)
 
-  showActivity    Boolean  @default(true)
-  showAnimeList   Boolean  @default(true)
-  notificationsOn Boolean  @default(true)
-  preferredGenres String[]
+  showActivity             Boolean  @default(true)
+  showAnimeList            Boolean  @default(true)
+  showAllCommentsInProfile Boolean  @default(true)
+  notificationsOn          Boolean  @default(true)
+  preferredGenres          String[]
 }
 
 model User {

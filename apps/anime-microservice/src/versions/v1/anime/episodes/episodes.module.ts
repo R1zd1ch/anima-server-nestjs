@@ -5,9 +5,10 @@ import { EpisodesService } from './episodes.service';
 import { EpisodesController } from './episodes.controller';
 import { KodikService } from './kodik/kodik.service';
 import { AnilibriaService } from './anilibria/anilibiria.service';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
-  imports: [KodikModule, AnilibriaModule],
+  imports: [KodikModule, AnilibriaModule, CommentsModule],
   providers: [EpisodesService, KodikService, AnilibriaService],
   controllers: [EpisodesController],
   exports: [EpisodesService, KodikService, AnilibriaService],

@@ -52,7 +52,34 @@ export class AnilibriaService {
           seasons: [
             {
               season: 1,
-              episodes: data.episodes,
+              episodes: data.episodes.map((ep, index) => ({
+                id: ep.id?.toString() ?? String(index),
+                name: ep.name ?? `Episode ${index + 1}`,
+                ordinal:
+                  'episode' in ep && typeof ep.episode === 'number'
+                    ? ep.episode
+                    : index + 1,
+                opening: { start: null, stop: null },
+                ending: { start: null, stop: null },
+                preview: {
+                  src: null,
+                  thumbnail: null,
+                  optimized: {
+                    src: null,
+                    thumbnail: null,
+                    optimized: null,
+                  },
+                },
+                hls_480: null,
+                hls_720: null,
+                hls_1080: null,
+                duration: 0,
+                rutube_id: null,
+                youtube_id: null,
+                updated_at: new Date().toISOString(),
+                sort_order: index,
+                name_english: null,
+              })),
             },
           ],
         },

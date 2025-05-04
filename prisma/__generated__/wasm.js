@@ -297,7 +297,9 @@ exports.Prisma.CommentScalarFieldEnum = {
   content: 'content',
   userId: 'userId',
   animeId: 'animeId',
+  likesCount: 'likesCount',
   episode: 'episode',
+  parentId: 'parentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -336,6 +338,7 @@ exports.Prisma.UserSettingsScalarFieldEnum = {
   show18plus: 'show18plus',
   showActivity: 'showActivity',
   showAnimeList: 'showAnimeList',
+  showAllCommentsInProfile: 'showAllCommentsInProfile',
   notificationsOn: 'notificationsOn',
   preferredGenres: 'preferredGenres'
 };

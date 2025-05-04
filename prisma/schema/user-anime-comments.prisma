@@ -5,10 +5,16 @@ model Comment {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-  anime   Anime?  @relation(fields: [animeId], references: [id], onDelete: Cascade)
-  animeId String?
+  anime      Anime?  @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  animeId    String?
+  likesCount Int     @default(0)
 
   episode Int?
+
+  parentId String?
+  parent   Comment? @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+
+  replies Comment[] @relation("CommentReplies")
 
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt

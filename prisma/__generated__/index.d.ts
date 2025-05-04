@@ -3777,10 +3777,12 @@ export namespace Prisma {
    */
 
   export type CommentCountOutputType = {
+    replies: number
     CommentLike: number
   }
 
   export type CommentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    replies?: boolean | CommentCountOutputTypeCountRepliesArgs
     CommentLike?: boolean | CommentCountOutputTypeCountCommentLikeArgs
   }
 
@@ -3793,6 +3795,13 @@ export namespace Prisma {
      * Select specific fields to fetch from the CommentCountOutputType
      */
     select?: CommentCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CommentCountOutputType without action
+   */
+  export type CommentCountOutputTypeCountRepliesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommentWhereInput
   }
 
   /**
@@ -26885,10 +26894,12 @@ export namespace Prisma {
   }
 
   export type CommentAvgAggregateOutputType = {
+    likesCount: number | null
     episode: number | null
   }
 
   export type CommentSumAggregateOutputType = {
+    likesCount: number | null
     episode: number | null
   }
 
@@ -26897,7 +26908,9 @@ export namespace Prisma {
     content: string | null
     userId: string | null
     animeId: string | null
+    likesCount: number | null
     episode: number | null
+    parentId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -26907,7 +26920,9 @@ export namespace Prisma {
     content: string | null
     userId: string | null
     animeId: string | null
+    likesCount: number | null
     episode: number | null
+    parentId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -26917,7 +26932,9 @@ export namespace Prisma {
     content: number
     userId: number
     animeId: number
+    likesCount: number
     episode: number
+    parentId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -26925,10 +26942,12 @@ export namespace Prisma {
 
 
   export type CommentAvgAggregateInputType = {
+    likesCount?: true
     episode?: true
   }
 
   export type CommentSumAggregateInputType = {
+    likesCount?: true
     episode?: true
   }
 
@@ -26937,7 +26956,9 @@ export namespace Prisma {
     content?: true
     userId?: true
     animeId?: true
+    likesCount?: true
     episode?: true
+    parentId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -26947,7 +26968,9 @@ export namespace Prisma {
     content?: true
     userId?: true
     animeId?: true
+    likesCount?: true
     episode?: true
+    parentId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -26957,7 +26980,9 @@ export namespace Prisma {
     content?: true
     userId?: true
     animeId?: true
+    likesCount?: true
     episode?: true
+    parentId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -27054,7 +27079,9 @@ export namespace Prisma {
     content: string
     userId: string
     animeId: string | null
+    likesCount: number
     episode: number | null
+    parentId: string | null
     createdAt: Date
     updatedAt: Date
     _count: CommentCountAggregateOutputType | null
@@ -27083,11 +27110,15 @@ export namespace Prisma {
     content?: boolean
     userId?: boolean
     animeId?: boolean
+    likesCount?: boolean
     episode?: boolean
+    parentId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     anime?: boolean | Comment$animeArgs<ExtArgs>
+    parent?: boolean | Comment$parentArgs<ExtArgs>
+    replies?: boolean | Comment$repliesArgs<ExtArgs>
     CommentLike?: boolean | Comment$CommentLikeArgs<ExtArgs>
     _count?: boolean | CommentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
@@ -27097,11 +27128,14 @@ export namespace Prisma {
     content?: boolean
     userId?: boolean
     animeId?: boolean
+    likesCount?: boolean
     episode?: boolean
+    parentId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     anime?: boolean | Comment$animeArgs<ExtArgs>
+    parent?: boolean | Comment$parentArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
 
   export type CommentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -27109,11 +27143,14 @@ export namespace Prisma {
     content?: boolean
     userId?: boolean
     animeId?: boolean
+    likesCount?: boolean
     episode?: boolean
+    parentId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     anime?: boolean | Comment$animeArgs<ExtArgs>
+    parent?: boolean | Comment$parentArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
 
   export type CommentSelectScalar = {
@@ -27121,25 +27158,31 @@ export namespace Prisma {
     content?: boolean
     userId?: boolean
     animeId?: boolean
+    likesCount?: boolean
     episode?: boolean
+    parentId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "userId" | "animeId" | "episode" | "createdAt" | "updatedAt", ExtArgs["result"]["comment"]>
+  export type CommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "userId" | "animeId" | "likesCount" | "episode" | "parentId" | "createdAt" | "updatedAt", ExtArgs["result"]["comment"]>
   export type CommentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     anime?: boolean | Comment$animeArgs<ExtArgs>
+    parent?: boolean | Comment$parentArgs<ExtArgs>
+    replies?: boolean | Comment$repliesArgs<ExtArgs>
     CommentLike?: boolean | Comment$CommentLikeArgs<ExtArgs>
     _count?: boolean | CommentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CommentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     anime?: boolean | Comment$animeArgs<ExtArgs>
+    parent?: boolean | Comment$parentArgs<ExtArgs>
   }
   export type CommentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     anime?: boolean | Comment$animeArgs<ExtArgs>
+    parent?: boolean | Comment$parentArgs<ExtArgs>
   }
 
   export type $CommentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -27147,6 +27190,8 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       anime: Prisma.$AnimePayload<ExtArgs> | null
+      parent: Prisma.$CommentPayload<ExtArgs> | null
+      replies: Prisma.$CommentPayload<ExtArgs>[]
       CommentLike: Prisma.$CommentLikePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -27154,7 +27199,9 @@ export namespace Prisma {
       content: string
       userId: string
       animeId: string | null
+      likesCount: number
       episode: number | null
+      parentId: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["comment"]>
@@ -27553,6 +27600,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     anime<T extends Comment$animeArgs<ExtArgs> = {}>(args?: Subset<T, Comment$animeArgs<ExtArgs>>): Prisma__AnimeClient<$Result.GetResult<Prisma.$AnimePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    parent<T extends Comment$parentArgs<ExtArgs> = {}>(args?: Subset<T, Comment$parentArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    replies<T extends Comment$repliesArgs<ExtArgs> = {}>(args?: Subset<T, Comment$repliesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     CommentLike<T extends Comment$CommentLikeArgs<ExtArgs> = {}>(args?: Subset<T, Comment$CommentLikeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -27587,7 +27636,9 @@ export namespace Prisma {
     readonly content: FieldRef<"Comment", 'String'>
     readonly userId: FieldRef<"Comment", 'String'>
     readonly animeId: FieldRef<"Comment", 'String'>
+    readonly likesCount: FieldRef<"Comment", 'Int'>
     readonly episode: FieldRef<"Comment", 'Int'>
+    readonly parentId: FieldRef<"Comment", 'String'>
     readonly createdAt: FieldRef<"Comment", 'DateTime'>
     readonly updatedAt: FieldRef<"Comment", 'DateTime'>
   }
@@ -28002,6 +28053,49 @@ export namespace Prisma {
      */
     include?: AnimeInclude<ExtArgs> | null
     where?: AnimeWhereInput
+  }
+
+  /**
+   * Comment.parent
+   */
+  export type Comment$parentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    where?: CommentWhereInput
+  }
+
+  /**
+   * Comment.replies
+   */
+  export type Comment$repliesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    where?: CommentWhereInput
+    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
+    cursor?: CommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
   }
 
   /**
@@ -31361,6 +31455,7 @@ export namespace Prisma {
     show18plus: boolean | null
     showActivity: boolean | null
     showAnimeList: boolean | null
+    showAllCommentsInProfile: boolean | null
     notificationsOn: boolean | null
   }
 
@@ -31372,6 +31467,7 @@ export namespace Prisma {
     show18plus: boolean | null
     showActivity: boolean | null
     showAnimeList: boolean | null
+    showAllCommentsInProfile: boolean | null
     notificationsOn: boolean | null
   }
 
@@ -31383,6 +31479,7 @@ export namespace Prisma {
     show18plus: number
     showActivity: number
     showAnimeList: number
+    showAllCommentsInProfile: number
     notificationsOn: number
     preferredGenres: number
     _all: number
@@ -31397,6 +31494,7 @@ export namespace Prisma {
     show18plus?: true
     showActivity?: true
     showAnimeList?: true
+    showAllCommentsInProfile?: true
     notificationsOn?: true
   }
 
@@ -31408,6 +31506,7 @@ export namespace Prisma {
     show18plus?: true
     showActivity?: true
     showAnimeList?: true
+    showAllCommentsInProfile?: true
     notificationsOn?: true
   }
 
@@ -31419,6 +31518,7 @@ export namespace Prisma {
     show18plus?: true
     showActivity?: true
     showAnimeList?: true
+    showAllCommentsInProfile?: true
     notificationsOn?: true
     preferredGenres?: true
     _all?: true
@@ -31504,6 +31604,7 @@ export namespace Prisma {
     show18plus: boolean
     showActivity: boolean
     showAnimeList: boolean
+    showAllCommentsInProfile: boolean
     notificationsOn: boolean
     preferredGenres: string[]
     _count: UserSettingsCountAggregateOutputType | null
@@ -31533,6 +31634,7 @@ export namespace Prisma {
     show18plus?: boolean
     showActivity?: boolean
     showAnimeList?: boolean
+    showAllCommentsInProfile?: boolean
     notificationsOn?: boolean
     preferredGenres?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -31546,6 +31648,7 @@ export namespace Prisma {
     show18plus?: boolean
     showActivity?: boolean
     showAnimeList?: boolean
+    showAllCommentsInProfile?: boolean
     notificationsOn?: boolean
     preferredGenres?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -31559,6 +31662,7 @@ export namespace Prisma {
     show18plus?: boolean
     showActivity?: boolean
     showAnimeList?: boolean
+    showAllCommentsInProfile?: boolean
     notificationsOn?: boolean
     preferredGenres?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -31572,11 +31676,12 @@ export namespace Prisma {
     show18plus?: boolean
     showActivity?: boolean
     showAnimeList?: boolean
+    showAllCommentsInProfile?: boolean
     notificationsOn?: boolean
     preferredGenres?: boolean
   }
 
-  export type UserSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "theme" | "language" | "show18plus" | "showActivity" | "showAnimeList" | "notificationsOn" | "preferredGenres", ExtArgs["result"]["userSettings"]>
+  export type UserSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "theme" | "language" | "show18plus" | "showActivity" | "showAnimeList" | "showAllCommentsInProfile" | "notificationsOn" | "preferredGenres", ExtArgs["result"]["userSettings"]>
   export type UserSettingsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -31600,6 +31705,7 @@ export namespace Prisma {
       show18plus: boolean
       showActivity: boolean
       showAnimeList: boolean
+      showAllCommentsInProfile: boolean
       notificationsOn: boolean
       preferredGenres: string[]
     }, ExtArgs["result"]["userSettings"]>
@@ -32033,6 +32139,7 @@ export namespace Prisma {
     readonly show18plus: FieldRef<"UserSettings", 'Boolean'>
     readonly showActivity: FieldRef<"UserSettings", 'Boolean'>
     readonly showAnimeList: FieldRef<"UserSettings", 'Boolean'>
+    readonly showAllCommentsInProfile: FieldRef<"UserSettings", 'Boolean'>
     readonly notificationsOn: FieldRef<"UserSettings", 'Boolean'>
     readonly preferredGenres: FieldRef<"UserSettings", 'String[]'>
   }
@@ -34058,7 +34165,9 @@ export namespace Prisma {
     content: 'content',
     userId: 'userId',
     animeId: 'animeId',
+    likesCount: 'likesCount',
     episode: 'episode',
+    parentId: 'parentId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -34109,6 +34218,7 @@ export namespace Prisma {
     show18plus: 'show18plus',
     showActivity: 'showActivity',
     showAnimeList: 'showAnimeList',
+    showAllCommentsInProfile: 'showAllCommentsInProfile',
     notificationsOn: 'notificationsOn',
     preferredGenres: 'preferredGenres'
   };
@@ -35652,11 +35762,15 @@ export namespace Prisma {
     content?: StringFilter<"Comment"> | string
     userId?: StringFilter<"Comment"> | string
     animeId?: StringNullableFilter<"Comment"> | string | null
+    likesCount?: IntFilter<"Comment"> | number
     episode?: IntNullableFilter<"Comment"> | number | null
+    parentId?: StringNullableFilter<"Comment"> | string | null
     createdAt?: DateTimeFilter<"Comment"> | Date | string
     updatedAt?: DateTimeFilter<"Comment"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     anime?: XOR<AnimeNullableScalarRelationFilter, AnimeWhereInput> | null
+    parent?: XOR<CommentNullableScalarRelationFilter, CommentWhereInput> | null
+    replies?: CommentListRelationFilter
     CommentLike?: CommentLikeListRelationFilter
   }
 
@@ -35665,11 +35779,15 @@ export namespace Prisma {
     content?: SortOrder
     userId?: SortOrder
     animeId?: SortOrderInput | SortOrder
+    likesCount?: SortOrder
     episode?: SortOrderInput | SortOrder
+    parentId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
     anime?: AnimeOrderByWithRelationInput
+    parent?: CommentOrderByWithRelationInput
+    replies?: CommentOrderByRelationAggregateInput
     CommentLike?: CommentLikeOrderByRelationAggregateInput
   }
 
@@ -35681,11 +35799,15 @@ export namespace Prisma {
     content?: StringFilter<"Comment"> | string
     userId?: StringFilter<"Comment"> | string
     animeId?: StringNullableFilter<"Comment"> | string | null
+    likesCount?: IntFilter<"Comment"> | number
     episode?: IntNullableFilter<"Comment"> | number | null
+    parentId?: StringNullableFilter<"Comment"> | string | null
     createdAt?: DateTimeFilter<"Comment"> | Date | string
     updatedAt?: DateTimeFilter<"Comment"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     anime?: XOR<AnimeNullableScalarRelationFilter, AnimeWhereInput> | null
+    parent?: XOR<CommentNullableScalarRelationFilter, CommentWhereInput> | null
+    replies?: CommentListRelationFilter
     CommentLike?: CommentLikeListRelationFilter
   }, "id">
 
@@ -35694,7 +35816,9 @@ export namespace Prisma {
     content?: SortOrder
     userId?: SortOrder
     animeId?: SortOrderInput | SortOrder
+    likesCount?: SortOrder
     episode?: SortOrderInput | SortOrder
+    parentId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: CommentCountOrderByAggregateInput
@@ -35712,7 +35836,9 @@ export namespace Prisma {
     content?: StringWithAggregatesFilter<"Comment"> | string
     userId?: StringWithAggregatesFilter<"Comment"> | string
     animeId?: StringNullableWithAggregatesFilter<"Comment"> | string | null
+    likesCount?: IntWithAggregatesFilter<"Comment"> | number
     episode?: IntNullableWithAggregatesFilter<"Comment"> | number | null
+    parentId?: StringNullableWithAggregatesFilter<"Comment"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Comment"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Comment"> | Date | string
   }
@@ -35919,6 +36045,7 @@ export namespace Prisma {
     show18plus?: BoolFilter<"UserSettings"> | boolean
     showActivity?: BoolFilter<"UserSettings"> | boolean
     showAnimeList?: BoolFilter<"UserSettings"> | boolean
+    showAllCommentsInProfile?: BoolFilter<"UserSettings"> | boolean
     notificationsOn?: BoolFilter<"UserSettings"> | boolean
     preferredGenres?: StringNullableListFilter<"UserSettings">
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -35932,6 +36059,7 @@ export namespace Prisma {
     show18plus?: SortOrder
     showActivity?: SortOrder
     showAnimeList?: SortOrder
+    showAllCommentsInProfile?: SortOrder
     notificationsOn?: SortOrder
     preferredGenres?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -35948,6 +36076,7 @@ export namespace Prisma {
     show18plus?: BoolFilter<"UserSettings"> | boolean
     showActivity?: BoolFilter<"UserSettings"> | boolean
     showAnimeList?: BoolFilter<"UserSettings"> | boolean
+    showAllCommentsInProfile?: BoolFilter<"UserSettings"> | boolean
     notificationsOn?: BoolFilter<"UserSettings"> | boolean
     preferredGenres?: StringNullableListFilter<"UserSettings">
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -35961,6 +36090,7 @@ export namespace Prisma {
     show18plus?: SortOrder
     showActivity?: SortOrder
     showAnimeList?: SortOrder
+    showAllCommentsInProfile?: SortOrder
     notificationsOn?: SortOrder
     preferredGenres?: SortOrder
     _count?: UserSettingsCountOrderByAggregateInput
@@ -35979,6 +36109,7 @@ export namespace Prisma {
     show18plus?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     showActivity?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     showAnimeList?: BoolWithAggregatesFilter<"UserSettings"> | boolean
+    showAllCommentsInProfile?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     notificationsOn?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     preferredGenres?: StringNullableListFilter<"UserSettings">
   }
@@ -37382,11 +37513,14 @@ export namespace Prisma {
   export type CommentCreateInput = {
     id?: string
     content: string
+    likesCount?: number
     episode?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutAnimeCommentsInput
     anime?: AnimeCreateNestedOneWithoutCommentsInput
+    parent?: CommentCreateNestedOneWithoutRepliesInput
+    replies?: CommentCreateNestedManyWithoutParentInput
     CommentLike?: CommentLikeCreateNestedManyWithoutCommentInput
   }
 
@@ -37395,20 +37529,26 @@ export namespace Prisma {
     content: string
     userId: string
     animeId?: string | null
+    likesCount?: number
     episode?: number | null
+    parentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    replies?: CommentUncheckedCreateNestedManyWithoutParentInput
     CommentLike?: CommentLikeUncheckedCreateNestedManyWithoutCommentInput
   }
 
   export type CommentUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    likesCount?: IntFieldUpdateOperationsInput | number
     episode?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutAnimeCommentsNestedInput
     anime?: AnimeUpdateOneWithoutCommentsNestedInput
+    parent?: CommentUpdateOneWithoutRepliesNestedInput
+    replies?: CommentUpdateManyWithoutParentNestedInput
     CommentLike?: CommentLikeUpdateManyWithoutCommentNestedInput
   }
 
@@ -37417,9 +37557,12 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     animeId?: NullableStringFieldUpdateOperationsInput | string | null
+    likesCount?: IntFieldUpdateOperationsInput | number
     episode?: NullableIntFieldUpdateOperationsInput | number | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    replies?: CommentUncheckedUpdateManyWithoutParentNestedInput
     CommentLike?: CommentLikeUncheckedUpdateManyWithoutCommentNestedInput
   }
 
@@ -37428,7 +37571,9 @@ export namespace Prisma {
     content: string
     userId: string
     animeId?: string | null
+    likesCount?: number
     episode?: number | null
+    parentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -37436,6 +37581,7 @@ export namespace Prisma {
   export type CommentUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    likesCount?: IntFieldUpdateOperationsInput | number
     episode?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -37446,7 +37592,9 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     animeId?: NullableStringFieldUpdateOperationsInput | string | null
+    likesCount?: IntFieldUpdateOperationsInput | number
     episode?: NullableIntFieldUpdateOperationsInput | number | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -37634,6 +37782,7 @@ export namespace Prisma {
     show18plus?: boolean
     showActivity?: boolean
     showAnimeList?: boolean
+    showAllCommentsInProfile?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
     user: UserCreateNestedOneWithoutSettingsInput
@@ -37647,6 +37796,7 @@ export namespace Prisma {
     show18plus?: boolean
     showActivity?: boolean
     showAnimeList?: boolean
+    showAllCommentsInProfile?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
@@ -37658,6 +37808,7 @@ export namespace Prisma {
     show18plus?: BoolFieldUpdateOperationsInput | boolean
     showActivity?: BoolFieldUpdateOperationsInput | boolean
     showAnimeList?: BoolFieldUpdateOperationsInput | boolean
+    showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
     user?: UserUpdateOneRequiredWithoutSettingsNestedInput
@@ -37671,6 +37822,7 @@ export namespace Prisma {
     show18plus?: BoolFieldUpdateOperationsInput | boolean
     showActivity?: BoolFieldUpdateOperationsInput | boolean
     showAnimeList?: BoolFieldUpdateOperationsInput | boolean
+    showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
@@ -37683,6 +37835,7 @@ export namespace Prisma {
     show18plus?: boolean
     showActivity?: boolean
     showAnimeList?: boolean
+    showAllCommentsInProfile?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
@@ -37694,6 +37847,7 @@ export namespace Prisma {
     show18plus?: BoolFieldUpdateOperationsInput | boolean
     showActivity?: BoolFieldUpdateOperationsInput | boolean
     showAnimeList?: BoolFieldUpdateOperationsInput | boolean
+    showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
@@ -37706,6 +37860,7 @@ export namespace Prisma {
     show18plus?: BoolFieldUpdateOperationsInput | boolean
     showActivity?: BoolFieldUpdateOperationsInput | boolean
     showAnimeList?: BoolFieldUpdateOperationsInput | boolean
+    showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
@@ -39014,6 +39169,11 @@ export namespace Prisma {
     isNot?: AnimeWhereInput | null
   }
 
+  export type CommentNullableScalarRelationFilter = {
+    is?: CommentWhereInput | null
+    isNot?: CommentWhereInput | null
+  }
+
   export type CommentLikeListRelationFilter = {
     every?: CommentLikeWhereInput
     some?: CommentLikeWhereInput
@@ -39029,12 +39189,15 @@ export namespace Prisma {
     content?: SortOrder
     userId?: SortOrder
     animeId?: SortOrder
+    likesCount?: SortOrder
     episode?: SortOrder
+    parentId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type CommentAvgOrderByAggregateInput = {
+    likesCount?: SortOrder
     episode?: SortOrder
   }
 
@@ -39043,7 +39206,9 @@ export namespace Prisma {
     content?: SortOrder
     userId?: SortOrder
     animeId?: SortOrder
+    likesCount?: SortOrder
     episode?: SortOrder
+    parentId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -39053,12 +39218,15 @@ export namespace Prisma {
     content?: SortOrder
     userId?: SortOrder
     animeId?: SortOrder
+    likesCount?: SortOrder
     episode?: SortOrder
+    parentId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type CommentSumOrderByAggregateInput = {
+    likesCount?: SortOrder
     episode?: SortOrder
   }
 
@@ -39187,6 +39355,7 @@ export namespace Prisma {
     show18plus?: SortOrder
     showActivity?: SortOrder
     showAnimeList?: SortOrder
+    showAllCommentsInProfile?: SortOrder
     notificationsOn?: SortOrder
     preferredGenres?: SortOrder
   }
@@ -39199,6 +39368,7 @@ export namespace Prisma {
     show18plus?: SortOrder
     showActivity?: SortOrder
     showAnimeList?: SortOrder
+    showAllCommentsInProfile?: SortOrder
     notificationsOn?: SortOrder
   }
 
@@ -39210,6 +39380,7 @@ export namespace Prisma {
     show18plus?: SortOrder
     showActivity?: SortOrder
     showAnimeList?: SortOrder
+    showAllCommentsInProfile?: SortOrder
     notificationsOn?: SortOrder
   }
 
@@ -40592,11 +40763,31 @@ export namespace Prisma {
     connect?: AnimeWhereUniqueInput
   }
 
+  export type CommentCreateNestedOneWithoutRepliesInput = {
+    create?: XOR<CommentCreateWithoutRepliesInput, CommentUncheckedCreateWithoutRepliesInput>
+    connectOrCreate?: CommentCreateOrConnectWithoutRepliesInput
+    connect?: CommentWhereUniqueInput
+  }
+
+  export type CommentCreateNestedManyWithoutParentInput = {
+    create?: XOR<CommentCreateWithoutParentInput, CommentUncheckedCreateWithoutParentInput> | CommentCreateWithoutParentInput[] | CommentUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutParentInput | CommentCreateOrConnectWithoutParentInput[]
+    createMany?: CommentCreateManyParentInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+  }
+
   export type CommentLikeCreateNestedManyWithoutCommentInput = {
     create?: XOR<CommentLikeCreateWithoutCommentInput, CommentLikeUncheckedCreateWithoutCommentInput> | CommentLikeCreateWithoutCommentInput[] | CommentLikeUncheckedCreateWithoutCommentInput[]
     connectOrCreate?: CommentLikeCreateOrConnectWithoutCommentInput | CommentLikeCreateOrConnectWithoutCommentInput[]
     createMany?: CommentLikeCreateManyCommentInputEnvelope
     connect?: CommentLikeWhereUniqueInput | CommentLikeWhereUniqueInput[]
+  }
+
+  export type CommentUncheckedCreateNestedManyWithoutParentInput = {
+    create?: XOR<CommentCreateWithoutParentInput, CommentUncheckedCreateWithoutParentInput> | CommentCreateWithoutParentInput[] | CommentUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutParentInput | CommentCreateOrConnectWithoutParentInput[]
+    createMany?: CommentCreateManyParentInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
   }
 
   export type CommentLikeUncheckedCreateNestedManyWithoutCommentInput = {
@@ -40624,6 +40815,30 @@ export namespace Prisma {
     update?: XOR<XOR<AnimeUpdateToOneWithWhereWithoutCommentsInput, AnimeUpdateWithoutCommentsInput>, AnimeUncheckedUpdateWithoutCommentsInput>
   }
 
+  export type CommentUpdateOneWithoutRepliesNestedInput = {
+    create?: XOR<CommentCreateWithoutRepliesInput, CommentUncheckedCreateWithoutRepliesInput>
+    connectOrCreate?: CommentCreateOrConnectWithoutRepliesInput
+    upsert?: CommentUpsertWithoutRepliesInput
+    disconnect?: CommentWhereInput | boolean
+    delete?: CommentWhereInput | boolean
+    connect?: CommentWhereUniqueInput
+    update?: XOR<XOR<CommentUpdateToOneWithWhereWithoutRepliesInput, CommentUpdateWithoutRepliesInput>, CommentUncheckedUpdateWithoutRepliesInput>
+  }
+
+  export type CommentUpdateManyWithoutParentNestedInput = {
+    create?: XOR<CommentCreateWithoutParentInput, CommentUncheckedCreateWithoutParentInput> | CommentCreateWithoutParentInput[] | CommentUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutParentInput | CommentCreateOrConnectWithoutParentInput[]
+    upsert?: CommentUpsertWithWhereUniqueWithoutParentInput | CommentUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: CommentCreateManyParentInputEnvelope
+    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    update?: CommentUpdateWithWhereUniqueWithoutParentInput | CommentUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: CommentUpdateManyWithWhereWithoutParentInput | CommentUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
+  }
+
   export type CommentLikeUpdateManyWithoutCommentNestedInput = {
     create?: XOR<CommentLikeCreateWithoutCommentInput, CommentLikeUncheckedCreateWithoutCommentInput> | CommentLikeCreateWithoutCommentInput[] | CommentLikeUncheckedCreateWithoutCommentInput[]
     connectOrCreate?: CommentLikeCreateOrConnectWithoutCommentInput | CommentLikeCreateOrConnectWithoutCommentInput[]
@@ -40636,6 +40851,20 @@ export namespace Prisma {
     update?: CommentLikeUpdateWithWhereUniqueWithoutCommentInput | CommentLikeUpdateWithWhereUniqueWithoutCommentInput[]
     updateMany?: CommentLikeUpdateManyWithWhereWithoutCommentInput | CommentLikeUpdateManyWithWhereWithoutCommentInput[]
     deleteMany?: CommentLikeScalarWhereInput | CommentLikeScalarWhereInput[]
+  }
+
+  export type CommentUncheckedUpdateManyWithoutParentNestedInput = {
+    create?: XOR<CommentCreateWithoutParentInput, CommentUncheckedCreateWithoutParentInput> | CommentCreateWithoutParentInput[] | CommentUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutParentInput | CommentCreateOrConnectWithoutParentInput[]
+    upsert?: CommentUpsertWithWhereUniqueWithoutParentInput | CommentUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: CommentCreateManyParentInputEnvelope
+    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    update?: CommentUpdateWithWhereUniqueWithoutParentInput | CommentUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: CommentUpdateManyWithWhereWithoutParentInput | CommentUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
   }
 
   export type CommentLikeUncheckedUpdateManyWithoutCommentNestedInput = {
@@ -43838,10 +44067,13 @@ export namespace Prisma {
   export type CommentCreateWithoutAnimeInput = {
     id?: string
     content: string
+    likesCount?: number
     episode?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutAnimeCommentsInput
+    parent?: CommentCreateNestedOneWithoutRepliesInput
+    replies?: CommentCreateNestedManyWithoutParentInput
     CommentLike?: CommentLikeCreateNestedManyWithoutCommentInput
   }
 
@@ -43849,9 +44081,12 @@ export namespace Prisma {
     id?: string
     content: string
     userId: string
+    likesCount?: number
     episode?: number | null
+    parentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    replies?: CommentUncheckedCreateNestedManyWithoutParentInput
     CommentLike?: CommentLikeUncheckedCreateNestedManyWithoutCommentInput
   }
 
@@ -44137,7 +44372,9 @@ export namespace Prisma {
     content?: StringFilter<"Comment"> | string
     userId?: StringFilter<"Comment"> | string
     animeId?: StringNullableFilter<"Comment"> | string | null
+    likesCount?: IntFilter<"Comment"> | number
     episode?: IntNullableFilter<"Comment"> | number | null
+    parentId?: StringNullableFilter<"Comment"> | string | null
     createdAt?: DateTimeFilter<"Comment"> | Date | string
     updatedAt?: DateTimeFilter<"Comment"> | Date | string
   }
@@ -45010,6 +45247,73 @@ export namespace Prisma {
     create: XOR<AnimeCreateWithoutCommentsInput, AnimeUncheckedCreateWithoutCommentsInput>
   }
 
+  export type CommentCreateWithoutRepliesInput = {
+    id?: string
+    content: string
+    likesCount?: number
+    episode?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutAnimeCommentsInput
+    anime?: AnimeCreateNestedOneWithoutCommentsInput
+    parent?: CommentCreateNestedOneWithoutRepliesInput
+    CommentLike?: CommentLikeCreateNestedManyWithoutCommentInput
+  }
+
+  export type CommentUncheckedCreateWithoutRepliesInput = {
+    id?: string
+    content: string
+    userId: string
+    animeId?: string | null
+    likesCount?: number
+    episode?: number | null
+    parentId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    CommentLike?: CommentLikeUncheckedCreateNestedManyWithoutCommentInput
+  }
+
+  export type CommentCreateOrConnectWithoutRepliesInput = {
+    where: CommentWhereUniqueInput
+    create: XOR<CommentCreateWithoutRepliesInput, CommentUncheckedCreateWithoutRepliesInput>
+  }
+
+  export type CommentCreateWithoutParentInput = {
+    id?: string
+    content: string
+    likesCount?: number
+    episode?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutAnimeCommentsInput
+    anime?: AnimeCreateNestedOneWithoutCommentsInput
+    replies?: CommentCreateNestedManyWithoutParentInput
+    CommentLike?: CommentLikeCreateNestedManyWithoutCommentInput
+  }
+
+  export type CommentUncheckedCreateWithoutParentInput = {
+    id?: string
+    content: string
+    userId: string
+    animeId?: string | null
+    likesCount?: number
+    episode?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    replies?: CommentUncheckedCreateNestedManyWithoutParentInput
+    CommentLike?: CommentLikeUncheckedCreateNestedManyWithoutCommentInput
+  }
+
+  export type CommentCreateOrConnectWithoutParentInput = {
+    where: CommentWhereUniqueInput
+    create: XOR<CommentCreateWithoutParentInput, CommentUncheckedCreateWithoutParentInput>
+  }
+
+  export type CommentCreateManyParentInputEnvelope = {
+    data: CommentCreateManyParentInput | CommentCreateManyParentInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CommentLikeCreateWithoutCommentInput = {
     likedAt?: Date | string
     user: UserCreateNestedOneWithoutAnimeCommentLikesInput
@@ -45178,6 +45482,59 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutAnimeNestedInput
   }
 
+  export type CommentUpsertWithoutRepliesInput = {
+    update: XOR<CommentUpdateWithoutRepliesInput, CommentUncheckedUpdateWithoutRepliesInput>
+    create: XOR<CommentCreateWithoutRepliesInput, CommentUncheckedCreateWithoutRepliesInput>
+    where?: CommentWhereInput
+  }
+
+  export type CommentUpdateToOneWithWhereWithoutRepliesInput = {
+    where?: CommentWhereInput
+    data: XOR<CommentUpdateWithoutRepliesInput, CommentUncheckedUpdateWithoutRepliesInput>
+  }
+
+  export type CommentUpdateWithoutRepliesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+    episode?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutAnimeCommentsNestedInput
+    anime?: AnimeUpdateOneWithoutCommentsNestedInput
+    parent?: CommentUpdateOneWithoutRepliesNestedInput
+    CommentLike?: CommentLikeUpdateManyWithoutCommentNestedInput
+  }
+
+  export type CommentUncheckedUpdateWithoutRepliesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    animeId?: NullableStringFieldUpdateOperationsInput | string | null
+    likesCount?: IntFieldUpdateOperationsInput | number
+    episode?: NullableIntFieldUpdateOperationsInput | number | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    CommentLike?: CommentLikeUncheckedUpdateManyWithoutCommentNestedInput
+  }
+
+  export type CommentUpsertWithWhereUniqueWithoutParentInput = {
+    where: CommentWhereUniqueInput
+    update: XOR<CommentUpdateWithoutParentInput, CommentUncheckedUpdateWithoutParentInput>
+    create: XOR<CommentCreateWithoutParentInput, CommentUncheckedCreateWithoutParentInput>
+  }
+
+  export type CommentUpdateWithWhereUniqueWithoutParentInput = {
+    where: CommentWhereUniqueInput
+    data: XOR<CommentUpdateWithoutParentInput, CommentUncheckedUpdateWithoutParentInput>
+  }
+
+  export type CommentUpdateManyWithWhereWithoutParentInput = {
+    where: CommentScalarWhereInput
+    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutParentInput>
+  }
+
   export type CommentLikeUpsertWithWhereUniqueWithoutCommentInput = {
     where: CommentLikeWhereUniqueInput
     update: XOR<CommentLikeUpdateWithoutCommentInput, CommentLikeUncheckedUpdateWithoutCommentInput>
@@ -45255,11 +45612,14 @@ export namespace Prisma {
   export type CommentCreateWithoutCommentLikeInput = {
     id?: string
     content: string
+    likesCount?: number
     episode?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutAnimeCommentsInput
     anime?: AnimeCreateNestedOneWithoutCommentsInput
+    parent?: CommentCreateNestedOneWithoutRepliesInput
+    replies?: CommentCreateNestedManyWithoutParentInput
   }
 
   export type CommentUncheckedCreateWithoutCommentLikeInput = {
@@ -45267,9 +45627,12 @@ export namespace Prisma {
     content: string
     userId: string
     animeId?: string | null
+    likesCount?: number
     episode?: number | null
+    parentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    replies?: CommentUncheckedCreateNestedManyWithoutParentInput
   }
 
   export type CommentCreateOrConnectWithoutCommentLikeInput = {
@@ -45346,11 +45709,14 @@ export namespace Prisma {
   export type CommentUpdateWithoutCommentLikeInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    likesCount?: IntFieldUpdateOperationsInput | number
     episode?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutAnimeCommentsNestedInput
     anime?: AnimeUpdateOneWithoutCommentsNestedInput
+    parent?: CommentUpdateOneWithoutRepliesNestedInput
+    replies?: CommentUpdateManyWithoutParentNestedInput
   }
 
   export type CommentUncheckedUpdateWithoutCommentLikeInput = {
@@ -45358,9 +45724,12 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     animeId?: NullableStringFieldUpdateOperationsInput | string | null
+    likesCount?: IntFieldUpdateOperationsInput | number
     episode?: NullableIntFieldUpdateOperationsInput | number | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    replies?: CommentUncheckedUpdateManyWithoutParentNestedInput
   }
 
   export type AnimeCreateWithoutUserProgressInput = {
@@ -46156,6 +46525,7 @@ export namespace Prisma {
     show18plus?: boolean
     showActivity?: boolean
     showAnimeList?: boolean
+    showAllCommentsInProfile?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
@@ -46167,6 +46537,7 @@ export namespace Prisma {
     show18plus?: boolean
     showActivity?: boolean
     showAnimeList?: boolean
+    showAllCommentsInProfile?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
@@ -46179,10 +46550,13 @@ export namespace Prisma {
   export type CommentCreateWithoutUserInput = {
     id?: string
     content: string
+    likesCount?: number
     episode?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     anime?: AnimeCreateNestedOneWithoutCommentsInput
+    parent?: CommentCreateNestedOneWithoutRepliesInput
+    replies?: CommentCreateNestedManyWithoutParentInput
     CommentLike?: CommentLikeCreateNestedManyWithoutCommentInput
   }
 
@@ -46190,9 +46564,12 @@ export namespace Prisma {
     id?: string
     content: string
     animeId?: string | null
+    likesCount?: number
     episode?: number | null
+    parentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    replies?: CommentUncheckedCreateNestedManyWithoutParentInput
     CommentLike?: CommentLikeUncheckedCreateNestedManyWithoutCommentInput
   }
 
@@ -46365,6 +46742,7 @@ export namespace Prisma {
     show18plus?: BoolFieldUpdateOperationsInput | boolean
     showActivity?: BoolFieldUpdateOperationsInput | boolean
     showAnimeList?: BoolFieldUpdateOperationsInput | boolean
+    showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
@@ -46376,6 +46754,7 @@ export namespace Prisma {
     show18plus?: BoolFieldUpdateOperationsInput | boolean
     showActivity?: BoolFieldUpdateOperationsInput | boolean
     showAnimeList?: BoolFieldUpdateOperationsInput | boolean
+    showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
@@ -46586,7 +46965,9 @@ export namespace Prisma {
     id?: string
     content: string
     userId: string
+    likesCount?: number
     episode?: number | null
+    parentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -46777,10 +47158,13 @@ export namespace Prisma {
   export type CommentUpdateWithoutAnimeInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    likesCount?: IntFieldUpdateOperationsInput | number
     episode?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutAnimeCommentsNestedInput
+    parent?: CommentUpdateOneWithoutRepliesNestedInput
+    replies?: CommentUpdateManyWithoutParentNestedInput
     CommentLike?: CommentLikeUpdateManyWithoutCommentNestedInput
   }
 
@@ -46788,9 +47172,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    likesCount?: IntFieldUpdateOperationsInput | number
     episode?: NullableIntFieldUpdateOperationsInput | number | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    replies?: CommentUncheckedUpdateManyWithoutParentNestedInput
     CommentLike?: CommentLikeUncheckedUpdateManyWithoutCommentNestedInput
   }
 
@@ -46798,7 +47185,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    likesCount?: IntFieldUpdateOperationsInput | number
     episode?: NullableIntFieldUpdateOperationsInput | number | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -46874,9 +47263,57 @@ export namespace Prisma {
     likedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type CommentCreateManyParentInput = {
+    id?: string
+    content: string
+    userId: string
+    animeId?: string | null
+    likesCount?: number
+    episode?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type CommentLikeCreateManyCommentInput = {
     userId: string
     likedAt?: Date | string
+  }
+
+  export type CommentUpdateWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+    episode?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutAnimeCommentsNestedInput
+    anime?: AnimeUpdateOneWithoutCommentsNestedInput
+    replies?: CommentUpdateManyWithoutParentNestedInput
+    CommentLike?: CommentLikeUpdateManyWithoutCommentNestedInput
+  }
+
+  export type CommentUncheckedUpdateWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    animeId?: NullableStringFieldUpdateOperationsInput | string | null
+    likesCount?: IntFieldUpdateOperationsInput | number
+    episode?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    replies?: CommentUncheckedUpdateManyWithoutParentNestedInput
+    CommentLike?: CommentLikeUncheckedUpdateManyWithoutCommentNestedInput
+  }
+
+  export type CommentUncheckedUpdateManyWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    animeId?: NullableStringFieldUpdateOperationsInput | string | null
+    likesCount?: IntFieldUpdateOperationsInput | number
+    episode?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CommentLikeUpdateWithoutCommentInput = {
@@ -46933,7 +47370,9 @@ export namespace Prisma {
     id?: string
     content: string
     animeId?: string | null
+    likesCount?: number
     episode?: number | null
+    parentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -47064,10 +47503,13 @@ export namespace Prisma {
   export type CommentUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    likesCount?: IntFieldUpdateOperationsInput | number
     episode?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     anime?: AnimeUpdateOneWithoutCommentsNestedInput
+    parent?: CommentUpdateOneWithoutRepliesNestedInput
+    replies?: CommentUpdateManyWithoutParentNestedInput
     CommentLike?: CommentLikeUpdateManyWithoutCommentNestedInput
   }
 
@@ -47075,9 +47517,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     animeId?: NullableStringFieldUpdateOperationsInput | string | null
+    likesCount?: IntFieldUpdateOperationsInput | number
     episode?: NullableIntFieldUpdateOperationsInput | number | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    replies?: CommentUncheckedUpdateManyWithoutParentNestedInput
     CommentLike?: CommentLikeUncheckedUpdateManyWithoutCommentNestedInput
   }
 
@@ -47085,7 +47530,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     animeId?: NullableStringFieldUpdateOperationsInput | string | null
+    likesCount?: IntFieldUpdateOperationsInput | number
     episode?: NullableIntFieldUpdateOperationsInput | number | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
