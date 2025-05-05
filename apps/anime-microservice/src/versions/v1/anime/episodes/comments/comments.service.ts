@@ -15,7 +15,7 @@ export class CommentsService {
   private readonly logger = new Logger(CommentsService.name);
   public constructor(private readonly prismaService: PrismaService) {}
 
-  public async createComment(dto: CreateCommentDto) {
+  public async createComment(dto: CreateCommentDto, userId: string) {
     try {
       if (dto.parentId) {
         const parent = await this.prismaService.comment.findUnique({
@@ -29,7 +29,10 @@ export class CommentsService {
       }
 
       const comment = await this.prismaService.comment.create({
-        data: dto,
+        data: {
+          ...dto,
+          userId,
+        },
         include: {
           user: {
             select: {
@@ -52,25 +55,34 @@ export class CommentsService {
       });
 
       return comment;
-    } catch {
-      this.logger.error(`Ошибка создания комментария`);
+    } catch (e) {
+      this.logger.error(
+        `Ошибка создания комментария ${e instanceof Error ? e.stack : JSON.stringify(e)}`,
+      );
       throw new InternalServerErrorException('Ошибка создания комментария');
     }
   }
 
-  public async updateComment(id: string, dto: UpdateCommentDto) {
+  public async updateComment(
+    id: string,
+    dto: UpdateCommentDto,
+    userId: string,
+  ) {
     try {
       const comment = await this.prismaService.comment.findFirst({
-        where: { id },
+        where: { id: id },
       });
 
       if (!comment) throw new NotFoundException('Комментарий не найден');
-      if (dto.userId !== comment.userId)
+      if (userId !== comment.userId)
         throw new UnauthorizedException('Вы не создатель комментария');
 
       return await this.prismaService.comment.update({
-        where: { id },
-        data: dto,
+        where: { id: comment.id },
+        data: {
+          ...dto,
+          updatedAt: new Date(),
+        },
       });
     } catch {
       this.logger.error(`Ошибка обновления комментария`);
@@ -179,8 +191,10 @@ export class CommentsService {
           totalPages: Math.ceil(total / limit),
         },
       };
-    } catch {
-      this.logger.error(`Ошибка получения комментариев`);
+    } catch (e) {
+      this.logger.error(
+        `Ошибка получения комментариев, ${e instanceof Error ? e.stack : JSON.stringify(e)}`,
+      );
       throw new InternalServerErrorException('Ошибка получения комментариев');
     }
   }
@@ -189,6 +203,7 @@ export class CommentsService {
     commentId: string,
     page: number = 1,
     limit: number = 10,
+    userId?: string,
   ) {
     try {
       const where = { parentId: commentId };
@@ -224,13 +239,14 @@ export class CommentsService {
       }
 
       const replyIds = replies.map((reply) => reply.id);
-      const userLikesForReplies = await this.prismaService.commentLike.findMany(
-        {
-          where: {
-            commentId: { in: replyIds },
-          },
-        },
-      );
+      const userLikesForReplies = userId
+        ? await this.prismaService.commentLike.findMany({
+            where: {
+              userId,
+              commentId: { in: replyIds },
+            },
+          })
+        : [];
 
       const repliesWithLikes = replies.map((reply) => ({
         ...reply,

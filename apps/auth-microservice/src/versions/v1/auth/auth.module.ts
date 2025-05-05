@@ -26,7 +26,7 @@ import { RabbitMQModule } from 'shared/lib/rabbitmq/rabbitmq.module';
     }),
     RabbitMQModule.forRoot({
       name: 'USER_SERVICE',
-      queue: 'user_queue',
+      queue: 'auth_queue',
     }),
     forwardRef(() => EmailConfirmationModule),
   ],

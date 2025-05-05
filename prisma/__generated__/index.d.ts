@@ -31456,6 +31456,8 @@ export namespace Prisma {
     showActivity: boolean | null
     showAnimeList: boolean | null
     showAllCommentsInProfile: boolean | null
+    showCollections: boolean | null
+    showLikedCollections: boolean | null
     notificationsOn: boolean | null
   }
 
@@ -31468,6 +31470,8 @@ export namespace Prisma {
     showActivity: boolean | null
     showAnimeList: boolean | null
     showAllCommentsInProfile: boolean | null
+    showCollections: boolean | null
+    showLikedCollections: boolean | null
     notificationsOn: boolean | null
   }
 
@@ -31480,6 +31484,8 @@ export namespace Prisma {
     showActivity: number
     showAnimeList: number
     showAllCommentsInProfile: number
+    showCollections: number
+    showLikedCollections: number
     notificationsOn: number
     preferredGenres: number
     _all: number
@@ -31495,6 +31501,8 @@ export namespace Prisma {
     showActivity?: true
     showAnimeList?: true
     showAllCommentsInProfile?: true
+    showCollections?: true
+    showLikedCollections?: true
     notificationsOn?: true
   }
 
@@ -31507,6 +31515,8 @@ export namespace Prisma {
     showActivity?: true
     showAnimeList?: true
     showAllCommentsInProfile?: true
+    showCollections?: true
+    showLikedCollections?: true
     notificationsOn?: true
   }
 
@@ -31519,6 +31529,8 @@ export namespace Prisma {
     showActivity?: true
     showAnimeList?: true
     showAllCommentsInProfile?: true
+    showCollections?: true
+    showLikedCollections?: true
     notificationsOn?: true
     preferredGenres?: true
     _all?: true
@@ -31605,6 +31617,8 @@ export namespace Prisma {
     showActivity: boolean
     showAnimeList: boolean
     showAllCommentsInProfile: boolean
+    showCollections: boolean
+    showLikedCollections: boolean
     notificationsOn: boolean
     preferredGenres: string[]
     _count: UserSettingsCountAggregateOutputType | null
@@ -31635,6 +31649,8 @@ export namespace Prisma {
     showActivity?: boolean
     showAnimeList?: boolean
     showAllCommentsInProfile?: boolean
+    showCollections?: boolean
+    showLikedCollections?: boolean
     notificationsOn?: boolean
     preferredGenres?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -31649,6 +31665,8 @@ export namespace Prisma {
     showActivity?: boolean
     showAnimeList?: boolean
     showAllCommentsInProfile?: boolean
+    showCollections?: boolean
+    showLikedCollections?: boolean
     notificationsOn?: boolean
     preferredGenres?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -31663,6 +31681,8 @@ export namespace Prisma {
     showActivity?: boolean
     showAnimeList?: boolean
     showAllCommentsInProfile?: boolean
+    showCollections?: boolean
+    showLikedCollections?: boolean
     notificationsOn?: boolean
     preferredGenres?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -31677,11 +31697,13 @@ export namespace Prisma {
     showActivity?: boolean
     showAnimeList?: boolean
     showAllCommentsInProfile?: boolean
+    showCollections?: boolean
+    showLikedCollections?: boolean
     notificationsOn?: boolean
     preferredGenres?: boolean
   }
 
-  export type UserSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "theme" | "language" | "show18plus" | "showActivity" | "showAnimeList" | "showAllCommentsInProfile" | "notificationsOn" | "preferredGenres", ExtArgs["result"]["userSettings"]>
+  export type UserSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "theme" | "language" | "show18plus" | "showActivity" | "showAnimeList" | "showAllCommentsInProfile" | "showCollections" | "showLikedCollections" | "notificationsOn" | "preferredGenres", ExtArgs["result"]["userSettings"]>
   export type UserSettingsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -31706,6 +31728,8 @@ export namespace Prisma {
       showActivity: boolean
       showAnimeList: boolean
       showAllCommentsInProfile: boolean
+      showCollections: boolean
+      showLikedCollections: boolean
       notificationsOn: boolean
       preferredGenres: string[]
     }, ExtArgs["result"]["userSettings"]>
@@ -32140,6 +32164,8 @@ export namespace Prisma {
     readonly showActivity: FieldRef<"UserSettings", 'Boolean'>
     readonly showAnimeList: FieldRef<"UserSettings", 'Boolean'>
     readonly showAllCommentsInProfile: FieldRef<"UserSettings", 'Boolean'>
+    readonly showCollections: FieldRef<"UserSettings", 'Boolean'>
+    readonly showLikedCollections: FieldRef<"UserSettings", 'Boolean'>
     readonly notificationsOn: FieldRef<"UserSettings", 'Boolean'>
     readonly preferredGenres: FieldRef<"UserSettings", 'String[]'>
   }
@@ -34219,6 +34245,8 @@ export namespace Prisma {
     showActivity: 'showActivity',
     showAnimeList: 'showAnimeList',
     showAllCommentsInProfile: 'showAllCommentsInProfile',
+    showCollections: 'showCollections',
+    showLikedCollections: 'showLikedCollections',
     notificationsOn: 'notificationsOn',
     preferredGenres: 'preferredGenres'
   };
@@ -36046,6 +36074,8 @@ export namespace Prisma {
     showActivity?: BoolFilter<"UserSettings"> | boolean
     showAnimeList?: BoolFilter<"UserSettings"> | boolean
     showAllCommentsInProfile?: BoolFilter<"UserSettings"> | boolean
+    showCollections?: BoolFilter<"UserSettings"> | boolean
+    showLikedCollections?: BoolFilter<"UserSettings"> | boolean
     notificationsOn?: BoolFilter<"UserSettings"> | boolean
     preferredGenres?: StringNullableListFilter<"UserSettings">
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -36060,6 +36090,8 @@ export namespace Prisma {
     showActivity?: SortOrder
     showAnimeList?: SortOrder
     showAllCommentsInProfile?: SortOrder
+    showCollections?: SortOrder
+    showLikedCollections?: SortOrder
     notificationsOn?: SortOrder
     preferredGenres?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -36077,6 +36109,8 @@ export namespace Prisma {
     showActivity?: BoolFilter<"UserSettings"> | boolean
     showAnimeList?: BoolFilter<"UserSettings"> | boolean
     showAllCommentsInProfile?: BoolFilter<"UserSettings"> | boolean
+    showCollections?: BoolFilter<"UserSettings"> | boolean
+    showLikedCollections?: BoolFilter<"UserSettings"> | boolean
     notificationsOn?: BoolFilter<"UserSettings"> | boolean
     preferredGenres?: StringNullableListFilter<"UserSettings">
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -36091,6 +36125,8 @@ export namespace Prisma {
     showActivity?: SortOrder
     showAnimeList?: SortOrder
     showAllCommentsInProfile?: SortOrder
+    showCollections?: SortOrder
+    showLikedCollections?: SortOrder
     notificationsOn?: SortOrder
     preferredGenres?: SortOrder
     _count?: UserSettingsCountOrderByAggregateInput
@@ -36110,6 +36146,8 @@ export namespace Prisma {
     showActivity?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     showAnimeList?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     showAllCommentsInProfile?: BoolWithAggregatesFilter<"UserSettings"> | boolean
+    showCollections?: BoolWithAggregatesFilter<"UserSettings"> | boolean
+    showLikedCollections?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     notificationsOn?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     preferredGenres?: StringNullableListFilter<"UserSettings">
   }
@@ -37783,6 +37821,8 @@ export namespace Prisma {
     showActivity?: boolean
     showAnimeList?: boolean
     showAllCommentsInProfile?: boolean
+    showCollections?: boolean
+    showLikedCollections?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
     user: UserCreateNestedOneWithoutSettingsInput
@@ -37797,6 +37837,8 @@ export namespace Prisma {
     showActivity?: boolean
     showAnimeList?: boolean
     showAllCommentsInProfile?: boolean
+    showCollections?: boolean
+    showLikedCollections?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
@@ -37809,6 +37851,8 @@ export namespace Prisma {
     showActivity?: BoolFieldUpdateOperationsInput | boolean
     showAnimeList?: BoolFieldUpdateOperationsInput | boolean
     showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showLikedCollections?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
     user?: UserUpdateOneRequiredWithoutSettingsNestedInput
@@ -37823,6 +37867,8 @@ export namespace Prisma {
     showActivity?: BoolFieldUpdateOperationsInput | boolean
     showAnimeList?: BoolFieldUpdateOperationsInput | boolean
     showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showLikedCollections?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
@@ -37836,6 +37882,8 @@ export namespace Prisma {
     showActivity?: boolean
     showAnimeList?: boolean
     showAllCommentsInProfile?: boolean
+    showCollections?: boolean
+    showLikedCollections?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
@@ -37848,6 +37896,8 @@ export namespace Prisma {
     showActivity?: BoolFieldUpdateOperationsInput | boolean
     showAnimeList?: BoolFieldUpdateOperationsInput | boolean
     showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showLikedCollections?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
@@ -37861,6 +37911,8 @@ export namespace Prisma {
     showActivity?: BoolFieldUpdateOperationsInput | boolean
     showAnimeList?: BoolFieldUpdateOperationsInput | boolean
     showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showLikedCollections?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
@@ -39356,6 +39408,8 @@ export namespace Prisma {
     showActivity?: SortOrder
     showAnimeList?: SortOrder
     showAllCommentsInProfile?: SortOrder
+    showCollections?: SortOrder
+    showLikedCollections?: SortOrder
     notificationsOn?: SortOrder
     preferredGenres?: SortOrder
   }
@@ -39369,6 +39423,8 @@ export namespace Prisma {
     showActivity?: SortOrder
     showAnimeList?: SortOrder
     showAllCommentsInProfile?: SortOrder
+    showCollections?: SortOrder
+    showLikedCollections?: SortOrder
     notificationsOn?: SortOrder
   }
 
@@ -39381,6 +39437,8 @@ export namespace Prisma {
     showActivity?: SortOrder
     showAnimeList?: SortOrder
     showAllCommentsInProfile?: SortOrder
+    showCollections?: SortOrder
+    showLikedCollections?: SortOrder
     notificationsOn?: SortOrder
   }
 
@@ -46526,6 +46584,8 @@ export namespace Prisma {
     showActivity?: boolean
     showAnimeList?: boolean
     showAllCommentsInProfile?: boolean
+    showCollections?: boolean
+    showLikedCollections?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
@@ -46538,6 +46598,8 @@ export namespace Prisma {
     showActivity?: boolean
     showAnimeList?: boolean
     showAllCommentsInProfile?: boolean
+    showCollections?: boolean
+    showLikedCollections?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
@@ -46743,6 +46805,8 @@ export namespace Prisma {
     showActivity?: BoolFieldUpdateOperationsInput | boolean
     showAnimeList?: BoolFieldUpdateOperationsInput | boolean
     showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showLikedCollections?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
@@ -46755,6 +46819,8 @@ export namespace Prisma {
     showActivity?: BoolFieldUpdateOperationsInput | boolean
     showAnimeList?: BoolFieldUpdateOperationsInput | boolean
     showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
+    showCollections?: BoolFieldUpdateOperationsInput | boolean
+    showLikedCollections?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }

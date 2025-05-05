@@ -44,6 +44,15 @@ async function bootstrap() {
     },
   });
 
+  app.connectMicroservice({
+    transport: Transport.RMQ,
+    options: {
+      urls: [config.getOrThrow<string>('RABBIT_MQ_URI')],
+      queue: 'auth_queue',
+      queueOptions: { durable: false },
+    },
+  });
+
   app.use(
     session({
       secret: config.getOrThrow<string>('SESSION_SECRET'),

@@ -5,10 +5,23 @@ import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { Transport } from '@nestjs/microservices';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Express } from 'express';
+import * as cookieParser from 'cookie-parser';
+import IORedis from 'ioredis';
+import * as session from 'express-session';
+import { ms, StringValue } from 'shared/lib/utils/ms.util';
+import { parseBoolean } from 'shared/lib/utils/parse-boolean.util';
+import { RedisStore } from 'connect-redis';
 
 async function bootstrap() {
   const app = await NestFactory.create(AnimeMicroserviceModule);
   const config = app.get(ConfigService);
+  const redis = new IORedis(config.getOrThrow('REDIS_URI'));
+
+  app.use(
+    ((cookieParser as (secret: string) => void) ?? (() => {}))(
+      config.getOrThrow<string>('COOKIES_SECRET'),
+    ),
+  );
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -16,6 +29,26 @@ async function bootstrap() {
       transformOptions: {
         enableImplicitConversion: true,
       },
+    }),
+  );
+
+  app.use(
+    session({
+      secret: config.getOrThrow<string>('SESSION_SECRET'),
+      name: config.getOrThrow<string>('SESSION_NAME'),
+      resave: true,
+      saveUninitialized: false,
+      cookie: {
+        domain: config.getOrThrow<string>('SESSION_DOMAIN'),
+        maxAge: ms(config.getOrThrow<StringValue>('SESSION_MAX_AGE')),
+        httpOnly: parseBoolean(config.getOrThrow<string>('SESSION_HTTP_ONLY')),
+        secure: parseBoolean(config.getOrThrow<string>('SESSION_SECURE')),
+        samesite: 'lax',
+      },
+      store: new RedisStore({
+        client: redis,
+        prefix: config.getOrThrow<string>('SESSION_FOLDER'),
+      }),
     }),
   );
 

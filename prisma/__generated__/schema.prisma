@@ -478,6 +478,8 @@ model UserSettings {
   showActivity             Boolean  @default(true)
   showAnimeList            Boolean  @default(true)
   showAllCommentsInProfile Boolean  @default(true)
+  showCollections          Boolean  @default(true)
+  showLikedCollections     Boolean  @default(true)
   notificationsOn          Boolean  @default(true)
   preferredGenres          String[]
 }

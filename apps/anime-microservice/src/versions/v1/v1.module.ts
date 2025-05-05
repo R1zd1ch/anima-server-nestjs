@@ -10,6 +10,7 @@ import { ConfigModule } from '@nestjs/config';
 import { IS_DEV_ENV } from 'shared/lib/utils/is-dev.util';
 import { WatchProgressModule } from './anime/watch-progress/watch-progress.module';
 import { CollectionsModule } from './anime/collections/collections.module';
+import { RabbitMQModule } from 'shared/lib/rabbitmq/rabbitmq.module';
 
 @Module({
   imports: [
@@ -17,6 +18,10 @@ import { CollectionsModule } from './anime/collections/collections.module';
       ignoreEnvFile: !IS_DEV_ENV,
       isGlobal: true,
       expandVariables: true,
+    }),
+    RabbitMQModule.forRoot({
+      name: 'USER_SERVICE',
+      queue: 'user_queue',
     }),
     WatchProgressModule,
     CollectionsModule,

@@ -1,14 +1,11 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateCommentDto {
   @IsString()
   content: string;
 
-  @IsString()
-  userId: string;
-
-  @IsString()
-  episodeId: string;
+  @IsNumber()
+  episode: number;
 
   @IsString()
   animeId: string;

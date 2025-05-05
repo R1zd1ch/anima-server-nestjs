@@ -339,6 +339,8 @@ exports.Prisma.UserSettingsScalarFieldEnum = {
   showActivity: 'showActivity',
   showAnimeList: 'showAnimeList',
   showAllCommentsInProfile: 'showAllCommentsInProfile',
+  showCollections: 'showCollections',
+  showLikedCollections: 'showLikedCollections',
   notificationsOn: 'notificationsOn',
   preferredGenres: 'preferredGenres'
 };
