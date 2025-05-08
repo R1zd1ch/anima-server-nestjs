@@ -2,9 +2,12 @@ import { IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
 
 export class CreateReviewDto {
   @IsString()
-  userId: string;
+  @IsOptional()
+  title?: string;
+
   @IsString()
-  animeId: string;
+  @IsOptional()
+  description?: string;
 
   @IsNumber()
   @Min(1)

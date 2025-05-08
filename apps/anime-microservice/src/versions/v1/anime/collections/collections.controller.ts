@@ -10,13 +10,14 @@ import {
 } from '@nestjs/common';
 import { CollectionsService } from './collections.service';
 import { Authorized } from 'apps/anime-microservice/src/decorators/authorized.decorator';
-import { ApiResponseUtil } from 'shared/lib/utils/api-response';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { Authorization } from 'apps/anime-microservice/src/decorators/auth.decorator';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
 import { UpdateAnimeNoteDto } from './dto/update-anime-note-in-collection.dto';
 import { AddAnimeToCollectionDto } from './dto/add-anime-to-collection.dto';
 import { SoftAuthorization } from 'apps/anime-microservice/src/decorators/soft-auth.decorator';
+import { parsePagination } from 'shared/lib/utils/parse-pagination';
+import { wrapApiResponse } from 'shared/lib/utils/wrap-api-response';
 
 @Controller({
   path: 'anime/user/collections',
@@ -33,15 +34,14 @@ export class CollectionsController {
     @Query('limit') limit: number,
     @Query('sortBy') sortBy: 'newest' | 'oldest' | 'top',
   ) {
-    const pageNumber = Number(page) || 1;
-    const limitNumber = Number(limit) || 10;
+    const { pageNumber, limitNumber } = parsePagination(page, limit);
     const result = await this.collectionsService.getCollections(
       pageNumber,
       limitNumber,
       sortBy,
       viewerId,
     );
-    return ApiResponseUtil.withMeta(result.data, result.meta);
+    return wrapApiResponse(result, true);
   }
 
   @SoftAuthorization()
@@ -54,7 +54,7 @@ export class CollectionsController {
       collectionId,
       viewerId,
     );
-    return ApiResponseUtil.success(result);
+    return wrapApiResponse(result);
   }
 
   @SoftAuthorization()
@@ -67,7 +67,7 @@ export class CollectionsController {
       collectionId,
       viewerId,
     );
-    return ApiResponseUtil.success(result);
+    return wrapApiResponse(result);
   }
 
   @SoftAuthorization()
@@ -79,8 +79,7 @@ export class CollectionsController {
     @Query('limit') limit?: number,
     @Query('sortBy') sortBy?: 'newest' | 'top',
   ) {
-    const pageNumber = Number(page) || 1;
-    const limitNumber = Number(limit) || 10;
+    const { pageNumber, limitNumber } = parsePagination(page, limit);
     const result = await this.collectionsService.getUserCollections(
       userId,
       pageNumber,
@@ -88,8 +87,7 @@ export class CollectionsController {
       sortBy,
       viewerId,
     );
-
-    return ApiResponseUtil.withMeta(result.data, result.meta);
+    return wrapApiResponse(result, true);
   }
 
   @SoftAuthorization()
@@ -101,8 +99,7 @@ export class CollectionsController {
     @Query('limit') limit?: number,
     @Query('sortBy') sortBy?: 'newest' | 'top',
   ) {
-    const pageNumber = Number(page) || 1;
-    const limitNumber = Number(limit) || 10;
+    const { pageNumber, limitNumber } = parsePagination(page, limit);
     const result = await this.collectionsService.getUserLikedCollections(
       userId,
       pageNumber,
@@ -110,7 +107,7 @@ export class CollectionsController {
       sortBy,
       viewerId,
     );
-    return ApiResponseUtil.withMeta(result.data, result.meta);
+    return wrapApiResponse(result, true);
   }
 
   @Authorization()
@@ -123,7 +120,7 @@ export class CollectionsController {
       viewerId,
       dto,
     );
-    return ApiResponseUtil.success(result);
+    return wrapApiResponse(result);
   }
 
   @Authorization()
@@ -138,7 +135,7 @@ export class CollectionsController {
       collectionId,
       dto,
     );
-    return ApiResponseUtil.success(result);
+    return wrapApiResponse(result);
   }
 
   @Authorization()
@@ -151,7 +148,7 @@ export class CollectionsController {
       userId,
       collectionId,
     );
-    return ApiResponseUtil.success(result);
+    return wrapApiResponse(result);
   }
 
   @Authorization()
@@ -164,8 +161,7 @@ export class CollectionsController {
       userId,
       collectionId,
     );
-
-    return ApiResponseUtil.success(result);
+    return wrapApiResponse(result);
   }
 
   @Authorization()
@@ -178,8 +174,7 @@ export class CollectionsController {
       userId,
       collectionId,
     );
-
-    return ApiResponseUtil.success(result);
+    return wrapApiResponse(result);
   }
 
   @Authorization()
@@ -194,7 +189,7 @@ export class CollectionsController {
       collectionId,
       dto,
     );
-    return ApiResponseUtil.success(result);
+    return wrapApiResponse(result);
   }
 
   @Authorization()
@@ -209,7 +204,7 @@ export class CollectionsController {
       collectionId,
       dto,
     );
-    return ApiResponseUtil.success(result);
+    return wrapApiResponse(result);
   }
 
   @Authorization()
@@ -224,6 +219,6 @@ export class CollectionsController {
       collectionId,
       animeId,
     );
-    return ApiResponseUtil.success(result);
+    return wrapApiResponse(result);
   }
 }

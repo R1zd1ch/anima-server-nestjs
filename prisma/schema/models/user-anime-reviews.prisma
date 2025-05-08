@@ -1,0 +1,33 @@
+model Review {
+  id     String @id @default(uuid())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  anime   Anime  @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  animeId String
+
+  rating      Int // 1 - 10
+  title       String?
+  description String?
+  content     String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  reviewLikes ReviewLike[]
+
+  @@unique([userId, animeId])
+}
+
+model ReviewLike {
+  userId   String
+  reviewId String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  review Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+
+  likedAt DateTime @default(now())
+
+  @@id([userId, reviewId])
+  @@index([reviewId])
+  @@index([userId])
+  @@map("review_likes")
+}

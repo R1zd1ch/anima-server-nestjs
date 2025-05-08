@@ -1,0 +1,31 @@
+model User {
+  id String @id @default(uuid())
+
+  username String @unique
+  email    String @unique
+  password String
+
+  displayName String
+  picture     String?
+
+  role     UserRole   @default(REGULAR)
+  method   AuthMethod @default(CREDENTIALS)
+  accounts Account[]
+
+  isVerified         Boolean                @default(false) @map("is_verified")
+  isTwoFactorEnabled Boolean                @default(false) @map("is_two_factor_enabled")
+  animeProgress      AnimeEpisodeProgress[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  animeCollection   AnimeCollection[]
+  likedCollection   AnimeCollectionLike[]
+  settings          UserSettings?
+  animeComments     Comment[]
+  animeCommentLikes CommentLike[]
+  animeReviews      Review[]
+  reviewLikes       ReviewLike[]
+
+  @@map("users")
+}

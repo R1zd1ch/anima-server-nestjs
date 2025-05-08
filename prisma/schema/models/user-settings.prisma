@@ -1,0 +1,19 @@
+model UserSettings {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
+
+  theme      String  @default("system")
+  language   String  @default("en")
+  show18plus Boolean @default(false)
+
+  showActivity             Boolean  @default(true)
+  showAnimeList            Boolean  @default(true)
+  showAllCommentsInProfile Boolean  @default(true)
+  showCollections          Boolean  @default(true)
+  showLikedCollections     Boolean  @default(true)
+  showLikedReviews         Boolean  @default(true)
+  showReviews              Boolean  @default(true)
+  notificationsOn          Boolean  @default(true)
+  preferredGenres          String[]
+}

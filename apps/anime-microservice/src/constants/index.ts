@@ -4,3 +4,4 @@ export * from './anime-sorting';
 export * from './anime-years';
 export * from './anime-types';
 export * from './db-request-anime';
+export * from './review.constants';

@@ -11,6 +11,7 @@ import * as session from 'express-session';
 import { ms, StringValue } from 'shared/lib/utils/ms.util';
 import { parseBoolean } from 'shared/lib/utils/parse-boolean.util';
 import { RedisStore } from 'connect-redis';
+import { AllExceptionsFilter } from 'shared/filters/all-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AnimeMicroserviceModule);
@@ -22,6 +23,8 @@ async function bootstrap() {
       config.getOrThrow<string>('COOKIES_SECRET'),
     ),
   );
+
+  app.useGlobalFilters(new AllExceptionsFilter());
 
   app.useGlobalPipes(
     new ValidationPipe({

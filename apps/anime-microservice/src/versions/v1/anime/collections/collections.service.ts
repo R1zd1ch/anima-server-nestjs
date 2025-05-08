@@ -1,6 +1,5 @@
 import {
   Injectable,
-  InternalServerErrorException,
   Logger,
   NotFoundException,
   UnauthorizedException,
@@ -10,6 +9,8 @@ import { CreateCollectionDto } from './dto/create-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
 import { UpdateAnimeNoteDto } from './dto/update-anime-note-in-collection.dto';
 import { AddAnimeToCollectionDto } from './dto/add-anime-to-collection.dto';
+import { buildMeta } from 'shared/lib/utils/build-meta';
+import { handleError } from 'shared/lib/utils/handle-error';
 
 @Injectable()
 export class CollectionsService {
@@ -37,12 +38,7 @@ export class CollectionsService {
         if (!targetUser?.settings?.showCollections) {
           return {
             data: [],
-            meta: {
-              total: 0,
-              page,
-              limit,
-              totalPages: 0,
-            },
+            meta: buildMeta(0, page, limit),
           };
         }
       }
@@ -80,28 +76,30 @@ export class CollectionsService {
           })
         : [];
 
-      const collectionsWithLikes = collections.map((collection) => ({
-        ...collection,
-        isLiked: viewerLikesForCollections.some(
-          (like) => like.collectionId === collection.id,
-        ),
-        likesCount: collection._count.likes,
-        itemsCount: collection._count.items,
-      }));
+      const collectionsWithLikes = collections.map((collection) => {
+        const { _count, ...rest } = collection;
+        return {
+          ...rest,
+          isLiked: viewerLikesForCollections.some(
+            (like) => like.collectionId === collection.id,
+          ),
+          likesCount: _count.likes,
+          itemsCount: _count.items,
+        };
+      });
 
       const total = await this.prismaService.animeCollection.count({ where });
 
       return {
         data: collectionsWithLikes,
-        meta: {
-          total,
-          page,
-          limit,
-          totalPages: Math.ceil(total / limit),
-        },
+        meta: buildMeta(total, page, limit),
       };
     } catch (e) {
-      this.handleError(e, `Ошибка получения коллекции пользователя`);
+      return handleError(
+        e,
+        `Ошибка получения коллекции пользователя`,
+        this.logger,
+      );
     }
   }
 
@@ -125,12 +123,7 @@ export class CollectionsService {
         if (!targetUser?.settings?.showLikedCollections) {
           return {
             data: [],
-            meta: {
-              total: 0,
-              page,
-              limit,
-              totalPages: 0,
-            },
+            meta: buildMeta(0, page, limit),
           };
         }
       }
@@ -176,14 +169,17 @@ export class CollectionsService {
           })
         : [];
 
-      const collectionsWithLikes = likedCollections.map((collection) => ({
-        ...collection,
-        isLiked: viewerLikesForCollections.some(
-          (like) => like.collectionId === collection.collection.id,
-        ),
-        likesCount: collection.collection._count.likes,
-        itemsCount: collection.collection._count.items,
-      }));
+      const collectionsWithLikes = likedCollections.map((collection) => {
+        const { _count, ...rest } = collection.collection;
+        return {
+          ...rest,
+          isLiked: viewerLikesForCollections.some(
+            (like) => like.collectionId === collection.collection.id,
+          ),
+          likesCount: _count.likes,
+          itemsCount: _count.items,
+        };
+      });
 
       const total = await this.prismaService.animeCollectionLike.count({
         where,
@@ -191,15 +187,14 @@ export class CollectionsService {
 
       return {
         data: collectionsWithLikes,
-        meta: {
-          total,
-          page,
-          limit,
-          totalPages: Math.ceil(total / limit),
-        },
+        meta: buildMeta(total, page, limit),
       };
     } catch (e) {
-      this.handleError(e, `Ошибка получения лайкнутых коллекций пользователя`);
+      return handleError(
+        e,
+        `Ошибка получения лайкнутых коллекций пользователя`,
+        this.logger,
+      );
     }
   }
 
@@ -245,14 +240,17 @@ export class CollectionsService {
           })
         : [];
 
-      const collectionsWithLikes = collections.map((collection) => ({
-        ...collection,
-        isLiked: viewerLikesForCollections.some(
-          (like) => like.collectionId === collection.id,
-        ),
-        likesCount: collection._count.likes,
-        itemsCount: collection._count.items,
-      }));
+      const collectionsWithLikes = collections.map((collection) => {
+        const { _count, ...rest } = collection;
+        return {
+          ...rest,
+          isLiked: viewerLikesForCollections.some(
+            (like) => like.collectionId === collection.id,
+          ),
+          likesCount: _count.likes,
+          itemsCount: _count.items,
+        };
+      });
       const total = await this.prismaService.animeCollection.count({
         where: {
           isPublic: true,
@@ -261,15 +259,10 @@ export class CollectionsService {
 
       return {
         data: collectionsWithLikes,
-        meta: {
-          total,
-          page,
-          limit,
-          totalPages: Math.ceil(total / limit),
-        },
+        meta: buildMeta(total, page, limit),
       };
     } catch (e) {
-      this.handleError(e, `Ошибка получения всех коллекций`);
+      handleError(e, `Ошибка получения всех коллекций`, this.logger);
     }
   }
 
@@ -324,14 +317,15 @@ export class CollectionsService {
 
       const isLiked = await this.isCollectionLiked(viewerId, collectionId);
 
+      const { _count, ...rest } = collection;
       return {
-        ...collection,
+        ...rest,
         isLiked,
-        itemsCount: collection._count.items,
-        likesCount: collection._count.likes,
+        itemsCount: _count.items,
+        likesCount: _count.likes,
       };
     } catch (e) {
-      this.handleError(e, `Ошибка получения деталей коллекции`);
+      handleError(e, `Ошибка получения деталей коллекции`, this.logger);
     }
   }
 
@@ -376,7 +370,11 @@ export class CollectionsService {
 
       return ratingCounts;
     } catch (e) {
-      this.handleError(e, `Ошибка получения рейтингов из коллекции`);
+      return handleError(
+        e,
+        `Ошибка получения рейтингов из коллекции`,
+        this.logger,
+      );
     }
   }
 
@@ -423,7 +421,7 @@ export class CollectionsService {
 
       return typeCounts;
     } catch (e) {
-      this.handleError(e, 'Ошибка получения типов из коллекции');
+      handleError(e, 'Ошибка получения типов из коллекции', this.logger);
     }
   }
 
@@ -480,7 +478,11 @@ export class CollectionsService {
 
       return themeCounts;
     } catch (e) {
-      this.handleError(e, 'Ошибка получения тематик из коллекции');
+      return handleError(
+        e,
+        'Ошибка получения тематик из коллекции',
+        this.logger,
+      );
     }
   }
 
@@ -530,7 +532,11 @@ export class CollectionsService {
 
       return yearCounts;
     } catch (e) {
-      this.handleError(e, 'Ошибка получения годов выпуска из коллекции');
+      return handleError(
+        e,
+        'Ошибка получения годов выпуска из коллекции',
+        this.logger,
+      );
     }
   }
 
@@ -586,7 +592,11 @@ export class CollectionsService {
 
       return genreCounts;
     } catch (e) {
-      this.handleError(e, 'Ошибка получения жанров из коллекции');
+      return handleError(
+        e,
+        'Ошибка получения жанров из коллекции',
+        this.logger,
+      );
     }
   }
 
@@ -646,9 +656,10 @@ export class CollectionsService {
 
       return demographicCounts;
     } catch (e) {
-      this.handleError(
+      return handleError(
         e,
         'Ошибка получения демографических категорий из коллекции',
+        this.logger,
       );
     }
   }
@@ -695,7 +706,11 @@ export class CollectionsService {
         isLiked,
       };
     } catch (e) {
-      this.handleError(e, 'Ошибка получения всех метрик из коллекции');
+      return handleError(
+        e,
+        'Ошибка получения всех метрик из коллекции',
+        this.logger,
+      );
     }
   }
 
@@ -707,7 +722,7 @@ export class CollectionsService {
 
       return this.getCollection(collection.id, userId);
     } catch (e) {
-      this.handleError(e, `Ошибка создания коллекции`);
+      handleError(e, `Ошибка создания коллекции`, this.logger);
     }
   }
 
@@ -733,7 +748,7 @@ export class CollectionsService {
 
       return { status: 'success' };
     } catch (e) {
-      this.handleError(e, `Ошибка обновления коллекции`);
+      handleError(e, `Ошибка обновления коллекции`, this.logger);
     }
   }
 
@@ -754,7 +769,7 @@ export class CollectionsService {
 
       return { status: 'success' };
     } catch (e) {
-      this.handleError(e, `Ошибка удаления коллекции`);
+      handleError(e, `Ошибка удаления коллекции`, this.logger);
     }
   }
 
@@ -786,7 +801,7 @@ export class CollectionsService {
 
       return { status: 'success' };
     } catch (e) {
-      this.handleError(e, `Ошибка добавления аниме в коллекцию`);
+      handleError(e, `Ошибка добавления аниме в коллекцию`, this.logger);
     }
   }
 
@@ -824,7 +839,7 @@ export class CollectionsService {
 
       return { status: 'success' };
     } catch (e) {
-      this.handleError(e, `Ошибка удаления аниме из коллекции`);
+      handleError(e, `Ошибка удаления аниме из коллекции`, this.logger);
     }
   }
 
@@ -864,7 +879,11 @@ export class CollectionsService {
 
       return { status: 'success' };
     } catch (e) {
-      this.handleError(e, `Ошибка обновления заметки в коллекции`);
+      return handleError(
+        e,
+        `Ошибка обновления заметки в коллекции`,
+        this.logger,
+      );
     }
   }
 
@@ -887,7 +906,7 @@ export class CollectionsService {
 
       return { status: 'success' };
     } catch (e) {
-      this.handleError(e, `Ошибка лайка коллекции`);
+      handleError(e, `Ошибка лайка коллекции`, this.logger);
     }
   }
 
@@ -909,7 +928,7 @@ export class CollectionsService {
 
       return { status: 'success' };
     } catch (e) {
-      this.handleError(e, `Ошибка лайка коллекции`);
+      handleError(e, `Ошибка лайка коллекции`, this.logger);
     }
   }
 
@@ -918,7 +937,6 @@ export class CollectionsService {
     collectionId: string,
   ) {
     try {
-      console.log(userId);
       if (!userId) return false;
       const like = await this.prismaService.animeCollectionLike.findUnique({
         where: {
@@ -931,18 +949,10 @@ export class CollectionsService {
 
       return like ? true : false;
     } catch (e) {
-      this.handleError(e, 'Ошибка проверки лайка коллекции');
+      handleError(e, `Ошибка проверки лайка коллекции`, this.logger);
     }
   }
 
-  private handleError(e: unknown, message: string): never {
-    this.logger.error(
-      `${message}: ${e instanceof Error ? e.message : JSON.stringify(e)}`,
-    );
-    if (e instanceof NotFoundException || e instanceof UnauthorizedException)
-      throw e;
-    throw new InternalServerErrorException(message);
-  }
   private checkCollectionAccess(
     collection: { isPublic: boolean; userId: string },
     viewerId?: string,

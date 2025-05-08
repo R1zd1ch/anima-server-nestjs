@@ -324,17 +324,6 @@ enum ParsingSessionType {
   UPDATE_THIS_YEAR
 }
 
-generator client {
-  provider        = "prisma-client-js"
-  output          = "../__generated__"
-  previewFeatures = ["prismaSchemaFolder"]
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("POSTGRES_URI")
-}
-
 model AnimeCollection {
   id          String              @id @default(uuid())
   userId      String
@@ -458,12 +447,30 @@ model Review {
   anime   Anime  @relation(fields: [animeId], references: [id], onDelete: Cascade)
   animeId String
 
-  rating    Int
-  content   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  rating      Int // 1 - 10
+  title       String?
+  description String?
+  content     String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  reviewLikes ReviewLike[]
 
   @@unique([userId, animeId])
+}
+
+model ReviewLike {
+  userId   String
+  reviewId String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  review Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+
+  likedAt DateTime @default(now())
+
+  @@id([userId, reviewId])
+  @@index([reviewId])
+  @@index([userId])
+  @@map("review_likes")
 }
 
 model UserSettings {
@@ -480,6 +487,8 @@ model UserSettings {
   showAllCommentsInProfile Boolean  @default(true)
   showCollections          Boolean  @default(true)
   showLikedCollections     Boolean  @default(true)
+  showLikedReviews         Boolean  @default(true)
+  showReviews              Boolean  @default(true)
   notificationsOn          Boolean  @default(true)
   preferredGenres          String[]
 }
@@ -510,7 +519,18 @@ model User {
   settings          UserSettings?
   animeComments     Comment[]
   animeCommentLikes CommentLike[]
-  animeReview       Review[]
+  animeReviews      Review[]
+  reviewLikes       ReviewLike[]
 
   @@map("users")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../__generated__"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URI")
 }

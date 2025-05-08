@@ -139,6 +139,11 @@ export type AnimeEpisodeProgress = $Result.DefaultSelection<Prisma.$AnimeEpisode
  */
 export type Review = $Result.DefaultSelection<Prisma.$ReviewPayload>
 /**
+ * Model ReviewLike
+ * 
+ */
+export type ReviewLike = $Result.DefaultSelection<Prisma.$ReviewLikePayload>
+/**
  * Model UserSettings
  * 
  */
@@ -702,6 +707,16 @@ export class PrismaClient<
   get review(): Prisma.ReviewDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.reviewLike`: Exposes CRUD operations for the **ReviewLike** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ReviewLikes
+    * const reviewLikes = await prisma.reviewLike.findMany()
+    * ```
+    */
+  get reviewLike(): Prisma.ReviewLikeDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.userSettings`: Exposes CRUD operations for the **UserSettings** model.
     * Example usage:
     * ```ts
@@ -778,8 +793,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.6.0
-   * Query Engine version: f676762280b54cd07c770017ed3711ddde35f37a
+   * Prisma Client JS version: 6.7.0
+   * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
    */
   export type PrismaVersion = {
     client: string
@@ -1185,6 +1200,7 @@ export namespace Prisma {
     CommentLike: 'CommentLike',
     AnimeEpisodeProgress: 'AnimeEpisodeProgress',
     Review: 'Review',
+    ReviewLike: 'ReviewLike',
     UserSettings: 'UserSettings',
     User: 'User'
   };
@@ -1205,7 +1221,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "demographic" | "animeDemographic" | "genre" | "animeGenre" | "animePoster" | "relatedAnime" | "screenshots" | "animeScreenshot" | "studio" | "animeStudio" | "theme" | "animeTheme" | "animeVideo" | "video" | "anime" | "account" | "token" | "parsingSession" | "animeCollection" | "animeInCollection" | "animeCollectionLike" | "comment" | "commentLike" | "animeEpisodeProgress" | "review" | "userSettings" | "user"
+      modelProps: "demographic" | "animeDemographic" | "genre" | "animeGenre" | "animePoster" | "relatedAnime" | "screenshots" | "animeScreenshot" | "studio" | "animeStudio" | "theme" | "animeTheme" | "animeVideo" | "video" | "anime" | "account" | "token" | "parsingSession" | "animeCollection" | "animeInCollection" | "animeCollectionLike" | "comment" | "commentLike" | "animeEpisodeProgress" | "review" | "reviewLike" | "userSettings" | "user"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3059,6 +3075,80 @@ export namespace Prisma {
           }
         }
       }
+      ReviewLike: {
+        payload: Prisma.$ReviewLikePayload<ExtArgs>
+        fields: Prisma.ReviewLikeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ReviewLikeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewLikePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ReviewLikeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewLikePayload>
+          }
+          findFirst: {
+            args: Prisma.ReviewLikeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewLikePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ReviewLikeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewLikePayload>
+          }
+          findMany: {
+            args: Prisma.ReviewLikeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewLikePayload>[]
+          }
+          create: {
+            args: Prisma.ReviewLikeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewLikePayload>
+          }
+          createMany: {
+            args: Prisma.ReviewLikeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ReviewLikeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewLikePayload>[]
+          }
+          delete: {
+            args: Prisma.ReviewLikeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewLikePayload>
+          }
+          update: {
+            args: Prisma.ReviewLikeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewLikePayload>
+          }
+          deleteMany: {
+            args: Prisma.ReviewLikeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ReviewLikeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ReviewLikeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewLikePayload>[]
+          }
+          upsert: {
+            args: Prisma.ReviewLikeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReviewLikePayload>
+          }
+          aggregate: {
+            args: Prisma.ReviewLikeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateReviewLike>
+          }
+          groupBy: {
+            args: Prisma.ReviewLikeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ReviewLikeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ReviewLikeCountArgs<ExtArgs>
+            result: $Utils.Optional<ReviewLikeCountAggregateOutputType> | number
+          }
+        }
+      }
       UserSettings: {
         payload: Prisma.$UserSettingsPayload<ExtArgs>
         fields: Prisma.UserSettingsFieldRefs
@@ -3316,6 +3406,7 @@ export namespace Prisma {
     commentLike?: CommentLikeOmit
     animeEpisodeProgress?: AnimeEpisodeProgressOmit
     review?: ReviewOmit
+    reviewLike?: ReviewLikeOmit
     userSettings?: UserSettingsOmit
     user?: UserOmit
   }
@@ -3813,6 +3904,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type ReviewCountOutputType
+   */
+
+  export type ReviewCountOutputType = {
+    reviewLikes: number
+  }
+
+  export type ReviewCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    reviewLikes?: boolean | ReviewCountOutputTypeCountReviewLikesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ReviewCountOutputType without action
+   */
+  export type ReviewCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReviewCountOutputType
+     */
+    select?: ReviewCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ReviewCountOutputType without action
+   */
+  export type ReviewCountOutputTypeCountReviewLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReviewLikeWhereInput
+  }
+
+
+  /**
    * Count Type UserCountOutputType
    */
 
@@ -3823,7 +3945,8 @@ export namespace Prisma {
     likedCollection: number
     animeComments: number
     animeCommentLikes: number
-    animeReview: number
+    animeReviews: number
+    reviewLikes: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3833,7 +3956,8 @@ export namespace Prisma {
     likedCollection?: boolean | UserCountOutputTypeCountLikedCollectionArgs
     animeComments?: boolean | UserCountOutputTypeCountAnimeCommentsArgs
     animeCommentLikes?: boolean | UserCountOutputTypeCountAnimeCommentLikesArgs
-    animeReview?: boolean | UserCountOutputTypeCountAnimeReviewArgs
+    animeReviews?: boolean | UserCountOutputTypeCountAnimeReviewsArgs
+    reviewLikes?: boolean | UserCountOutputTypeCountReviewLikesArgs
   }
 
   // Custom InputTypes
@@ -3892,8 +4016,15 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountAnimeReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountAnimeReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ReviewWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountReviewLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReviewLikeWhereInput
   }
 
 
@@ -30336,6 +30467,8 @@ export namespace Prisma {
     userId: string | null
     animeId: string | null
     rating: number | null
+    title: string | null
+    description: string | null
     content: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -30346,6 +30479,8 @@ export namespace Prisma {
     userId: string | null
     animeId: string | null
     rating: number | null
+    title: string | null
+    description: string | null
     content: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -30356,6 +30491,8 @@ export namespace Prisma {
     userId: number
     animeId: number
     rating: number
+    title: number
+    description: number
     content: number
     createdAt: number
     updatedAt: number
@@ -30376,6 +30513,8 @@ export namespace Prisma {
     userId?: true
     animeId?: true
     rating?: true
+    title?: true
+    description?: true
     content?: true
     createdAt?: true
     updatedAt?: true
@@ -30386,6 +30525,8 @@ export namespace Prisma {
     userId?: true
     animeId?: true
     rating?: true
+    title?: true
+    description?: true
     content?: true
     createdAt?: true
     updatedAt?: true
@@ -30396,6 +30537,8 @@ export namespace Prisma {
     userId?: true
     animeId?: true
     rating?: true
+    title?: true
+    description?: true
     content?: true
     createdAt?: true
     updatedAt?: true
@@ -30493,6 +30636,8 @@ export namespace Prisma {
     userId: string
     animeId: string
     rating: number
+    title: string | null
+    description: string | null
     content: string | null
     createdAt: Date
     updatedAt: Date
@@ -30522,11 +30667,15 @@ export namespace Prisma {
     userId?: boolean
     animeId?: boolean
     rating?: boolean
+    title?: boolean
+    description?: boolean
     content?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     anime?: boolean | AnimeDefaultArgs<ExtArgs>
+    reviewLikes?: boolean | Review$reviewLikesArgs<ExtArgs>
+    _count?: boolean | ReviewCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
   export type ReviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -30534,6 +30683,8 @@ export namespace Prisma {
     userId?: boolean
     animeId?: boolean
     rating?: boolean
+    title?: boolean
+    description?: boolean
     content?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -30546,6 +30697,8 @@ export namespace Prisma {
     userId?: boolean
     animeId?: boolean
     rating?: boolean
+    title?: boolean
+    description?: boolean
     content?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -30558,15 +30711,19 @@ export namespace Prisma {
     userId?: boolean
     animeId?: boolean
     rating?: boolean
+    title?: boolean
+    description?: boolean
     content?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "animeId" | "rating" | "content" | "createdAt" | "updatedAt", ExtArgs["result"]["review"]>
+  export type ReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "animeId" | "rating" | "title" | "description" | "content" | "createdAt" | "updatedAt", ExtArgs["result"]["review"]>
   export type ReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     anime?: boolean | AnimeDefaultArgs<ExtArgs>
+    reviewLikes?: boolean | Review$reviewLikesArgs<ExtArgs>
+    _count?: boolean | ReviewCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ReviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -30582,12 +30739,15 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       anime: Prisma.$AnimePayload<ExtArgs>
+      reviewLikes: Prisma.$ReviewLikePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string
       animeId: string
       rating: number
+      title: string | null
+      description: string | null
       content: string | null
       createdAt: Date
       updatedAt: Date
@@ -30987,6 +31147,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     anime<T extends AnimeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AnimeDefaultArgs<ExtArgs>>): Prisma__AnimeClient<$Result.GetResult<Prisma.$AnimePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    reviewLikes<T extends Review$reviewLikesArgs<ExtArgs> = {}>(args?: Subset<T, Review$reviewLikesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -31020,6 +31181,8 @@ export namespace Prisma {
     readonly userId: FieldRef<"Review", 'String'>
     readonly animeId: FieldRef<"Review", 'String'>
     readonly rating: FieldRef<"Review", 'Int'>
+    readonly title: FieldRef<"Review", 'String'>
+    readonly description: FieldRef<"Review", 'String'>
     readonly content: FieldRef<"Review", 'String'>
     readonly createdAt: FieldRef<"Review", 'DateTime'>
     readonly updatedAt: FieldRef<"Review", 'DateTime'>
@@ -31419,6 +31582,30 @@ export namespace Prisma {
   }
 
   /**
+   * Review.reviewLikes
+   */
+  export type Review$reviewLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReviewLike
+     */
+    select?: ReviewLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReviewLike
+     */
+    omit?: ReviewLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewLikeInclude<ExtArgs> | null
+    where?: ReviewLikeWhereInput
+    orderBy?: ReviewLikeOrderByWithRelationInput | ReviewLikeOrderByWithRelationInput[]
+    cursor?: ReviewLikeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReviewLikeScalarFieldEnum | ReviewLikeScalarFieldEnum[]
+  }
+
+  /**
    * Review without action
    */
   export type ReviewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -31434,6 +31621,1046 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ReviewInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ReviewLike
+   */
+
+  export type AggregateReviewLike = {
+    _count: ReviewLikeCountAggregateOutputType | null
+    _min: ReviewLikeMinAggregateOutputType | null
+    _max: ReviewLikeMaxAggregateOutputType | null
+  }
+
+  export type ReviewLikeMinAggregateOutputType = {
+    userId: string | null
+    reviewId: string | null
+    likedAt: Date | null
+  }
+
+  export type ReviewLikeMaxAggregateOutputType = {
+    userId: string | null
+    reviewId: string | null
+    likedAt: Date | null
+  }
+
+  export type ReviewLikeCountAggregateOutputType = {
+    userId: number
+    reviewId: number
+    likedAt: number
+    _all: number
+  }
+
+
+  export type ReviewLikeMinAggregateInputType = {
+    userId?: true
+    reviewId?: true
+    likedAt?: true
+  }
+
+  export type ReviewLikeMaxAggregateInputType = {
+    userId?: true
+    reviewId?: true
+    likedAt?: true
+  }
+
+  export type ReviewLikeCountAggregateInputType = {
+    userId?: true
+    reviewId?: true
+    likedAt?: true
+    _all?: true
+  }
+
+  export type ReviewLikeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ReviewLike to aggregate.
+     */
+    where?: ReviewLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReviewLikes to fetch.
+     */
+    orderBy?: ReviewLikeOrderByWithRelationInput | ReviewLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ReviewLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReviewLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReviewLikes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ReviewLikes
+    **/
+    _count?: true | ReviewLikeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ReviewLikeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ReviewLikeMaxAggregateInputType
+  }
+
+  export type GetReviewLikeAggregateType<T extends ReviewLikeAggregateArgs> = {
+        [P in keyof T & keyof AggregateReviewLike]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateReviewLike[P]>
+      : GetScalarType<T[P], AggregateReviewLike[P]>
+  }
+
+
+
+
+  export type ReviewLikeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReviewLikeWhereInput
+    orderBy?: ReviewLikeOrderByWithAggregationInput | ReviewLikeOrderByWithAggregationInput[]
+    by: ReviewLikeScalarFieldEnum[] | ReviewLikeScalarFieldEnum
+    having?: ReviewLikeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ReviewLikeCountAggregateInputType | true
+    _min?: ReviewLikeMinAggregateInputType
+    _max?: ReviewLikeMaxAggregateInputType
+  }
+
+  export type ReviewLikeGroupByOutputType = {
+    userId: string
+    reviewId: string
+    likedAt: Date
+    _count: ReviewLikeCountAggregateOutputType | null
+    _min: ReviewLikeMinAggregateOutputType | null
+    _max: ReviewLikeMaxAggregateOutputType | null
+  }
+
+  type GetReviewLikeGroupByPayload<T extends ReviewLikeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ReviewLikeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ReviewLikeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ReviewLikeGroupByOutputType[P]>
+            : GetScalarType<T[P], ReviewLikeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ReviewLikeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    userId?: boolean
+    reviewId?: boolean
+    likedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    review?: boolean | ReviewDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["reviewLike"]>
+
+  export type ReviewLikeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    userId?: boolean
+    reviewId?: boolean
+    likedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    review?: boolean | ReviewDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["reviewLike"]>
+
+  export type ReviewLikeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    userId?: boolean
+    reviewId?: boolean
+    likedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    review?: boolean | ReviewDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["reviewLike"]>
+
+  export type ReviewLikeSelectScalar = {
+    userId?: boolean
+    reviewId?: boolean
+    likedAt?: boolean
+  }
+
+  export type ReviewLikeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "reviewId" | "likedAt", ExtArgs["result"]["reviewLike"]>
+  export type ReviewLikeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    review?: boolean | ReviewDefaultArgs<ExtArgs>
+  }
+  export type ReviewLikeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    review?: boolean | ReviewDefaultArgs<ExtArgs>
+  }
+  export type ReviewLikeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    review?: boolean | ReviewDefaultArgs<ExtArgs>
+  }
+
+  export type $ReviewLikePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ReviewLike"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      review: Prisma.$ReviewPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      userId: string
+      reviewId: string
+      likedAt: Date
+    }, ExtArgs["result"]["reviewLike"]>
+    composites: {}
+  }
+
+  type ReviewLikeGetPayload<S extends boolean | null | undefined | ReviewLikeDefaultArgs> = $Result.GetResult<Prisma.$ReviewLikePayload, S>
+
+  type ReviewLikeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ReviewLikeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ReviewLikeCountAggregateInputType | true
+    }
+
+  export interface ReviewLikeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ReviewLike'], meta: { name: 'ReviewLike' } }
+    /**
+     * Find zero or one ReviewLike that matches the filter.
+     * @param {ReviewLikeFindUniqueArgs} args - Arguments to find a ReviewLike
+     * @example
+     * // Get one ReviewLike
+     * const reviewLike = await prisma.reviewLike.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ReviewLikeFindUniqueArgs>(args: SelectSubset<T, ReviewLikeFindUniqueArgs<ExtArgs>>): Prisma__ReviewLikeClient<$Result.GetResult<Prisma.$ReviewLikePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ReviewLike that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ReviewLikeFindUniqueOrThrowArgs} args - Arguments to find a ReviewLike
+     * @example
+     * // Get one ReviewLike
+     * const reviewLike = await prisma.reviewLike.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ReviewLikeFindUniqueOrThrowArgs>(args: SelectSubset<T, ReviewLikeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ReviewLikeClient<$Result.GetResult<Prisma.$ReviewLikePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ReviewLike that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReviewLikeFindFirstArgs} args - Arguments to find a ReviewLike
+     * @example
+     * // Get one ReviewLike
+     * const reviewLike = await prisma.reviewLike.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ReviewLikeFindFirstArgs>(args?: SelectSubset<T, ReviewLikeFindFirstArgs<ExtArgs>>): Prisma__ReviewLikeClient<$Result.GetResult<Prisma.$ReviewLikePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ReviewLike that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReviewLikeFindFirstOrThrowArgs} args - Arguments to find a ReviewLike
+     * @example
+     * // Get one ReviewLike
+     * const reviewLike = await prisma.reviewLike.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ReviewLikeFindFirstOrThrowArgs>(args?: SelectSubset<T, ReviewLikeFindFirstOrThrowArgs<ExtArgs>>): Prisma__ReviewLikeClient<$Result.GetResult<Prisma.$ReviewLikePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ReviewLikes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReviewLikeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ReviewLikes
+     * const reviewLikes = await prisma.reviewLike.findMany()
+     * 
+     * // Get first 10 ReviewLikes
+     * const reviewLikes = await prisma.reviewLike.findMany({ take: 10 })
+     * 
+     * // Only select the `userId`
+     * const reviewLikeWithUserIdOnly = await prisma.reviewLike.findMany({ select: { userId: true } })
+     * 
+     */
+    findMany<T extends ReviewLikeFindManyArgs>(args?: SelectSubset<T, ReviewLikeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ReviewLike.
+     * @param {ReviewLikeCreateArgs} args - Arguments to create a ReviewLike.
+     * @example
+     * // Create one ReviewLike
+     * const ReviewLike = await prisma.reviewLike.create({
+     *   data: {
+     *     // ... data to create a ReviewLike
+     *   }
+     * })
+     * 
+     */
+    create<T extends ReviewLikeCreateArgs>(args: SelectSubset<T, ReviewLikeCreateArgs<ExtArgs>>): Prisma__ReviewLikeClient<$Result.GetResult<Prisma.$ReviewLikePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ReviewLikes.
+     * @param {ReviewLikeCreateManyArgs} args - Arguments to create many ReviewLikes.
+     * @example
+     * // Create many ReviewLikes
+     * const reviewLike = await prisma.reviewLike.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ReviewLikeCreateManyArgs>(args?: SelectSubset<T, ReviewLikeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ReviewLikes and returns the data saved in the database.
+     * @param {ReviewLikeCreateManyAndReturnArgs} args - Arguments to create many ReviewLikes.
+     * @example
+     * // Create many ReviewLikes
+     * const reviewLike = await prisma.reviewLike.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ReviewLikes and only return the `userId`
+     * const reviewLikeWithUserIdOnly = await prisma.reviewLike.createManyAndReturn({
+     *   select: { userId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ReviewLikeCreateManyAndReturnArgs>(args?: SelectSubset<T, ReviewLikeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewLikePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ReviewLike.
+     * @param {ReviewLikeDeleteArgs} args - Arguments to delete one ReviewLike.
+     * @example
+     * // Delete one ReviewLike
+     * const ReviewLike = await prisma.reviewLike.delete({
+     *   where: {
+     *     // ... filter to delete one ReviewLike
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ReviewLikeDeleteArgs>(args: SelectSubset<T, ReviewLikeDeleteArgs<ExtArgs>>): Prisma__ReviewLikeClient<$Result.GetResult<Prisma.$ReviewLikePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ReviewLike.
+     * @param {ReviewLikeUpdateArgs} args - Arguments to update one ReviewLike.
+     * @example
+     * // Update one ReviewLike
+     * const reviewLike = await prisma.reviewLike.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ReviewLikeUpdateArgs>(args: SelectSubset<T, ReviewLikeUpdateArgs<ExtArgs>>): Prisma__ReviewLikeClient<$Result.GetResult<Prisma.$ReviewLikePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ReviewLikes.
+     * @param {ReviewLikeDeleteManyArgs} args - Arguments to filter ReviewLikes to delete.
+     * @example
+     * // Delete a few ReviewLikes
+     * const { count } = await prisma.reviewLike.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ReviewLikeDeleteManyArgs>(args?: SelectSubset<T, ReviewLikeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ReviewLikes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReviewLikeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ReviewLikes
+     * const reviewLike = await prisma.reviewLike.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ReviewLikeUpdateManyArgs>(args: SelectSubset<T, ReviewLikeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ReviewLikes and returns the data updated in the database.
+     * @param {ReviewLikeUpdateManyAndReturnArgs} args - Arguments to update many ReviewLikes.
+     * @example
+     * // Update many ReviewLikes
+     * const reviewLike = await prisma.reviewLike.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ReviewLikes and only return the `userId`
+     * const reviewLikeWithUserIdOnly = await prisma.reviewLike.updateManyAndReturn({
+     *   select: { userId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ReviewLikeUpdateManyAndReturnArgs>(args: SelectSubset<T, ReviewLikeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewLikePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ReviewLike.
+     * @param {ReviewLikeUpsertArgs} args - Arguments to update or create a ReviewLike.
+     * @example
+     * // Update or create a ReviewLike
+     * const reviewLike = await prisma.reviewLike.upsert({
+     *   create: {
+     *     // ... data to create a ReviewLike
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ReviewLike we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ReviewLikeUpsertArgs>(args: SelectSubset<T, ReviewLikeUpsertArgs<ExtArgs>>): Prisma__ReviewLikeClient<$Result.GetResult<Prisma.$ReviewLikePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ReviewLikes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReviewLikeCountArgs} args - Arguments to filter ReviewLikes to count.
+     * @example
+     * // Count the number of ReviewLikes
+     * const count = await prisma.reviewLike.count({
+     *   where: {
+     *     // ... the filter for the ReviewLikes we want to count
+     *   }
+     * })
+    **/
+    count<T extends ReviewLikeCountArgs>(
+      args?: Subset<T, ReviewLikeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ReviewLikeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ReviewLike.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReviewLikeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ReviewLikeAggregateArgs>(args: Subset<T, ReviewLikeAggregateArgs>): Prisma.PrismaPromise<GetReviewLikeAggregateType<T>>
+
+    /**
+     * Group by ReviewLike.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReviewLikeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ReviewLikeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ReviewLikeGroupByArgs['orderBy'] }
+        : { orderBy?: ReviewLikeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ReviewLikeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetReviewLikeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ReviewLike model
+   */
+  readonly fields: ReviewLikeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ReviewLike.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ReviewLikeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    review<T extends ReviewDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ReviewDefaultArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ReviewLike model
+   */
+  interface ReviewLikeFieldRefs {
+    readonly userId: FieldRef<"ReviewLike", 'String'>
+    readonly reviewId: FieldRef<"ReviewLike", 'String'>
+    readonly likedAt: FieldRef<"ReviewLike", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ReviewLike findUnique
+   */
+  export type ReviewLikeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReviewLike
+     */
+    select?: ReviewLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReviewLike
+     */
+    omit?: ReviewLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which ReviewLike to fetch.
+     */
+    where: ReviewLikeWhereUniqueInput
+  }
+
+  /**
+   * ReviewLike findUniqueOrThrow
+   */
+  export type ReviewLikeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReviewLike
+     */
+    select?: ReviewLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReviewLike
+     */
+    omit?: ReviewLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which ReviewLike to fetch.
+     */
+    where: ReviewLikeWhereUniqueInput
+  }
+
+  /**
+   * ReviewLike findFirst
+   */
+  export type ReviewLikeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReviewLike
+     */
+    select?: ReviewLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReviewLike
+     */
+    omit?: ReviewLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which ReviewLike to fetch.
+     */
+    where?: ReviewLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReviewLikes to fetch.
+     */
+    orderBy?: ReviewLikeOrderByWithRelationInput | ReviewLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ReviewLikes.
+     */
+    cursor?: ReviewLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReviewLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReviewLikes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ReviewLikes.
+     */
+    distinct?: ReviewLikeScalarFieldEnum | ReviewLikeScalarFieldEnum[]
+  }
+
+  /**
+   * ReviewLike findFirstOrThrow
+   */
+  export type ReviewLikeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReviewLike
+     */
+    select?: ReviewLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReviewLike
+     */
+    omit?: ReviewLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which ReviewLike to fetch.
+     */
+    where?: ReviewLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReviewLikes to fetch.
+     */
+    orderBy?: ReviewLikeOrderByWithRelationInput | ReviewLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ReviewLikes.
+     */
+    cursor?: ReviewLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReviewLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReviewLikes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ReviewLikes.
+     */
+    distinct?: ReviewLikeScalarFieldEnum | ReviewLikeScalarFieldEnum[]
+  }
+
+  /**
+   * ReviewLike findMany
+   */
+  export type ReviewLikeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReviewLike
+     */
+    select?: ReviewLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReviewLike
+     */
+    omit?: ReviewLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which ReviewLikes to fetch.
+     */
+    where?: ReviewLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReviewLikes to fetch.
+     */
+    orderBy?: ReviewLikeOrderByWithRelationInput | ReviewLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ReviewLikes.
+     */
+    cursor?: ReviewLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReviewLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReviewLikes.
+     */
+    skip?: number
+    distinct?: ReviewLikeScalarFieldEnum | ReviewLikeScalarFieldEnum[]
+  }
+
+  /**
+   * ReviewLike create
+   */
+  export type ReviewLikeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReviewLike
+     */
+    select?: ReviewLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReviewLike
+     */
+    omit?: ReviewLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewLikeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ReviewLike.
+     */
+    data: XOR<ReviewLikeCreateInput, ReviewLikeUncheckedCreateInput>
+  }
+
+  /**
+   * ReviewLike createMany
+   */
+  export type ReviewLikeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ReviewLikes.
+     */
+    data: ReviewLikeCreateManyInput | ReviewLikeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ReviewLike createManyAndReturn
+   */
+  export type ReviewLikeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReviewLike
+     */
+    select?: ReviewLikeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReviewLike
+     */
+    omit?: ReviewLikeOmit<ExtArgs> | null
+    /**
+     * The data used to create many ReviewLikes.
+     */
+    data: ReviewLikeCreateManyInput | ReviewLikeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewLikeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ReviewLike update
+   */
+  export type ReviewLikeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReviewLike
+     */
+    select?: ReviewLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReviewLike
+     */
+    omit?: ReviewLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewLikeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ReviewLike.
+     */
+    data: XOR<ReviewLikeUpdateInput, ReviewLikeUncheckedUpdateInput>
+    /**
+     * Choose, which ReviewLike to update.
+     */
+    where: ReviewLikeWhereUniqueInput
+  }
+
+  /**
+   * ReviewLike updateMany
+   */
+  export type ReviewLikeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ReviewLikes.
+     */
+    data: XOR<ReviewLikeUpdateManyMutationInput, ReviewLikeUncheckedUpdateManyInput>
+    /**
+     * Filter which ReviewLikes to update
+     */
+    where?: ReviewLikeWhereInput
+    /**
+     * Limit how many ReviewLikes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ReviewLike updateManyAndReturn
+   */
+  export type ReviewLikeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReviewLike
+     */
+    select?: ReviewLikeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReviewLike
+     */
+    omit?: ReviewLikeOmit<ExtArgs> | null
+    /**
+     * The data used to update ReviewLikes.
+     */
+    data: XOR<ReviewLikeUpdateManyMutationInput, ReviewLikeUncheckedUpdateManyInput>
+    /**
+     * Filter which ReviewLikes to update
+     */
+    where?: ReviewLikeWhereInput
+    /**
+     * Limit how many ReviewLikes to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewLikeIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ReviewLike upsert
+   */
+  export type ReviewLikeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReviewLike
+     */
+    select?: ReviewLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReviewLike
+     */
+    omit?: ReviewLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewLikeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ReviewLike to update in case it exists.
+     */
+    where: ReviewLikeWhereUniqueInput
+    /**
+     * In case the ReviewLike found by the `where` argument doesn't exist, create a new ReviewLike with this data.
+     */
+    create: XOR<ReviewLikeCreateInput, ReviewLikeUncheckedCreateInput>
+    /**
+     * In case the ReviewLike was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ReviewLikeUpdateInput, ReviewLikeUncheckedUpdateInput>
+  }
+
+  /**
+   * ReviewLike delete
+   */
+  export type ReviewLikeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReviewLike
+     */
+    select?: ReviewLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReviewLike
+     */
+    omit?: ReviewLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewLikeInclude<ExtArgs> | null
+    /**
+     * Filter which ReviewLike to delete.
+     */
+    where: ReviewLikeWhereUniqueInput
+  }
+
+  /**
+   * ReviewLike deleteMany
+   */
+  export type ReviewLikeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ReviewLikes to delete
+     */
+    where?: ReviewLikeWhereInput
+    /**
+     * Limit how many ReviewLikes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ReviewLike without action
+   */
+  export type ReviewLikeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReviewLike
+     */
+    select?: ReviewLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReviewLike
+     */
+    omit?: ReviewLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewLikeInclude<ExtArgs> | null
   }
 
 
@@ -31458,6 +32685,8 @@ export namespace Prisma {
     showAllCommentsInProfile: boolean | null
     showCollections: boolean | null
     showLikedCollections: boolean | null
+    showLikedReviews: boolean | null
+    showReviews: boolean | null
     notificationsOn: boolean | null
   }
 
@@ -31472,6 +32701,8 @@ export namespace Prisma {
     showAllCommentsInProfile: boolean | null
     showCollections: boolean | null
     showLikedCollections: boolean | null
+    showLikedReviews: boolean | null
+    showReviews: boolean | null
     notificationsOn: boolean | null
   }
 
@@ -31486,6 +32717,8 @@ export namespace Prisma {
     showAllCommentsInProfile: number
     showCollections: number
     showLikedCollections: number
+    showLikedReviews: number
+    showReviews: number
     notificationsOn: number
     preferredGenres: number
     _all: number
@@ -31503,6 +32736,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: true
     showCollections?: true
     showLikedCollections?: true
+    showLikedReviews?: true
+    showReviews?: true
     notificationsOn?: true
   }
 
@@ -31517,6 +32752,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: true
     showCollections?: true
     showLikedCollections?: true
+    showLikedReviews?: true
+    showReviews?: true
     notificationsOn?: true
   }
 
@@ -31531,6 +32768,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: true
     showCollections?: true
     showLikedCollections?: true
+    showLikedReviews?: true
+    showReviews?: true
     notificationsOn?: true
     preferredGenres?: true
     _all?: true
@@ -31619,6 +32858,8 @@ export namespace Prisma {
     showAllCommentsInProfile: boolean
     showCollections: boolean
     showLikedCollections: boolean
+    showLikedReviews: boolean
+    showReviews: boolean
     notificationsOn: boolean
     preferredGenres: string[]
     _count: UserSettingsCountAggregateOutputType | null
@@ -31651,6 +32892,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: boolean
     showCollections?: boolean
     showLikedCollections?: boolean
+    showLikedReviews?: boolean
+    showReviews?: boolean
     notificationsOn?: boolean
     preferredGenres?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -31667,6 +32910,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: boolean
     showCollections?: boolean
     showLikedCollections?: boolean
+    showLikedReviews?: boolean
+    showReviews?: boolean
     notificationsOn?: boolean
     preferredGenres?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -31683,6 +32928,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: boolean
     showCollections?: boolean
     showLikedCollections?: boolean
+    showLikedReviews?: boolean
+    showReviews?: boolean
     notificationsOn?: boolean
     preferredGenres?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -31699,11 +32946,13 @@ export namespace Prisma {
     showAllCommentsInProfile?: boolean
     showCollections?: boolean
     showLikedCollections?: boolean
+    showLikedReviews?: boolean
+    showReviews?: boolean
     notificationsOn?: boolean
     preferredGenres?: boolean
   }
 
-  export type UserSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "theme" | "language" | "show18plus" | "showActivity" | "showAnimeList" | "showAllCommentsInProfile" | "showCollections" | "showLikedCollections" | "notificationsOn" | "preferredGenres", ExtArgs["result"]["userSettings"]>
+  export type UserSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "theme" | "language" | "show18plus" | "showActivity" | "showAnimeList" | "showAllCommentsInProfile" | "showCollections" | "showLikedCollections" | "showLikedReviews" | "showReviews" | "notificationsOn" | "preferredGenres", ExtArgs["result"]["userSettings"]>
   export type UserSettingsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -31730,6 +32979,8 @@ export namespace Prisma {
       showAllCommentsInProfile: boolean
       showCollections: boolean
       showLikedCollections: boolean
+      showLikedReviews: boolean
+      showReviews: boolean
       notificationsOn: boolean
       preferredGenres: string[]
     }, ExtArgs["result"]["userSettings"]>
@@ -32166,6 +33417,8 @@ export namespace Prisma {
     readonly showAllCommentsInProfile: FieldRef<"UserSettings", 'Boolean'>
     readonly showCollections: FieldRef<"UserSettings", 'Boolean'>
     readonly showLikedCollections: FieldRef<"UserSettings", 'Boolean'>
+    readonly showLikedReviews: FieldRef<"UserSettings", 'Boolean'>
+    readonly showReviews: FieldRef<"UserSettings", 'Boolean'>
     readonly notificationsOn: FieldRef<"UserSettings", 'Boolean'>
     readonly preferredGenres: FieldRef<"UserSettings", 'String[]'>
   }
@@ -32809,7 +34062,8 @@ export namespace Prisma {
     settings?: boolean | User$settingsArgs<ExtArgs>
     animeComments?: boolean | User$animeCommentsArgs<ExtArgs>
     animeCommentLikes?: boolean | User$animeCommentLikesArgs<ExtArgs>
-    animeReview?: boolean | User$animeReviewArgs<ExtArgs>
+    animeReviews?: boolean | User$animeReviewsArgs<ExtArgs>
+    reviewLikes?: boolean | User$reviewLikesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -32867,7 +34121,8 @@ export namespace Prisma {
     settings?: boolean | User$settingsArgs<ExtArgs>
     animeComments?: boolean | User$animeCommentsArgs<ExtArgs>
     animeCommentLikes?: boolean | User$animeCommentLikesArgs<ExtArgs>
-    animeReview?: boolean | User$animeReviewArgs<ExtArgs>
+    animeReviews?: boolean | User$animeReviewsArgs<ExtArgs>
+    reviewLikes?: boolean | User$reviewLikesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -32883,7 +34138,8 @@ export namespace Prisma {
       settings: Prisma.$UserSettingsPayload<ExtArgs> | null
       animeComments: Prisma.$CommentPayload<ExtArgs>[]
       animeCommentLikes: Prisma.$CommentLikePayload<ExtArgs>[]
-      animeReview: Prisma.$ReviewPayload<ExtArgs>[]
+      animeReviews: Prisma.$ReviewPayload<ExtArgs>[]
+      reviewLikes: Prisma.$ReviewLikePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -33299,7 +34555,8 @@ export namespace Prisma {
     settings<T extends User$settingsArgs<ExtArgs> = {}>(args?: Subset<T, User$settingsArgs<ExtArgs>>): Prisma__UserSettingsClient<$Result.GetResult<Prisma.$UserSettingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     animeComments<T extends User$animeCommentsArgs<ExtArgs> = {}>(args?: Subset<T, User$animeCommentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     animeCommentLikes<T extends User$animeCommentLikesArgs<ExtArgs> = {}>(args?: Subset<T, User$animeCommentLikesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    animeReview<T extends User$animeReviewArgs<ExtArgs> = {}>(args?: Subset<T, User$animeReviewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    animeReviews<T extends User$animeReviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$animeReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    reviewLikes<T extends User$reviewLikesArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewLikesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -33892,9 +35149,9 @@ export namespace Prisma {
   }
 
   /**
-   * User.animeReview
+   * User.animeReviews
    */
-  export type User$animeReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$animeReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Review
      */
@@ -33913,6 +35170,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
+  }
+
+  /**
+   * User.reviewLikes
+   */
+  export type User$reviewLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReviewLike
+     */
+    select?: ReviewLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReviewLike
+     */
+    omit?: ReviewLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewLikeInclude<ExtArgs> | null
+    where?: ReviewLikeWhereInput
+    orderBy?: ReviewLikeOrderByWithRelationInput | ReviewLikeOrderByWithRelationInput[]
+    cursor?: ReviewLikeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReviewLikeScalarFieldEnum | ReviewLikeScalarFieldEnum[]
   }
 
   /**
@@ -34228,12 +35509,23 @@ export namespace Prisma {
     userId: 'userId',
     animeId: 'animeId',
     rating: 'rating',
+    title: 'title',
+    description: 'description',
     content: 'content',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
   export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
+
+
+  export const ReviewLikeScalarFieldEnum: {
+    userId: 'userId',
+    reviewId: 'reviewId',
+    likedAt: 'likedAt'
+  };
+
+  export type ReviewLikeScalarFieldEnum = (typeof ReviewLikeScalarFieldEnum)[keyof typeof ReviewLikeScalarFieldEnum]
 
 
   export const UserSettingsScalarFieldEnum: {
@@ -34247,6 +35539,8 @@ export namespace Prisma {
     showAllCommentsInProfile: 'showAllCommentsInProfile',
     showCollections: 'showCollections',
     showLikedCollections: 'showLikedCollections',
+    showLikedReviews: 'showLikedReviews',
+    showReviews: 'showReviews',
     notificationsOn: 'notificationsOn',
     preferredGenres: 'preferredGenres'
   };
@@ -35999,11 +37293,14 @@ export namespace Prisma {
     userId?: StringFilter<"Review"> | string
     animeId?: StringFilter<"Review"> | string
     rating?: IntFilter<"Review"> | number
+    title?: StringNullableFilter<"Review"> | string | null
+    description?: StringNullableFilter<"Review"> | string | null
     content?: StringNullableFilter<"Review"> | string | null
     createdAt?: DateTimeFilter<"Review"> | Date | string
     updatedAt?: DateTimeFilter<"Review"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     anime?: XOR<AnimeScalarRelationFilter, AnimeWhereInput>
+    reviewLikes?: ReviewLikeListRelationFilter
   }
 
   export type ReviewOrderByWithRelationInput = {
@@ -36011,11 +37308,14 @@ export namespace Prisma {
     userId?: SortOrder
     animeId?: SortOrder
     rating?: SortOrder
+    title?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
     content?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
     anime?: AnimeOrderByWithRelationInput
+    reviewLikes?: ReviewLikeOrderByRelationAggregateInput
   }
 
   export type ReviewWhereUniqueInput = Prisma.AtLeast<{
@@ -36027,11 +37327,14 @@ export namespace Prisma {
     userId?: StringFilter<"Review"> | string
     animeId?: StringFilter<"Review"> | string
     rating?: IntFilter<"Review"> | number
+    title?: StringNullableFilter<"Review"> | string | null
+    description?: StringNullableFilter<"Review"> | string | null
     content?: StringNullableFilter<"Review"> | string | null
     createdAt?: DateTimeFilter<"Review"> | Date | string
     updatedAt?: DateTimeFilter<"Review"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     anime?: XOR<AnimeScalarRelationFilter, AnimeWhereInput>
+    reviewLikes?: ReviewLikeListRelationFilter
   }, "id" | "userId_animeId">
 
   export type ReviewOrderByWithAggregationInput = {
@@ -36039,6 +37342,8 @@ export namespace Prisma {
     userId?: SortOrder
     animeId?: SortOrder
     rating?: SortOrder
+    title?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
     content?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -36057,9 +37362,60 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"Review"> | string
     animeId?: StringWithAggregatesFilter<"Review"> | string
     rating?: IntWithAggregatesFilter<"Review"> | number
+    title?: StringNullableWithAggregatesFilter<"Review"> | string | null
+    description?: StringNullableWithAggregatesFilter<"Review"> | string | null
     content?: StringNullableWithAggregatesFilter<"Review"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
+  }
+
+  export type ReviewLikeWhereInput = {
+    AND?: ReviewLikeWhereInput | ReviewLikeWhereInput[]
+    OR?: ReviewLikeWhereInput[]
+    NOT?: ReviewLikeWhereInput | ReviewLikeWhereInput[]
+    userId?: StringFilter<"ReviewLike"> | string
+    reviewId?: StringFilter<"ReviewLike"> | string
+    likedAt?: DateTimeFilter<"ReviewLike"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    review?: XOR<ReviewScalarRelationFilter, ReviewWhereInput>
+  }
+
+  export type ReviewLikeOrderByWithRelationInput = {
+    userId?: SortOrder
+    reviewId?: SortOrder
+    likedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    review?: ReviewOrderByWithRelationInput
+  }
+
+  export type ReviewLikeWhereUniqueInput = Prisma.AtLeast<{
+    userId_reviewId?: ReviewLikeUserIdReviewIdCompoundUniqueInput
+    AND?: ReviewLikeWhereInput | ReviewLikeWhereInput[]
+    OR?: ReviewLikeWhereInput[]
+    NOT?: ReviewLikeWhereInput | ReviewLikeWhereInput[]
+    userId?: StringFilter<"ReviewLike"> | string
+    reviewId?: StringFilter<"ReviewLike"> | string
+    likedAt?: DateTimeFilter<"ReviewLike"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    review?: XOR<ReviewScalarRelationFilter, ReviewWhereInput>
+  }, "userId_reviewId">
+
+  export type ReviewLikeOrderByWithAggregationInput = {
+    userId?: SortOrder
+    reviewId?: SortOrder
+    likedAt?: SortOrder
+    _count?: ReviewLikeCountOrderByAggregateInput
+    _max?: ReviewLikeMaxOrderByAggregateInput
+    _min?: ReviewLikeMinOrderByAggregateInput
+  }
+
+  export type ReviewLikeScalarWhereWithAggregatesInput = {
+    AND?: ReviewLikeScalarWhereWithAggregatesInput | ReviewLikeScalarWhereWithAggregatesInput[]
+    OR?: ReviewLikeScalarWhereWithAggregatesInput[]
+    NOT?: ReviewLikeScalarWhereWithAggregatesInput | ReviewLikeScalarWhereWithAggregatesInput[]
+    userId?: StringWithAggregatesFilter<"ReviewLike"> | string
+    reviewId?: StringWithAggregatesFilter<"ReviewLike"> | string
+    likedAt?: DateTimeWithAggregatesFilter<"ReviewLike"> | Date | string
   }
 
   export type UserSettingsWhereInput = {
@@ -36076,6 +37432,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: BoolFilter<"UserSettings"> | boolean
     showCollections?: BoolFilter<"UserSettings"> | boolean
     showLikedCollections?: BoolFilter<"UserSettings"> | boolean
+    showLikedReviews?: BoolFilter<"UserSettings"> | boolean
+    showReviews?: BoolFilter<"UserSettings"> | boolean
     notificationsOn?: BoolFilter<"UserSettings"> | boolean
     preferredGenres?: StringNullableListFilter<"UserSettings">
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -36092,6 +37450,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: SortOrder
     showCollections?: SortOrder
     showLikedCollections?: SortOrder
+    showLikedReviews?: SortOrder
+    showReviews?: SortOrder
     notificationsOn?: SortOrder
     preferredGenres?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -36111,6 +37471,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: BoolFilter<"UserSettings"> | boolean
     showCollections?: BoolFilter<"UserSettings"> | boolean
     showLikedCollections?: BoolFilter<"UserSettings"> | boolean
+    showLikedReviews?: BoolFilter<"UserSettings"> | boolean
+    showReviews?: BoolFilter<"UserSettings"> | boolean
     notificationsOn?: BoolFilter<"UserSettings"> | boolean
     preferredGenres?: StringNullableListFilter<"UserSettings">
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -36127,6 +37489,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: SortOrder
     showCollections?: SortOrder
     showLikedCollections?: SortOrder
+    showLikedReviews?: SortOrder
+    showReviews?: SortOrder
     notificationsOn?: SortOrder
     preferredGenres?: SortOrder
     _count?: UserSettingsCountOrderByAggregateInput
@@ -36148,6 +37512,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     showCollections?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     showLikedCollections?: BoolWithAggregatesFilter<"UserSettings"> | boolean
+    showLikedReviews?: BoolWithAggregatesFilter<"UserSettings"> | boolean
+    showReviews?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     notificationsOn?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     preferredGenres?: StringNullableListFilter<"UserSettings">
   }
@@ -36175,7 +37541,8 @@ export namespace Prisma {
     settings?: XOR<UserSettingsNullableScalarRelationFilter, UserSettingsWhereInput> | null
     animeComments?: CommentListRelationFilter
     animeCommentLikes?: CommentLikeListRelationFilter
-    animeReview?: ReviewListRelationFilter
+    animeReviews?: ReviewListRelationFilter
+    reviewLikes?: ReviewLikeListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -36198,7 +37565,8 @@ export namespace Prisma {
     settings?: UserSettingsOrderByWithRelationInput
     animeComments?: CommentOrderByRelationAggregateInput
     animeCommentLikes?: CommentLikeOrderByRelationAggregateInput
-    animeReview?: ReviewOrderByRelationAggregateInput
+    animeReviews?: ReviewOrderByRelationAggregateInput
+    reviewLikes?: ReviewLikeOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -36224,7 +37592,8 @@ export namespace Prisma {
     settings?: XOR<UserSettingsNullableScalarRelationFilter, UserSettingsWhereInput> | null
     animeComments?: CommentListRelationFilter
     animeCommentLikes?: CommentLikeListRelationFilter
-    animeReview?: ReviewListRelationFilter
+    animeReviews?: ReviewListRelationFilter
+    reviewLikes?: ReviewLikeListRelationFilter
   }, "id" | "username" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -37748,11 +39117,14 @@ export namespace Prisma {
   export type ReviewCreateInput = {
     id?: string
     rating: number
+    title?: string | null
+    description?: string | null
     content?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutAnimeReviewInput
+    user: UserCreateNestedOneWithoutAnimeReviewsInput
     anime: AnimeCreateNestedOneWithoutReviewsInput
+    reviewLikes?: ReviewLikeCreateNestedManyWithoutReviewInput
   }
 
   export type ReviewUncheckedCreateInput = {
@@ -37760,19 +39132,25 @@ export namespace Prisma {
     userId: string
     animeId: string
     rating: number
+    title?: string | null
+    description?: string | null
     content?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutReviewInput
   }
 
   export type ReviewUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutAnimeReviewNestedInput
+    user?: UserUpdateOneRequiredWithoutAnimeReviewsNestedInput
     anime?: AnimeUpdateOneRequiredWithoutReviewsNestedInput
+    reviewLikes?: ReviewLikeUpdateManyWithoutReviewNestedInput
   }
 
   export type ReviewUncheckedUpdateInput = {
@@ -37780,9 +39158,12 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     animeId?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutReviewNestedInput
   }
 
   export type ReviewCreateManyInput = {
@@ -37790,6 +39171,8 @@ export namespace Prisma {
     userId: string
     animeId: string
     rating: number
+    title?: string | null
+    description?: string | null
     content?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -37798,6 +39181,8 @@ export namespace Prisma {
   export type ReviewUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -37808,9 +39193,51 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     animeId?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReviewLikeCreateInput = {
+    likedAt?: Date | string
+    user: UserCreateNestedOneWithoutReviewLikesInput
+    review: ReviewCreateNestedOneWithoutReviewLikesInput
+  }
+
+  export type ReviewLikeUncheckedCreateInput = {
+    userId: string
+    reviewId: string
+    likedAt?: Date | string
+  }
+
+  export type ReviewLikeUpdateInput = {
+    likedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutReviewLikesNestedInput
+    review?: ReviewUpdateOneRequiredWithoutReviewLikesNestedInput
+  }
+
+  export type ReviewLikeUncheckedUpdateInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    reviewId?: StringFieldUpdateOperationsInput | string
+    likedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReviewLikeCreateManyInput = {
+    userId: string
+    reviewId: string
+    likedAt?: Date | string
+  }
+
+  export type ReviewLikeUpdateManyMutationInput = {
+    likedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReviewLikeUncheckedUpdateManyInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    reviewId?: StringFieldUpdateOperationsInput | string
+    likedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserSettingsCreateInput = {
@@ -37823,6 +39250,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: boolean
     showCollections?: boolean
     showLikedCollections?: boolean
+    showLikedReviews?: boolean
+    showReviews?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
     user: UserCreateNestedOneWithoutSettingsInput
@@ -37839,6 +39268,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: boolean
     showCollections?: boolean
     showLikedCollections?: boolean
+    showLikedReviews?: boolean
+    showReviews?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
@@ -37853,6 +39284,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
     showCollections?: BoolFieldUpdateOperationsInput | boolean
     showLikedCollections?: BoolFieldUpdateOperationsInput | boolean
+    showLikedReviews?: BoolFieldUpdateOperationsInput | boolean
+    showReviews?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
     user?: UserUpdateOneRequiredWithoutSettingsNestedInput
@@ -37869,6 +39302,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
     showCollections?: BoolFieldUpdateOperationsInput | boolean
     showLikedCollections?: BoolFieldUpdateOperationsInput | boolean
+    showLikedReviews?: BoolFieldUpdateOperationsInput | boolean
+    showReviews?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
@@ -37884,6 +39319,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: boolean
     showCollections?: boolean
     showLikedCollections?: boolean
+    showLikedReviews?: boolean
+    showReviews?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
@@ -37898,6 +39335,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
     showCollections?: BoolFieldUpdateOperationsInput | boolean
     showLikedCollections?: BoolFieldUpdateOperationsInput | boolean
+    showLikedReviews?: BoolFieldUpdateOperationsInput | boolean
+    showReviews?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
@@ -37913,6 +39352,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
     showCollections?: BoolFieldUpdateOperationsInput | boolean
     showLikedCollections?: BoolFieldUpdateOperationsInput | boolean
+    showLikedReviews?: BoolFieldUpdateOperationsInput | boolean
+    showReviews?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
@@ -37937,7 +39378,8 @@ export namespace Prisma {
     settings?: UserSettingsCreateNestedOneWithoutUserInput
     animeComments?: CommentCreateNestedManyWithoutUserInput
     animeCommentLikes?: CommentLikeCreateNestedManyWithoutUserInput
-    animeReview?: ReviewCreateNestedManyWithoutUserInput
+    animeReviews?: ReviewCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -37960,7 +39402,8 @@ export namespace Prisma {
     settings?: UserSettingsUncheckedCreateNestedOneWithoutUserInput
     animeComments?: CommentUncheckedCreateNestedManyWithoutUserInput
     animeCommentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
-    animeReview?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    animeReviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -37983,7 +39426,8 @@ export namespace Prisma {
     settings?: UserSettingsUpdateOneWithoutUserNestedInput
     animeComments?: CommentUpdateManyWithoutUserNestedInput
     animeCommentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
-    animeReview?: ReviewUpdateManyWithoutUserNestedInput
+    animeReviews?: ReviewUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -38006,7 +39450,8 @@ export namespace Prisma {
     settings?: UserSettingsUncheckedUpdateOneWithoutUserNestedInput
     animeComments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     animeCommentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
-    animeReview?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    animeReviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -39356,6 +40801,16 @@ export namespace Prisma {
     timestamp?: SortOrder
   }
 
+  export type ReviewLikeListRelationFilter = {
+    every?: ReviewLikeWhereInput
+    some?: ReviewLikeWhereInput
+    none?: ReviewLikeWhereInput
+  }
+
+  export type ReviewLikeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type ReviewUserIdAnimeIdCompoundUniqueInput = {
     userId: string
     animeId: string
@@ -39366,6 +40821,8 @@ export namespace Prisma {
     userId?: SortOrder
     animeId?: SortOrder
     rating?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
     content?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -39380,6 +40837,8 @@ export namespace Prisma {
     userId?: SortOrder
     animeId?: SortOrder
     rating?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
     content?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -39390,6 +40849,8 @@ export namespace Prisma {
     userId?: SortOrder
     animeId?: SortOrder
     rating?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
     content?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -39397,6 +40858,34 @@ export namespace Prisma {
 
   export type ReviewSumOrderByAggregateInput = {
     rating?: SortOrder
+  }
+
+  export type ReviewScalarRelationFilter = {
+    is?: ReviewWhereInput
+    isNot?: ReviewWhereInput
+  }
+
+  export type ReviewLikeUserIdReviewIdCompoundUniqueInput = {
+    userId: string
+    reviewId: string
+  }
+
+  export type ReviewLikeCountOrderByAggregateInput = {
+    userId?: SortOrder
+    reviewId?: SortOrder
+    likedAt?: SortOrder
+  }
+
+  export type ReviewLikeMaxOrderByAggregateInput = {
+    userId?: SortOrder
+    reviewId?: SortOrder
+    likedAt?: SortOrder
+  }
+
+  export type ReviewLikeMinOrderByAggregateInput = {
+    userId?: SortOrder
+    reviewId?: SortOrder
+    likedAt?: SortOrder
   }
 
   export type UserSettingsCountOrderByAggregateInput = {
@@ -39410,6 +40899,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: SortOrder
     showCollections?: SortOrder
     showLikedCollections?: SortOrder
+    showLikedReviews?: SortOrder
+    showReviews?: SortOrder
     notificationsOn?: SortOrder
     preferredGenres?: SortOrder
   }
@@ -39425,6 +40916,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: SortOrder
     showCollections?: SortOrder
     showLikedCollections?: SortOrder
+    showLikedReviews?: SortOrder
+    showReviews?: SortOrder
     notificationsOn?: SortOrder
   }
 
@@ -39439,6 +40932,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: SortOrder
     showCollections?: SortOrder
     showLikedCollections?: SortOrder
+    showLikedReviews?: SortOrder
+    showReviews?: SortOrder
     notificationsOn?: SortOrder
   }
 
@@ -40995,9 +42490,9 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAnimeProgressInput, UserUpdateWithoutAnimeProgressInput>, UserUncheckedUpdateWithoutAnimeProgressInput>
   }
 
-  export type UserCreateNestedOneWithoutAnimeReviewInput = {
-    create?: XOR<UserCreateWithoutAnimeReviewInput, UserUncheckedCreateWithoutAnimeReviewInput>
-    connectOrCreate?: UserCreateOrConnectWithoutAnimeReviewInput
+  export type UserCreateNestedOneWithoutAnimeReviewsInput = {
+    create?: XOR<UserCreateWithoutAnimeReviewsInput, UserUncheckedCreateWithoutAnimeReviewsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAnimeReviewsInput
     connect?: UserWhereUniqueInput
   }
 
@@ -41007,12 +42502,26 @@ export namespace Prisma {
     connect?: AnimeWhereUniqueInput
   }
 
-  export type UserUpdateOneRequiredWithoutAnimeReviewNestedInput = {
-    create?: XOR<UserCreateWithoutAnimeReviewInput, UserUncheckedCreateWithoutAnimeReviewInput>
-    connectOrCreate?: UserCreateOrConnectWithoutAnimeReviewInput
-    upsert?: UserUpsertWithoutAnimeReviewInput
+  export type ReviewLikeCreateNestedManyWithoutReviewInput = {
+    create?: XOR<ReviewLikeCreateWithoutReviewInput, ReviewLikeUncheckedCreateWithoutReviewInput> | ReviewLikeCreateWithoutReviewInput[] | ReviewLikeUncheckedCreateWithoutReviewInput[]
+    connectOrCreate?: ReviewLikeCreateOrConnectWithoutReviewInput | ReviewLikeCreateOrConnectWithoutReviewInput[]
+    createMany?: ReviewLikeCreateManyReviewInputEnvelope
+    connect?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+  }
+
+  export type ReviewLikeUncheckedCreateNestedManyWithoutReviewInput = {
+    create?: XOR<ReviewLikeCreateWithoutReviewInput, ReviewLikeUncheckedCreateWithoutReviewInput> | ReviewLikeCreateWithoutReviewInput[] | ReviewLikeUncheckedCreateWithoutReviewInput[]
+    connectOrCreate?: ReviewLikeCreateOrConnectWithoutReviewInput | ReviewLikeCreateOrConnectWithoutReviewInput[]
+    createMany?: ReviewLikeCreateManyReviewInputEnvelope
+    connect?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutAnimeReviewsNestedInput = {
+    create?: XOR<UserCreateWithoutAnimeReviewsInput, UserUncheckedCreateWithoutAnimeReviewsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAnimeReviewsInput
+    upsert?: UserUpsertWithoutAnimeReviewsInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAnimeReviewInput, UserUpdateWithoutAnimeReviewInput>, UserUncheckedUpdateWithoutAnimeReviewInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAnimeReviewsInput, UserUpdateWithoutAnimeReviewsInput>, UserUncheckedUpdateWithoutAnimeReviewsInput>
   }
 
   export type AnimeUpdateOneRequiredWithoutReviewsNestedInput = {
@@ -41021,6 +42530,62 @@ export namespace Prisma {
     upsert?: AnimeUpsertWithoutReviewsInput
     connect?: AnimeWhereUniqueInput
     update?: XOR<XOR<AnimeUpdateToOneWithWhereWithoutReviewsInput, AnimeUpdateWithoutReviewsInput>, AnimeUncheckedUpdateWithoutReviewsInput>
+  }
+
+  export type ReviewLikeUpdateManyWithoutReviewNestedInput = {
+    create?: XOR<ReviewLikeCreateWithoutReviewInput, ReviewLikeUncheckedCreateWithoutReviewInput> | ReviewLikeCreateWithoutReviewInput[] | ReviewLikeUncheckedCreateWithoutReviewInput[]
+    connectOrCreate?: ReviewLikeCreateOrConnectWithoutReviewInput | ReviewLikeCreateOrConnectWithoutReviewInput[]
+    upsert?: ReviewLikeUpsertWithWhereUniqueWithoutReviewInput | ReviewLikeUpsertWithWhereUniqueWithoutReviewInput[]
+    createMany?: ReviewLikeCreateManyReviewInputEnvelope
+    set?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+    disconnect?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+    delete?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+    connect?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+    update?: ReviewLikeUpdateWithWhereUniqueWithoutReviewInput | ReviewLikeUpdateWithWhereUniqueWithoutReviewInput[]
+    updateMany?: ReviewLikeUpdateManyWithWhereWithoutReviewInput | ReviewLikeUpdateManyWithWhereWithoutReviewInput[]
+    deleteMany?: ReviewLikeScalarWhereInput | ReviewLikeScalarWhereInput[]
+  }
+
+  export type ReviewLikeUncheckedUpdateManyWithoutReviewNestedInput = {
+    create?: XOR<ReviewLikeCreateWithoutReviewInput, ReviewLikeUncheckedCreateWithoutReviewInput> | ReviewLikeCreateWithoutReviewInput[] | ReviewLikeUncheckedCreateWithoutReviewInput[]
+    connectOrCreate?: ReviewLikeCreateOrConnectWithoutReviewInput | ReviewLikeCreateOrConnectWithoutReviewInput[]
+    upsert?: ReviewLikeUpsertWithWhereUniqueWithoutReviewInput | ReviewLikeUpsertWithWhereUniqueWithoutReviewInput[]
+    createMany?: ReviewLikeCreateManyReviewInputEnvelope
+    set?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+    disconnect?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+    delete?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+    connect?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+    update?: ReviewLikeUpdateWithWhereUniqueWithoutReviewInput | ReviewLikeUpdateWithWhereUniqueWithoutReviewInput[]
+    updateMany?: ReviewLikeUpdateManyWithWhereWithoutReviewInput | ReviewLikeUpdateManyWithWhereWithoutReviewInput[]
+    deleteMany?: ReviewLikeScalarWhereInput | ReviewLikeScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutReviewLikesInput = {
+    create?: XOR<UserCreateWithoutReviewLikesInput, UserUncheckedCreateWithoutReviewLikesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReviewLikesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ReviewCreateNestedOneWithoutReviewLikesInput = {
+    create?: XOR<ReviewCreateWithoutReviewLikesInput, ReviewUncheckedCreateWithoutReviewLikesInput>
+    connectOrCreate?: ReviewCreateOrConnectWithoutReviewLikesInput
+    connect?: ReviewWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutReviewLikesNestedInput = {
+    create?: XOR<UserCreateWithoutReviewLikesInput, UserUncheckedCreateWithoutReviewLikesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReviewLikesInput
+    upsert?: UserUpsertWithoutReviewLikesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReviewLikesInput, UserUpdateWithoutReviewLikesInput>, UserUncheckedUpdateWithoutReviewLikesInput>
+  }
+
+  export type ReviewUpdateOneRequiredWithoutReviewLikesNestedInput = {
+    create?: XOR<ReviewCreateWithoutReviewLikesInput, ReviewUncheckedCreateWithoutReviewLikesInput>
+    connectOrCreate?: ReviewCreateOrConnectWithoutReviewLikesInput
+    upsert?: ReviewUpsertWithoutReviewLikesInput
+    connect?: ReviewWhereUniqueInput
+    update?: XOR<XOR<ReviewUpdateToOneWithWhereWithoutReviewLikesInput, ReviewUpdateWithoutReviewLikesInput>, ReviewUncheckedUpdateWithoutReviewLikesInput>
   }
 
   export type UserSettingsCreatepreferredGenresInput = {
@@ -41101,6 +42666,13 @@ export namespace Prisma {
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
+  export type ReviewLikeCreateNestedManyWithoutUserInput = {
+    create?: XOR<ReviewLikeCreateWithoutUserInput, ReviewLikeUncheckedCreateWithoutUserInput> | ReviewLikeCreateWithoutUserInput[] | ReviewLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewLikeCreateOrConnectWithoutUserInput | ReviewLikeCreateOrConnectWithoutUserInput[]
+    createMany?: ReviewLikeCreateManyUserInputEnvelope
+    connect?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -41154,6 +42726,13 @@ export namespace Prisma {
     connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
     createMany?: ReviewCreateManyUserInputEnvelope
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
+  export type ReviewLikeUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ReviewLikeCreateWithoutUserInput, ReviewLikeUncheckedCreateWithoutUserInput> | ReviewLikeCreateWithoutUserInput[] | ReviewLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewLikeCreateOrConnectWithoutUserInput | ReviewLikeCreateOrConnectWithoutUserInput[]
+    createMany?: ReviewLikeCreateManyUserInputEnvelope
+    connect?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
   }
 
   export type EnumUserRoleFieldUpdateOperationsInput = {
@@ -41272,6 +42851,20 @@ export namespace Prisma {
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
+  export type ReviewLikeUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ReviewLikeCreateWithoutUserInput, ReviewLikeUncheckedCreateWithoutUserInput> | ReviewLikeCreateWithoutUserInput[] | ReviewLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewLikeCreateOrConnectWithoutUserInput | ReviewLikeCreateOrConnectWithoutUserInput[]
+    upsert?: ReviewLikeUpsertWithWhereUniqueWithoutUserInput | ReviewLikeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ReviewLikeCreateManyUserInputEnvelope
+    set?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+    disconnect?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+    delete?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+    connect?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+    update?: ReviewLikeUpdateWithWhereUniqueWithoutUserInput | ReviewLikeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ReviewLikeUpdateManyWithWhereWithoutUserInput | ReviewLikeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ReviewLikeScalarWhereInput | ReviewLikeScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -41378,6 +42971,20 @@ export namespace Prisma {
     update?: ReviewUpdateWithWhereUniqueWithoutUserInput | ReviewUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: ReviewUpdateManyWithWhereWithoutUserInput | ReviewUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
+  export type ReviewLikeUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ReviewLikeCreateWithoutUserInput, ReviewLikeUncheckedCreateWithoutUserInput> | ReviewLikeCreateWithoutUserInput[] | ReviewLikeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewLikeCreateOrConnectWithoutUserInput | ReviewLikeCreateOrConnectWithoutUserInput[]
+    upsert?: ReviewLikeUpsertWithWhereUniqueWithoutUserInput | ReviewLikeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ReviewLikeCreateManyUserInputEnvelope
+    set?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+    disconnect?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+    delete?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+    connect?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+    update?: ReviewLikeUpdateWithWhereUniqueWithoutUserInput | ReviewLikeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ReviewLikeUpdateManyWithWhereWithoutUserInput | ReviewLikeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ReviewLikeScalarWhereInput | ReviewLikeScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -44161,19 +45768,25 @@ export namespace Prisma {
   export type ReviewCreateWithoutAnimeInput = {
     id?: string
     rating: number
+    title?: string | null
+    description?: string | null
     content?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutAnimeReviewInput
+    user: UserCreateNestedOneWithoutAnimeReviewsInput
+    reviewLikes?: ReviewLikeCreateNestedManyWithoutReviewInput
   }
 
   export type ReviewUncheckedCreateWithoutAnimeInput = {
     id?: string
     userId: string
     rating: number
+    title?: string | null
+    description?: string | null
     content?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutReviewInput
   }
 
   export type ReviewCreateOrConnectWithoutAnimeInput = {
@@ -44461,6 +46074,8 @@ export namespace Prisma {
     userId?: StringFilter<"Review"> | string
     animeId?: StringFilter<"Review"> | string
     rating?: IntFilter<"Review"> | number
+    title?: StringNullableFilter<"Review"> | string | null
+    description?: StringNullableFilter<"Review"> | string | null
     content?: StringNullableFilter<"Review"> | string | null
     createdAt?: DateTimeFilter<"Review"> | Date | string
     updatedAt?: DateTimeFilter<"Review"> | Date | string
@@ -44485,7 +46100,8 @@ export namespace Prisma {
     settings?: UserSettingsCreateNestedOneWithoutUserInput
     animeComments?: CommentCreateNestedManyWithoutUserInput
     animeCommentLikes?: CommentLikeCreateNestedManyWithoutUserInput
-    animeReview?: ReviewCreateNestedManyWithoutUserInput
+    animeReviews?: ReviewCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -44507,7 +46123,8 @@ export namespace Prisma {
     settings?: UserSettingsUncheckedCreateNestedOneWithoutUserInput
     animeComments?: CommentUncheckedCreateNestedManyWithoutUserInput
     animeCommentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
-    animeReview?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    animeReviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -44545,7 +46162,8 @@ export namespace Prisma {
     settings?: UserSettingsUpdateOneWithoutUserNestedInput
     animeComments?: CommentUpdateManyWithoutUserNestedInput
     animeCommentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
-    animeReview?: ReviewUpdateManyWithoutUserNestedInput
+    animeReviews?: ReviewUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -44567,7 +46185,8 @@ export namespace Prisma {
     settings?: UserSettingsUncheckedUpdateOneWithoutUserNestedInput
     animeComments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     animeCommentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
-    animeReview?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    animeReviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAnimeCollectionInput = {
@@ -44589,7 +46208,8 @@ export namespace Prisma {
     settings?: UserSettingsCreateNestedOneWithoutUserInput
     animeComments?: CommentCreateNestedManyWithoutUserInput
     animeCommentLikes?: CommentLikeCreateNestedManyWithoutUserInput
-    animeReview?: ReviewCreateNestedManyWithoutUserInput
+    animeReviews?: ReviewCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAnimeCollectionInput = {
@@ -44611,7 +46231,8 @@ export namespace Prisma {
     settings?: UserSettingsUncheckedCreateNestedOneWithoutUserInput
     animeComments?: CommentUncheckedCreateNestedManyWithoutUserInput
     animeCommentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
-    animeReview?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    animeReviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAnimeCollectionInput = {
@@ -44691,7 +46312,8 @@ export namespace Prisma {
     settings?: UserSettingsUpdateOneWithoutUserNestedInput
     animeComments?: CommentUpdateManyWithoutUserNestedInput
     animeCommentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
-    animeReview?: ReviewUpdateManyWithoutUserNestedInput
+    animeReviews?: ReviewUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAnimeCollectionInput = {
@@ -44713,7 +46335,8 @@ export namespace Prisma {
     settings?: UserSettingsUncheckedUpdateOneWithoutUserNestedInput
     animeComments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     animeCommentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
-    animeReview?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    animeReviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AnimeInCollectionUpsertWithWhereUniqueWithoutCollectionInput = {
@@ -45020,7 +46643,8 @@ export namespace Prisma {
     settings?: UserSettingsCreateNestedOneWithoutUserInput
     animeComments?: CommentCreateNestedManyWithoutUserInput
     animeCommentLikes?: CommentLikeCreateNestedManyWithoutUserInput
-    animeReview?: ReviewCreateNestedManyWithoutUserInput
+    animeReviews?: ReviewCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutLikedCollectionInput = {
@@ -45042,7 +46666,8 @@ export namespace Prisma {
     settings?: UserSettingsUncheckedCreateNestedOneWithoutUserInput
     animeComments?: CommentUncheckedCreateNestedManyWithoutUserInput
     animeCommentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
-    animeReview?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    animeReviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutLikedCollectionInput = {
@@ -45109,7 +46734,8 @@ export namespace Prisma {
     settings?: UserSettingsUpdateOneWithoutUserNestedInput
     animeComments?: CommentUpdateManyWithoutUserNestedInput
     animeCommentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
-    animeReview?: ReviewUpdateManyWithoutUserNestedInput
+    animeReviews?: ReviewUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLikedCollectionInput = {
@@ -45131,7 +46757,8 @@ export namespace Prisma {
     settings?: UserSettingsUncheckedUpdateOneWithoutUserNestedInput
     animeComments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     animeCommentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
-    animeReview?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    animeReviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AnimeCollectionUpsertWithoutLikesInput = {
@@ -45188,7 +46815,8 @@ export namespace Prisma {
     likedCollection?: AnimeCollectionLikeCreateNestedManyWithoutUserInput
     settings?: UserSettingsCreateNestedOneWithoutUserInput
     animeCommentLikes?: CommentLikeCreateNestedManyWithoutUserInput
-    animeReview?: ReviewCreateNestedManyWithoutUserInput
+    animeReviews?: ReviewCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAnimeCommentsInput = {
@@ -45210,7 +46838,8 @@ export namespace Prisma {
     likedCollection?: AnimeCollectionLikeUncheckedCreateNestedManyWithoutUserInput
     settings?: UserSettingsUncheckedCreateNestedOneWithoutUserInput
     animeCommentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
-    animeReview?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    animeReviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAnimeCommentsInput = {
@@ -45422,7 +47051,8 @@ export namespace Prisma {
     likedCollection?: AnimeCollectionLikeUpdateManyWithoutUserNestedInput
     settings?: UserSettingsUpdateOneWithoutUserNestedInput
     animeCommentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
-    animeReview?: ReviewUpdateManyWithoutUserNestedInput
+    animeReviews?: ReviewUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAnimeCommentsInput = {
@@ -45444,7 +47074,8 @@ export namespace Prisma {
     likedCollection?: AnimeCollectionLikeUncheckedUpdateManyWithoutUserNestedInput
     settings?: UserSettingsUncheckedUpdateOneWithoutUserNestedInput
     animeCommentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
-    animeReview?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    animeReviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AnimeUpsertWithoutCommentsInput = {
@@ -45637,7 +47268,8 @@ export namespace Prisma {
     likedCollection?: AnimeCollectionLikeCreateNestedManyWithoutUserInput
     settings?: UserSettingsCreateNestedOneWithoutUserInput
     animeComments?: CommentCreateNestedManyWithoutUserInput
-    animeReview?: ReviewCreateNestedManyWithoutUserInput
+    animeReviews?: ReviewCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAnimeCommentLikesInput = {
@@ -45659,7 +47291,8 @@ export namespace Prisma {
     likedCollection?: AnimeCollectionLikeUncheckedCreateNestedManyWithoutUserInput
     settings?: UserSettingsUncheckedCreateNestedOneWithoutUserInput
     animeComments?: CommentUncheckedCreateNestedManyWithoutUserInput
-    animeReview?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    animeReviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAnimeCommentLikesInput = {
@@ -45728,7 +47361,8 @@ export namespace Prisma {
     likedCollection?: AnimeCollectionLikeUpdateManyWithoutUserNestedInput
     settings?: UserSettingsUpdateOneWithoutUserNestedInput
     animeComments?: CommentUpdateManyWithoutUserNestedInput
-    animeReview?: ReviewUpdateManyWithoutUserNestedInput
+    animeReviews?: ReviewUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAnimeCommentLikesInput = {
@@ -45750,7 +47384,8 @@ export namespace Prisma {
     likedCollection?: AnimeCollectionLikeUncheckedUpdateManyWithoutUserNestedInput
     settings?: UserSettingsUncheckedUpdateOneWithoutUserNestedInput
     animeComments?: CommentUncheckedUpdateManyWithoutUserNestedInput
-    animeReview?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    animeReviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CommentUpsertWithoutCommentLikeInput = {
@@ -45896,7 +47531,8 @@ export namespace Prisma {
     settings?: UserSettingsCreateNestedOneWithoutUserInput
     animeComments?: CommentCreateNestedManyWithoutUserInput
     animeCommentLikes?: CommentLikeCreateNestedManyWithoutUserInput
-    animeReview?: ReviewCreateNestedManyWithoutUserInput
+    animeReviews?: ReviewCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAnimeProgressInput = {
@@ -45918,7 +47554,8 @@ export namespace Prisma {
     settings?: UserSettingsUncheckedCreateNestedOneWithoutUserInput
     animeComments?: CommentUncheckedCreateNestedManyWithoutUserInput
     animeCommentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
-    animeReview?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    animeReviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAnimeProgressInput = {
@@ -46049,7 +47686,8 @@ export namespace Prisma {
     settings?: UserSettingsUpdateOneWithoutUserNestedInput
     animeComments?: CommentUpdateManyWithoutUserNestedInput
     animeCommentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
-    animeReview?: ReviewUpdateManyWithoutUserNestedInput
+    animeReviews?: ReviewUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAnimeProgressInput = {
@@ -46071,10 +47709,11 @@ export namespace Prisma {
     settings?: UserSettingsUncheckedUpdateOneWithoutUserNestedInput
     animeComments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     animeCommentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
-    animeReview?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    animeReviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type UserCreateWithoutAnimeReviewInput = {
+  export type UserCreateWithoutAnimeReviewsInput = {
     id?: string
     username: string
     email: string
@@ -46094,9 +47733,10 @@ export namespace Prisma {
     settings?: UserSettingsCreateNestedOneWithoutUserInput
     animeComments?: CommentCreateNestedManyWithoutUserInput
     animeCommentLikes?: CommentLikeCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
   }
 
-  export type UserUncheckedCreateWithoutAnimeReviewInput = {
+  export type UserUncheckedCreateWithoutAnimeReviewsInput = {
     id?: string
     username: string
     email: string
@@ -46116,11 +47756,12 @@ export namespace Prisma {
     settings?: UserSettingsUncheckedCreateNestedOneWithoutUserInput
     animeComments?: CommentUncheckedCreateNestedManyWithoutUserInput
     animeCommentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserCreateOrConnectWithoutAnimeReviewInput = {
+  export type UserCreateOrConnectWithoutAnimeReviewsInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutAnimeReviewInput, UserUncheckedCreateWithoutAnimeReviewInput>
+    create: XOR<UserCreateWithoutAnimeReviewsInput, UserUncheckedCreateWithoutAnimeReviewsInput>
   }
 
   export type AnimeCreateWithoutReviewsInput = {
@@ -46210,18 +47851,38 @@ export namespace Prisma {
     create: XOR<AnimeCreateWithoutReviewsInput, AnimeUncheckedCreateWithoutReviewsInput>
   }
 
-  export type UserUpsertWithoutAnimeReviewInput = {
-    update: XOR<UserUpdateWithoutAnimeReviewInput, UserUncheckedUpdateWithoutAnimeReviewInput>
-    create: XOR<UserCreateWithoutAnimeReviewInput, UserUncheckedCreateWithoutAnimeReviewInput>
+  export type ReviewLikeCreateWithoutReviewInput = {
+    likedAt?: Date | string
+    user: UserCreateNestedOneWithoutReviewLikesInput
+  }
+
+  export type ReviewLikeUncheckedCreateWithoutReviewInput = {
+    userId: string
+    likedAt?: Date | string
+  }
+
+  export type ReviewLikeCreateOrConnectWithoutReviewInput = {
+    where: ReviewLikeWhereUniqueInput
+    create: XOR<ReviewLikeCreateWithoutReviewInput, ReviewLikeUncheckedCreateWithoutReviewInput>
+  }
+
+  export type ReviewLikeCreateManyReviewInputEnvelope = {
+    data: ReviewLikeCreateManyReviewInput | ReviewLikeCreateManyReviewInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutAnimeReviewsInput = {
+    update: XOR<UserUpdateWithoutAnimeReviewsInput, UserUncheckedUpdateWithoutAnimeReviewsInput>
+    create: XOR<UserCreateWithoutAnimeReviewsInput, UserUncheckedCreateWithoutAnimeReviewsInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutAnimeReviewInput = {
+  export type UserUpdateToOneWithWhereWithoutAnimeReviewsInput = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutAnimeReviewInput, UserUncheckedUpdateWithoutAnimeReviewInput>
+    data: XOR<UserUpdateWithoutAnimeReviewsInput, UserUncheckedUpdateWithoutAnimeReviewsInput>
   }
 
-  export type UserUpdateWithoutAnimeReviewInput = {
+  export type UserUpdateWithoutAnimeReviewsInput = {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -46241,9 +47902,10 @@ export namespace Prisma {
     settings?: UserSettingsUpdateOneWithoutUserNestedInput
     animeComments?: CommentUpdateManyWithoutUserNestedInput
     animeCommentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutAnimeReviewInput = {
+  export type UserUncheckedUpdateWithoutAnimeReviewsInput = {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -46263,6 +47925,7 @@ export namespace Prisma {
     settings?: UserSettingsUncheckedUpdateOneWithoutUserNestedInput
     animeComments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     animeCommentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AnimeUpsertWithoutReviewsInput = {
@@ -46358,6 +48021,203 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutAnimeNestedInput
   }
 
+  export type ReviewLikeUpsertWithWhereUniqueWithoutReviewInput = {
+    where: ReviewLikeWhereUniqueInput
+    update: XOR<ReviewLikeUpdateWithoutReviewInput, ReviewLikeUncheckedUpdateWithoutReviewInput>
+    create: XOR<ReviewLikeCreateWithoutReviewInput, ReviewLikeUncheckedCreateWithoutReviewInput>
+  }
+
+  export type ReviewLikeUpdateWithWhereUniqueWithoutReviewInput = {
+    where: ReviewLikeWhereUniqueInput
+    data: XOR<ReviewLikeUpdateWithoutReviewInput, ReviewLikeUncheckedUpdateWithoutReviewInput>
+  }
+
+  export type ReviewLikeUpdateManyWithWhereWithoutReviewInput = {
+    where: ReviewLikeScalarWhereInput
+    data: XOR<ReviewLikeUpdateManyMutationInput, ReviewLikeUncheckedUpdateManyWithoutReviewInput>
+  }
+
+  export type ReviewLikeScalarWhereInput = {
+    AND?: ReviewLikeScalarWhereInput | ReviewLikeScalarWhereInput[]
+    OR?: ReviewLikeScalarWhereInput[]
+    NOT?: ReviewLikeScalarWhereInput | ReviewLikeScalarWhereInput[]
+    userId?: StringFilter<"ReviewLike"> | string
+    reviewId?: StringFilter<"ReviewLike"> | string
+    likedAt?: DateTimeFilter<"ReviewLike"> | Date | string
+  }
+
+  export type UserCreateWithoutReviewLikesInput = {
+    id?: string
+    username: string
+    email: string
+    password: string
+    displayName: string
+    picture?: string | null
+    role?: $Enums.UserRole
+    method?: $Enums.AuthMethod
+    isVerified?: boolean
+    isTwoFactorEnabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    animeProgress?: AnimeEpisodeProgressCreateNestedManyWithoutUserInput
+    animeCollection?: AnimeCollectionCreateNestedManyWithoutUserInput
+    likedCollection?: AnimeCollectionLikeCreateNestedManyWithoutUserInput
+    settings?: UserSettingsCreateNestedOneWithoutUserInput
+    animeComments?: CommentCreateNestedManyWithoutUserInput
+    animeCommentLikes?: CommentLikeCreateNestedManyWithoutUserInput
+    animeReviews?: ReviewCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutReviewLikesInput = {
+    id?: string
+    username: string
+    email: string
+    password: string
+    displayName: string
+    picture?: string | null
+    role?: $Enums.UserRole
+    method?: $Enums.AuthMethod
+    isVerified?: boolean
+    isTwoFactorEnabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    animeProgress?: AnimeEpisodeProgressUncheckedCreateNestedManyWithoutUserInput
+    animeCollection?: AnimeCollectionUncheckedCreateNestedManyWithoutUserInput
+    likedCollection?: AnimeCollectionLikeUncheckedCreateNestedManyWithoutUserInput
+    settings?: UserSettingsUncheckedCreateNestedOneWithoutUserInput
+    animeComments?: CommentUncheckedCreateNestedManyWithoutUserInput
+    animeCommentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
+    animeReviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutReviewLikesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutReviewLikesInput, UserUncheckedCreateWithoutReviewLikesInput>
+  }
+
+  export type ReviewCreateWithoutReviewLikesInput = {
+    id?: string
+    rating: number
+    title?: string | null
+    description?: string | null
+    content?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutAnimeReviewsInput
+    anime: AnimeCreateNestedOneWithoutReviewsInput
+  }
+
+  export type ReviewUncheckedCreateWithoutReviewLikesInput = {
+    id?: string
+    userId: string
+    animeId: string
+    rating: number
+    title?: string | null
+    description?: string | null
+    content?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ReviewCreateOrConnectWithoutReviewLikesInput = {
+    where: ReviewWhereUniqueInput
+    create: XOR<ReviewCreateWithoutReviewLikesInput, ReviewUncheckedCreateWithoutReviewLikesInput>
+  }
+
+  export type UserUpsertWithoutReviewLikesInput = {
+    update: XOR<UserUpdateWithoutReviewLikesInput, UserUncheckedUpdateWithoutReviewLikesInput>
+    create: XOR<UserCreateWithoutReviewLikesInput, UserUncheckedCreateWithoutReviewLikesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutReviewLikesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutReviewLikesInput, UserUncheckedUpdateWithoutReviewLikesInput>
+  }
+
+  export type UserUpdateWithoutReviewLikesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isTwoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    animeProgress?: AnimeEpisodeProgressUpdateManyWithoutUserNestedInput
+    animeCollection?: AnimeCollectionUpdateManyWithoutUserNestedInput
+    likedCollection?: AnimeCollectionLikeUpdateManyWithoutUserNestedInput
+    settings?: UserSettingsUpdateOneWithoutUserNestedInput
+    animeComments?: CommentUpdateManyWithoutUserNestedInput
+    animeCommentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
+    animeReviews?: ReviewUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutReviewLikesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    isTwoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    animeProgress?: AnimeEpisodeProgressUncheckedUpdateManyWithoutUserNestedInput
+    animeCollection?: AnimeCollectionUncheckedUpdateManyWithoutUserNestedInput
+    likedCollection?: AnimeCollectionLikeUncheckedUpdateManyWithoutUserNestedInput
+    settings?: UserSettingsUncheckedUpdateOneWithoutUserNestedInput
+    animeComments?: CommentUncheckedUpdateManyWithoutUserNestedInput
+    animeCommentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
+    animeReviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ReviewUpsertWithoutReviewLikesInput = {
+    update: XOR<ReviewUpdateWithoutReviewLikesInput, ReviewUncheckedUpdateWithoutReviewLikesInput>
+    create: XOR<ReviewCreateWithoutReviewLikesInput, ReviewUncheckedCreateWithoutReviewLikesInput>
+    where?: ReviewWhereInput
+  }
+
+  export type ReviewUpdateToOneWithWhereWithoutReviewLikesInput = {
+    where?: ReviewWhereInput
+    data: XOR<ReviewUpdateWithoutReviewLikesInput, ReviewUncheckedUpdateWithoutReviewLikesInput>
+  }
+
+  export type ReviewUpdateWithoutReviewLikesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rating?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutAnimeReviewsNestedInput
+    anime?: AnimeUpdateOneRequiredWithoutReviewsNestedInput
+  }
+
+  export type ReviewUncheckedUpdateWithoutReviewLikesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    animeId?: StringFieldUpdateOperationsInput | string
+    rating?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateWithoutSettingsInput = {
     id?: string
     username: string
@@ -46377,7 +48237,8 @@ export namespace Prisma {
     likedCollection?: AnimeCollectionLikeCreateNestedManyWithoutUserInput
     animeComments?: CommentCreateNestedManyWithoutUserInput
     animeCommentLikes?: CommentLikeCreateNestedManyWithoutUserInput
-    animeReview?: ReviewCreateNestedManyWithoutUserInput
+    animeReviews?: ReviewCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSettingsInput = {
@@ -46399,7 +48260,8 @@ export namespace Prisma {
     likedCollection?: AnimeCollectionLikeUncheckedCreateNestedManyWithoutUserInput
     animeComments?: CommentUncheckedCreateNestedManyWithoutUserInput
     animeCommentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
-    animeReview?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    animeReviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSettingsInput = {
@@ -46437,7 +48299,8 @@ export namespace Prisma {
     likedCollection?: AnimeCollectionLikeUpdateManyWithoutUserNestedInput
     animeComments?: CommentUpdateManyWithoutUserNestedInput
     animeCommentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
-    animeReview?: ReviewUpdateManyWithoutUserNestedInput
+    animeReviews?: ReviewUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSettingsInput = {
@@ -46459,7 +48322,8 @@ export namespace Prisma {
     likedCollection?: AnimeCollectionLikeUncheckedUpdateManyWithoutUserNestedInput
     animeComments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     animeCommentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
-    animeReview?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    animeReviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -46586,6 +48450,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: boolean
     showCollections?: boolean
     showLikedCollections?: boolean
+    showLikedReviews?: boolean
+    showReviews?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
@@ -46600,6 +48466,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: boolean
     showCollections?: boolean
     showLikedCollections?: boolean
+    showLikedReviews?: boolean
+    showReviews?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
@@ -46668,19 +48536,25 @@ export namespace Prisma {
   export type ReviewCreateWithoutUserInput = {
     id?: string
     rating: number
+    title?: string | null
+    description?: string | null
     content?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     anime: AnimeCreateNestedOneWithoutReviewsInput
+    reviewLikes?: ReviewLikeCreateNestedManyWithoutReviewInput
   }
 
   export type ReviewUncheckedCreateWithoutUserInput = {
     id?: string
     animeId: string
     rating: number
+    title?: string | null
+    description?: string | null
     content?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutReviewInput
   }
 
   export type ReviewCreateOrConnectWithoutUserInput = {
@@ -46690,6 +48564,26 @@ export namespace Prisma {
 
   export type ReviewCreateManyUserInputEnvelope = {
     data: ReviewCreateManyUserInput | ReviewCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ReviewLikeCreateWithoutUserInput = {
+    likedAt?: Date | string
+    review: ReviewCreateNestedOneWithoutReviewLikesInput
+  }
+
+  export type ReviewLikeUncheckedCreateWithoutUserInput = {
+    reviewId: string
+    likedAt?: Date | string
+  }
+
+  export type ReviewLikeCreateOrConnectWithoutUserInput = {
+    where: ReviewLikeWhereUniqueInput
+    create: XOR<ReviewLikeCreateWithoutUserInput, ReviewLikeUncheckedCreateWithoutUserInput>
+  }
+
+  export type ReviewLikeCreateManyUserInputEnvelope = {
+    data: ReviewLikeCreateManyUserInput | ReviewLikeCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -46807,6 +48701,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
     showCollections?: BoolFieldUpdateOperationsInput | boolean
     showLikedCollections?: BoolFieldUpdateOperationsInput | boolean
+    showLikedReviews?: BoolFieldUpdateOperationsInput | boolean
+    showReviews?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
@@ -46821,6 +48717,8 @@ export namespace Prisma {
     showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
     showCollections?: BoolFieldUpdateOperationsInput | boolean
     showLikedCollections?: BoolFieldUpdateOperationsInput | boolean
+    showLikedReviews?: BoolFieldUpdateOperationsInput | boolean
+    showReviews?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
@@ -46871,6 +48769,22 @@ export namespace Prisma {
   export type ReviewUpdateManyWithWhereWithoutUserInput = {
     where: ReviewScalarWhereInput
     data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ReviewLikeUpsertWithWhereUniqueWithoutUserInput = {
+    where: ReviewLikeWhereUniqueInput
+    update: XOR<ReviewLikeUpdateWithoutUserInput, ReviewLikeUncheckedUpdateWithoutUserInput>
+    create: XOR<ReviewLikeCreateWithoutUserInput, ReviewLikeUncheckedCreateWithoutUserInput>
+  }
+
+  export type ReviewLikeUpdateWithWhereUniqueWithoutUserInput = {
+    where: ReviewLikeWhereUniqueInput
+    data: XOR<ReviewLikeUpdateWithoutUserInput, ReviewLikeUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ReviewLikeUpdateManyWithWhereWithoutUserInput = {
+    where: ReviewLikeScalarWhereInput
+    data: XOR<ReviewLikeUpdateManyMutationInput, ReviewLikeUncheckedUpdateManyWithoutUserInput>
   }
 
   export type AnimeDemographicCreateManyDemographicInput = {
@@ -47042,6 +48956,8 @@ export namespace Prisma {
     id?: string
     userId: string
     rating: number
+    title?: string | null
+    description?: string | null
     content?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -47261,25 +49177,33 @@ export namespace Prisma {
   export type ReviewUpdateWithoutAnimeInput = {
     id?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutAnimeReviewNestedInput
+    user?: UserUpdateOneRequiredWithoutAnimeReviewsNestedInput
+    reviewLikes?: ReviewLikeUpdateManyWithoutReviewNestedInput
   }
 
   export type ReviewUncheckedUpdateWithoutAnimeInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutReviewNestedInput
   }
 
   export type ReviewUncheckedUpdateManyWithoutAnimeInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47397,6 +49321,26 @@ export namespace Prisma {
     likedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ReviewLikeCreateManyReviewInput = {
+    userId: string
+    likedAt?: Date | string
+  }
+
+  export type ReviewLikeUpdateWithoutReviewInput = {
+    likedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutReviewLikesNestedInput
+  }
+
+  export type ReviewLikeUncheckedUpdateWithoutReviewInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    likedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReviewLikeUncheckedUpdateManyWithoutReviewInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    likedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type AccountCreateManyUserInput = {
     id?: string
     type: string
@@ -47452,9 +49396,16 @@ export namespace Prisma {
     id?: string
     animeId: string
     rating: number
+    title?: string | null
+    description?: string | null
     content?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type ReviewLikeCreateManyUserInput = {
+    reviewId: string
+    likedAt?: Date | string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -47621,28 +49572,51 @@ export namespace Prisma {
   export type ReviewUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     anime?: AnimeUpdateOneRequiredWithoutReviewsNestedInput
+    reviewLikes?: ReviewLikeUpdateManyWithoutReviewNestedInput
   }
 
   export type ReviewUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     animeId?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutReviewNestedInput
   }
 
   export type ReviewUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     animeId?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReviewLikeUpdateWithoutUserInput = {
+    likedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    review?: ReviewUpdateOneRequiredWithoutReviewLikesNestedInput
+  }
+
+  export type ReviewLikeUncheckedUpdateWithoutUserInput = {
+    reviewId?: StringFieldUpdateOperationsInput | string
+    likedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReviewLikeUncheckedUpdateManyWithoutUserInput = {
+    reviewId?: StringFieldUpdateOperationsInput | string
+    likedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

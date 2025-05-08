@@ -18,5 +18,11 @@ dev-docs:
 	docker start postgres redis
 	bun run start:dev docs-microservice
 
+prisma-generate: 
+	bunx prisma generate --schema prisma/schema 
+
+prisma-migrate:
+	bunx prisma migrate dev --schema prisma/schema
+
 rebuild:
 	docker-compose up -d --build

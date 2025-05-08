@@ -9,16 +9,19 @@ import {
   Query,
 } from '@nestjs/common';
 import { CommentsService } from './comments.service';
-import { ApiResponseUtil } from 'shared/lib/utils/api-response';
 import { Authorized } from 'apps/anime-microservice/src/decorators/authorized.decorator';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { Authorization } from 'apps/anime-microservice/src/decorators/auth.decorator';
+import { SoftAuthorization } from 'apps/anime-microservice/src/decorators/soft-auth.decorator';
+import { wrapApiResponse } from 'shared/lib/utils/wrap-api-response';
+import { parsePagination } from 'shared/lib/utils/parse-pagination';
 
 @Controller({ path: 'anime/episodes/comments', version: '1' })
-export class CommentsConroller {
+export class CommentsController {
   public constructor(private readonly commentsService: CommentsService) {}
 
+  @SoftAuthorization()
   @Get(':animeId')
   public async getCommentsByAnime(
     @Query('page') page: number,
@@ -27,9 +30,7 @@ export class CommentsConroller {
     @Param('animeId') animeId: string,
     @Authorized('id') userId: string,
   ) {
-    const pageNumber = Number(page) || 1;
-    const limitNumber = Number(limit) || 10;
-
+    const { pageNumber, limitNumber } = parsePagination(page, limit);
     const result = await this.commentsService.getCommentsByAnime(
       animeId,
       pageNumber,
@@ -37,7 +38,7 @@ export class CommentsConroller {
       sortBy,
       userId,
     );
-    return ApiResponseUtil.withMeta(result.data, result.meta);
+    return wrapApiResponse(result, true);
   }
 
   @Get('replies/:commentId')
@@ -46,18 +47,16 @@ export class CommentsConroller {
     @Query('limit') limit: number,
     @Param('commentId') commentId: string,
   ) {
-    const pageNumber = Number(page) || 1;
-    const limitNumber = Number(limit) || 10;
+    const { pageNumber, limitNumber } = parsePagination(page, limit);
     const result = await this.commentsService.getCommentReplies(
       commentId,
       pageNumber,
       limitNumber,
     );
-
-    return ApiResponseUtil.withMeta(result.data, result.meta);
+    return wrapApiResponse(result, true);
   }
 
-  @Authorization()
+  @SoftAuthorization()
   @Get('user/:userId')
   public async getUserComments(
     @Param('userId') userId: string,
@@ -66,9 +65,7 @@ export class CommentsConroller {
     @Query('limit') limit: number,
     @Query('sortBy') sortBy: 'newest' | 'top',
   ) {
-    const pageNumber = Number(page) || 1;
-    const limitNumber = Number(limit) || 10;
-
+    const { pageNumber, limitNumber } = parsePagination(page, limit);
     const result = await this.commentsService.getUserComments(
       userId,
       viewerId,
@@ -76,10 +73,10 @@ export class CommentsConroller {
       limitNumber,
       sortBy,
     );
-    return ApiResponseUtil.withMeta(result.data, result.meta);
+    return wrapApiResponse(result, true);
   }
 
-  @Authorization()
+  @SoftAuthorization()
   @Get('user/:userId/likes')
   public async getUserLikes(
     @Param('userId') userId: string,
@@ -88,9 +85,7 @@ export class CommentsConroller {
     @Query('limit') limit: number,
     @Query('sortBy') sortBy: 'newest' | 'oldest',
   ) {
-    const pageNumber = Number(page) || 1;
-    const limitNumber = Number(limit) || 10;
-
+    const { pageNumber, limitNumber } = parsePagination(page, limit);
     const result = await this.commentsService.getUserLikes(
       userId,
       viewerId,
@@ -98,7 +93,30 @@ export class CommentsConroller {
       limitNumber,
       sortBy,
     );
-    return ApiResponseUtil.withMeta(result.data, result.meta);
+    return wrapApiResponse(result, true);
+  }
+
+  @SoftAuthorization()
+  @Get(':animeId/:episode')
+  public async getCommentsByAnimeAndEpisode(
+    @Param('animeId') animeId: string,
+    @Param('episode') episode: number,
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+    @Query('sortBy') sortBy: 'newest' | 'top',
+    @Authorized('id') userId: string,
+  ) {
+    const episodeNumber = Number(episode) || 1;
+    const { pageNumber, limitNumber } = parsePagination(page, limit);
+    const result = await this.commentsService.getCommentsByAnimeAndEpisode(
+      animeId,
+      episodeNumber,
+      pageNumber,
+      limitNumber,
+      sortBy,
+      userId,
+    );
+    return wrapApiResponse(result, true);
   }
 
   @Authorization()
@@ -108,7 +126,7 @@ export class CommentsConroller {
     @Param('id') id: string,
   ) {
     const result = await this.commentsService.likeComment(userId, id);
-    return ApiResponseUtil.success(result);
+    return wrapApiResponse(result);
   }
 
   @Authorization()
@@ -118,7 +136,7 @@ export class CommentsConroller {
     @Param('id') id: string,
   ) {
     const result = await this.commentsService.unlikeComment(userId, id);
-    return ApiResponseUtil.success(result);
+    return wrapApiResponse(result);
   }
 
   @Authorization()
@@ -128,27 +146,27 @@ export class CommentsConroller {
     @Authorized('id') userId: string,
   ) {
     const result = await this.commentsService.createComment(dto, userId);
-    return ApiResponseUtil.success(result);
+    return wrapApiResponse(result);
   }
 
   @Authorization()
   @Patch('comment/:id')
   public async updateComment(
     @Body() dto: UpdateCommentDto,
-    @Param() id: string,
+    @Param('id') id: string,
     @Authorized('id') userId: string,
   ) {
     const result = await this.commentsService.updateComment(id, dto, userId);
-    return ApiResponseUtil.success(result);
+    return wrapApiResponse(result);
   }
 
   @Authorization()
   @Delete('comment/:id')
   public async deleteComment(
-    @Param() id: string,
+    @Param('id') id: string,
     @Authorized('id') userId: string,
   ) {
     const result = await this.commentsService.deleteComment(id, userId);
-    return ApiResponseUtil.success(result);
+    return wrapApiResponse(result);
   }
 }

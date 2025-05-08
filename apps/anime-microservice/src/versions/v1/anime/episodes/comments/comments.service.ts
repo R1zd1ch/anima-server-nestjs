@@ -1,7 +1,6 @@
 import {
   ConflictException,
   Injectable,
-  InternalServerErrorException,
   Logger,
   NotFoundException,
   UnauthorizedException,
@@ -9,6 +8,7 @@ import {
 import { PrismaService } from 'shared/lib/prisma/prisma.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
+import { handleError } from 'shared/lib/utils/handle-error';
 
 @Injectable()
 export class CommentsService {
@@ -56,10 +56,7 @@ export class CommentsService {
 
       return comment;
     } catch (e) {
-      this.logger.error(
-        `Ошибка создания комментария ${e instanceof Error ? e.stack : JSON.stringify(e)}`,
-      );
-      throw new InternalServerErrorException('Ошибка создания комментария');
+      handleError(e, 'Ошибка создания комментария', this.logger);
     }
   }
 
@@ -84,9 +81,8 @@ export class CommentsService {
           updatedAt: new Date(),
         },
       });
-    } catch {
-      this.logger.error(`Ошибка обновления комментария`);
-      throw new InternalServerErrorException('Ошибка обновления комментария');
+    } catch (e) {
+      handleError(e, 'Ошибка обновления комментария', this.logger);
     }
   }
 
@@ -101,9 +97,8 @@ export class CommentsService {
         throw new UnauthorizedException('Вы не создатель комментария');
 
       return await this.prismaService.comment.delete({ where: { id } });
-    } catch {
-      this.logger.error(`Ошибка удаления комментария`);
-      throw new InternalServerErrorException('Ошибка удаления комментария');
+    } catch (e) {
+      handleError(e, 'Ошибка удаления комментария', this.logger);
     }
   }
 
@@ -131,37 +126,11 @@ export class CommentsService {
               picture: true,
             },
           },
-          replies: {
-            include: {
-              user: {
-                select: {
-                  id: true,
-                  username: true,
-                  picture: true,
-                },
-              },
-              _count: {
-                select: { CommentLike: true },
-              },
-            },
-          },
           _count: {
-            select: { CommentLike: true },
+            select: { CommentLike: true, replies: true },
           },
         },
       });
-
-      if (comments.length === 0) {
-        return {
-          data: [],
-          meta: {
-            total: 0,
-            page,
-            limit,
-            totalPages: 0,
-          },
-        };
-      }
 
       const commentIds = comments.map((comment) => comment.id);
       const userLikesForComments = userId
@@ -172,13 +141,17 @@ export class CommentsService {
             },
           })
         : [];
-      const commentsWithLikes = comments.map((comment) => ({
-        ...comment,
-        isLiked: userLikesForComments.some(
-          (like) => like.commentId === comment.id,
-        ),
-        likesCount: comment._count.CommentLike,
-      }));
+      const commentsWithLikes = comments.map((comment) => {
+        const { _count, ...rest } = comment;
+        return {
+          ...rest,
+          isLiked: userLikesForComments.some(
+            (like) => like.commentId === comment.id,
+          ),
+          likesCount: _count.CommentLike,
+          repliesCount: _count.replies,
+        };
+      });
 
       const total = await this.prismaService.comment.count({ where });
 
@@ -192,10 +165,84 @@ export class CommentsService {
         },
       };
     } catch (e) {
-      this.logger.error(
-        `Ошибка получения комментариев, ${e instanceof Error ? e.stack : JSON.stringify(e)}`,
+      handleError(e, 'Ошибка получения комментариев', this.logger);
+    }
+  }
+
+  public async getCommentsByAnimeAndEpisode(
+    animeId: string,
+    episode: number,
+    page: number = 1,
+    limit: number = 10,
+    sortBy: 'newest' | 'top' = 'newest',
+    userId?: string,
+  ) {
+    try {
+      const where = { animeId, episode, parentId: null };
+      const [anime, comments] = await this.prismaService.$transaction([
+        this.prismaService.anime.findUnique({ where: { id: animeId } }),
+        this.prismaService.comment.findMany({
+          where,
+          skip: (page - 1) * limit,
+          take: limit,
+          orderBy:
+            sortBy === 'newest'
+              ? { createdAt: 'desc' }
+              : { likesCount: 'desc' },
+          include: {
+            user: {
+              select: {
+                id: true,
+                username: true,
+                picture: true,
+              },
+            },
+            _count: {
+              select: { CommentLike: true, replies: true },
+            },
+          },
+        }),
+      ]);
+
+      if (!anime) throw new NotFoundException('Аниме не найдено');
+
+      const commentIds = comments.map((comment) => comment.id);
+      const userLikesForComments = userId
+        ? await this.prismaService.commentLike.findMany({
+            where: {
+              userId,
+              commentId: { in: commentIds },
+            },
+          })
+        : [];
+      const commentsWithLikes = comments.map((comment) => {
+        const { _count, ...rest } = comment;
+        return {
+          ...rest,
+          isLiked: userLikesForComments.some(
+            (like) => like.commentId === comment.id,
+          ),
+          likesCount: _count.CommentLike,
+          repliesCount: _count.replies,
+        };
+      });
+
+      const total = await this.prismaService.comment.count({ where });
+      return {
+        data: commentsWithLikes,
+        meta: {
+          total,
+          page,
+          limit,
+          totalPages: Math.ceil(total / limit),
+        },
+      };
+    } catch (e) {
+      return handleError(
+        e,
+        'Ошибка получения комментариев по эпизоду',
+        this.logger,
       );
-      throw new InternalServerErrorException('Ошибка получения комментариев');
     }
   }
 
@@ -226,18 +273,6 @@ export class CommentsService {
         },
       });
 
-      if (replies.length === 0) {
-        return {
-          data: [],
-          meta: {
-            total: 0,
-            page,
-            limit,
-            totalPages: 0,
-          },
-        };
-      }
-
       const replyIds = replies.map((reply) => reply.id);
       const userLikesForReplies = userId
         ? await this.prismaService.commentLike.findMany({
@@ -248,13 +283,16 @@ export class CommentsService {
           })
         : [];
 
-      const repliesWithLikes = replies.map((reply) => ({
-        ...reply,
-        isLiked: userLikesForReplies.some(
-          (like) => like.commentId === reply.id,
-        ),
-        likesCount: reply._count.CommentLike,
-      }));
+      const repliesWithLikes = replies.map((reply) => {
+        const { _count, ...rest } = reply;
+        return {
+          ...rest,
+          isLiked: userLikesForReplies.some(
+            (like) => like.commentId === reply.id,
+          ),
+          likesCount: _count.CommentLike,
+        };
+      });
 
       const total = await this.prismaService.comment.count({ where });
 
@@ -267,10 +305,11 @@ export class CommentsService {
           totalPages: Math.ceil(total / limit),
         },
       };
-    } catch {
-      this.logger.error(`Ошибка получения ответов на комментарий`);
-      throw new InternalServerErrorException(
+    } catch (e) {
+      return handleError(
+        e,
         'Ошибка получения ответов на комментарий',
+        this.logger,
       );
     }
   }
@@ -297,7 +336,7 @@ export class CommentsService {
 
         if (!targetUser) throw new NotFoundException('Пользователь не найден');
 
-        if (!targetUser.settings.showAllCommentsInProfile) {
+        if (!targetUser?.settings?.showAllCommentsInProfile) {
           return {
             data: [],
             meta: {
@@ -322,7 +361,7 @@ export class CommentsService {
             : { CommentLike: { _count: 'desc' } },
         include: {
           _count: {
-            select: { CommentLike: true },
+            select: { CommentLike: true, replies: true },
           },
           anime: {
             select: {
@@ -338,25 +377,16 @@ export class CommentsService {
           },
         },
       });
-
-      if (comments.length === 0) {
-        return {
-          data: [],
-          meta: {
-            total: 0,
-            page,
-            limit,
-            totalPages: 0,
-          },
-        };
-      }
-
       const commentsWithLikes = await Promise.all(
-        comments.map(async (comment) => ({
-          ...comment,
-          isLiked: await this.isCommentLiked(userId, comment.id),
-          likesCount: comment._count.CommentLike,
-        })),
+        comments.map(async (comment) => {
+          const { _count, ...rest } = comment;
+          return {
+            ...rest,
+            isLiked: await this.isCommentLiked(userId, comment.id),
+            likesCount: _count.CommentLike,
+            repliesCount: _count.replies,
+          };
+        }),
       );
 
       const total = await this.prismaService.comment.count({ where });
@@ -370,10 +400,11 @@ export class CommentsService {
           totalPages: Math.ceil(total / limit),
         },
       };
-    } catch {
-      this.logger.error(`Ошибка получения комментариев пользователя`);
-      throw new InternalServerErrorException(
+    } catch (e) {
+      return handleError(
+        e,
         'Ошибка получения комментариев пользователя',
+        this.logger,
       );
     }
   }
@@ -400,11 +431,8 @@ export class CommentsService {
       ]);
 
       return { success: true };
-    } catch {
-      this.logger.error(`Ошибка создания лайка комментария`);
-      throw new InternalServerErrorException(
-        'Ошибка создания лайка комментария',
-      );
+    } catch (e) {
+      handleError(e, 'Ошибка создания лайка комментария', this.logger);
     }
   }
 
@@ -432,11 +460,8 @@ export class CommentsService {
       ]);
 
       return { success: true };
-    } catch {
-      this.logger.error(`Ошибка удаления лайка комментария`);
-      throw new InternalServerErrorException(
-        'Ошибка удаления лайка комментария',
-      );
+    } catch (e) {
+      handleError(e, 'Ошибка удаления лайка комментария', this.logger);
     }
   }
 
@@ -533,11 +558,10 @@ export class CommentsService {
         },
       };
     } catch (e: unknown) {
-      this.logger.error(
-        `Ошибка получения страницы лайков пользователя: ${e instanceof Error ? e.message : JSON.stringify(e)}`,
-      );
-      throw new InternalServerErrorException(
+      return handleError(
+        e,
         'Ошибка получения страницы лайков пользователя',
+        this.logger,
       );
     }
   }
@@ -554,11 +578,8 @@ export class CommentsService {
       });
 
       return like ? true : false;
-    } catch {
-      this.logger.error(`Ошибка проверки лайка комментария`);
-      throw new InternalServerErrorException(
-        'Ошибка проверки лайка комментария',
-      );
+    } catch (e) {
+      handleError(e, 'Ошибка проверки лайка комментария', this.logger);
     }
   }
 }

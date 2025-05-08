@@ -30,7 +30,7 @@
     "@nestjs/schedule": "^5.0.1",
     "@nestjs/swagger": "^11.1.5",
     "@nestlab/google-recaptcha": "^3.10.0",
-    "@prisma/client": "^6.5.0",
+    "@prisma/client": "6.7.0",
     "@react-email/components": "^0.0.35",
     "@react-email/html": "^0.0.11",
     "amqp-connection-manager": "^4.1.14",

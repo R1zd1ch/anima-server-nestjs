@@ -16,7 +16,7 @@ export class WatchProgressService {
   ) {
     try {
       this.validateProgress(dto);
-      return this.prismaService.animeEpisodeProgress.create({
+      return await this.prismaService.animeEpisodeProgress.create({
         data: {
           userId: userId,
           episode: dto.episode,
