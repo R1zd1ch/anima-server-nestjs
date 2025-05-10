@@ -24,5 +24,11 @@ prisma-generate:
 prisma-migrate:
 	bunx prisma migrate dev --schema prisma/schema
 
+prisma-db-push:
+	bunx prisma db push --schema prisma/schema
+
 rebuild:
 	docker-compose up -d --build
+
+
+.PHONY: dev

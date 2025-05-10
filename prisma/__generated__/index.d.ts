@@ -32687,6 +32687,7 @@ export namespace Prisma {
     showLikedCollections: boolean | null
     showLikedReviews: boolean | null
     showReviews: boolean | null
+    showLatestWatched: boolean | null
     notificationsOn: boolean | null
   }
 
@@ -32703,6 +32704,7 @@ export namespace Prisma {
     showLikedCollections: boolean | null
     showLikedReviews: boolean | null
     showReviews: boolean | null
+    showLatestWatched: boolean | null
     notificationsOn: boolean | null
   }
 
@@ -32719,6 +32721,7 @@ export namespace Prisma {
     showLikedCollections: number
     showLikedReviews: number
     showReviews: number
+    showLatestWatched: number
     notificationsOn: number
     preferredGenres: number
     _all: number
@@ -32738,6 +32741,7 @@ export namespace Prisma {
     showLikedCollections?: true
     showLikedReviews?: true
     showReviews?: true
+    showLatestWatched?: true
     notificationsOn?: true
   }
 
@@ -32754,6 +32758,7 @@ export namespace Prisma {
     showLikedCollections?: true
     showLikedReviews?: true
     showReviews?: true
+    showLatestWatched?: true
     notificationsOn?: true
   }
 
@@ -32770,6 +32775,7 @@ export namespace Prisma {
     showLikedCollections?: true
     showLikedReviews?: true
     showReviews?: true
+    showLatestWatched?: true
     notificationsOn?: true
     preferredGenres?: true
     _all?: true
@@ -32860,6 +32866,7 @@ export namespace Prisma {
     showLikedCollections: boolean
     showLikedReviews: boolean
     showReviews: boolean
+    showLatestWatched: boolean
     notificationsOn: boolean
     preferredGenres: string[]
     _count: UserSettingsCountAggregateOutputType | null
@@ -32894,6 +32901,7 @@ export namespace Prisma {
     showLikedCollections?: boolean
     showLikedReviews?: boolean
     showReviews?: boolean
+    showLatestWatched?: boolean
     notificationsOn?: boolean
     preferredGenres?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -32912,6 +32920,7 @@ export namespace Prisma {
     showLikedCollections?: boolean
     showLikedReviews?: boolean
     showReviews?: boolean
+    showLatestWatched?: boolean
     notificationsOn?: boolean
     preferredGenres?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -32930,6 +32939,7 @@ export namespace Prisma {
     showLikedCollections?: boolean
     showLikedReviews?: boolean
     showReviews?: boolean
+    showLatestWatched?: boolean
     notificationsOn?: boolean
     preferredGenres?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -32948,11 +32958,12 @@ export namespace Prisma {
     showLikedCollections?: boolean
     showLikedReviews?: boolean
     showReviews?: boolean
+    showLatestWatched?: boolean
     notificationsOn?: boolean
     preferredGenres?: boolean
   }
 
-  export type UserSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "theme" | "language" | "show18plus" | "showActivity" | "showAnimeList" | "showAllCommentsInProfile" | "showCollections" | "showLikedCollections" | "showLikedReviews" | "showReviews" | "notificationsOn" | "preferredGenres", ExtArgs["result"]["userSettings"]>
+  export type UserSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "theme" | "language" | "show18plus" | "showActivity" | "showAnimeList" | "showAllCommentsInProfile" | "showCollections" | "showLikedCollections" | "showLikedReviews" | "showReviews" | "showLatestWatched" | "notificationsOn" | "preferredGenres", ExtArgs["result"]["userSettings"]>
   export type UserSettingsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -32981,6 +32992,7 @@ export namespace Prisma {
       showLikedCollections: boolean
       showLikedReviews: boolean
       showReviews: boolean
+      showLatestWatched: boolean
       notificationsOn: boolean
       preferredGenres: string[]
     }, ExtArgs["result"]["userSettings"]>
@@ -33419,6 +33431,7 @@ export namespace Prisma {
     readonly showLikedCollections: FieldRef<"UserSettings", 'Boolean'>
     readonly showLikedReviews: FieldRef<"UserSettings", 'Boolean'>
     readonly showReviews: FieldRef<"UserSettings", 'Boolean'>
+    readonly showLatestWatched: FieldRef<"UserSettings", 'Boolean'>
     readonly notificationsOn: FieldRef<"UserSettings", 'Boolean'>
     readonly preferredGenres: FieldRef<"UserSettings", 'String[]'>
   }
@@ -35541,6 +35554,7 @@ export namespace Prisma {
     showLikedCollections: 'showLikedCollections',
     showLikedReviews: 'showLikedReviews',
     showReviews: 'showReviews',
+    showLatestWatched: 'showLatestWatched',
     notificationsOn: 'notificationsOn',
     preferredGenres: 'preferredGenres'
   };
@@ -37242,7 +37256,7 @@ export namespace Prisma {
   }
 
   export type AnimeEpisodeProgressWhereUniqueInput = Prisma.AtLeast<{
-    userId_animeId_episode?: AnimeEpisodeProgressUserIdAnimeIdEpisodeCompoundUniqueInput
+    userId_animeId?: AnimeEpisodeProgressUserIdAnimeIdCompoundUniqueInput
     AND?: AnimeEpisodeProgressWhereInput | AnimeEpisodeProgressWhereInput[]
     OR?: AnimeEpisodeProgressWhereInput[]
     NOT?: AnimeEpisodeProgressWhereInput | AnimeEpisodeProgressWhereInput[]
@@ -37255,7 +37269,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"AnimeEpisodeProgress"> | Date | string
     anime?: XOR<AnimeScalarRelationFilter, AnimeWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "userId_animeId_episode">
+  }, "userId_animeId">
 
   export type AnimeEpisodeProgressOrderByWithAggregationInput = {
     userId?: SortOrder
@@ -37434,6 +37448,7 @@ export namespace Prisma {
     showLikedCollections?: BoolFilter<"UserSettings"> | boolean
     showLikedReviews?: BoolFilter<"UserSettings"> | boolean
     showReviews?: BoolFilter<"UserSettings"> | boolean
+    showLatestWatched?: BoolFilter<"UserSettings"> | boolean
     notificationsOn?: BoolFilter<"UserSettings"> | boolean
     preferredGenres?: StringNullableListFilter<"UserSettings">
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -37452,6 +37467,7 @@ export namespace Prisma {
     showLikedCollections?: SortOrder
     showLikedReviews?: SortOrder
     showReviews?: SortOrder
+    showLatestWatched?: SortOrder
     notificationsOn?: SortOrder
     preferredGenres?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -37473,6 +37489,7 @@ export namespace Prisma {
     showLikedCollections?: BoolFilter<"UserSettings"> | boolean
     showLikedReviews?: BoolFilter<"UserSettings"> | boolean
     showReviews?: BoolFilter<"UserSettings"> | boolean
+    showLatestWatched?: BoolFilter<"UserSettings"> | boolean
     notificationsOn?: BoolFilter<"UserSettings"> | boolean
     preferredGenres?: StringNullableListFilter<"UserSettings">
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -37491,6 +37508,7 @@ export namespace Prisma {
     showLikedCollections?: SortOrder
     showLikedReviews?: SortOrder
     showReviews?: SortOrder
+    showLatestWatched?: SortOrder
     notificationsOn?: SortOrder
     preferredGenres?: SortOrder
     _count?: UserSettingsCountOrderByAggregateInput
@@ -37514,6 +37532,7 @@ export namespace Prisma {
     showLikedCollections?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     showLikedReviews?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     showReviews?: BoolWithAggregatesFilter<"UserSettings"> | boolean
+    showLatestWatched?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     notificationsOn?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     preferredGenres?: StringNullableListFilter<"UserSettings">
   }
@@ -39252,6 +39271,7 @@ export namespace Prisma {
     showLikedCollections?: boolean
     showLikedReviews?: boolean
     showReviews?: boolean
+    showLatestWatched?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
     user: UserCreateNestedOneWithoutSettingsInput
@@ -39270,6 +39290,7 @@ export namespace Prisma {
     showLikedCollections?: boolean
     showLikedReviews?: boolean
     showReviews?: boolean
+    showLatestWatched?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
@@ -39286,6 +39307,7 @@ export namespace Prisma {
     showLikedCollections?: BoolFieldUpdateOperationsInput | boolean
     showLikedReviews?: BoolFieldUpdateOperationsInput | boolean
     showReviews?: BoolFieldUpdateOperationsInput | boolean
+    showLatestWatched?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
     user?: UserUpdateOneRequiredWithoutSettingsNestedInput
@@ -39304,6 +39326,7 @@ export namespace Prisma {
     showLikedCollections?: BoolFieldUpdateOperationsInput | boolean
     showLikedReviews?: BoolFieldUpdateOperationsInput | boolean
     showReviews?: BoolFieldUpdateOperationsInput | boolean
+    showLatestWatched?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
@@ -39321,6 +39344,7 @@ export namespace Prisma {
     showLikedCollections?: boolean
     showLikedReviews?: boolean
     showReviews?: boolean
+    showLatestWatched?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
@@ -39337,6 +39361,7 @@ export namespace Prisma {
     showLikedCollections?: BoolFieldUpdateOperationsInput | boolean
     showLikedReviews?: BoolFieldUpdateOperationsInput | boolean
     showReviews?: BoolFieldUpdateOperationsInput | boolean
+    showLatestWatched?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
@@ -39354,6 +39379,7 @@ export namespace Prisma {
     showLikedCollections?: BoolFieldUpdateOperationsInput | boolean
     showLikedReviews?: BoolFieldUpdateOperationsInput | boolean
     showReviews?: BoolFieldUpdateOperationsInput | boolean
+    showLatestWatched?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
@@ -40755,10 +40781,9 @@ export namespace Prisma {
     likedAt?: SortOrder
   }
 
-  export type AnimeEpisodeProgressUserIdAnimeIdEpisodeCompoundUniqueInput = {
+  export type AnimeEpisodeProgressUserIdAnimeIdCompoundUniqueInput = {
     userId: string
     animeId: string
-    episode: number
   }
 
   export type AnimeEpisodeProgressCountOrderByAggregateInput = {
@@ -40901,6 +40926,7 @@ export namespace Prisma {
     showLikedCollections?: SortOrder
     showLikedReviews?: SortOrder
     showReviews?: SortOrder
+    showLatestWatched?: SortOrder
     notificationsOn?: SortOrder
     preferredGenres?: SortOrder
   }
@@ -40918,6 +40944,7 @@ export namespace Prisma {
     showLikedCollections?: SortOrder
     showLikedReviews?: SortOrder
     showReviews?: SortOrder
+    showLatestWatched?: SortOrder
     notificationsOn?: SortOrder
   }
 
@@ -40934,6 +40961,7 @@ export namespace Prisma {
     showLikedCollections?: SortOrder
     showLikedReviews?: SortOrder
     showReviews?: SortOrder
+    showLatestWatched?: SortOrder
     notificationsOn?: SortOrder
   }
 
@@ -48452,6 +48480,7 @@ export namespace Prisma {
     showLikedCollections?: boolean
     showLikedReviews?: boolean
     showReviews?: boolean
+    showLatestWatched?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
@@ -48468,6 +48497,7 @@ export namespace Prisma {
     showLikedCollections?: boolean
     showLikedReviews?: boolean
     showReviews?: boolean
+    showLatestWatched?: boolean
     notificationsOn?: boolean
     preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
@@ -48703,6 +48733,7 @@ export namespace Prisma {
     showLikedCollections?: BoolFieldUpdateOperationsInput | boolean
     showLikedReviews?: BoolFieldUpdateOperationsInput | boolean
     showReviews?: BoolFieldUpdateOperationsInput | boolean
+    showLatestWatched?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
@@ -48719,6 +48750,7 @@ export namespace Prisma {
     showLikedCollections?: BoolFieldUpdateOperationsInput | boolean
     showLikedReviews?: BoolFieldUpdateOperationsInput | boolean
     showReviews?: BoolFieldUpdateOperationsInput | boolean
+    showLatestWatched?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
     preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }

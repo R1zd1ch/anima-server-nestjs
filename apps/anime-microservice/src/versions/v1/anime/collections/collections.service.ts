@@ -11,6 +11,12 @@ import { UpdateAnimeNoteDto } from './dto/update-anime-note-in-collection.dto';
 import { AddAnimeToCollectionDto } from './dto/add-anime-to-collection.dto';
 import { buildMeta } from 'shared/lib/utils/build-meta';
 import { handleError } from 'shared/lib/utils/handle-error';
+import { buildPagination } from 'shared/lib/utils/build-pagination';
+import {
+  COLLECTION_COMMON_USER_INCLUDE,
+  COMMON_COLLECTION_INCLUDE,
+} from 'apps/anime-microservice/src/constants';
+import { Prisma } from '@prisma/__generated__';
 
 @Injectable()
 export class CollectionsService {
@@ -26,67 +32,23 @@ export class CollectionsService {
     viewerId?: string,
   ) {
     try {
-      const isOwner = viewerId && userId === viewerId;
-      if (!isOwner) {
-        const targetUser = await this.prismaService.user.findUnique({
-          where: { id: userId },
-          select: { settings: { select: { showCollections: true } } },
-        });
-
-        if (!targetUser) throw new NotFoundException('Пользователь не найден');
-
-        if (!targetUser?.settings?.showCollections) {
-          return {
-            data: [],
-            meta: buildMeta(0, page, limit),
-          };
-        }
-      }
+      const access = await this.checkUserAccess(userId, viewerId);
+      if (access?.data) return access;
       const where = { userId };
-
       const collections = await this.prismaService.animeCollection.findMany({
         where,
-        skip: (page - 1) * limit,
-        take: limit,
-        orderBy:
-          sortBy === 'newest'
-            ? { createdAt: 'desc' }
-            : { likes: { _count: 'desc' } },
+        ...buildPagination(page, limit),
+        orderBy: this.getSortOrder(sortBy),
         include: {
-          _count: {
-            select: { likes: true, items: true },
-          },
-          user: {
-            select: {
-              id: true,
-              username: true,
-              picture: true,
-            },
-          },
+          _count: { select: { likes: true, items: true } },
+          user: { select: COLLECTION_COMMON_USER_INCLUDE },
         },
       });
 
-      const collectionIds = collections.map((collection) => collection.id);
-      const viewerLikesForCollections = viewerId
-        ? await this.prismaService.animeCollectionLike.findMany({
-            where: {
-              userId: viewerId,
-              collectionId: { in: collectionIds },
-            },
-          })
-        : [];
-
-      const collectionsWithLikes = collections.map((collection) => {
-        const { _count, ...rest } = collection;
-        return {
-          ...rest,
-          isLiked: viewerLikesForCollections.some(
-            (like) => like.collectionId === collection.id,
-          ),
-          likesCount: _count.likes,
-          itemsCount: _count.items,
-        };
-      });
+      const collectionsWithLikes = await this.processCollectionLikes(
+        collections,
+        viewerId,
+      );
 
       const total = await this.prismaService.animeCollection.count({ where });
 
@@ -111,75 +73,29 @@ export class CollectionsService {
     viewerId?: string,
   ) {
     try {
-      const isOwner = viewerId && userId === viewerId;
-      if (!isOwner) {
-        const targetUser = await this.prismaService.user.findUnique({
-          where: { id: userId },
-          select: { settings: { select: { showLikedCollections: true } } },
-        });
-
-        if (!targetUser) throw new NotFoundException('Пользователь не найден');
-
-        if (!targetUser?.settings?.showLikedCollections) {
-          return {
-            data: [],
-            meta: buildMeta(0, page, limit),
-          };
-        }
-      }
-
+      const access = await this.checkUserAccess(userId, viewerId);
+      if (access?.data) return access;
       const where = { userId };
 
       const likedCollections =
         await this.prismaService.animeCollectionLike.findMany({
           where,
-          skip: (page - 1) * limit,
-          take: limit,
-          orderBy:
-            sortBy === 'newest'
-              ? { collection: { createdAt: 'desc' } }
-              : { collection: { likes: { _count: 'desc' } } },
+          ...buildPagination(page, limit),
+          orderBy: { collection: this.getSortOrder(sortBy) },
           include: {
             collection: {
               include: {
-                _count: {
-                  select: { likes: true, items: true },
-                },
-                user: {
-                  select: {
-                    id: true,
-                    username: true,
-                    picture: true,
-                  },
-                },
+                _count: { select: { likes: true, items: true } },
+                user: { select: COLLECTION_COMMON_USER_INCLUDE },
               },
             },
           },
         });
 
-      const collectionIds = likedCollections.map(
-        (collection) => collection.collection.id,
+      const collectionsWithLikes = await this.processCollectionLikes(
+        likedCollections.map((collection) => collection.collection),
+        viewerId,
       );
-      const viewerLikesForCollections = viewerId
-        ? await this.prismaService.animeCollectionLike.findMany({
-            where: {
-              userId: viewerId,
-              collectionId: { in: collectionIds },
-            },
-          })
-        : [];
-
-      const collectionsWithLikes = likedCollections.map((collection) => {
-        const { _count, ...rest } = collection.collection;
-        return {
-          ...rest,
-          isLiked: viewerLikesForCollections.some(
-            (like) => like.collectionId === collection.collection.id,
-          ),
-          likesCount: _count.likes,
-          itemsCount: _count.items,
-        };
-      });
 
       const total = await this.prismaService.animeCollectionLike.count({
         where,
@@ -207,54 +123,23 @@ export class CollectionsService {
     try {
       const collections = await this.prismaService.animeCollection.findMany({
         where: { isPublic: true, type: 'CUSTOM' },
-        skip: (page - 1) * limit,
-        take: limit,
-        orderBy:
-          sortBy === 'newest'
-            ? { createdAt: 'desc' }
-            : sortBy === 'oldest'
-              ? { createdAt: 'asc' }
-              : { likes: { _count: 'desc' } },
+        ...buildPagination(page, limit),
+        orderBy: this.getSortOrder(sortBy),
         include: {
-          _count: {
-            select: { likes: true, items: true },
-          },
+          _count: { select: { likes: true, items: true } },
           user: {
-            select: {
-              id: true,
-              username: true,
-              picture: true,
-            },
+            select: COLLECTION_COMMON_USER_INCLUDE,
           },
         },
       });
 
-      if (!collections) throw new NotFoundException('Коллекция не найдена');
-      const collectionIds = collections.map((collection) => collection.id);
-      const viewerLikesForCollections = viewerId
-        ? await this.prismaService.animeCollectionLike.findMany({
-            where: {
-              userId: viewerId,
-              collectionId: { in: collectionIds },
-            },
-          })
-        : [];
+      const collectionsWithLikes = await this.processCollectionLikes(
+        collections,
+        viewerId,
+      );
 
-      const collectionsWithLikes = collections.map((collection) => {
-        const { _count, ...rest } = collection;
-        return {
-          ...rest,
-          isLiked: viewerLikesForCollections.some(
-            (like) => like.collectionId === collection.id,
-          ),
-          likesCount: _count.likes,
-          itemsCount: _count.items,
-        };
-      });
       const total = await this.prismaService.animeCollection.count({
-        where: {
-          isPublic: true,
-        },
+        where: { isPublic: true },
       });
 
       return {
@@ -270,51 +155,11 @@ export class CollectionsService {
     try {
       const collection = await this.prismaService.animeCollection.findUnique({
         where: { id: collectionId },
-        include: {
-          items: {
-            include: {
-              anime: {
-                select: {
-                  id: true,
-                  name: true,
-                  russian: true,
-                  airedOn: true,
-                  rating: true,
-                  description: true,
-                  kind: true,
-                  theme: true,
-                  demographic: true,
-                  genres: true,
-                  poster: {
-                    select: {
-                      originalUrl: true,
-                      mainUrl: true,
-                    },
-                  },
-                },
-              },
-            },
-          },
-          _count: {
-            select: {
-              likes: true,
-              items: true,
-            },
-          },
-          user: {
-            select: {
-              id: true,
-              username: true,
-              picture: true,
-            },
-          },
-        },
+        include: COMMON_COLLECTION_INCLUDE,
       });
-      if (!collection) throw new NotFoundException('Коллекция не найдена');
-      if (!collection.isPublic && collection.userId !== viewerId) {
-        throw new UnauthorizedException('Коллекция приватная');
-      }
 
+      if (!collection) throw new NotFoundException('Коллекция не найдена');
+      this.checkCollectionAccess(collection, viewerId);
       const isLiked = await this.isCollectionLiked(viewerId, collectionId);
 
       const { _count, ...rest } = collection;
@@ -334,41 +179,14 @@ export class CollectionsService {
     viewerId?: string,
   ) {
     try {
-      const collection = await this.prismaService.animeCollection.findUnique({
-        where: { id: collectionId },
-        select: {
-          isPublic: true,
-          userId: true,
-          items: {
-            select: {
-              anime: {
-                select: {
-                  rating: true,
-                },
-              },
-            },
-          },
-        },
-      });
-      if (!collection) throw new NotFoundException('Коллекция не найдена');
-
-      if (!collection.isPublic && collection.userId !== viewerId) {
-        throw new UnauthorizedException('Коллекция приватная');
-      }
+      const collection = await this.getCollectionMetric(
+        collectionId,
+        viewerId,
+        { rating: true },
+      );
 
       const ratings = collection.items.map((item) => item.anime.rating);
-      const countsMap: Record<string, number> = {};
-
-      for (const rating of ratings) {
-        countsMap[rating] = (countsMap[rating] || 0) + 1;
-      }
-
-      const ratingCounts = Object.entries(countsMap).map(([rating, count]) => ({
-        rating,
-        count,
-      }));
-
-      return ratingCounts;
+      return this.countItems(ratings);
     } catch (e) {
       return handleError(
         e,
@@ -383,43 +201,14 @@ export class CollectionsService {
     viewerId?: string,
   ) {
     try {
-      const collection = await this.prismaService.animeCollection.findUnique({
-        where: {
-          id: collectionId,
-        },
-        select: {
-          isPublic: true,
-          userId: true,
-          items: {
-            select: {
-              anime: {
-                select: {
-                  kind: true,
-                },
-              },
-            },
-          },
-        },
-      });
+      const collection = await this.getCollectionMetric(
+        collectionId,
+        viewerId,
+        { kind: true },
+      );
 
-      if (!collection) throw new NotFoundException('Коллекция не найдена');
-
-      if (!collection.isPublic && collection.userId !== viewerId) {
-        throw new UnauthorizedException('Коллекция приватная');
-      }
-
-      const animeTypes = collection.items.map((item) => item.anime.kind);
-      const countsMap: Record<string, number> = {};
-
-      for (const type of animeTypes) {
-        countsMap[type] = (countsMap[type] || 0) + 1;
-      }
-      const typeCounts = Object.entries(countsMap).map(([type, count]) => ({
-        type,
-        count,
-      }));
-
-      return typeCounts;
+      const types = collection.items.map((item) => item.anime.kind);
+      return this.countItems(types);
     } catch (e) {
       handleError(e, 'Ошибка получения типов из коллекции', this.logger);
     }
@@ -430,53 +219,16 @@ export class CollectionsService {
     viewerId?: string,
   ) {
     try {
-      const collection = await this.prismaService.animeCollection.findUnique({
-        where: {
-          id: collectionId,
-        },
-        select: {
-          isPublic: true,
-          userId: true,
-          items: {
-            select: {
-              anime: {
-                select: {
-                  theme: {
-                    select: {
-                      theme: {
-                        select: {
-                          russian: true,
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      });
-
-      if (!collection) throw new NotFoundException('Коллекция не найдена');
-      if (!collection.isPublic && collection.userId !== viewerId) {
-        throw new UnauthorizedException('Коллекция приватная');
-      }
+      const collection = await this.getCollectionMetric(
+        collectionId,
+        viewerId,
+        { theme: { select: { theme: { select: { russian: true } } } } },
+      );
 
       const themes = collection.items.flatMap((item) =>
         item.anime.theme.map((theme) => theme.theme.russian),
       );
-      const countsMap: Record<string, number> = {};
-
-      for (const theme of themes) {
-        countsMap[theme] = (countsMap[theme] || 0) + 1;
-      }
-
-      const themeCounts = Object.entries(countsMap).map(([theme, count]) => ({
-        theme,
-        count,
-      }));
-
-      return themeCounts;
+      return this.countItems(themes);
     } catch (e) {
       return handleError(
         e,
@@ -491,46 +243,17 @@ export class CollectionsService {
     viewerId?: string,
   ) {
     try {
-      const collection = await this.prismaService.animeCollection.findUnique({
-        where: {
-          id: collectionId,
-        },
-        select: {
-          isPublic: true,
-          userId: true,
-          items: {
-            select: {
-              anime: {
-                select: {
-                  airedOn: true,
-                },
-              },
-            },
-          },
-        },
-      });
-
-      if (!collection) throw new NotFoundException('Коллекция не найдена');
-      if (!collection.isPublic && collection.userId !== viewerId) {
-        throw new UnauthorizedException('Коллекция приватная');
-      }
+      const collection = await this.getCollectionMetric(
+        collectionId,
+        viewerId,
+        { airedOn: true },
+      );
 
       const years = collection.items.map((item) =>
         new Date(item.anime.airedOn).getFullYear(),
       );
 
-      const countsMap: Record<number, number> = {};
-
-      for (const year of years) {
-        countsMap[year] = (countsMap[year] || 0) + 1;
-      }
-
-      const yearCounts = Object.entries(countsMap).map(([year, count]) => ({
-        year: Number(year),
-        count,
-      }));
-
-      return yearCounts;
+      return this.countItems(years);
     } catch (e) {
       return handleError(
         e,
@@ -545,52 +268,18 @@ export class CollectionsService {
     viewerId?: string,
   ) {
     try {
-      const collection = await this.prismaService.animeCollection.findUnique({
-        where: {
-          id: collectionId,
+      const collection = await this.getCollectionMetric(
+        collectionId,
+        viewerId,
+        {
+          genres: { select: { genre: { select: { russian: true } } } },
         },
-        select: {
-          isPublic: true,
-          userId: true,
-          items: {
-            select: {
-              anime: {
-                select: {
-                  genres: {
-                    select: {
-                      genre: {
-                        select: {
-                          russian: true,
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      });
-
-      if (!collection) throw new NotFoundException('Коллекция не найдена');
-      if (!collection.isPublic && collection.userId !== viewerId) {
-        throw new UnauthorizedException('Коллекция приватная');
-      }
+      );
 
       const genres = collection.items.flatMap((item) =>
         item.anime.genres.map((genre) => genre.genre.russian),
       );
-      const countsMap: Record<string, number> = {};
-
-      for (const genre of genres) {
-        countsMap[genre] = (countsMap[genre] || 0) + 1;
-      }
-      const genreCounts = Object.entries(countsMap).map(([genre, count]) => ({
-        genre,
-        count,
-      }));
-
-      return genreCounts;
+      return this.countItems(genres);
     } catch (e) {
       return handleError(
         e,
@@ -605,35 +294,15 @@ export class CollectionsService {
     viewerId?: string,
   ) {
     try {
-      const collection = await this.prismaService.animeCollection.findUnique({
-        where: { id: collectionId },
-        select: {
-          isPublic: true,
-          userId: true,
-          items: {
-            select: {
-              anime: {
-                select: {
-                  demographic: {
-                    select: {
-                      demographic: {
-                        select: {
-                          russian: true,
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
+      const collection = await this.getCollectionMetric(
+        collectionId,
+        viewerId,
+        {
+          demographic: {
+            select: { demographic: { select: { russian: true } } },
           },
         },
-      });
-
-      if (!collection) throw new NotFoundException('Коллекция не найдена');
-      if (!collection.isPublic && collection.userId !== viewerId) {
-        throw new UnauthorizedException('Коллекция приватная');
-      }
+      );
 
       const demographics = collection.items.flatMap((item) =>
         item.anime.demographic.map(
@@ -641,20 +310,7 @@ export class CollectionsService {
         ),
       );
 
-      const countsMap: Record<string, number> = {};
-
-      for (const demographic of demographics) {
-        countsMap[demographic] = (countsMap[demographic] || 0) + 1;
-      }
-
-      const demographicCounts = Object.entries(countsMap).map(
-        ([demographic, count]) => ({
-          demographic,
-          count,
-        }),
-      );
-
-      return demographicCounts;
+      return this.countItems(demographics);
     } catch (e) {
       return handleError(
         e,
@@ -674,9 +330,7 @@ export class CollectionsService {
         select: { isPublic: true, userId: true },
       });
       if (!collection) throw new NotFoundException('Коллекция не найдена');
-      if (!collection.isPublic && collection.userId !== viewerId) {
-        throw new UnauthorizedException('Коллекция приватная');
-      }
+      this.checkCollectionAccess(collection, viewerId);
 
       const [
         ageRatings,
@@ -746,7 +400,7 @@ export class CollectionsService {
         data: dto,
       });
 
-      return { status: 'success' };
+      return { message: 'Коллекция успешно обновлена' };
     } catch (e) {
       handleError(e, `Ошибка обновления коллекции`, this.logger);
     }
@@ -767,7 +421,7 @@ export class CollectionsService {
         where: { userId, id: collectionId },
       });
 
-      return { status: 'success' };
+      return { message: 'Коллекция успешно удалена' };
     } catch (e) {
       handleError(e, `Ошибка удаления коллекции`, this.logger);
     }
@@ -799,7 +453,7 @@ export class CollectionsService {
         update: {},
       });
 
-      return { status: 'success' };
+      return anime;
     } catch (e) {
       handleError(e, `Ошибка добавления аниме в коллекцию`, this.logger);
     }
@@ -837,7 +491,9 @@ export class CollectionsService {
         where: { collectionId_animeId: { collectionId, animeId } },
       });
 
-      return { status: 'success' };
+      return {
+        message: 'Аниме успешно удалено из коллекции',
+      };
     } catch (e) {
       handleError(e, `Ошибка удаления аниме из коллекции`, this.logger);
     }
@@ -877,7 +533,7 @@ export class CollectionsService {
         data: { note: dto.note },
       });
 
-      return { status: 'success' };
+      return { message: 'Заметка успешно обновлена' };
     } catch (e) {
       return handleError(
         e,
@@ -904,7 +560,7 @@ export class CollectionsService {
         });
       }
 
-      return { status: 'success' };
+      return { message: 'Лайк успешно поставлен' };
     } catch (e) {
       handleError(e, `Ошибка лайка коллекции`, this.logger);
     }
@@ -926,7 +582,7 @@ export class CollectionsService {
         });
       }
 
-      return { status: 'success' };
+      return { message: 'Лайк успешно убран' };
     } catch (e) {
       handleError(e, `Ошибка лайка коллекции`, this.logger);
     }
@@ -960,5 +616,97 @@ export class CollectionsService {
     if (!collection.isPublic && collection.userId !== viewerId) {
       throw new UnauthorizedException('Коллекция приватная');
     }
+  }
+
+  private getSortOrder(order: 'newest' | 'oldest' | 'top') {
+    switch (order) {
+      case 'newest':
+        return { createdAt: 'desc' as const };
+      case 'oldest':
+        return { createdAt: 'asc' as const };
+      case 'top':
+        return { likes: { _count: 'desc' as const } };
+      default:
+        return { createdAt: 'desc' as const };
+    }
+  }
+
+  private async checkUserAccess(userId: string, viewerId?: string) {
+    const isOwner = viewerId && userId === viewerId;
+    if (!isOwner) {
+      const targetUser = await this.prismaService.user.findUnique({
+        where: { id: userId },
+        select: { settings: { select: { showCollections: true } } },
+      });
+
+      if (!targetUser) throw new NotFoundException('Пользователь не найден');
+
+      if (!targetUser?.settings?.showCollections) {
+        return {
+          data: [],
+          meta: buildMeta(0),
+        };
+      }
+    }
+  }
+
+  private async getUserLikes(collectionIds: string[], viewerId: string) {
+    return await this.prismaService.animeCollectionLike.findMany({
+      where: { userId: viewerId, collectionId: { in: collectionIds } },
+    });
+  }
+
+  private async processCollectionLikes<
+    T extends { id: string; _count?: { likes: number; items: number } },
+  >(collections: T[], viewerId: string | null) {
+    const collectionIds = collections.map((collection) => collection.id);
+
+    const likes = viewerId
+      ? await this.getUserLikes(collectionIds, viewerId)
+      : [];
+
+    return collections.map((collection) => {
+      const { _count, ...rest } = collection;
+      return {
+        ...rest,
+        isLiked: likes.some((like) => like.collectionId === collection.id),
+        itemsCount: _count?.likes ?? 0,
+        likesCount: _count?.items ?? 0,
+      };
+    });
+  }
+
+  private countItems<T extends string | number>(items: T[]) {
+    const countsMap: Record<string, number> = {};
+
+    for (const item of items) {
+      countsMap[String(item)] = (countsMap[String(item)] || 0) + 1;
+    }
+
+    return Object.entries(countsMap).map(([key, count]) => ({
+      [typeof items[0] === 'number' ? 'year' : key]:
+        typeof items[0] === 'number' ? Number(key) : (key as T),
+      count,
+    }));
+  }
+
+  private async getCollectionMetric<T extends Prisma.AnimeSelect>(
+    collectionId: string,
+    viewerId: string | undefined,
+    metric: T,
+  ) {
+    const collection = await this.prismaService.animeCollection.findUnique({
+      where: { id: collectionId },
+      select: {
+        isPublic: true,
+        userId: true,
+        items: { select: { anime: { select: metric } } },
+      },
+    });
+
+    if (!collection) throw new NotFoundException('Коллекция не найдена');
+    this.checkCollectionAccess(collection, viewerId);
+
+    return collection;
   }
 }

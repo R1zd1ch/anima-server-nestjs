@@ -435,7 +435,7 @@ model AnimeEpisodeProgress {
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
 
-  @@id([userId, animeId, episode])
+  @@id([userId, animeId])
   @@map("anime_user_progress")
 }
 
@@ -489,6 +489,7 @@ model UserSettings {
   showLikedCollections     Boolean  @default(true)
   showLikedReviews         Boolean  @default(true)
   showReviews              Boolean  @default(true)
+  showLatestWatched        Boolean  @default(true)
   notificationsOn          Boolean  @default(true)
   preferredGenres          String[]
 }

@@ -1,7 +1,17 @@
-import { Controller } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { WatchProgressService } from './watch-progress.service';
-import { MessagePattern, Payload } from '@nestjs/microservices';
-import { ProgressCreateDto } from './dto/create-progress.dto';
+import { Authorization } from 'apps/anime-microservice/src/decorators/auth.decorator';
+import { Authorized } from 'apps/anime-microservice/src/decorators/authorized.decorator';
+import { wrapApiResponse } from 'shared/lib/utils/wrap-api-response';
+import { SoftAuthorization } from 'apps/anime-microservice/src/decorators/soft-auth.decorator';
 import { ProgressUpdateDto } from './dto/response-progress.dto';
 
 @Controller({
@@ -12,54 +22,74 @@ export class WatchProgressController {
   public constructor(
     private readonly watchProgressService: WatchProgressService,
   ) {}
-
-  @MessagePattern({ cmd: 'create-progress' })
-  public async createProgress(
-    @Payload()
-    data: {
-      userId: string;
-      animeId: string;
-      dto: ProgressCreateDto;
-    },
-  ) {
-    const { userId, animeId, dto } = data;
-    return this.watchProgressService.createProgress(userId, animeId, dto);
+  @Authorization()
+  @Get()
+  public async getAll(@Authorized('id') userId: string) {
+    const result = await this.watchProgressService.getUserProgress(userId);
+    return wrapApiResponse(result);
   }
 
-  @MessagePattern({ cmd: 'get-progress' })
-  public async getProgress(
-    @Payload()
-    data: {
-      userId: string;
-      animeId: string;
-    },
+  @SoftAuthorization()
+  @Get('user-progress/:userId')
+  public async getUserProgress(
+    @Param('userId') userId: string,
+    @Authorized('id') viewerId: string,
   ) {
-    const { userId, animeId } = data;
-    return this.watchProgressService.getProgress(userId, animeId);
+    const result = await this.watchProgressService.getUserProgress(
+      userId,
+      viewerId,
+    );
+    return wrapApiResponse(result);
   }
 
-  @MessagePattern({ cmd: 'update-time-codes' })
-  public async updateTimeCodes(
-    @Payload()
-    data: {
-      userId: string;
-      animeId: string;
-      dto: ProgressUpdateDto;
-    },
+  @Authorization()
+  @Get(':animeId')
+  public async getOne(
+    @Param('animeId') animeId: string,
+    @Authorized('id') userId: string,
   ) {
-    const { userId, animeId, dto } = data;
-    return this.watchProgressService.updateTimeCodes(userId, animeId, dto);
+    const result = await this.watchProgressService.getProgressForAnime(
+      userId,
+      animeId,
+    );
+    return wrapApiResponse(result);
   }
 
-  @MessagePattern({ cmd: 'delete-progress' })
-  public async deleteProgress(
-    @Payload()
-    data: {
-      userId: string;
-      animeId: string;
-    },
+  @Authorization()
+  @Post(':animeId')
+  update(
+    @Param('animeId') animeId: string,
+    @Body() dto: ProgressUpdateDto,
+    @Authorized('id') userId: string,
   ) {
-    const { userId, animeId } = data;
-    return this.watchProgressService.deleteProgress(userId, animeId);
+    const result = this.watchProgressService.updateProgress(
+      userId,
+      animeId,
+      dto,
+    );
+    return wrapApiResponse(result);
+  }
+
+  @Authorization()
+  @Patch(':animeId')
+  public async markWatched(
+    @Param('animeId') animeId: string,
+    @Authorized('id') userId: string,
+  ) {
+    const result = await this.watchProgressService.markWatched(userId, animeId);
+    return wrapApiResponse(result);
+  }
+
+  @Authorization()
+  @Delete(':animeId')
+  public async delete(
+    @Param('animeId') animeId: string,
+    @Authorized('id') userId: string,
+  ) {
+    const result = await this.watchProgressService.deleteProgress(
+      userId,
+      animeId,
+    );
+    return wrapApiResponse(result);
   }
 }

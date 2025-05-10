@@ -354,6 +354,7 @@ exports.Prisma.UserSettingsScalarFieldEnum = {
   showLikedCollections: 'showLikedCollections',
   showLikedReviews: 'showLikedReviews',
   showReviews: 'showReviews',
+  showLatestWatched: 'showLatestWatched',
   notificationsOn: 'notificationsOn',
   preferredGenres: 'preferredGenres'
 };

@@ -1,126 +1,178 @@
-import { Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'shared/lib/prisma/prisma.service';
-import { ProgressResponseDto } from './dto/update-progress.dto';
 import { ProgressUpdateDto } from './dto/response-progress.dto';
-import { ProgressCreateDto } from './dto/create-progress.dto';
+import { handleError } from 'shared/lib/utils/handle-error';
+import { WATCH_PROGRESS_COMMON_INCLUDE } from 'apps/anime-microservice/src/constants';
 
 @Injectable()
 export class WatchProgressService {
   private readonly logger = new Logger(WatchProgressService.name);
   public constructor(private readonly prismaService: PrismaService) {}
 
-  public async createProgress(
+  public async updateProgress(
     userId: string,
     animeId: string,
-    dto: ProgressCreateDto,
+    dto: ProgressUpdateDto,
   ) {
     try {
-      this.validateProgress(dto);
-      return await this.prismaService.animeEpisodeProgress.create({
+      const anime = await this.existsAnime(animeId);
+      await this.existsUser(userId);
+
+      if (dto.episode !== undefined) {
+        await this.validateEpisode(animeId, dto.episode);
+      }
+
+      if (dto.episode >= anime.episodes) {
+        dto.isWatched = true;
+      }
+
+      const existingProgress =
+        await this.prismaService.animeEpisodeProgress.findUnique({
+          where: { userId_animeId: { userId, animeId } },
+        });
+
+      if (existingProgress) {
+        const result = await this.prismaService.animeEpisodeProgress.update({
+          where: { userId_animeId: { userId, animeId } },
+          include: WATCH_PROGRESS_COMMON_INCLUDE,
+          data: { ...dto, updatedAt: new Date() },
+        });
+        return {
+          data: { ...result },
+        };
+      }
+
+      return this.prismaService.animeEpisodeProgress.create({
         data: {
-          userId: userId,
-          episode: dto.episode,
-          timestamp: dto.timestamp,
-          isWatched: dto.isWatched,
-          animeId: animeId,
-        },
-      });
-    } catch {
-      this.logger.log(`Failed to create progress for ${userId} and ${animeId}`);
-      return null;
-    }
-  }
-
-  public async getProgress(
-    userId: string,
-    animeId: string,
-  ): Promise<ProgressResponseDto[] | []> {
-    try {
-      const progress = await this.prismaService.animeEpisodeProgress.findMany({
-        where: {
-          userId: userId,
-          animeId: animeId,
-        },
-        select: {
-          episode: true,
-          timestamp: true,
-          isWatched: true,
-          updatedAt: true,
-        },
-      });
-
-      if (!progress.length) return [];
-
-      return progress;
-    } catch {
-      this.logger.log(`Failed to get progress for ${userId} and ${animeId}`);
-      return [];
-    }
-  }
-  public async updateTimeCodes(
-    userId: string,
-    animeId: string,
-
-    dto: ProgressUpdateDto,
-  ): Promise<ProgressResponseDto> {
-    try {
-      this.validateProgress(dto);
-
-      return this.prismaService.animeEpisodeProgress.upsert({
-        where: {
-          userId_animeId_episode: {
-            userId,
-            animeId,
-            episode: dto.episode,
-          },
-        },
-        create: {
-          episode: dto.episode,
-          timestamp: dto.timestamp,
-          isWatched: dto.isWatched,
           userId,
           animeId,
+          timestamp: dto.timestamp ?? 0,
+          episode: dto.episode ?? 0,
+          isWatched: dto.isWatched ?? false,
         },
-        update: {
-          timestamp: dto.timestamp,
-          isWatched: dto.isWatched,
+        include: WATCH_PROGRESS_COMMON_INCLUDE,
+      });
+    } catch (e) {
+      handleError(
+        e,
+        'Ошибка при создании или обновлении прогресса',
+        this.logger,
+      );
+    }
+  }
+
+  public async getUserProgress(userId: string, viewerId?: string, limit = 20) {
+    try {
+      const access = await this.checkAccess(viewerId, userId);
+      if (access?.data) return access;
+
+      return this.prismaService.animeEpisodeProgress.findMany({
+        where: { userId },
+        orderBy: { updatedAt: 'desc' },
+        include: WATCH_PROGRESS_COMMON_INCLUDE,
+        take: limit,
+      });
+    } catch (e) {
+      handleError(
+        e,
+        'Ошибка при получении недавнего прогресса пользователя',
+        this.logger,
+      );
+    }
+  }
+
+  public async markWatched(userId: string, animeId: string) {
+    try {
+      const anime = await this.existsAnime(animeId);
+      await this.existsUser(userId);
+      return this.prismaService.animeEpisodeProgress.update({
+        where: { userId_animeId: { userId, animeId } },
+        data: {
+          isWatched: true,
+          episode: anime.episodesAired || anime.episodes,
         },
       });
-    } catch {
-      this.logger.log(`Failed to update progress for ${userId} and ${animeId}`);
-      return null;
+    } catch (e) {
+      handleError(e, 'Ошибка при отметке аниме как просмотренное', this.logger);
+    }
+  }
+
+  public async getProgressForAnime(userId: string, animeId: string) {
+    try {
+      await Promise.all([this.existsUser(userId), this.existsAnime(animeId)]);
+      return this.prismaService.animeEpisodeProgress.findUnique({
+        where: { userId_animeId: { userId, animeId } },
+        include: WATCH_PROGRESS_COMMON_INCLUDE,
+      });
+    } catch (e) {
+      handleError(e, 'Ошибка при получении прогресса по аниме', this.logger);
     }
   }
 
   public async deleteProgress(userId: string, animeId: string) {
     try {
-      const deleted = await this.prismaService.animeEpisodeProgress.deleteMany({
-        where: {
-          userId: userId,
-          animeId: animeId,
-        },
+      await Promise.all([this.existsUser(userId), this.existsAnime(animeId)]);
+
+      const progress = await this.prismaService.animeEpisodeProgress.findUnique(
+        { where: { userId_animeId: { userId, animeId } } },
+      );
+
+      if (!progress) throw new NotFoundException('Прогресса не было');
+
+      return this.prismaService.animeEpisodeProgress.delete({
+        where: { userId_animeId: { userId, animeId } },
       });
-
-      if (deleted.count === 0) {
-        this.logger.log(
-          `Failed to delete progress for ${userId} and ${animeId}`,
-        );
-      }
-
-      return deleted;
-    } catch {
-      this.logger.log(`Failed to delete progress for ${userId} and ${animeId}`);
-      return null;
+    } catch (e) {
+      handleError(e, 'Ошибка при удалении прогресса', this.logger);
     }
   }
 
-  private validateProgress(dto: ProgressCreateDto | ProgressUpdateDto): void {
-    if (dto.timestamp < 0) {
-      throw new Error('Timestamp cannot be negative');
-    }
+  private async checkAccess(viewerId: string | null, userId: string) {
+    const isOwner = viewerId && viewerId === userId;
+    if (!isOwner) {
+      const targetUser = await this.prismaService.user.findUnique({
+        where: { id: userId },
+        select: { settings: { select: { showLatestWatched: true } } },
+      });
+      if (!targetUser) throw new NotFoundException('Пользователь не найден');
 
-    if (dto.episode <= 0) {
-      throw new Error('Episode number must be positive');
+      if (!targetUser?.settings?.showLatestWatched) {
+        return {
+          data: [],
+        };
+      }
+    }
+  }
+
+  private async existsUser(userId: string) {
+    const user = await this.prismaService.user.findUnique({
+      where: { id: userId },
+    });
+    if (!user) throw new NotFoundException('Пользователь не найден');
+    return user;
+  }
+
+  private async existsAnime(animeId: string) {
+    const anime = await this.prismaService.anime.findUnique({
+      where: { id: animeId },
+    });
+    if (!anime) throw new NotFoundException('Аниме не найдено');
+    return anime;
+  }
+
+  private async validateEpisode(animeId: string, episode: number) {
+    const anime = await this.prismaService.anime.findUnique({
+      where: { id: animeId },
+      select: { episodes: true },
+    });
+
+    if (episode > anime.episodes) {
+      throw new BadRequestException('Эпизод превышает общее количество');
     }
   }
 }

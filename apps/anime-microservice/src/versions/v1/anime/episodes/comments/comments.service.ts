@@ -9,6 +9,14 @@ import { PrismaService } from 'shared/lib/prisma/prisma.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { handleError } from 'shared/lib/utils/handle-error';
+import {
+  COMMENT_COMMON_ANIME_INCLUDE,
+  COMMENT_COMMON_INCLUDE,
+  COMMENT_COMMON_USER_INCLUDE,
+  COMMENT_COMMON_WITH_COUNTS,
+} from 'apps/anime-microservice/src/constants';
+import { buildPagination } from 'shared/lib/utils/build-pagination';
+import { buildMeta } from 'shared/lib/utils/build-meta';
 
 @Injectable()
 export class CommentsService {
@@ -19,9 +27,7 @@ export class CommentsService {
     try {
       if (dto.parentId) {
         const parent = await this.prismaService.comment.findUnique({
-          where: {
-            id: dto.parentId,
-          },
+          where: { id: dto.parentId },
         });
 
         if (!parent)
@@ -29,28 +35,10 @@ export class CommentsService {
       }
 
       const comment = await this.prismaService.comment.create({
-        data: {
-          ...dto,
-          userId,
-        },
+        data: { ...dto, userId },
         include: {
-          user: {
-            select: {
-              id: true,
-              username: true,
-              picture: true,
-            },
-          },
-          anime: {
-            select: {
-              id: true,
-              russian: true,
-              name: true,
-              poster: {
-                select: { originalUrl: true, mainUrl: true },
-              },
-            },
-          },
+          user: { select: COMMENT_COMMON_USER_INCLUDE },
+          anime: { select: COMMENT_COMMON_ANIME_INCLUDE },
         },
       });
 
@@ -76,9 +64,10 @@ export class CommentsService {
 
       return await this.prismaService.comment.update({
         where: { id: comment.id },
-        data: {
-          ...dto,
-          updatedAt: new Date(),
+        data: { ...dto, updatedAt: new Date() },
+        include: {
+          user: { select: COMMENT_COMMON_USER_INCLUDE },
+          anime: { select: COMMENT_COMMON_ANIME_INCLUDE },
         },
       });
     } catch (e) {
@@ -114,21 +103,12 @@ export class CommentsService {
 
       const comments = await this.prismaService.comment.findMany({
         where,
-        skip: (page - 1) * limit,
-        take: limit,
+        ...buildPagination(page, limit),
         orderBy:
           sortBy === 'newest' ? { createdAt: 'desc' } : { likesCount: 'desc' },
         include: {
-          user: {
-            select: {
-              id: true,
-              username: true,
-              picture: true,
-            },
-          },
-          _count: {
-            select: { CommentLike: true, replies: true },
-          },
+          user: { select: COMMENT_COMMON_USER_INCLUDE },
+          ...COMMENT_COMMON_WITH_COUNTS,
         },
       });
 
@@ -157,12 +137,7 @@ export class CommentsService {
 
       return {
         data: commentsWithLikes,
-        meta: {
-          total,
-          page,
-          limit,
-          totalPages: Math.ceil(total / limit),
-        },
+        meta: buildMeta(total, page, limit),
       };
     } catch (e) {
       handleError(e, 'Ошибка получения комментариев', this.logger);
@@ -183,23 +158,14 @@ export class CommentsService {
         this.prismaService.anime.findUnique({ where: { id: animeId } }),
         this.prismaService.comment.findMany({
           where,
-          skip: (page - 1) * limit,
-          take: limit,
+          ...buildPagination(page, limit),
           orderBy:
             sortBy === 'newest'
               ? { createdAt: 'desc' }
               : { likesCount: 'desc' },
           include: {
-            user: {
-              select: {
-                id: true,
-                username: true,
-                picture: true,
-              },
-            },
-            _count: {
-              select: { CommentLike: true, replies: true },
-            },
+            user: { select: COMMENT_COMMON_USER_INCLUDE },
+            ...COMMENT_COMMON_WITH_COUNTS,
           },
         }),
       ]);
@@ -230,12 +196,7 @@ export class CommentsService {
       const total = await this.prismaService.comment.count({ where });
       return {
         data: commentsWithLikes,
-        meta: {
-          total,
-          page,
-          limit,
-          totalPages: Math.ceil(total / limit),
-        },
+        meta: buildMeta(total, page, limit),
       };
     } catch (e) {
       return handleError(
@@ -256,20 +217,11 @@ export class CommentsService {
       const where = { parentId: commentId };
       const replies = await this.prismaService.comment.findMany({
         where,
-        skip: (page - 1) * limit,
-        take: limit,
+        ...buildPagination(page, limit),
         orderBy: { createdAt: 'desc' },
         include: {
-          user: {
-            select: {
-              id: true,
-              username: true,
-              picture: true,
-            },
-          },
-          _count: {
-            select: { CommentLike: true },
-          },
+          user: { select: COMMENT_COMMON_USER_INCLUDE },
+          ...COMMENT_COMMON_WITH_COUNTS,
         },
       });
 
@@ -298,12 +250,7 @@ export class CommentsService {
 
       return {
         data: repliesWithLikes,
-        meta: {
-          total,
-          page,
-          limit,
-          totalPages: Math.ceil(total / limit),
-        },
+        meta: buildMeta(total, page, limit),
       };
     } catch (e) {
       return handleError(
@@ -322,60 +269,17 @@ export class CommentsService {
     sortBy: 'newest' | 'top' = 'newest',
   ) {
     try {
-      const isOwner = viewerId === userId;
-
-      if (!isOwner) {
-        const targetUser = await this.prismaService.user.findUnique({
-          where: { id: userId },
-          select: {
-            settings: {
-              select: { showAllCommentsInProfile: true },
-            },
-          },
-        });
-
-        if (!targetUser) throw new NotFoundException('Пользователь не найден');
-
-        if (!targetUser?.settings?.showAllCommentsInProfile) {
-          return {
-            data: [],
-            meta: {
-              total: 0,
-              page,
-              limit,
-              totalPages: 0,
-            },
-          };
-        }
-      }
-
+      await this.checkUserAccess(userId, viewerId);
       const where = { userId };
 
       const comments = await this.prismaService.comment.findMany({
         where,
-        skip: (page - 1) * limit,
-        take: limit,
+        ...buildPagination(page, limit),
         orderBy:
           sortBy === 'newest'
             ? { createdAt: 'desc' }
             : { CommentLike: { _count: 'desc' } },
-        include: {
-          _count: {
-            select: { CommentLike: true, replies: true },
-          },
-          anime: {
-            select: {
-              id: true,
-              russian: true,
-              name: true,
-            },
-            include: {
-              poster: {
-                select: { originalUrl: true, mainUrl: true },
-              },
-            },
-          },
-        },
+        include: COMMENT_COMMON_INCLUDE,
       });
       const commentsWithLikes = await Promise.all(
         comments.map(async (comment) => {
@@ -393,12 +297,7 @@ export class CommentsService {
 
       return {
         data: commentsWithLikes,
-        meta: {
-          total,
-          page,
-          limit,
-          totalPages: Math.ceil(total / limit),
-        },
+        meta: buildMeta(total, page, limit),
       };
     } catch (e) {
       return handleError(
@@ -420,17 +319,21 @@ export class CommentsService {
       if (existingLike)
         throw new ConflictException('Вы уже лайкнули этот комментарий');
 
-      await this.prismaService.$transaction([
+      const [, likedComment] = await this.prismaService.$transaction([
         this.prismaService.commentLike.create({
           data: { userId, commentId },
         }),
         this.prismaService.comment.update({
           where: { id: commentId },
           data: { likesCount: { increment: 1 } },
+          include: {
+            user: { select: COMMENT_COMMON_USER_INCLUDE },
+            anime: { select: COMMENT_COMMON_ANIME_INCLUDE },
+          },
         }),
       ]);
 
-      return { success: true };
+      return likedComment;
     } catch (e) {
       handleError(e, 'Ошибка создания лайка комментария', this.logger);
     }
@@ -447,7 +350,7 @@ export class CommentsService {
       if (!isLiked)
         throw new ConflictException('Вы не лайкалиы этот комментарий');
 
-      await this.prismaService.$transaction([
+      const [, unlikedComment] = await this.prismaService.$transaction([
         this.prismaService.commentLike.delete({
           where: {
             userId_commentId: { userId, commentId },
@@ -456,10 +359,14 @@ export class CommentsService {
         this.prismaService.comment.update({
           where: { id: commentId },
           data: { likesCount: { decrement: 1 } },
+          include: {
+            user: { select: COMMENT_COMMON_USER_INCLUDE },
+            anime: { select: COMMENT_COMMON_ANIME_INCLUDE },
+          },
         }),
       ]);
 
-      return { success: true };
+      return unlikedComment;
     } catch (e) {
       handleError(e, 'Ошибка удаления лайка комментария', this.logger);
     }
@@ -473,35 +380,12 @@ export class CommentsService {
     sortBy: 'newest' | 'oldest' = 'newest',
   ) {
     try {
-      const isOwner = userId === viewerId;
-
-      if (!isOwner) {
-        const targetUser = await this.prismaService.user.findUnique({
-          where: { id: userId },
-          select: {
-            settings: {
-              select: { showAllCommentsInProfile: true },
-            },
-          },
-        });
-
-        if (!targetUser?.settings?.showAllCommentsInProfile) {
-          return {
-            data: [],
-            total: 0,
-            page,
-            limit,
-            totalPages: 0,
-          };
-        }
-      }
-
+      await this.checkUserAccess(userId, viewerId);
       const where = { userId };
 
       const likes = await this.prismaService.commentLike.findMany({
         where,
-        skip: (page - 1) * limit,
-        take: limit,
+        ...buildPagination(page, limit),
         orderBy: {
           likedAt: sortBy === 'newest' ? 'desc' : 'asc',
         },
@@ -509,39 +393,12 @@ export class CommentsService {
         include: {
           comment: {
             include: {
-              user: {
-                select: {
-                  id: true,
-                  username: true,
-                  picture: true,
-                },
-              },
-              anime: {
-                select: {
-                  id: true,
-                  russian: true,
-                  name: true,
-                  poster: {
-                    select: { originalUrl: true, mainUrl: true },
-                  },
-                },
-              },
+              user: { select: COMMENT_COMMON_USER_INCLUDE },
+              anime: { select: COMMENT_COMMON_ANIME_INCLUDE },
             },
           },
         },
       });
-
-      if (!likes) {
-        return {
-          data: [],
-          meta: {
-            total: 0,
-            page,
-            limit,
-            totalPages: 0,
-          },
-        };
-      }
 
       const total = await this.prismaService.commentLike.count({ where });
 
@@ -550,12 +407,7 @@ export class CommentsService {
           ...like.comment,
           likedAt: like.likedAt,
         })),
-        meta: {
-          total,
-          page,
-          limit,
-          totalPages: Math.ceil(total / limit),
-        },
+        meta: buildMeta(total, page, limit),
       };
     } catch (e: unknown) {
       return handleError(
@@ -569,17 +421,58 @@ export class CommentsService {
   private async isCommentLiked(userId: string, id: string) {
     try {
       const like = await this.prismaService.commentLike.findUnique({
-        where: {
-          userId_commentId: {
-            userId,
-            commentId: id,
-          },
-        },
+        where: { userId_commentId: { userId, commentId: id } },
       });
-
       return like ? true : false;
     } catch (e) {
       handleError(e, 'Ошибка проверки лайка комментария', this.logger);
     }
+  }
+
+  private async checkUserAccess(userId: string, viewerId: string | null) {
+    const isOwner = viewerId && userId === viewerId;
+    if (!isOwner) {
+      const targetUser = await this.prismaService.user.findUnique({
+        where: { id: userId },
+        select: { settings: { select: { showAllCommentsInProfile: true } } },
+      });
+      if (!targetUser) throw new NotFoundException('Пользователь не найден');
+      if (!targetUser?.settings?.showAllCommentsInProfile) {
+        return {
+          data: [],
+          meta: buildMeta(0),
+        };
+      }
+    }
+  }
+
+  private async getUserLikesForComments(
+    commentIds: string[],
+    viewerId: string,
+  ) {
+    return await this.prismaService.commentLike.findMany({
+      where: { userId: viewerId, commentId: { in: commentIds } },
+    });
+  }
+
+  private async processCommentLikes<
+    T extends { id: string; _count?: { likes: number; replies?: number } },
+  >(comments: T[], viewerId: string | null) {
+    const commentIds = comments.map((comment) => comment.id);
+    const userLikesForComments = viewerId
+      ? await this.getUserLikesForComments(commentIds, viewerId)
+      : [];
+
+    return comments.map((comment) => {
+      const { _count, ...rest } = comment;
+      return {
+        ...rest,
+        isLiked: userLikesForComments.some(
+          (like) => like.commentId === comment.id,
+        ),
+        likesCount: _count?.likes || 0,
+        repliesCount: _count?.replies || 0,
+      };
+    });
   }
 }

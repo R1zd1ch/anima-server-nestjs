@@ -10,30 +10,19 @@ import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { handleError } from 'shared/lib/utils/handle-error';
 import { buildMeta } from 'shared/lib/utils/build-meta';
+import {
+  REVIEW_COMMON_ANIME_INCLUDE,
+  COMMON_REVIEW_INCLUDE,
+  REVIEW_COMMON_USER_INCLUDE,
+  WHERE_TEXT_NOT_NULL,
+} from 'apps/anime-microservice/src/constants';
+import { Anime, User, Review, AnimePoster } from '@prisma/__generated__';
+import { buildPagination } from 'shared/lib/utils/build-pagination';
 
 @Injectable()
 export class ReviewsService {
   private readonly logger = new Logger(ReviewsService.name);
   public constructor(private readonly prismaService: PrismaService) {}
-
-  private readonly whereTextNotNull = {
-    AND: [
-      {
-        content: {
-          not: {
-            equals: null,
-          },
-        },
-      },
-      {
-        title: {
-          not: {
-            equals: null,
-          },
-        },
-      },
-    ],
-  };
 
   public async getReviewsByReleaseId(
     releaseId: string,
@@ -43,55 +32,20 @@ export class ReviewsService {
     viewerId?: string | null,
   ) {
     try {
-      const where = { animeId: releaseId, ...this.whereTextNotNull };
-      const anime = await this.prismaService.anime.findUnique({
-        where: { id: releaseId },
-      });
-      if (!anime) throw new NotFoundException('Аниме не найдено');
+      const where = { animeId: releaseId, ...WHERE_TEXT_NOT_NULL };
+      await this.animeExists(releaseId);
       const reviews = await this.prismaService.review.findMany({
         where,
         include: {
-          _count: {
-            select: { reviewLikes: true },
-          },
-          user: {
-            select: {
-              id: true,
-              username: true,
-              picture: true,
-            },
-          },
+          _count: { select: { reviewLikes: true } },
+          user: { select: { ...REVIEW_COMMON_USER_INCLUDE } },
         },
-        take: limit,
-        skip: (page - 1) * limit,
-        orderBy:
-          sortBy === 'newest'
-            ? { createdAt: 'desc' }
-            : sortBy === 'oldest'
-              ? { createdAt: 'asc' }
-              : { reviewLikes: { _count: 'desc' } },
+        ...buildPagination(page, limit),
+        orderBy: this.getSortOrder(sortBy),
       });
 
       if (!reviews) throw new NotFoundException('Оценки не найдены');
-      const reviewIds = reviews.map((review) => review.id);
-      const viewerLikesForReviews = viewerId
-        ? await this.prismaService.reviewLike.findMany({
-            where: {
-              userId: viewerId,
-              reviewId: { in: reviewIds },
-            },
-          })
-        : [];
-      const reviewsWithLikes = reviews.map((review) => {
-        const { _count, ...rest } = review;
-        return {
-          ...rest,
-          isLiked: viewerLikesForReviews.some(
-            (like) => like.reviewId === review.id,
-          ),
-          likesCount: _count.reviewLikes,
-        };
-      });
+      const reviewsWithLikes = this.processReviewLikes(reviews, viewerId);
       const total = await this.prismaService.review.count({ where });
 
       return {
@@ -111,79 +65,22 @@ export class ReviewsService {
     viewerId?: string | null,
   ) {
     try {
-      const isOwner = viewerId && userId === viewerId;
-      if (!isOwner) {
-        const targetUser = await this.prismaService.user.findUnique({
-          where: { id: userId },
-          select: { settings: { select: { showReviews: true } } },
-        });
+      const access = await this.checkUserAccess(userId, viewerId);
+      if (access?.data) return access;
 
-        if (!targetUser) throw new NotFoundException('Пользователь не найден');
-
-        if (!targetUser?.settings?.showReviews) {
-          return {
-            data: [],
-            meta: buildMeta(0, page, limit),
-          };
-        }
-      }
-      const where = { userId, ...this.whereTextNotNull };
+      const where = { userId, ...WHERE_TEXT_NOT_NULL };
       const reviews = await this.prismaService.review.findMany({
         where,
-        skip: (page - 1) * limit,
-        take: limit,
-        orderBy:
-          sortBy === 'newest'
-            ? { createdAt: 'desc' }
-            : sortBy === 'oldest'
-              ? { createdAt: 'asc' }
-              : { reviewLikes: { _count: 'desc' } },
+        ...buildPagination(page, limit),
+        orderBy: this.getSortOrder(sortBy),
         include: {
-          _count: {
-            select: { reviewLikes: true },
-          },
-          user: {
-            select: {
-              id: true,
-              username: true,
-              picture: true,
-            },
-          },
-          anime: {
-            select: {
-              id: true,
-              russian: true,
-              name: true,
-              poster: {
-                select: { originalUrl: true, mainUrl: true },
-              },
-            },
-          },
+          _count: { select: { reviewLikes: true } },
+          user: { select: { ...REVIEW_COMMON_USER_INCLUDE } },
+          anime: { select: { ...REVIEW_COMMON_ANIME_INCLUDE } },
         },
       });
-
-      const collectionIds = reviews.map((review) => review.id);
-      const viewerLikesForReviews = viewerId
-        ? await this.prismaService.reviewLike.findMany({
-            where: {
-              userId: viewerId,
-              reviewId: { in: collectionIds },
-            },
-          })
-        : [];
-
       const total = await this.prismaService.review.count({ where });
-      const reviewsWithLikes = reviews.map((review) => {
-        const { _count, ...rest } = review;
-        return {
-          ...rest,
-          isLiked: viewerLikesForReviews.some(
-            (like) => like.reviewId === review.id,
-          ),
-          likesCount: _count.reviewLikes,
-        };
-      });
-
+      const reviewsWithLikes = this.processReviewLikes(reviews, viewerId);
       return {
         data: reviewsWithLikes,
         meta: buildMeta(total, page, limit),
@@ -201,28 +98,7 @@ export class ReviewsService {
     try {
       const review = await this.prismaService.review.findUnique({
         where: { id: reviewId },
-        include: {
-          _count: {
-            select: { reviewLikes: true },
-          },
-          user: {
-            select: {
-              id: true,
-              username: true,
-              picture: true,
-            },
-          },
-          anime: {
-            select: {
-              id: true,
-              russian: true,
-              name: true,
-              poster: {
-                select: { originalUrl: true, mainUrl: true },
-              },
-            },
-          },
-        },
+        include: { ...COMMON_REVIEW_INCLUDE },
       });
 
       if (!review) throw new NotFoundException('Оценка не найдена');
@@ -242,23 +118,15 @@ export class ReviewsService {
 
   public async getRating(animeId: string) {
     try {
-      const anime = await this.prismaService.anime.findUnique({
-        where: { id: animeId },
-      });
-      if (!anime) throw new NotFoundException('Аниме не найдено');
-
+      await this.animeExists(animeId);
       const rating = await this.prismaService.review.aggregate({
         where: { animeId },
-        _avg: {
-          rating: true,
-        },
+        _avg: { rating: true },
       });
 
       if (!rating) throw new NotFoundException('Рейтинг не найден');
 
-      return {
-        rating: rating._avg.rating,
-      };
+      return { rating: rating._avg.rating };
     } catch (e) {
       handleError(e, `Ошибка получения рейтинга`, this.logger);
     }
@@ -272,49 +140,17 @@ export class ReviewsService {
     viewerId: string | null,
   ) {
     try {
-      const isOwner = viewerId && userId === viewerId;
-
-      if (!isOwner) {
-        const targetUser = await this.prismaService.user.findUnique({
-          where: { id: userId },
-          select: { settings: { select: { showReviews: true } } },
-        });
-
-        if (!targetUser) throw new NotFoundException('Пользователь не найден');
-
-        if (!targetUser?.settings?.showReviews) {
-          return {
-            data: [],
-            meta: buildMeta(0, page, limit),
-          };
-        }
-      }
+      const access = await this.checkUserAccess(userId, viewerId);
+      if (access?.data) return access;
 
       const where = { userId };
       const ratings = await this.prismaService.review.findMany({
         where,
-        skip: (page - 1) * limit,
-        take: limit,
-        orderBy:
-          sortBy === 'newest' ? { createdAt: 'desc' } : { createdAt: 'asc' },
+        ...buildPagination(page, limit),
+        orderBy: this.getSortOrder(sortBy),
         include: {
-          anime: {
-            select: {
-              id: true,
-              russian: true,
-              name: true,
-              poster: {
-                select: { originalUrl: true, mainUrl: true },
-              },
-            },
-          },
-          user: {
-            select: {
-              id: true,
-              username: true,
-              picture: true,
-            },
-          },
+          anime: { select: REVIEW_COMMON_ANIME_INCLUDE },
+          user: { select: REVIEW_COMMON_USER_INCLUDE },
         },
       });
 
@@ -332,9 +168,7 @@ export class ReviewsService {
 
       const avgRating = await this.prismaService.review.aggregate({
         where,
-        _avg: {
-          rating: true,
-        },
+        _avg: { rating: true },
       });
 
       return {
@@ -359,20 +193,10 @@ export class ReviewsService {
     dto: CreateReviewDto,
   ) {
     try {
-      const [anime, review] = await this.prismaService.$transaction([
-        this.prismaService.anime.findUnique({
-          where: { id: animeId },
-        }),
-        this.prismaService.review.findUnique({
-          where: {
-            userId_animeId: {
-              userId,
-              animeId,
-            },
-          },
-        }),
-      ]);
-      if (!anime) throw new NotFoundException('Аниме не найдено');
+      const review = await this.prismaService.review.findUnique({
+        where: { userId_animeId: { userId, animeId } },
+      });
+      await this.animeExists(animeId);
       if (review) {
         throw new BadRequestException('Вы уже оставили оценку для этого аниме');
       }
@@ -391,20 +215,10 @@ export class ReviewsService {
     rating: number,
   ) {
     try {
-      const [anime, review] = await this.prismaService.$transaction([
-        this.prismaService.anime.findUnique({
-          where: { id: animeId },
-        }),
-        this.prismaService.review.findUnique({
-          where: {
-            userId_animeId: {
-              userId,
-              animeId,
-            },
-          },
-        }),
-      ]);
-      if (!anime) throw new NotFoundException('Аниме не найдено');
+      const review = await this.prismaService.review.findUnique({
+        where: { userId_animeId: { userId, animeId } },
+      });
+      await this.animeExists(animeId);
       if (review) {
         throw new BadRequestException('Вы уже оставили оценку для этого аниме');
       }
@@ -422,16 +236,10 @@ export class ReviewsService {
     dto: UpdateReviewDto,
   ) {
     try {
-      const [anime, review] = await this.prismaService.$transaction([
-        this.prismaService.anime.findUnique({
-          where: { id: animeId },
-        }),
-        this.prismaService.review.findUnique({
-          where: { userId_animeId: { userId, animeId } },
-        }),
-      ]);
-
-      if (!anime) throw new NotFoundException(`Аниме не найдено`);
+      const review = await this.prismaService.review.findUnique({
+        where: { userId_animeId: { userId, animeId } },
+      });
+      await this.animeExists(animeId);
       if (!review) throw new NotFoundException(`Оценка не найдена`);
 
       return this.prismaService.review.update({
@@ -446,12 +254,7 @@ export class ReviewsService {
   public async deleteReview(userId: string, animeId: string) {
     try {
       const review = await this.prismaService.review.findUnique({
-        where: {
-          userId_animeId: {
-            userId,
-            animeId,
-          },
-        },
+        where: { userId_animeId: { userId, animeId } },
       });
 
       if (!review) throw new NotFoundException('Оценка не найдена');
@@ -474,14 +277,10 @@ export class ReviewsService {
 
       if (!review) throw new NotFoundException('Оценка не найдена');
 
-      //todo дописать проверку приватная или нет
       const isLiked = await this.isReviewLiked(userId, reviewId);
       if (!isLiked) {
         await this.prismaService.reviewLike.create({
-          data: {
-            userId,
-            reviewId,
-          },
+          data: { userId, reviewId },
         });
       }
 
@@ -502,12 +301,7 @@ export class ReviewsService {
       const isLiked = await this.isReviewLiked(userId, reviewId);
       if (isLiked) {
         await this.prismaService.reviewLike.delete({
-          where: {
-            userId_reviewId: {
-              userId,
-              reviewId,
-            },
-          },
+          where: { userId_reviewId: { userId, reviewId } },
         });
       }
 
@@ -532,6 +326,75 @@ export class ReviewsService {
       return like ? true : false;
     } catch (e) {
       handleError(e, `Ошибка проверки лайка оценки`, this.logger);
+    }
+  }
+
+  private getSortOrder(sortBy: 'newest' | 'oldest' | 'top') {
+    switch (sortBy) {
+      case 'newest':
+        return { createdAt: 'desc' as const };
+      case 'oldest':
+        return { createdAt: 'asc' as const };
+      case 'top':
+        return { reviewLikes: { _count: 'desc' } as const };
+      default:
+        return { createdAt: 'desc' as const };
+    }
+  }
+
+  private async getUserLikes(reviewIds: string[], viewerId: string) {
+    return await this.prismaService.reviewLike.findMany({
+      where: {
+        userId: viewerId,
+        reviewId: { in: reviewIds },
+      },
+    });
+  }
+
+  private async processReviewLikes<
+    T extends Review & {
+      _count: { reviewLikes: number };
+      user: Pick<User, 'id' | 'username' | 'picture'>;
+      anime?: Pick<Anime, 'id' | 'russian' | 'name'> & {
+        poster: Pick<AnimePoster, 'mainUrl' | 'originalUrl'>[];
+      };
+    },
+  >(reviews: T[], viewerId: string | null) {
+    const reviewIds = reviews.map((r) => r.id);
+    const likes = viewerId ? await this.getUserLikes(reviewIds, viewerId) : [];
+
+    return reviews.map((review) => {
+      const { _count, ...rest } = review;
+      return {
+        ...rest,
+        isLiked: likes.some((l) => l.reviewId === review.id),
+        likesCount: _count?.reviewLikes || 0,
+      };
+    });
+  }
+
+  private async animeExists(animeId: string) {
+    const anime = await this.prismaService.anime.findUnique({
+      where: { id: animeId },
+    });
+    if (!anime) throw new NotFoundException('Аниме не найдено');
+  }
+
+  private async checkUserAccess(userId: string, viewerId?: string) {
+    const isOwner = viewerId && userId === viewerId;
+    if (!isOwner) {
+      const targetUser = await this.prismaService.user.findUnique({
+        where: { id: userId },
+        select: { settings: { select: { showReviews: true } } },
+      });
+
+      if (!targetUser) throw new NotFoundException('Пользователь не найден');
+      if (!targetUser?.settings?.showReviews) {
+        return {
+          data: [],
+          meta: buildMeta(0),
+        };
+      }
     }
   }
 }
