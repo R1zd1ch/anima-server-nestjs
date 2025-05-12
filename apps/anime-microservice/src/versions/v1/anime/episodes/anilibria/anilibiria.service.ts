@@ -44,10 +44,7 @@ export class AnilibriaService {
       episodesCount: data.episodes_total,
       translations: [
         {
-          translation: {
-            title: 'Anilibria',
-            type: 'voice',
-          },
+          translation: { title: 'Anilibria', type: 'voice' },
           lastEpisode: data.episodes.length,
           seasons: [
             {
@@ -64,11 +61,7 @@ export class AnilibriaService {
                 preview: {
                   src: null,
                   thumbnail: null,
-                  optimized: {
-                    src: null,
-                    thumbnail: null,
-                    optimized: null,
-                  },
+                  optimized: { src: null, thumbnail: null, optimized: null },
                 },
                 hls_480: null,
                 hls_720: null,

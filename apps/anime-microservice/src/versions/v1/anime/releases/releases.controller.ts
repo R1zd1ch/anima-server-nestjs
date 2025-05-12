@@ -1,6 +1,7 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ReleasesService } from './releases.service';
 import { ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { wrapApiResponse } from 'shared/lib/utils/wrap-api-response';
 
 @ApiTags('Anime/Releases')
 @Controller({
@@ -14,20 +15,23 @@ export class ReleasesController {
   @ApiOperation({ summary: 'Получить последние релизы (без эпизодов)' })
   @ApiQuery({ name: 'count', required: false, type: Number, example: 10 })
   public async getLatestReleases(@Query('count') count: number = 10) {
-    return this.releasesService.getLatestReleases(+count);
+    const result = await this.releasesService.getLatestReleases(+count);
+    return wrapApiResponse(result);
   }
 
   @Get('random')
   @ApiOperation({ summary: 'Получить один случайный релиз (c эпизодами)' })
   public async getRandomRelease() {
-    return this.releasesService.getRandomRelease(true);
+    const result = await this.releasesService.getRandomRelease(true);
+    return wrapApiResponse(result);
   }
 
   @Get('randoms')
   @ApiOperation({ summary: 'Получить случайные релизы (без эпизодов)' })
   @ApiQuery({ name: 'count', required: false, type: Number, example: 10 })
   public async getRandomReleases(@Query('count') count: number = 10) {
-    return this.releasesService.getRandomReleases(+count);
+    const result = await this.releasesService.getRandomReleases(+count);
+    return wrapApiResponse(result);
   }
 
   @Get(':aliasOrId')
@@ -43,9 +47,17 @@ export class ReleasesController {
     const shikimoriId = Number(aliasOrId);
 
     if (!isNaN(shikimoriId)) {
-      return this.releasesService.getByAliasOrShikiId(undefined, shikimoriId);
+      const result = await this.releasesService.getByAliasOrShikiId(
+        undefined,
+        shikimoriId,
+      );
+      return wrapApiResponse(result);
     }
 
-    return this.releasesService.getByAliasOrShikiId(aliasOrId, undefined);
+    const result = await this.releasesService.getByAliasOrShikiId(
+      aliasOrId,
+      undefined,
+    );
+    return wrapApiResponse(result);
   }
 }

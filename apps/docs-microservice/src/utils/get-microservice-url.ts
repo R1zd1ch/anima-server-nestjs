@@ -10,7 +10,7 @@ export const getMicroserviceUrl = (
   config: ConfigService,
 ) => {
   const isDockerEnv = isDocker(config);
-  const isTrue = true; //временно
+  const isTrue = false; //временно
   const host = isTrue
     ? `${config.getOrThrow<string>(hostKey)}`
     : `${config.getOrThrow<string>('APPLICATION_HOST')}`;

@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { ReferencesService } from './references.service';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { wrapApiResponse } from 'shared/lib/utils/wrap-api-response';
 
 @ApiTags('Anime/Catalog/References')
 @Controller({
@@ -12,55 +13,64 @@ export class ReferencesController {
 
   @Get()
   @ApiOperation({ summary: 'Получить все референсы' })
-  public getRefernces() {
-    return this.referencesService.getRefernces();
+  public async getRefernces() {
+    const result = await this.referencesService.getRefernces();
+    return wrapApiResponse(result);
   }
 
   @Get('genres')
   @ApiOperation({ summary: 'Получить жанры' })
-  public getGenres() {
-    return this.referencesService.getGenres();
+  public async getGenres() {
+    const result = await this.referencesService.getGenres();
+    return wrapApiResponse(result);
   }
 
   @Get('demographics')
   @ApiOperation({ summary: 'Получить демографические категории' })
-  public getDemographics() {
-    return this.referencesService.getDemographics();
+  public async getDemographics() {
+    const result = await this.referencesService.getDemographics();
+    return wrapApiResponse(result);
   }
 
   @Get('themes')
   @ApiOperation({ summary: 'Получить темы' })
-  public getThemes() {
-    return this.referencesService.getThemes();
+  public async getThemes() {
+    const result = await this.referencesService.getThemes();
+    return wrapApiResponse(result);
   }
 
   @Get('age-ratings')
   @ApiOperation({ summary: 'Получить возрастные рейтинги' })
-  public getAgeRatings() {
-    return this.referencesService.getRatings();
+  public async getAgeRatings() {
+    const result = await this.referencesService.getRatings();
+    return wrapApiResponse(result as object);
   }
 
   @Get('seasons')
   @ApiOperation({ summary: 'Получить сезоны' })
-  public getSeasons() {
-    return this.referencesService.getSeasons();
+  public async getSeasons() {
+    const result = await this.referencesService.getSeasons();
+    return wrapApiResponse(result as object);
   }
 
   @Get('sortings')
   @ApiOperation({ summary: 'Получить типы сортировки' })
-  public getSortings() {
-    return this.referencesService.getSortings();
+  public async getSortings() {
+    const result = await this.referencesService.getSortings();
+    return wrapApiResponse(result as object);
   }
 
   @Get('types')
   @ApiOperation({ summary: 'Получить типы аниме' })
-  public getTypes() {
-    return this.referencesService.getTypes();
+  public async getTypes() {
+    const result = await this.referencesService.getTypes();
+    return wrapApiResponse(result as object);
   }
 
   @Get('years')
   @ApiOperation({ summary: 'Получить годы выпуска' })
-  public getYears() {
-    return this.referencesService.getYears();
+  public async getYears() {
+    const result = await this.referencesService.getYears();
+    return wrapApiResponse(result as object);
   }
 }

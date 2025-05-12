@@ -8,6 +8,9 @@ import {
   shikimoriScoreNotNull,
 } from 'apps/anime-microservice/src/constants';
 import { EpisodesService } from '../episodes/episodes.service';
+import { handleError } from 'shared/lib/utils/handle-error';
+import { buildPagination } from 'shared/lib/utils/build-pagination';
+import { buildMeta } from 'shared/lib/utils/build-meta';
 
 @Injectable()
 export class CatalogService {
@@ -21,52 +24,32 @@ export class CatalogService {
     try {
       const whereConditions: Prisma.AnimeWhereInput & {
         AND: Prisma.AnimeWhereInput[];
-      } = {
-        AND: [...shikimoriScoreNotNull.AND],
-      };
+      } = { AND: [...shikimoriScoreNotNull.AND] };
       let orderBy: Prisma.AnimeOrderByWithRelationInput = { createdAt: 'desc' };
 
       if (params.genres?.length) {
         whereConditions.AND.push({
-          genres: {
-            some: {
-              genre: {
-                requestId: { in: params.genres },
-              },
-            },
-          },
+          genres: { some: { genre: { requestId: { in: params.genres } } } },
         });
       }
 
       if (params.themes?.length) {
         whereConditions.AND.push({
-          theme: {
-            some: {
-              theme: {
-                requestId: { in: params.themes },
-              },
-            },
-          },
+          theme: { some: { theme: { requestId: { in: params.themes } } } },
         });
       }
 
       if (params.demographics?.length) {
         whereConditions.AND.push({
           demographic: {
-            some: {
-              demographic: {
-                requestId: { in: params.demographics },
-              },
-            },
+            some: { demographic: { requestId: { in: params.demographics } } },
           },
         });
       }
 
       if (params.types) {
         whereConditions.AND.push({
-          kind: {
-            in: params.types,
-          },
+          kind: { in: params.types },
         });
       }
 
@@ -104,63 +87,55 @@ export class CatalogService {
       }
 
       if (params.age_ratings) {
-        whereConditions.AND.push({
-          rating: { in: params.age_ratings },
-        });
+        whereConditions.AND.push({ rating: { in: params.age_ratings } });
       }
 
       if (params.status) {
-        whereConditions.AND.push({
-          status: params.status,
-        });
+        whereConditions.AND.push({ status: params.status });
       }
 
       const releases = await this.prismaService.anime.findMany({
         where: whereConditions,
-        take: params.limit,
-        skip: (params.page - 1) * params.limit,
-        include: {
-          ...includeSmall,
-        },
-        orderBy: {
-          ...orderBy,
-        },
+        ...buildPagination(params.page, params.limit),
+        include: includeSmall,
+        orderBy: orderBy,
       });
 
       this.logger.log(releases.length);
+      const total = await this.prismaService.anime.count({
+        where: whereConditions,
+      });
 
-      return releases;
+      return {
+        data: releases,
+        meta: buildMeta(total, params.page, params.limit),
+      };
     } catch (e) {
-      this.logger.error(
-        'Failed to get releases',
-        e instanceof Error ? e.stack : e,
-      );
-      throw e instanceof Error ? e : new Error(String(e));
+      handleError(e, 'Ошибка при получении релизов', this.logger);
     }
   }
 
   async getRelease(id?: string, shikimoriId?: string) {
-    if (id || shikimoriId) {
-      const release = await this.prismaService.anime.findFirst({
-        where: {
-          id,
-          shikimoriId,
-          ...shikimoriScoreNotNull,
-        },
-        include: {
-          ...includeAll,
-        },
-      });
+    try {
+      if (id || shikimoriId) {
+        const release = await this.prismaService.anime.findFirst({
+          where: { id, shikimoriId, ...shikimoriScoreNotNull },
+          include: includeAll,
+        });
 
-      if (!release) return [];
+        if (!release) return { data: null };
 
-      const episodes = await this.episodesService.getEpisodes(
-        release.alias,
-        Number(release.shikimoriId || 0),
-      );
-      return { ...release, ...episodes };
+        const episodes = await this.episodesService.getEpisodes(
+          release.alias,
+          Number(release.shikimoriId || 0),
+        );
+
+        return { ...release, ...episodes };
+      }
+
+      return;
+    } catch (e) {
+      handleError(e, 'Ошибка при получении релиза', this.logger);
     }
-
-    return [];
   }
 }

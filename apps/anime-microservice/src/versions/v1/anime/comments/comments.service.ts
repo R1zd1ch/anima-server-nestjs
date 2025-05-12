@@ -95,7 +95,7 @@ export class CommentsService {
     animeId: string,
     page: number = 1,
     limit: number = 10,
-    sortBy: 'newest' | 'top' = 'newest',
+    sortBy: 'newest' | 'oldest' | 'top' = 'newest',
     userId?: string,
   ) {
     try {
@@ -104,34 +104,17 @@ export class CommentsService {
       const comments = await this.prismaService.comment.findMany({
         where,
         ...buildPagination(page, limit),
-        orderBy:
-          sortBy === 'newest' ? { createdAt: 'desc' } : { likesCount: 'desc' },
+        orderBy: this.getSortOrder(sortBy),
         include: {
           user: { select: COMMENT_COMMON_USER_INCLUDE },
           ...COMMENT_COMMON_WITH_COUNTS,
         },
       });
 
-      const commentIds = comments.map((comment) => comment.id);
-      const userLikesForComments = userId
-        ? await this.prismaService.commentLike.findMany({
-            where: {
-              userId,
-              commentId: { in: commentIds },
-            },
-          })
-        : [];
-      const commentsWithLikes = comments.map((comment) => {
-        const { _count, ...rest } = comment;
-        return {
-          ...rest,
-          isLiked: userLikesForComments.some(
-            (like) => like.commentId === comment.id,
-          ),
-          likesCount: _count.CommentLike,
-          repliesCount: _count.replies,
-        };
-      });
+      const commentsWithLikes = await this.processCommentLikes(
+        comments,
+        userId,
+      );
 
       const total = await this.prismaService.comment.count({ where });
 
@@ -149,7 +132,7 @@ export class CommentsService {
     episode: number,
     page: number = 1,
     limit: number = 10,
-    sortBy: 'newest' | 'top' = 'newest',
+    sortBy: 'newest' | 'oldest' | 'top' = 'newest',
     userId?: string,
   ) {
     try {
@@ -159,10 +142,7 @@ export class CommentsService {
         this.prismaService.comment.findMany({
           where,
           ...buildPagination(page, limit),
-          orderBy:
-            sortBy === 'newest'
-              ? { createdAt: 'desc' }
-              : { likesCount: 'desc' },
+          orderBy: this.getSortOrder(sortBy),
           include: {
             user: { select: COMMENT_COMMON_USER_INCLUDE },
             ...COMMENT_COMMON_WITH_COUNTS,
@@ -172,26 +152,10 @@ export class CommentsService {
 
       if (!anime) throw new NotFoundException('Аниме не найдено');
 
-      const commentIds = comments.map((comment) => comment.id);
-      const userLikesForComments = userId
-        ? await this.prismaService.commentLike.findMany({
-            where: {
-              userId,
-              commentId: { in: commentIds },
-            },
-          })
-        : [];
-      const commentsWithLikes = comments.map((comment) => {
-        const { _count, ...rest } = comment;
-        return {
-          ...rest,
-          isLiked: userLikesForComments.some(
-            (like) => like.commentId === comment.id,
-          ),
-          likesCount: _count.CommentLike,
-          repliesCount: _count.replies,
-        };
-      });
+      const commentsWithLikes = await this.processCommentLikes(
+        comments,
+        userId,
+      );
 
       const total = await this.prismaService.comment.count({ where });
       return {
@@ -266,7 +230,7 @@ export class CommentsService {
     viewerId: string,
     page: number = 1,
     limit: number = 10,
-    sortBy: 'newest' | 'top' = 'newest',
+    sortBy: 'newest' | 'oldest' | 'top' = 'newest',
   ) {
     try {
       await this.checkUserAccess(userId, viewerId);
@@ -275,22 +239,12 @@ export class CommentsService {
       const comments = await this.prismaService.comment.findMany({
         where,
         ...buildPagination(page, limit),
-        orderBy:
-          sortBy === 'newest'
-            ? { createdAt: 'desc' }
-            : { CommentLike: { _count: 'desc' } },
+        orderBy: this.getSortOrder(sortBy),
         include: COMMENT_COMMON_INCLUDE,
       });
-      const commentsWithLikes = await Promise.all(
-        comments.map(async (comment) => {
-          const { _count, ...rest } = comment;
-          return {
-            ...rest,
-            isLiked: await this.isCommentLiked(userId, comment.id),
-            likesCount: _count.CommentLike,
-            repliesCount: _count.replies,
-          };
-        }),
+      const commentsWithLikes = await this.processCommentLikes(
+        comments,
+        viewerId,
       );
 
       const total = await this.prismaService.comment.count({ where });
@@ -315,8 +269,8 @@ export class CommentsService {
       });
 
       if (!comment) throw new NotFoundException('Комментарий не найден');
-      const existingLike = await this.isCommentLiked(userId, commentId);
-      if (existingLike)
+      const isLiked = await this.isCommentLiked(userId, commentId);
+      if (isLiked)
         throw new ConflictException('Вы уже лайкнули этот комментарий');
 
       const [, likedComment] = await this.prismaService.$transaction([
@@ -348,7 +302,7 @@ export class CommentsService {
 
       const isLiked = await this.isCommentLiked(userId, commentId);
       if (!isLiked)
-        throw new ConflictException('Вы не лайкалиы этот комментарий');
+        throw new ConflictException('Вы не лайкали этот комментарий');
 
       const [, unlikedComment] = await this.prismaService.$transaction([
         this.prismaService.commentLike.delete({
@@ -386,10 +340,7 @@ export class CommentsService {
       const likes = await this.prismaService.commentLike.findMany({
         where,
         ...buildPagination(page, limit),
-        orderBy: {
-          likedAt: sortBy === 'newest' ? 'desc' : 'asc',
-        },
-
+        orderBy: sortBy === 'newest' ? { likedAt: 'desc' } : { likedAt: 'asc' },
         include: {
           comment: {
             include: {
@@ -456,7 +407,10 @@ export class CommentsService {
   }
 
   private async processCommentLikes<
-    T extends { id: string; _count?: { likes: number; replies?: number } },
+    T extends {
+      id: string;
+      _count?: { CommentLike: number; replies?: number };
+    },
   >(comments: T[], viewerId: string | null) {
     const commentIds = comments.map((comment) => comment.id);
     const userLikesForComments = viewerId
@@ -470,9 +424,22 @@ export class CommentsService {
         isLiked: userLikesForComments.some(
           (like) => like.commentId === comment.id,
         ),
-        likesCount: _count?.likes || 0,
+        likesCount: _count?.CommentLike || 0,
         repliesCount: _count?.replies || 0,
       };
     });
+  }
+
+  private getSortOrder(sortBy: 'newest' | 'oldest' | 'top' = 'newest') {
+    switch (sortBy) {
+      case 'newest':
+        return { createdAt: 'desc' as const };
+      case 'oldest':
+        return { createdAt: 'asc' as const };
+      case 'top':
+        return { CommentLike: { _count: 'desc' } as const };
+      default:
+        return { createdAt: 'desc' as const };
+    }
   }
 }

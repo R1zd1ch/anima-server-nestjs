@@ -24,13 +24,8 @@ export class EpisodesService {
 
       if (!shikimoriId) {
         const animeByAlias = await this.prismaService.anime.findFirst({
-          where: {
-            alias,
-            ...shikimoriScoreNotNull,
-          },
-          select: {
-            shikimoriId: true,
-          },
+          where: { alias, ...shikimoriScoreNotNull },
+          select: { shikimoriId: true },
         });
         if (!animeByAlias) {
           return { kodik: [], anilibiria: [] };
@@ -44,9 +39,7 @@ export class EpisodesService {
             shikimoriId: shikimoriId.toString(),
             ...shikimoriScoreNotNull,
           },
-          select: {
-            alias: true,
-          },
+          select: { alias: true },
         });
         if (!animeByShikiId) {
           return { kodik: [], anilibiria: [] };
@@ -64,10 +57,7 @@ export class EpisodesService {
         formattedAlias,
         Number(formattedShikimoriId || 0),
       );
-      return {
-        kodik,
-        anilibiria,
-      };
+      return { kodik, anilibiria };
     } catch (e) {
       this.logger.error(
         `Ошибка получения эпизодов: ${e instanceof Error ? e.stack : e}`,

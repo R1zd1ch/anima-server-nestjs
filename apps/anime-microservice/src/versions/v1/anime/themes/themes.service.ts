@@ -7,6 +7,9 @@ import {
 import { PrismaService } from 'shared/lib/prisma/prisma.service';
 import { EpisodesService } from '../episodes/episodes.service';
 import { Anime } from '@prisma/__generated__';
+import { handleError } from 'shared/lib/utils/handle-error';
+import { buildPagination } from 'shared/lib/utils/build-pagination';
+import { buildMeta } from 'shared/lib/utils/build-meta';
 
 @Injectable()
 export class ThemesService {
@@ -25,27 +28,17 @@ export class ThemesService {
           const total = await this.prismaService.anime.count({
             where: {
               ...shikimoriScoreNotNull,
-              theme: {
-                some: {
-                  themeId: theme.id,
-                },
-              },
+              theme: { some: { themeId: theme.id } },
             },
           });
 
-          return {
-            ...theme,
-            total,
-          };
+          return { ...theme, total };
         }),
       );
 
       return themesWithCount;
     } catch (error) {
-      this.logger.log(
-        `Ошибка получения всех тем: ${error instanceof Error ? error.message : 'unknown'}`,
-      );
-      return [];
+      handleError(error, 'Ошибка при получении тем', this.logger);
     }
   }
 
@@ -54,27 +47,16 @@ export class ThemesService {
       const totalAnimes = await this.prismaService.anime.count({
         where: {
           ...shikimoriScoreNotNull,
-          theme: {
-            some: {
-              theme: {
-                requestId: requestId,
-              },
-            },
-          },
+          theme: { some: { theme: { requestId: requestId } } },
         },
       });
 
       const theme = await this.prismaService.theme.findUnique({
-        where: {
-          requestId: requestId,
-        },
+        where: { requestId: requestId },
       });
       return { ...theme, totalAnimes };
-    } catch (error) {
-      this.logger.log(
-        `Ошибка получения темы по id: ${error instanceof Error ? error.message : 'unknown'}`,
-      );
-      return [];
+    } catch (e) {
+      handleError(e, 'Ошибка при получении темы', this.logger);
     }
   }
 
@@ -98,17 +80,10 @@ export class ThemesService {
       }
 
       return this.prismaService.theme.findMany({
-        where: {
-          requestId: {
-            in: selectedThemes,
-          },
-        },
+        where: { requestId: { in: selectedThemes } },
       });
     } catch (error) {
-      this.logger.log(
-        `Ошибка получения случайных тем: ${error instanceof Error ? error.message : 'unknown'}`,
-      );
-      return [];
+      handleError(error, 'Ошибка при получении случайных тем', this.logger);
     }
   }
 
@@ -121,17 +96,9 @@ export class ThemesService {
       const page = pageFromQuery || 1;
       const limit = Math.min(limitFromQuery || 1, 50);
 
-      const skip = (page - 1) * limit;
-
       const whereClause = {
         ...shikimoriScoreNotNull,
-        theme: {
-          some: {
-            theme: {
-              requestId: requestId,
-            },
-          },
-        },
+        theme: { some: { theme: { requestId: requestId } } },
       };
 
       const [animesFromTheme, total] = await Promise.all([
@@ -140,8 +107,7 @@ export class ThemesService {
           include: {
             ...includeSmall,
           },
-          skip,
-          take: limit,
+          ...buildPagination(page, limit),
         }),
         this.prismaService.anime.count({
           where: whereClause,
@@ -150,16 +116,10 @@ export class ThemesService {
 
       return {
         data: animesFromTheme,
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
+        meta: buildMeta(total, page, limit),
       };
-    } catch (error) {
-      this.logger.log(
-        `Ошибка получения аниме по теме: ${error instanceof Error ? error.message : 'unknown'}`,
-      );
-      return [];
+    } catch (e) {
+      handleError(e, 'Ошибка при получении аниме по теме', this.logger);
     }
   }
 
@@ -170,17 +130,9 @@ export class ThemesService {
       const allIds = await this.prismaService.anime.findMany({
         where: {
           ...shikimoriScoreNotNull,
-          theme: {
-            some: {
-              theme: {
-                requestId: requestId,
-              },
-            },
-          },
+          theme: { some: { theme: { requestId: requestId } } },
         },
-        select: {
-          shikimoriId: true,
-        },
+        select: { shikimoriId: true },
       });
 
       while (release === null || release.shikimoriScore === null) {
@@ -189,14 +141,10 @@ export class ThemesService {
 
         const randomAnime = await this.prismaService.anime.findUnique({
           where: { shikimoriId: randomId },
-          include: {
-            ...includeAll,
-          },
+          include: includeAll,
         });
 
-        if (randomAnime) {
-          release = randomAnime;
-        }
+        if (randomAnime) release = randomAnime;
       }
 
       const episodes = await this.episodesService.getEpisodes(
@@ -205,10 +153,11 @@ export class ThemesService {
       );
       return { ...release, ...episodes };
     } catch (error) {
-      this.logger.log(
-        `Ошибка получения случайного аниме по теме: ${error instanceof Error ? error.message : 'unknown'}`,
+      handleError(
+        error,
+        'Ошибка при получении случайного аниме по теме',
+        this.logger,
       );
-      return [];
     }
   }
 }

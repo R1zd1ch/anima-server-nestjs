@@ -7,6 +7,7 @@ import {
 } from 'apps/anime-microservice/src/constants';
 import { PrismaService } from 'shared/lib/prisma/prisma.service';
 import { EpisodesService } from '../episodes/episodes.service';
+import { handleError } from 'shared/lib/utils/handle-error';
 
 @Injectable()
 export class ReleasesService {
@@ -26,19 +27,14 @@ export class ReleasesService {
           episodes: { gt: 0 },
           ...shikimoriScoreNotNull,
         },
-        include: {
-          ...includeSmall,
-        },
-        orderBy: {
-          airedOn: 'desc',
-        },
+        include: includeSmall,
+        orderBy: { airedOn: 'desc' },
         take: maxCount,
       });
 
       return releases;
-    } catch {
-      this.logger.error('Ошибка получения последних релизов');
-      return [];
+    } catch (e) {
+      handleError(e, 'Ошибка получения последних релизов', this.logger);
     }
   }
 
@@ -47,9 +43,7 @@ export class ReleasesService {
       let release: Anime | null = null;
       const allIds = await this.prismaService.anime.findMany({
         select: { shikimoriId: true },
-        where: {
-          ...shikimoriScoreNotNull,
-        },
+        where: shikimoriScoreNotNull,
       });
 
       while (release === null || release.shikimoriScore === null) {
@@ -58,15 +52,10 @@ export class ReleasesService {
 
         const randomAnime = await this.prismaService.anime.findUnique({
           where: { shikimoriId: randomId },
-
-          include: {
-            ...includeAll,
-          },
+          include: includeAll,
         });
 
-        if (randomAnime) {
-          release = randomAnime;
-        }
+        if (randomAnime) release = randomAnime;
       }
 
       if (withEpisoded) {
@@ -75,16 +64,12 @@ export class ReleasesService {
           Number(release?.shikimoriId || 0),
         );
 
-        return {
-          ...release,
-          ...episodes,
-        };
+        return { ...release, ...episodes };
       }
 
       return release;
-    } catch {
-      this.logger.error('Ошибка получения рандомного релиза');
-      return null;
+    } catch (e) {
+      handleError(e, 'Ошибка получения рандомного релиза', this.logger);
     }
   }
 
@@ -99,9 +84,8 @@ export class ReleasesService {
       }
 
       return releases;
-    } catch {
-      this.logger.error('Ошибка получения рандомных релизов');
-      return [];
+    } catch (e) {
+      handleError(e, 'Ошибка получения рандомных релизов', this.logger);
     }
   }
 
@@ -114,26 +98,16 @@ export class ReleasesService {
         const anime = await this.prismaService.anime.findFirst({
           where: {
             ...shikimoriScoreNotNull,
-            alias: {
-              contains: alias,
-              mode: 'insensitive',
-            },
+            alias: { contains: alias, mode: 'insensitive' },
           },
-          include: {
-            ...includeAll,
-          },
+          include: includeAll,
         });
 
-        if (!anime) {
-          return null;
-        }
+        if (!anime) return null;
 
         const shikiId = Number(anime.shikimoriId || 0);
         const episodes = await this.episodesService.getEpisodes(alias, shikiId);
-        return {
-          ...anime,
-          ...episodes,
-        };
+        return { ...anime, ...episodes };
       }
 
       if (shikimoriId) {
@@ -142,30 +116,26 @@ export class ReleasesService {
             ...shikimoriScoreNotNull,
             shikimoriId: shikimoriId.toString(),
           },
-          include: {
-            ...includeAll,
-          },
+          include: includeAll,
         });
 
-        if (!anime) {
-          return null;
-        }
+        if (!anime) return null;
 
         const episodes = await this.episodesService.getEpisodes(
           anime.alias,
           shikimoriId,
         );
 
-        return {
-          ...anime,
-          ...episodes,
-        };
+        return { ...anime, ...episodes };
       }
 
       return null;
-    } catch {
-      this.logger.error('Ошибка получения релиза по алиасу или shikimoriId');
-      return null;
+    } catch (e) {
+      handleError(
+        e,
+        'Ошибка получения релиза по алиасу или Shikimori ID',
+        this.logger,
+      );
     }
   }
 }

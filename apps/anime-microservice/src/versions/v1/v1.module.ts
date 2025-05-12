@@ -11,6 +11,7 @@ import { IS_DEV_ENV } from 'shared/lib/utils/is-dev.util';
 import { WatchProgressModule } from './anime/watch-progress/watch-progress.module';
 import { CollectionsModule } from './anime/collections/collections.module';
 import { RabbitMQModule } from 'shared/lib/rabbitmq/rabbitmq.module';
+import { CommentsModule } from './anime/comments/comments.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { RabbitMQModule } from 'shared/lib/rabbitmq/rabbitmq.module';
     ReleasesModule,
     DemographicModule,
     ThemesModule,
+    CommentsModule,
     EpisodesModule,
   ],
 })

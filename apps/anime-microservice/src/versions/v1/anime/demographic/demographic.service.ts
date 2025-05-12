@@ -8,6 +8,9 @@ import {
 
 import { PrismaService } from 'shared/lib/prisma/prisma.service';
 import { EpisodesService } from '../episodes/episodes.service';
+import { handleError } from 'shared/lib/utils/handle-error';
+import { buildPagination } from 'shared/lib/utils/build-pagination';
+import { buildMeta } from 'shared/lib/utils/build-meta';
 
 @Injectable()
 export class DemographicService {
@@ -27,27 +30,16 @@ export class DemographicService {
           const totalAnimes = await this.prismaService.anime.count({
             where: {
               ...shikimoriScoreNotNull,
-              demographic: {
-                some: {
-                  demographicId: demographic.id,
-                },
-              },
+              demographic: { some: { demographicId: demographic.id } },
             },
           });
 
-          return {
-            ...demographic,
-            totalAnimes,
-          };
+          return { ...demographic, totalAnimes };
         }),
       );
-
       return demographicsWithCount;
     } catch (error) {
-      this.logger.log(
-        `Ошибка получения демографий: ${error instanceof Error ? error.message : 'unknown'}`,
-      );
-      return [];
+      handleError(error, 'Ошибка получения демографий', this.logger);
     }
   }
 
@@ -56,26 +48,15 @@ export class DemographicService {
       const totalAnimes = await this.prismaService.anime.count({
         where: {
           ...shikimoriScoreNotNull,
-          demographic: {
-            some: {
-              demographic: {
-                requestId: requestId,
-              },
-            },
-          },
+          demographic: { some: { demographic: { requestId: requestId } } },
         },
       });
       const demographic = await this.prismaService.demographic.findUnique({
-        where: {
-          requestId: requestId,
-        },
+        where: { requestId: requestId },
       });
       return { ...demographic, totalAnimes };
     } catch (error) {
-      this.logger.log(
-        `Ошибка получения демографии по id: ${error instanceof Error ? error.message : 'unknown'}`,
-      );
-      return [];
+      handleError(error, 'Ошибка получения демографии', this.logger);
     }
   }
 
@@ -102,18 +83,13 @@ export class DemographicService {
 
       if (selectedDemographics.length === 0) return [];
 
-      return this.prismaService.genre.findMany({
-        where: {
-          requestId: {
-            in: selectedDemographics,
-          },
-        },
+      const demographic = this.prismaService.demographic.findMany({
+        where: { requestId: { in: selectedDemographics } },
       });
+
+      return demographic;
     } catch (error) {
-      this.logger.log(
-        `Ошибка получения случайных демографий: ${error instanceof Error ? error.message : 'unknown'}`,
-      );
-      return [];
+      handleError(error, 'Ошибка получения случайных демографий', this.logger);
     }
   }
 
@@ -127,17 +103,10 @@ export class DemographicService {
       const limit = Math.min(limitFromQuery || 1, 50);
 
       this.logger.log(`Getting anime from demographicId=${requestId}`);
-      const skip = (page - 1) * limit;
 
       const whereClause = {
         ...shikimoriScoreNotNull,
-        demographic: {
-          some: {
-            demographic: {
-              requestId: requestId,
-            },
-          },
-        },
+        demographic: { some: { demographic: { requestId: requestId } } },
       };
 
       const [animesFromDemographic, total] = await Promise.all([
@@ -146,8 +115,7 @@ export class DemographicService {
           include: {
             ...includeSmall,
           },
-          take: limit,
-          skip: skip,
+          ...buildPagination(page, limit),
         }),
 
         this.prismaService.anime.count({
@@ -157,16 +125,10 @@ export class DemographicService {
 
       return {
         data: animesFromDemographic,
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
+        meta: buildMeta(total, page, limit),
       };
     } catch (error) {
-      this.logger.log(
-        `Ошибка получения аниме по демографии: ${error instanceof Error ? error.message : 'unknown'}`,
-      );
-      return [];
+      handleError(error, 'Ошибка получения аниме по демографии', this.logger);
     }
   }
 
@@ -177,17 +139,9 @@ export class DemographicService {
       const allIds = await this.prismaService.anime.findMany({
         where: {
           ...shikimoriScoreNotNull,
-          demographic: {
-            some: {
-              demographic: {
-                requestId: requestId,
-              },
-            },
-          },
+          demographic: { some: { demographic: { requestId: requestId } } },
         },
-        select: {
-          shikimoriId: true,
-        },
+        select: { shikimoriId: true },
       });
 
       while (release === null || release.shikimoriScore === null) {
@@ -201,9 +155,7 @@ export class DemographicService {
           },
         });
 
-        if (randomAnime) {
-          release = randomAnime;
-        }
+        if (randomAnime) release = randomAnime;
       }
 
       const episodes = await this.episodesService.getEpisodes(
@@ -213,10 +165,7 @@ export class DemographicService {
 
       return { ...release, ...episodes };
     } catch (error) {
-      this.logger.log(
-        `Ошибка получения случайного аниме по демографии: ${error instanceof Error ? error.message : 'unknown'}`,
-      );
-      return [];
+      handleError(error, 'Ошибка получения случайного аниме', this.logger);
     }
   }
 }

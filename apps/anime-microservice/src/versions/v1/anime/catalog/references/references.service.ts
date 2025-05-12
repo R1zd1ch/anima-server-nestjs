@@ -7,6 +7,7 @@ import {
   types,
   years,
 } from 'apps/anime-microservice/src/constants';
+import { handleError } from 'shared/lib/utils/handle-error';
 
 @Injectable()
 export class ReferencesService {
@@ -39,8 +40,7 @@ export class ReferencesService {
     try {
       return this.prismaService.genre.findMany();
     } catch (error) {
-      this.logger.log(`Ошибка получения жанров: ${error}`);
-      return this.handleError('getGenres', error);
+      handleError(error, 'Ошибка при получении жанров', this.logger);
     }
   }
 
@@ -48,8 +48,7 @@ export class ReferencesService {
     try {
       return this.prismaService.demographic.findMany();
     } catch (error) {
-      this.logger.log(`Ошибка получения демографии: ${error}`);
-      return this.handleError('getDemographics', error);
+      handleError(error, 'Ошибка при получении демографий', this.logger);
     }
   }
 
@@ -57,16 +56,18 @@ export class ReferencesService {
     try {
       return this.prismaService.theme.findMany();
     } catch (error) {
-      this.logger.log(`Ошибка получения тем: ${error}`);
-      return this.handleError('getThemes', error);
+      handleError(error, 'Ошибка при получении тем', this.logger);
     }
   }
   public async getRatings() {
     try {
       return new Promise((r) => r(ageRatings));
     } catch (error) {
-      this.logger.log(`Ошибка получения рейтингов: ${error}`);
-      return this.handleError('getRatings', error);
+      handleError(
+        error,
+        'Ошибка при получении возрастных рейтингов',
+        this.logger,
+      );
     }
   }
 
@@ -74,16 +75,14 @@ export class ReferencesService {
     try {
       return new Promise((r) => r(seasons));
     } catch (error) {
-      this.logger.log(`Ошибка получения сезонов: ${error}`);
-      return this.handleError('getSeasons', error);
+      handleError(error, 'Ошибка при получении сезонов', this.logger);
     }
   }
   public async getSortings() {
     try {
       return new Promise((r) => r(sortings));
     } catch (error) {
-      this.logger.log(`Ошибка получения сортировок: ${error}`);
-      return this.handleError('getSortings', error);
+      handleError(error, 'Ошибка при получении сортировок', this.logger);
     }
   }
 
@@ -91,8 +90,7 @@ export class ReferencesService {
     try {
       return new Promise((r) => r(types));
     } catch (error) {
-      this.logger.log(`Ошибка получения типов: ${error}`);
-      return this.handleError('getTypes', error);
+      handleError(error, 'Ошибка при получении типов', this.logger);
     }
   }
 
@@ -100,15 +98,7 @@ export class ReferencesService {
     try {
       return new Promise((r) => r(years));
     } catch (error) {
-      this.logger.log(`Ошибка получения лет: ${error}`);
-      return this.handleError('getYears', error);
+      handleError(error, 'Ошибка при получении годов', this.logger);
     }
-  }
-
-  private handleError(method: string, error: any) {
-    return {
-      error: error instanceof Error ? error.message : 'unknown',
-      method,
-    };
   }
 }

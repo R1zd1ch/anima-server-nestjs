@@ -7,6 +7,9 @@ import {
 } from 'apps/anime-microservice/src/constants';
 import { PrismaService } from 'shared/lib/prisma/prisma.service';
 import { EpisodesService } from '../episodes/episodes.service';
+import { buildPagination } from 'shared/lib/utils/build-pagination';
+import { buildMeta } from 'shared/lib/utils/build-meta';
+import { handleError } from 'shared/lib/utils/handle-error';
 
 @Injectable()
 export class GenresService {
@@ -25,27 +28,17 @@ export class GenresService {
           const totalAnimes = await this.prismaService.anime.count({
             where: {
               ...shikimoriScoreNotNull,
-              genres: {
-                some: {
-                  genreId: genre.id,
-                },
-              },
+              genres: { some: { genreId: genre.id } },
             },
           });
 
-          return {
-            ...genre,
-            totalAnimes,
-          };
+          return { ...genre, totalAnimes };
         }),
       );
 
       return genresWithCount;
-    } catch (error) {
-      this.logger.log(
-        `Ошибка получения всех жанров: ${error instanceof Error ? error.message : 'unknown'}`,
-      );
-      return [];
+    } catch (e) {
+      handleError(e, 'Ошибка при получении жанров', this.logger);
     }
   }
 
@@ -54,26 +47,15 @@ export class GenresService {
       const totalAnimes = await this.prismaService.anime.count({
         where: {
           ...shikimoriScoreNotNull,
-          genres: {
-            some: {
-              genre: {
-                requestId: requestId,
-              },
-            },
-          },
+          genres: { some: { genre: { requestId: requestId } } },
         },
       });
       const genre = await this.prismaService.genre.findUnique({
-        where: {
-          requestId: requestId,
-        },
+        where: { requestId: requestId },
       });
       return { ...genre, totalAnimes };
-    } catch (error) {
-      this.logger.log(
-        `Ошибка получения жанра по id: ${error instanceof Error ? error.message : 'unknown'}`,
-      );
-      return [];
+    } catch (e) {
+      handleError(e, 'Ошибка при получении жанра по id', this.logger);
     }
   }
 
@@ -83,9 +65,7 @@ export class GenresService {
         select: { requestId: true },
       });
 
-      if (allGenres.length === 0) {
-        return [];
-      }
+      if (allGenres.length === 0) return [];
 
       const actualCount = Math.min(count, allGenres.length);
 
@@ -99,17 +79,10 @@ export class GenresService {
       }
 
       return this.prismaService.genre.findMany({
-        where: {
-          requestId: {
-            in: selectedGenres,
-          },
-        },
+        where: { requestId: { in: selectedGenres } },
       });
-    } catch (error) {
-      this.logger.log(
-        `Ошибка получения случайного жанра: ${error instanceof Error ? error.message : 'unknown'}`,
-      );
-      return [];
+    } catch (e) {
+      handleError(e, 'Ошибка при получении случайных жанров', this.logger);
     }
   }
 
@@ -123,27 +96,17 @@ export class GenresService {
       const limit = Math.min(limitFromQuery || 1, 50);
 
       this.logger.log(`Getting anime from genreId=${requestId}`);
-      const skip = (page - 1) * limit;
 
       const whereClause = {
         ...shikimoriScoreNotNull,
-        genres: {
-          some: {
-            genre: {
-              requestId: requestId,
-            },
-          },
-        },
+        genres: { some: { genre: { requestId: requestId } } },
       };
 
       const [animesFromGenre, total] = await Promise.all([
         this.prismaService.anime.findMany({
           where: whereClause,
-          include: {
-            ...includeSmall,
-          },
-          take: limit,
-          skip,
+          include: { ...includeSmall },
+          ...buildPagination(page, limit),
         }),
         this.prismaService.anime.count({ where: whereClause }),
       ]);
@@ -154,16 +117,10 @@ export class GenresService {
 
       return {
         data: animesFromGenre,
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
+        meta: buildMeta(page, limit, total),
       };
-    } catch (error) {
-      this.logger.log(
-        `Ошибка получения аниме по жанру: ${error instanceof Error ? error.message : 'unknown'}`,
-      );
-      return [];
+    } catch (e) {
+      handleError(e, 'Ошибка при получении аниме по жанру', this.logger);
     }
   }
 
@@ -174,17 +131,9 @@ export class GenresService {
       const allIds = await this.prismaService.anime.findMany({
         where: {
           ...shikimoriScoreNotNull,
-          genres: {
-            some: {
-              genre: {
-                requestId: requestId,
-              },
-            },
-          },
+          genres: { some: { genre: { requestId: requestId } } },
         },
-        select: {
-          shikimoriId: true,
-        },
+        select: { shikimoriId: true },
       });
 
       while (release === null || release.shikimoriScore === null) {
@@ -193,14 +142,10 @@ export class GenresService {
 
         const randomAnime = await this.prismaService.anime.findUnique({
           where: { shikimoriId: randomId },
-          include: {
-            ...includeAll,
-          },
+          include: { ...includeAll },
         });
 
-        if (randomAnime) {
-          release = randomAnime;
-        }
+        if (randomAnime) release = randomAnime;
       }
 
       const episodes = await this.episodesService.getEpisodes(
@@ -208,11 +153,12 @@ export class GenresService {
         Number(release?.shikimoriId || 0),
       );
       return { ...release, ...episodes };
-    } catch (error) {
-      this.logger.log(
-        `Ошибка получения случайного аниме по жанру: ${error instanceof Error ? error.message : 'unknown'}`,
+    } catch (e) {
+      handleError(
+        e,
+        'Ошибка при получении случайного аниме по жанру',
+        this.logger,
       );
-      return [];
     }
   }
 }

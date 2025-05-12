@@ -96,12 +96,7 @@ export class KodikService implements OnModuleInit {
       };
     });
 
-    return {
-      kodik: {
-        ...mainData,
-        translations,
-      },
-    };
+    return { kodik: { ...mainData, translations } };
   }
 
   private async getToken(): Promise<string> {
