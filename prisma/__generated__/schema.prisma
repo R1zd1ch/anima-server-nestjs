@@ -478,20 +478,27 @@ model UserSettings {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
 
-  theme      String  @default("system")
-  language   String  @default("en")
-  show18plus Boolean @default(false)
+  theme    String @default("system")
+  language String @default("ru")
 
-  showActivity             Boolean  @default(true)
-  showAnimeList            Boolean  @default(true)
-  showAllCommentsInProfile Boolean  @default(true)
-  showCollections          Boolean  @default(true)
-  showLikedCollections     Boolean  @default(true)
-  showLikedReviews         Boolean  @default(true)
-  showReviews              Boolean  @default(true)
-  showLatestWatched        Boolean  @default(true)
-  notificationsOn          Boolean  @default(true)
-  preferredGenres          String[]
+  showBio                  Boolean @default(true)
+  showFavorites            Boolean @default(true)
+  showEmail                Boolean @default(true)
+  showCity                 Boolean @default(true)
+  showCountry              Boolean @default(true)
+  showJoined               Boolean @default(true)
+  showBirthday             Boolean @default(true)
+  showGender               Boolean @default(true)
+  showStatistics           Boolean @default(true)
+  showActivity             Boolean @default(true)
+  showAnimeList            Boolean @default(true)
+  showAllCommentsInProfile Boolean @default(true)
+  showCollections          Boolean @default(true)
+  showLikedCollections     Boolean @default(true)
+  showLikedReviews         Boolean @default(true)
+  showReviews              Boolean @default(true)
+  showLatestWatched        Boolean @default(true)
+  notificationsOn          Boolean @default(true)
 }
 
 model User {
@@ -501,8 +508,15 @@ model User {
   email    String @unique
   password String
 
+  bio      String?
+  gender   UserGender @default(OTHER)
+  country  String?
+  city     String?
+  birthday DateTime?
+
   displayName String
   picture     String?
+  banner      String?
 
   role     UserRole   @default(REGULAR)
   method   AuthMethod @default(CREDENTIALS)
@@ -524,6 +538,12 @@ model User {
   reviewLikes       ReviewLike[]
 
   @@map("users")
+}
+
+enum UserGender {
+  MALE
+  FEMALE
+  OTHER
 }
 
 generator client {

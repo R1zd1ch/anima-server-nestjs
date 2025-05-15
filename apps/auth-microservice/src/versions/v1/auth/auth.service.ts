@@ -112,10 +112,7 @@ export class AuthService {
     const profile = await providerInstance.findUserByCode(code);
 
     const account = await this.prismaService.account.findFirst({
-      where: {
-        id: profile.id,
-        provider: profile.provider,
-      },
+      where: { id: profile.id, provider: profile.provider },
     });
 
     let user = account?.userId

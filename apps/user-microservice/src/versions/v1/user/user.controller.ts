@@ -11,7 +11,7 @@ import {
 import { UserService } from './user.service';
 import { Authorized } from 'shared/decorators/authorized.decorator';
 import { Authorization } from 'shared/decorators/auth.decorator';
-import { UserRole, UserSettings } from '@prisma/__generated__';
+import { UserRole } from '@prisma/__generated__';
 import { UpdateUserDto } from './dto/update-user.dto';
 import {
   ApiTags,
@@ -20,10 +20,11 @@ import {
   ApiParam,
   ApiCookieAuth,
 } from '@nestjs/swagger';
+import { wrapApiResponse } from 'shared/lib/utils/wrap-api-response';
 
 @ApiTags('User')
 @ApiCookieAuth()
-@Controller({ path: 'user', version: '1' }) //было users если что то сломается
+@Controller({ path: 'user', version: '1' })
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -36,7 +37,8 @@ export class UserController {
     description: 'Профиль пользователя успешно получен',
   })
   public async findProfile(@Authorized('id') userId: string) {
-    return this.userService.findById(userId);
+    const result = await this.userService.findById(userId);
+    return wrapApiResponse(result);
   }
 
   @Authorization()
@@ -51,7 +53,8 @@ export class UserController {
     @Authorized('id') userId: string,
     @Body() dto: UpdateUserDto,
   ) {
-    return this.userService.update(userId, dto);
+    const result = await this.userService.update(userId, dto);
+    return wrapApiResponse(result);
   }
 
   @HttpCode(HttpStatus.OK)
@@ -66,7 +69,8 @@ export class UserController {
     description: 'Пользователь не найден',
   })
   public async deleteProfile(@Authorized('id') userId: string) {
-    return this.userService.delete(userId);
+    const result = await this.userService.delete(userId);
+    return wrapApiResponse(result);
   }
 
   @HttpCode(HttpStatus.OK)
@@ -78,7 +82,8 @@ export class UserController {
   })
   @ApiParam({ name: 'id', description: 'ID пользователя' })
   public async getPublicProfile(@Param('id') userId: string) {
-    return this.userService.getPublicProfile(userId);
+    const result = await this.userService.getPublicProfile(userId);
+    return wrapApiResponse(result);
   }
 
   @Get('settings')
@@ -97,29 +102,8 @@ export class UserController {
     description: 'Внутренняя ошибка сервера',
   })
   public async getSettings(@Authorized('id') userId: string) {
-    return this.userService.getUserWithSettings(userId);
-  }
-
-  @Patch('settings')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Обновить настройки текущего пользователя' })
-  @ApiResponse({
-    status: 200,
-    description: 'Настройки пользователя успешно обновлены',
-  })
-  @ApiResponse({
-    status: 404,
-    description: 'Пользователь не найден',
-  })
-  @ApiResponse({
-    status: 500,
-    description: 'Внутренняя ошибка сервера',
-  })
-  public async updateSettings(
-    @Authorized('id') userId: string,
-    @Body() dto: Partial<UserSettings>,
-  ) {
-    return this.userService.updateSettings(userId, dto);
+    const result = await this.userService.getUserWithSettings(userId);
+    return wrapApiResponse(result);
   }
 
   @Authorization(UserRole.ADMIN)
@@ -134,6 +118,7 @@ export class UserController {
     description: 'Информация о пользователе успешно получена',
   })
   public async findById(@Param('id') userId: string) {
-    return this.userService.findById(userId);
+    const result = await this.userService.findById(userId);
+    return wrapApiResponse(result);
   }
 }

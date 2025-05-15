@@ -285,6 +285,15 @@ export const AnimeCollectionType: {
 
 export type AnimeCollectionType = (typeof AnimeCollectionType)[keyof typeof AnimeCollectionType]
 
+
+export const UserGender: {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE',
+  OTHER: 'OTHER'
+};
+
+export type UserGender = (typeof UserGender)[keyof typeof UserGender]
+
 }
 
 export type VideoKindEnum = $Enums.VideoKindEnum
@@ -330,6 +339,10 @@ export const ParsingSessionType: typeof $Enums.ParsingSessionType
 export type AnimeCollectionType = $Enums.AnimeCollectionType
 
 export const AnimeCollectionType: typeof $Enums.AnimeCollectionType
+
+export type UserGender = $Enums.UserGender
+
+export const UserGender: typeof $Enums.UserGender
 
 /**
  * ##  Prisma Client ʲˢ
@@ -32679,7 +32692,15 @@ export namespace Prisma {
     userId: string | null
     theme: string | null
     language: string | null
-    show18plus: boolean | null
+    showBio: boolean | null
+    showFavorites: boolean | null
+    showEmail: boolean | null
+    showCity: boolean | null
+    showCountry: boolean | null
+    showJoined: boolean | null
+    showBirthday: boolean | null
+    showGender: boolean | null
+    showStatistics: boolean | null
     showActivity: boolean | null
     showAnimeList: boolean | null
     showAllCommentsInProfile: boolean | null
@@ -32696,7 +32717,15 @@ export namespace Prisma {
     userId: string | null
     theme: string | null
     language: string | null
-    show18plus: boolean | null
+    showBio: boolean | null
+    showFavorites: boolean | null
+    showEmail: boolean | null
+    showCity: boolean | null
+    showCountry: boolean | null
+    showJoined: boolean | null
+    showBirthday: boolean | null
+    showGender: boolean | null
+    showStatistics: boolean | null
     showActivity: boolean | null
     showAnimeList: boolean | null
     showAllCommentsInProfile: boolean | null
@@ -32713,7 +32742,15 @@ export namespace Prisma {
     userId: number
     theme: number
     language: number
-    show18plus: number
+    showBio: number
+    showFavorites: number
+    showEmail: number
+    showCity: number
+    showCountry: number
+    showJoined: number
+    showBirthday: number
+    showGender: number
+    showStatistics: number
     showActivity: number
     showAnimeList: number
     showAllCommentsInProfile: number
@@ -32723,7 +32760,6 @@ export namespace Prisma {
     showReviews: number
     showLatestWatched: number
     notificationsOn: number
-    preferredGenres: number
     _all: number
   }
 
@@ -32733,7 +32769,15 @@ export namespace Prisma {
     userId?: true
     theme?: true
     language?: true
-    show18plus?: true
+    showBio?: true
+    showFavorites?: true
+    showEmail?: true
+    showCity?: true
+    showCountry?: true
+    showJoined?: true
+    showBirthday?: true
+    showGender?: true
+    showStatistics?: true
     showActivity?: true
     showAnimeList?: true
     showAllCommentsInProfile?: true
@@ -32750,7 +32794,15 @@ export namespace Prisma {
     userId?: true
     theme?: true
     language?: true
-    show18plus?: true
+    showBio?: true
+    showFavorites?: true
+    showEmail?: true
+    showCity?: true
+    showCountry?: true
+    showJoined?: true
+    showBirthday?: true
+    showGender?: true
+    showStatistics?: true
     showActivity?: true
     showAnimeList?: true
     showAllCommentsInProfile?: true
@@ -32767,7 +32819,15 @@ export namespace Prisma {
     userId?: true
     theme?: true
     language?: true
-    show18plus?: true
+    showBio?: true
+    showFavorites?: true
+    showEmail?: true
+    showCity?: true
+    showCountry?: true
+    showJoined?: true
+    showBirthday?: true
+    showGender?: true
+    showStatistics?: true
     showActivity?: true
     showAnimeList?: true
     showAllCommentsInProfile?: true
@@ -32777,7 +32837,6 @@ export namespace Prisma {
     showReviews?: true
     showLatestWatched?: true
     notificationsOn?: true
-    preferredGenres?: true
     _all?: true
   }
 
@@ -32858,7 +32917,15 @@ export namespace Prisma {
     userId: string
     theme: string
     language: string
-    show18plus: boolean
+    showBio: boolean
+    showFavorites: boolean
+    showEmail: boolean
+    showCity: boolean
+    showCountry: boolean
+    showJoined: boolean
+    showBirthday: boolean
+    showGender: boolean
+    showStatistics: boolean
     showActivity: boolean
     showAnimeList: boolean
     showAllCommentsInProfile: boolean
@@ -32868,7 +32935,6 @@ export namespace Prisma {
     showReviews: boolean
     showLatestWatched: boolean
     notificationsOn: boolean
-    preferredGenres: string[]
     _count: UserSettingsCountAggregateOutputType | null
     _min: UserSettingsMinAggregateOutputType | null
     _max: UserSettingsMaxAggregateOutputType | null
@@ -32893,7 +32959,15 @@ export namespace Prisma {
     userId?: boolean
     theme?: boolean
     language?: boolean
-    show18plus?: boolean
+    showBio?: boolean
+    showFavorites?: boolean
+    showEmail?: boolean
+    showCity?: boolean
+    showCountry?: boolean
+    showJoined?: boolean
+    showBirthday?: boolean
+    showGender?: boolean
+    showStatistics?: boolean
     showActivity?: boolean
     showAnimeList?: boolean
     showAllCommentsInProfile?: boolean
@@ -32903,7 +32977,6 @@ export namespace Prisma {
     showReviews?: boolean
     showLatestWatched?: boolean
     notificationsOn?: boolean
-    preferredGenres?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userSettings"]>
 
@@ -32912,7 +32985,15 @@ export namespace Prisma {
     userId?: boolean
     theme?: boolean
     language?: boolean
-    show18plus?: boolean
+    showBio?: boolean
+    showFavorites?: boolean
+    showEmail?: boolean
+    showCity?: boolean
+    showCountry?: boolean
+    showJoined?: boolean
+    showBirthday?: boolean
+    showGender?: boolean
+    showStatistics?: boolean
     showActivity?: boolean
     showAnimeList?: boolean
     showAllCommentsInProfile?: boolean
@@ -32922,7 +33003,6 @@ export namespace Prisma {
     showReviews?: boolean
     showLatestWatched?: boolean
     notificationsOn?: boolean
-    preferredGenres?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userSettings"]>
 
@@ -32931,7 +33011,15 @@ export namespace Prisma {
     userId?: boolean
     theme?: boolean
     language?: boolean
-    show18plus?: boolean
+    showBio?: boolean
+    showFavorites?: boolean
+    showEmail?: boolean
+    showCity?: boolean
+    showCountry?: boolean
+    showJoined?: boolean
+    showBirthday?: boolean
+    showGender?: boolean
+    showStatistics?: boolean
     showActivity?: boolean
     showAnimeList?: boolean
     showAllCommentsInProfile?: boolean
@@ -32941,7 +33029,6 @@ export namespace Prisma {
     showReviews?: boolean
     showLatestWatched?: boolean
     notificationsOn?: boolean
-    preferredGenres?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userSettings"]>
 
@@ -32950,7 +33037,15 @@ export namespace Prisma {
     userId?: boolean
     theme?: boolean
     language?: boolean
-    show18plus?: boolean
+    showBio?: boolean
+    showFavorites?: boolean
+    showEmail?: boolean
+    showCity?: boolean
+    showCountry?: boolean
+    showJoined?: boolean
+    showBirthday?: boolean
+    showGender?: boolean
+    showStatistics?: boolean
     showActivity?: boolean
     showAnimeList?: boolean
     showAllCommentsInProfile?: boolean
@@ -32960,10 +33055,9 @@ export namespace Prisma {
     showReviews?: boolean
     showLatestWatched?: boolean
     notificationsOn?: boolean
-    preferredGenres?: boolean
   }
 
-  export type UserSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "theme" | "language" | "show18plus" | "showActivity" | "showAnimeList" | "showAllCommentsInProfile" | "showCollections" | "showLikedCollections" | "showLikedReviews" | "showReviews" | "showLatestWatched" | "notificationsOn" | "preferredGenres", ExtArgs["result"]["userSettings"]>
+  export type UserSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "theme" | "language" | "showBio" | "showFavorites" | "showEmail" | "showCity" | "showCountry" | "showJoined" | "showBirthday" | "showGender" | "showStatistics" | "showActivity" | "showAnimeList" | "showAllCommentsInProfile" | "showCollections" | "showLikedCollections" | "showLikedReviews" | "showReviews" | "showLatestWatched" | "notificationsOn", ExtArgs["result"]["userSettings"]>
   export type UserSettingsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -32984,7 +33078,15 @@ export namespace Prisma {
       userId: string
       theme: string
       language: string
-      show18plus: boolean
+      showBio: boolean
+      showFavorites: boolean
+      showEmail: boolean
+      showCity: boolean
+      showCountry: boolean
+      showJoined: boolean
+      showBirthday: boolean
+      showGender: boolean
+      showStatistics: boolean
       showActivity: boolean
       showAnimeList: boolean
       showAllCommentsInProfile: boolean
@@ -32994,7 +33096,6 @@ export namespace Prisma {
       showReviews: boolean
       showLatestWatched: boolean
       notificationsOn: boolean
-      preferredGenres: string[]
     }, ExtArgs["result"]["userSettings"]>
     composites: {}
   }
@@ -33423,7 +33524,15 @@ export namespace Prisma {
     readonly userId: FieldRef<"UserSettings", 'String'>
     readonly theme: FieldRef<"UserSettings", 'String'>
     readonly language: FieldRef<"UserSettings", 'String'>
-    readonly show18plus: FieldRef<"UserSettings", 'Boolean'>
+    readonly showBio: FieldRef<"UserSettings", 'Boolean'>
+    readonly showFavorites: FieldRef<"UserSettings", 'Boolean'>
+    readonly showEmail: FieldRef<"UserSettings", 'Boolean'>
+    readonly showCity: FieldRef<"UserSettings", 'Boolean'>
+    readonly showCountry: FieldRef<"UserSettings", 'Boolean'>
+    readonly showJoined: FieldRef<"UserSettings", 'Boolean'>
+    readonly showBirthday: FieldRef<"UserSettings", 'Boolean'>
+    readonly showGender: FieldRef<"UserSettings", 'Boolean'>
+    readonly showStatistics: FieldRef<"UserSettings", 'Boolean'>
     readonly showActivity: FieldRef<"UserSettings", 'Boolean'>
     readonly showAnimeList: FieldRef<"UserSettings", 'Boolean'>
     readonly showAllCommentsInProfile: FieldRef<"UserSettings", 'Boolean'>
@@ -33433,7 +33542,6 @@ export namespace Prisma {
     readonly showReviews: FieldRef<"UserSettings", 'Boolean'>
     readonly showLatestWatched: FieldRef<"UserSettings", 'Boolean'>
     readonly notificationsOn: FieldRef<"UserSettings", 'Boolean'>
-    readonly preferredGenres: FieldRef<"UserSettings", 'String[]'>
   }
     
 
@@ -33863,8 +33971,14 @@ export namespace Prisma {
     username: string | null
     email: string | null
     password: string | null
+    bio: string | null
+    gender: $Enums.UserGender | null
+    country: string | null
+    city: string | null
+    birthday: Date | null
     displayName: string | null
     picture: string | null
+    banner: string | null
     role: $Enums.UserRole | null
     method: $Enums.AuthMethod | null
     isVerified: boolean | null
@@ -33878,8 +33992,14 @@ export namespace Prisma {
     username: string | null
     email: string | null
     password: string | null
+    bio: string | null
+    gender: $Enums.UserGender | null
+    country: string | null
+    city: string | null
+    birthday: Date | null
     displayName: string | null
     picture: string | null
+    banner: string | null
     role: $Enums.UserRole | null
     method: $Enums.AuthMethod | null
     isVerified: boolean | null
@@ -33893,8 +34013,14 @@ export namespace Prisma {
     username: number
     email: number
     password: number
+    bio: number
+    gender: number
+    country: number
+    city: number
+    birthday: number
     displayName: number
     picture: number
+    banner: number
     role: number
     method: number
     isVerified: number
@@ -33910,8 +34036,14 @@ export namespace Prisma {
     username?: true
     email?: true
     password?: true
+    bio?: true
+    gender?: true
+    country?: true
+    city?: true
+    birthday?: true
     displayName?: true
     picture?: true
+    banner?: true
     role?: true
     method?: true
     isVerified?: true
@@ -33925,8 +34057,14 @@ export namespace Prisma {
     username?: true
     email?: true
     password?: true
+    bio?: true
+    gender?: true
+    country?: true
+    city?: true
+    birthday?: true
     displayName?: true
     picture?: true
+    banner?: true
     role?: true
     method?: true
     isVerified?: true
@@ -33940,8 +34078,14 @@ export namespace Prisma {
     username?: true
     email?: true
     password?: true
+    bio?: true
+    gender?: true
+    country?: true
+    city?: true
+    birthday?: true
     displayName?: true
     picture?: true
+    banner?: true
     role?: true
     method?: true
     isVerified?: true
@@ -34028,8 +34172,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio: string | null
+    gender: $Enums.UserGender
+    country: string | null
+    city: string | null
+    birthday: Date | null
     displayName: string
     picture: string | null
+    banner: string | null
     role: $Enums.UserRole
     method: $Enums.AuthMethod
     isVerified: boolean
@@ -34060,8 +34210,14 @@ export namespace Prisma {
     username?: boolean
     email?: boolean
     password?: boolean
+    bio?: boolean
+    gender?: boolean
+    country?: boolean
+    city?: boolean
+    birthday?: boolean
     displayName?: boolean
     picture?: boolean
+    banner?: boolean
     role?: boolean
     method?: boolean
     isVerified?: boolean
@@ -34085,8 +34241,14 @@ export namespace Prisma {
     username?: boolean
     email?: boolean
     password?: boolean
+    bio?: boolean
+    gender?: boolean
+    country?: boolean
+    city?: boolean
+    birthday?: boolean
     displayName?: boolean
     picture?: boolean
+    banner?: boolean
     role?: boolean
     method?: boolean
     isVerified?: boolean
@@ -34100,8 +34262,14 @@ export namespace Prisma {
     username?: boolean
     email?: boolean
     password?: boolean
+    bio?: boolean
+    gender?: boolean
+    country?: boolean
+    city?: boolean
+    birthday?: boolean
     displayName?: boolean
     picture?: boolean
+    banner?: boolean
     role?: boolean
     method?: boolean
     isVerified?: boolean
@@ -34115,8 +34283,14 @@ export namespace Prisma {
     username?: boolean
     email?: boolean
     password?: boolean
+    bio?: boolean
+    gender?: boolean
+    country?: boolean
+    city?: boolean
+    birthday?: boolean
     displayName?: boolean
     picture?: boolean
+    banner?: boolean
     role?: boolean
     method?: boolean
     isVerified?: boolean
@@ -34125,7 +34299,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "email" | "password" | "displayName" | "picture" | "role" | "method" | "isVerified" | "isTwoFactorEnabled" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "email" | "password" | "bio" | "gender" | "country" | "city" | "birthday" | "displayName" | "picture" | "banner" | "role" | "method" | "isVerified" | "isTwoFactorEnabled" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     animeProgress?: boolean | User$animeProgressArgs<ExtArgs>
@@ -34159,8 +34333,14 @@ export namespace Prisma {
       username: string
       email: string
       password: string
+      bio: string | null
+      gender: $Enums.UserGender
+      country: string | null
+      city: string | null
+      birthday: Date | null
       displayName: string
       picture: string | null
+      banner: string | null
       role: $Enums.UserRole
       method: $Enums.AuthMethod
       isVerified: boolean
@@ -34603,8 +34783,14 @@ export namespace Prisma {
     readonly username: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
+    readonly bio: FieldRef<"User", 'String'>
+    readonly gender: FieldRef<"User", 'UserGender'>
+    readonly country: FieldRef<"User", 'String'>
+    readonly city: FieldRef<"User", 'String'>
+    readonly birthday: FieldRef<"User", 'DateTime'>
     readonly displayName: FieldRef<"User", 'String'>
     readonly picture: FieldRef<"User", 'String'>
+    readonly banner: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'UserRole'>
     readonly method: FieldRef<"User", 'AuthMethod'>
     readonly isVerified: FieldRef<"User", 'Boolean'>
@@ -35546,7 +35732,15 @@ export namespace Prisma {
     userId: 'userId',
     theme: 'theme',
     language: 'language',
-    show18plus: 'show18plus',
+    showBio: 'showBio',
+    showFavorites: 'showFavorites',
+    showEmail: 'showEmail',
+    showCity: 'showCity',
+    showCountry: 'showCountry',
+    showJoined: 'showJoined',
+    showBirthday: 'showBirthday',
+    showGender: 'showGender',
+    showStatistics: 'showStatistics',
     showActivity: 'showActivity',
     showAnimeList: 'showAnimeList',
     showAllCommentsInProfile: 'showAllCommentsInProfile',
@@ -35555,8 +35749,7 @@ export namespace Prisma {
     showLikedReviews: 'showLikedReviews',
     showReviews: 'showReviews',
     showLatestWatched: 'showLatestWatched',
-    notificationsOn: 'notificationsOn',
-    preferredGenres: 'preferredGenres'
+    notificationsOn: 'notificationsOn'
   };
 
   export type UserSettingsScalarFieldEnum = (typeof UserSettingsScalarFieldEnum)[keyof typeof UserSettingsScalarFieldEnum]
@@ -35567,8 +35760,14 @@ export namespace Prisma {
     username: 'username',
     email: 'email',
     password: 'password',
+    bio: 'bio',
+    gender: 'gender',
+    country: 'country',
+    city: 'city',
+    birthday: 'birthday',
     displayName: 'displayName',
     picture: 'picture',
+    banner: 'banner',
     role: 'role',
     method: 'method',
     isVerified: 'isVerified',
@@ -35781,6 +35980,20 @@ export namespace Prisma {
    * Reference to a field of type 'AnimeCollectionType[]'
    */
   export type ListEnumAnimeCollectionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AnimeCollectionType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'UserGender'
+   */
+  export type EnumUserGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserGender'>
+    
+
+
+  /**
+   * Reference to a field of type 'UserGender[]'
+   */
+  export type ListEnumUserGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserGender[]'>
     
 
 
@@ -37440,7 +37653,15 @@ export namespace Prisma {
     userId?: StringFilter<"UserSettings"> | string
     theme?: StringFilter<"UserSettings"> | string
     language?: StringFilter<"UserSettings"> | string
-    show18plus?: BoolFilter<"UserSettings"> | boolean
+    showBio?: BoolFilter<"UserSettings"> | boolean
+    showFavorites?: BoolFilter<"UserSettings"> | boolean
+    showEmail?: BoolFilter<"UserSettings"> | boolean
+    showCity?: BoolFilter<"UserSettings"> | boolean
+    showCountry?: BoolFilter<"UserSettings"> | boolean
+    showJoined?: BoolFilter<"UserSettings"> | boolean
+    showBirthday?: BoolFilter<"UserSettings"> | boolean
+    showGender?: BoolFilter<"UserSettings"> | boolean
+    showStatistics?: BoolFilter<"UserSettings"> | boolean
     showActivity?: BoolFilter<"UserSettings"> | boolean
     showAnimeList?: BoolFilter<"UserSettings"> | boolean
     showAllCommentsInProfile?: BoolFilter<"UserSettings"> | boolean
@@ -37450,7 +37671,6 @@ export namespace Prisma {
     showReviews?: BoolFilter<"UserSettings"> | boolean
     showLatestWatched?: BoolFilter<"UserSettings"> | boolean
     notificationsOn?: BoolFilter<"UserSettings"> | boolean
-    preferredGenres?: StringNullableListFilter<"UserSettings">
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -37459,7 +37679,15 @@ export namespace Prisma {
     userId?: SortOrder
     theme?: SortOrder
     language?: SortOrder
-    show18plus?: SortOrder
+    showBio?: SortOrder
+    showFavorites?: SortOrder
+    showEmail?: SortOrder
+    showCity?: SortOrder
+    showCountry?: SortOrder
+    showJoined?: SortOrder
+    showBirthday?: SortOrder
+    showGender?: SortOrder
+    showStatistics?: SortOrder
     showActivity?: SortOrder
     showAnimeList?: SortOrder
     showAllCommentsInProfile?: SortOrder
@@ -37469,7 +37697,6 @@ export namespace Prisma {
     showReviews?: SortOrder
     showLatestWatched?: SortOrder
     notificationsOn?: SortOrder
-    preferredGenres?: SortOrder
     user?: UserOrderByWithRelationInput
   }
 
@@ -37481,7 +37708,15 @@ export namespace Prisma {
     NOT?: UserSettingsWhereInput | UserSettingsWhereInput[]
     theme?: StringFilter<"UserSettings"> | string
     language?: StringFilter<"UserSettings"> | string
-    show18plus?: BoolFilter<"UserSettings"> | boolean
+    showBio?: BoolFilter<"UserSettings"> | boolean
+    showFavorites?: BoolFilter<"UserSettings"> | boolean
+    showEmail?: BoolFilter<"UserSettings"> | boolean
+    showCity?: BoolFilter<"UserSettings"> | boolean
+    showCountry?: BoolFilter<"UserSettings"> | boolean
+    showJoined?: BoolFilter<"UserSettings"> | boolean
+    showBirthday?: BoolFilter<"UserSettings"> | boolean
+    showGender?: BoolFilter<"UserSettings"> | boolean
+    showStatistics?: BoolFilter<"UserSettings"> | boolean
     showActivity?: BoolFilter<"UserSettings"> | boolean
     showAnimeList?: BoolFilter<"UserSettings"> | boolean
     showAllCommentsInProfile?: BoolFilter<"UserSettings"> | boolean
@@ -37491,7 +37726,6 @@ export namespace Prisma {
     showReviews?: BoolFilter<"UserSettings"> | boolean
     showLatestWatched?: BoolFilter<"UserSettings"> | boolean
     notificationsOn?: BoolFilter<"UserSettings"> | boolean
-    preferredGenres?: StringNullableListFilter<"UserSettings">
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "userId">
 
@@ -37500,7 +37734,15 @@ export namespace Prisma {
     userId?: SortOrder
     theme?: SortOrder
     language?: SortOrder
-    show18plus?: SortOrder
+    showBio?: SortOrder
+    showFavorites?: SortOrder
+    showEmail?: SortOrder
+    showCity?: SortOrder
+    showCountry?: SortOrder
+    showJoined?: SortOrder
+    showBirthday?: SortOrder
+    showGender?: SortOrder
+    showStatistics?: SortOrder
     showActivity?: SortOrder
     showAnimeList?: SortOrder
     showAllCommentsInProfile?: SortOrder
@@ -37510,7 +37752,6 @@ export namespace Prisma {
     showReviews?: SortOrder
     showLatestWatched?: SortOrder
     notificationsOn?: SortOrder
-    preferredGenres?: SortOrder
     _count?: UserSettingsCountOrderByAggregateInput
     _max?: UserSettingsMaxOrderByAggregateInput
     _min?: UserSettingsMinOrderByAggregateInput
@@ -37524,7 +37765,15 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"UserSettings"> | string
     theme?: StringWithAggregatesFilter<"UserSettings"> | string
     language?: StringWithAggregatesFilter<"UserSettings"> | string
-    show18plus?: BoolWithAggregatesFilter<"UserSettings"> | boolean
+    showBio?: BoolWithAggregatesFilter<"UserSettings"> | boolean
+    showFavorites?: BoolWithAggregatesFilter<"UserSettings"> | boolean
+    showEmail?: BoolWithAggregatesFilter<"UserSettings"> | boolean
+    showCity?: BoolWithAggregatesFilter<"UserSettings"> | boolean
+    showCountry?: BoolWithAggregatesFilter<"UserSettings"> | boolean
+    showJoined?: BoolWithAggregatesFilter<"UserSettings"> | boolean
+    showBirthday?: BoolWithAggregatesFilter<"UserSettings"> | boolean
+    showGender?: BoolWithAggregatesFilter<"UserSettings"> | boolean
+    showStatistics?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     showActivity?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     showAnimeList?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     showAllCommentsInProfile?: BoolWithAggregatesFilter<"UserSettings"> | boolean
@@ -37534,7 +37783,6 @@ export namespace Prisma {
     showReviews?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     showLatestWatched?: BoolWithAggregatesFilter<"UserSettings"> | boolean
     notificationsOn?: BoolWithAggregatesFilter<"UserSettings"> | boolean
-    preferredGenres?: StringNullableListFilter<"UserSettings">
   }
 
   export type UserWhereInput = {
@@ -37545,8 +37793,14 @@ export namespace Prisma {
     username?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    bio?: StringNullableFilter<"User"> | string | null
+    gender?: EnumUserGenderFilter<"User"> | $Enums.UserGender
+    country?: StringNullableFilter<"User"> | string | null
+    city?: StringNullableFilter<"User"> | string | null
+    birthday?: DateTimeNullableFilter<"User"> | Date | string | null
     displayName?: StringFilter<"User"> | string
     picture?: StringNullableFilter<"User"> | string | null
+    banner?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     method?: EnumAuthMethodFilter<"User"> | $Enums.AuthMethod
     isVerified?: BoolFilter<"User"> | boolean
@@ -37569,8 +37823,14 @@ export namespace Prisma {
     username?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    bio?: SortOrderInput | SortOrder
+    gender?: SortOrder
+    country?: SortOrderInput | SortOrder
+    city?: SortOrderInput | SortOrder
+    birthday?: SortOrderInput | SortOrder
     displayName?: SortOrder
     picture?: SortOrderInput | SortOrder
+    banner?: SortOrderInput | SortOrder
     role?: SortOrder
     method?: SortOrder
     isVerified?: SortOrder
@@ -37596,8 +37856,14 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     password?: StringFilter<"User"> | string
+    bio?: StringNullableFilter<"User"> | string | null
+    gender?: EnumUserGenderFilter<"User"> | $Enums.UserGender
+    country?: StringNullableFilter<"User"> | string | null
+    city?: StringNullableFilter<"User"> | string | null
+    birthday?: DateTimeNullableFilter<"User"> | Date | string | null
     displayName?: StringFilter<"User"> | string
     picture?: StringNullableFilter<"User"> | string | null
+    banner?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     method?: EnumAuthMethodFilter<"User"> | $Enums.AuthMethod
     isVerified?: BoolFilter<"User"> | boolean
@@ -37620,8 +37886,14 @@ export namespace Prisma {
     username?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    bio?: SortOrderInput | SortOrder
+    gender?: SortOrder
+    country?: SortOrderInput | SortOrder
+    city?: SortOrderInput | SortOrder
+    birthday?: SortOrderInput | SortOrder
     displayName?: SortOrder
     picture?: SortOrderInput | SortOrder
+    banner?: SortOrderInput | SortOrder
     role?: SortOrder
     method?: SortOrder
     isVerified?: SortOrder
@@ -37641,8 +37913,14 @@ export namespace Prisma {
     username?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
+    bio?: StringNullableWithAggregatesFilter<"User"> | string | null
+    gender?: EnumUserGenderWithAggregatesFilter<"User"> | $Enums.UserGender
+    country?: StringNullableWithAggregatesFilter<"User"> | string | null
+    city?: StringNullableWithAggregatesFilter<"User"> | string | null
+    birthday?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     displayName?: StringWithAggregatesFilter<"User"> | string
     picture?: StringNullableWithAggregatesFilter<"User"> | string | null
+    banner?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
     method?: EnumAuthMethodWithAggregatesFilter<"User"> | $Enums.AuthMethod
     isVerified?: BoolWithAggregatesFilter<"User"> | boolean
@@ -39263,7 +39541,15 @@ export namespace Prisma {
     id?: string
     theme?: string
     language?: string
-    show18plus?: boolean
+    showBio?: boolean
+    showFavorites?: boolean
+    showEmail?: boolean
+    showCity?: boolean
+    showCountry?: boolean
+    showJoined?: boolean
+    showBirthday?: boolean
+    showGender?: boolean
+    showStatistics?: boolean
     showActivity?: boolean
     showAnimeList?: boolean
     showAllCommentsInProfile?: boolean
@@ -39273,7 +39559,6 @@ export namespace Prisma {
     showReviews?: boolean
     showLatestWatched?: boolean
     notificationsOn?: boolean
-    preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
     user: UserCreateNestedOneWithoutSettingsInput
   }
 
@@ -39282,7 +39567,15 @@ export namespace Prisma {
     userId: string
     theme?: string
     language?: string
-    show18plus?: boolean
+    showBio?: boolean
+    showFavorites?: boolean
+    showEmail?: boolean
+    showCity?: boolean
+    showCountry?: boolean
+    showJoined?: boolean
+    showBirthday?: boolean
+    showGender?: boolean
+    showStatistics?: boolean
     showActivity?: boolean
     showAnimeList?: boolean
     showAllCommentsInProfile?: boolean
@@ -39292,14 +39585,21 @@ export namespace Prisma {
     showReviews?: boolean
     showLatestWatched?: boolean
     notificationsOn?: boolean
-    preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
 
   export type UserSettingsUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     language?: StringFieldUpdateOperationsInput | string
-    show18plus?: BoolFieldUpdateOperationsInput | boolean
+    showBio?: BoolFieldUpdateOperationsInput | boolean
+    showFavorites?: BoolFieldUpdateOperationsInput | boolean
+    showEmail?: BoolFieldUpdateOperationsInput | boolean
+    showCity?: BoolFieldUpdateOperationsInput | boolean
+    showCountry?: BoolFieldUpdateOperationsInput | boolean
+    showJoined?: BoolFieldUpdateOperationsInput | boolean
+    showBirthday?: BoolFieldUpdateOperationsInput | boolean
+    showGender?: BoolFieldUpdateOperationsInput | boolean
+    showStatistics?: BoolFieldUpdateOperationsInput | boolean
     showActivity?: BoolFieldUpdateOperationsInput | boolean
     showAnimeList?: BoolFieldUpdateOperationsInput | boolean
     showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
@@ -39309,7 +39609,6 @@ export namespace Prisma {
     showReviews?: BoolFieldUpdateOperationsInput | boolean
     showLatestWatched?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
-    preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
     user?: UserUpdateOneRequiredWithoutSettingsNestedInput
   }
 
@@ -39318,7 +39617,15 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     language?: StringFieldUpdateOperationsInput | string
-    show18plus?: BoolFieldUpdateOperationsInput | boolean
+    showBio?: BoolFieldUpdateOperationsInput | boolean
+    showFavorites?: BoolFieldUpdateOperationsInput | boolean
+    showEmail?: BoolFieldUpdateOperationsInput | boolean
+    showCity?: BoolFieldUpdateOperationsInput | boolean
+    showCountry?: BoolFieldUpdateOperationsInput | boolean
+    showJoined?: BoolFieldUpdateOperationsInput | boolean
+    showBirthday?: BoolFieldUpdateOperationsInput | boolean
+    showGender?: BoolFieldUpdateOperationsInput | boolean
+    showStatistics?: BoolFieldUpdateOperationsInput | boolean
     showActivity?: BoolFieldUpdateOperationsInput | boolean
     showAnimeList?: BoolFieldUpdateOperationsInput | boolean
     showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
@@ -39328,7 +39635,6 @@ export namespace Prisma {
     showReviews?: BoolFieldUpdateOperationsInput | boolean
     showLatestWatched?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
-    preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
 
   export type UserSettingsCreateManyInput = {
@@ -39336,7 +39642,15 @@ export namespace Prisma {
     userId: string
     theme?: string
     language?: string
-    show18plus?: boolean
+    showBio?: boolean
+    showFavorites?: boolean
+    showEmail?: boolean
+    showCity?: boolean
+    showCountry?: boolean
+    showJoined?: boolean
+    showBirthday?: boolean
+    showGender?: boolean
+    showStatistics?: boolean
     showActivity?: boolean
     showAnimeList?: boolean
     showAllCommentsInProfile?: boolean
@@ -39346,14 +39660,21 @@ export namespace Prisma {
     showReviews?: boolean
     showLatestWatched?: boolean
     notificationsOn?: boolean
-    preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
 
   export type UserSettingsUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     language?: StringFieldUpdateOperationsInput | string
-    show18plus?: BoolFieldUpdateOperationsInput | boolean
+    showBio?: BoolFieldUpdateOperationsInput | boolean
+    showFavorites?: BoolFieldUpdateOperationsInput | boolean
+    showEmail?: BoolFieldUpdateOperationsInput | boolean
+    showCity?: BoolFieldUpdateOperationsInput | boolean
+    showCountry?: BoolFieldUpdateOperationsInput | boolean
+    showJoined?: BoolFieldUpdateOperationsInput | boolean
+    showBirthday?: BoolFieldUpdateOperationsInput | boolean
+    showGender?: BoolFieldUpdateOperationsInput | boolean
+    showStatistics?: BoolFieldUpdateOperationsInput | boolean
     showActivity?: BoolFieldUpdateOperationsInput | boolean
     showAnimeList?: BoolFieldUpdateOperationsInput | boolean
     showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
@@ -39363,7 +39684,6 @@ export namespace Prisma {
     showReviews?: BoolFieldUpdateOperationsInput | boolean
     showLatestWatched?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
-    preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
 
   export type UserSettingsUncheckedUpdateManyInput = {
@@ -39371,7 +39691,15 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     language?: StringFieldUpdateOperationsInput | string
-    show18plus?: BoolFieldUpdateOperationsInput | boolean
+    showBio?: BoolFieldUpdateOperationsInput | boolean
+    showFavorites?: BoolFieldUpdateOperationsInput | boolean
+    showEmail?: BoolFieldUpdateOperationsInput | boolean
+    showCity?: BoolFieldUpdateOperationsInput | boolean
+    showCountry?: BoolFieldUpdateOperationsInput | boolean
+    showJoined?: BoolFieldUpdateOperationsInput | boolean
+    showBirthday?: BoolFieldUpdateOperationsInput | boolean
+    showGender?: BoolFieldUpdateOperationsInput | boolean
+    showStatistics?: BoolFieldUpdateOperationsInput | boolean
     showActivity?: BoolFieldUpdateOperationsInput | boolean
     showAnimeList?: BoolFieldUpdateOperationsInput | boolean
     showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
@@ -39381,7 +39709,6 @@ export namespace Prisma {
     showReviews?: BoolFieldUpdateOperationsInput | boolean
     showLatestWatched?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
-    preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
 
   export type UserCreateInput = {
@@ -39389,8 +39716,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -39413,8 +39746,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -39437,8 +39776,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -39461,8 +39806,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -39485,8 +39836,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -39500,8 +39857,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -39515,8 +39878,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -40918,7 +41287,15 @@ export namespace Prisma {
     userId?: SortOrder
     theme?: SortOrder
     language?: SortOrder
-    show18plus?: SortOrder
+    showBio?: SortOrder
+    showFavorites?: SortOrder
+    showEmail?: SortOrder
+    showCity?: SortOrder
+    showCountry?: SortOrder
+    showJoined?: SortOrder
+    showBirthday?: SortOrder
+    showGender?: SortOrder
+    showStatistics?: SortOrder
     showActivity?: SortOrder
     showAnimeList?: SortOrder
     showAllCommentsInProfile?: SortOrder
@@ -40928,7 +41305,6 @@ export namespace Prisma {
     showReviews?: SortOrder
     showLatestWatched?: SortOrder
     notificationsOn?: SortOrder
-    preferredGenres?: SortOrder
   }
 
   export type UserSettingsMaxOrderByAggregateInput = {
@@ -40936,7 +41312,15 @@ export namespace Prisma {
     userId?: SortOrder
     theme?: SortOrder
     language?: SortOrder
-    show18plus?: SortOrder
+    showBio?: SortOrder
+    showFavorites?: SortOrder
+    showEmail?: SortOrder
+    showCity?: SortOrder
+    showCountry?: SortOrder
+    showJoined?: SortOrder
+    showBirthday?: SortOrder
+    showGender?: SortOrder
+    showStatistics?: SortOrder
     showActivity?: SortOrder
     showAnimeList?: SortOrder
     showAllCommentsInProfile?: SortOrder
@@ -40953,7 +41337,15 @@ export namespace Prisma {
     userId?: SortOrder
     theme?: SortOrder
     language?: SortOrder
-    show18plus?: SortOrder
+    showBio?: SortOrder
+    showFavorites?: SortOrder
+    showEmail?: SortOrder
+    showCity?: SortOrder
+    showCountry?: SortOrder
+    showJoined?: SortOrder
+    showBirthday?: SortOrder
+    showGender?: SortOrder
+    showStatistics?: SortOrder
     showActivity?: SortOrder
     showAnimeList?: SortOrder
     showAllCommentsInProfile?: SortOrder
@@ -40963,6 +41355,24 @@ export namespace Prisma {
     showReviews?: SortOrder
     showLatestWatched?: SortOrder
     notificationsOn?: SortOrder
+  }
+
+  export type EnumUserGenderFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserGender | EnumUserGenderFieldRefInput<$PrismaModel>
+    in?: $Enums.UserGender[] | ListEnumUserGenderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserGender[] | ListEnumUserGenderFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserGenderFilter<$PrismaModel> | $Enums.UserGender
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type EnumUserRoleFilter<$PrismaModel = never> = {
@@ -41009,8 +41419,14 @@ export namespace Prisma {
     username?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    bio?: SortOrder
+    gender?: SortOrder
+    country?: SortOrder
+    city?: SortOrder
+    birthday?: SortOrder
     displayName?: SortOrder
     picture?: SortOrder
+    banner?: SortOrder
     role?: SortOrder
     method?: SortOrder
     isVerified?: SortOrder
@@ -41024,8 +41440,14 @@ export namespace Prisma {
     username?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    bio?: SortOrder
+    gender?: SortOrder
+    country?: SortOrder
+    city?: SortOrder
+    birthday?: SortOrder
     displayName?: SortOrder
     picture?: SortOrder
+    banner?: SortOrder
     role?: SortOrder
     method?: SortOrder
     isVerified?: SortOrder
@@ -41039,14 +41461,44 @@ export namespace Prisma {
     username?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    bio?: SortOrder
+    gender?: SortOrder
+    country?: SortOrder
+    city?: SortOrder
+    birthday?: SortOrder
     displayName?: SortOrder
     picture?: SortOrder
+    banner?: SortOrder
     role?: SortOrder
     method?: SortOrder
     isVerified?: SortOrder
     isTwoFactorEnabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type EnumUserGenderWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserGender | EnumUserGenderFieldRefInput<$PrismaModel>
+    in?: $Enums.UserGender[] | ListEnumUserGenderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserGender[] | ListEnumUserGenderFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserGenderWithAggregatesFilter<$PrismaModel> | $Enums.UserGender
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserGenderFilter<$PrismaModel>
+    _max?: NestedEnumUserGenderFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
@@ -42616,19 +43068,10 @@ export namespace Prisma {
     update?: XOR<XOR<ReviewUpdateToOneWithWhereWithoutReviewLikesInput, ReviewUpdateWithoutReviewLikesInput>, ReviewUncheckedUpdateWithoutReviewLikesInput>
   }
 
-  export type UserSettingsCreatepreferredGenresInput = {
-    set: string[]
-  }
-
   export type UserCreateNestedOneWithoutSettingsInput = {
     create?: XOR<UserCreateWithoutSettingsInput, UserUncheckedCreateWithoutSettingsInput>
     connectOrCreate?: UserCreateOrConnectWithoutSettingsInput
     connect?: UserWhereUniqueInput
-  }
-
-  export type UserSettingsUpdatepreferredGenresInput = {
-    set?: string[]
-    push?: string | string[]
   }
 
   export type UserUpdateOneRequiredWithoutSettingsNestedInput = {
@@ -42761,6 +43204,14 @@ export namespace Prisma {
     connectOrCreate?: ReviewLikeCreateOrConnectWithoutUserInput | ReviewLikeCreateOrConnectWithoutUserInput[]
     createMany?: ReviewLikeCreateManyUserInputEnvelope
     connect?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+  }
+
+  export type EnumUserGenderFieldUpdateOperationsInput = {
+    set?: $Enums.UserGender
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type EnumUserRoleFieldUpdateOperationsInput = {
@@ -43356,6 +43807,24 @@ export namespace Prisma {
     _max?: NestedEnumAnimeCollectionTypeFilter<$PrismaModel>
   }
 
+  export type NestedEnumUserGenderFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserGender | EnumUserGenderFieldRefInput<$PrismaModel>
+    in?: $Enums.UserGender[] | ListEnumUserGenderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserGender[] | ListEnumUserGenderFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserGenderFilter<$PrismaModel> | $Enums.UserGender
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
     in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
@@ -43368,6 +43837,30 @@ export namespace Prisma {
     in?: $Enums.AuthMethod[] | ListEnumAuthMethodFieldRefInput<$PrismaModel>
     notIn?: $Enums.AuthMethod[] | ListEnumAuthMethodFieldRefInput<$PrismaModel>
     not?: NestedEnumAuthMethodFilter<$PrismaModel> | $Enums.AuthMethod
+  }
+
+  export type NestedEnumUserGenderWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserGender | EnumUserGenderFieldRefInput<$PrismaModel>
+    in?: $Enums.UserGender[] | ListEnumUserGenderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserGender[] | ListEnumUserGenderFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserGenderWithAggregatesFilter<$PrismaModel> | $Enums.UserGender
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserGenderFilter<$PrismaModel>
+    _max?: NestedEnumUserGenderFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
@@ -46114,8 +46607,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -46137,8 +46636,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -46176,8 +46681,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -46199,8 +46710,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -46222,8 +46739,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -46245,8 +46768,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -46326,8 +46855,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -46349,8 +46884,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -46657,8 +47198,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -46680,8 +47227,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -46748,8 +47301,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -46771,8 +47330,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -46829,8 +47394,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -46852,8 +47423,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -47065,8 +47642,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -47088,8 +47671,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -47282,8 +47871,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -47305,8 +47900,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -47375,8 +47976,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -47398,8 +48005,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -47545,8 +48158,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -47568,8 +48187,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -47700,8 +48325,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -47723,8 +48354,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -47746,8 +48383,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -47769,8 +48412,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -47915,8 +48564,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -47938,8 +48593,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -48079,8 +48740,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -48102,8 +48769,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -48170,8 +48843,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -48193,8 +48872,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -48251,8 +48936,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -48274,8 +48965,14 @@ export namespace Prisma {
     username: string
     email: string
     password: string
+    bio?: string | null
+    gender?: $Enums.UserGender
+    country?: string | null
+    city?: string | null
+    birthday?: Date | string | null
     displayName: string
     picture?: string | null
+    banner?: string | null
     role?: $Enums.UserRole
     method?: $Enums.AuthMethod
     isVerified?: boolean
@@ -48313,8 +49010,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -48336,8 +49039,14 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumUserGenderFieldUpdateOperationsInput | $Enums.UserGender
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     displayName?: StringFieldUpdateOperationsInput | string
     picture?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     method?: EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
     isVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -48472,7 +49181,15 @@ export namespace Prisma {
     id?: string
     theme?: string
     language?: string
-    show18plus?: boolean
+    showBio?: boolean
+    showFavorites?: boolean
+    showEmail?: boolean
+    showCity?: boolean
+    showCountry?: boolean
+    showJoined?: boolean
+    showBirthday?: boolean
+    showGender?: boolean
+    showStatistics?: boolean
     showActivity?: boolean
     showAnimeList?: boolean
     showAllCommentsInProfile?: boolean
@@ -48482,14 +49199,21 @@ export namespace Prisma {
     showReviews?: boolean
     showLatestWatched?: boolean
     notificationsOn?: boolean
-    preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
 
   export type UserSettingsUncheckedCreateWithoutUserInput = {
     id?: string
     theme?: string
     language?: string
-    show18plus?: boolean
+    showBio?: boolean
+    showFavorites?: boolean
+    showEmail?: boolean
+    showCity?: boolean
+    showCountry?: boolean
+    showJoined?: boolean
+    showBirthday?: boolean
+    showGender?: boolean
+    showStatistics?: boolean
     showActivity?: boolean
     showAnimeList?: boolean
     showAllCommentsInProfile?: boolean
@@ -48499,7 +49223,6 @@ export namespace Prisma {
     showReviews?: boolean
     showLatestWatched?: boolean
     notificationsOn?: boolean
-    preferredGenres?: UserSettingsCreatepreferredGenresInput | string[]
   }
 
   export type UserSettingsCreateOrConnectWithoutUserInput = {
@@ -48725,7 +49448,15 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     language?: StringFieldUpdateOperationsInput | string
-    show18plus?: BoolFieldUpdateOperationsInput | boolean
+    showBio?: BoolFieldUpdateOperationsInput | boolean
+    showFavorites?: BoolFieldUpdateOperationsInput | boolean
+    showEmail?: BoolFieldUpdateOperationsInput | boolean
+    showCity?: BoolFieldUpdateOperationsInput | boolean
+    showCountry?: BoolFieldUpdateOperationsInput | boolean
+    showJoined?: BoolFieldUpdateOperationsInput | boolean
+    showBirthday?: BoolFieldUpdateOperationsInput | boolean
+    showGender?: BoolFieldUpdateOperationsInput | boolean
+    showStatistics?: BoolFieldUpdateOperationsInput | boolean
     showActivity?: BoolFieldUpdateOperationsInput | boolean
     showAnimeList?: BoolFieldUpdateOperationsInput | boolean
     showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
@@ -48735,14 +49466,21 @@ export namespace Prisma {
     showReviews?: BoolFieldUpdateOperationsInput | boolean
     showLatestWatched?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
-    preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
 
   export type UserSettingsUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     language?: StringFieldUpdateOperationsInput | string
-    show18plus?: BoolFieldUpdateOperationsInput | boolean
+    showBio?: BoolFieldUpdateOperationsInput | boolean
+    showFavorites?: BoolFieldUpdateOperationsInput | boolean
+    showEmail?: BoolFieldUpdateOperationsInput | boolean
+    showCity?: BoolFieldUpdateOperationsInput | boolean
+    showCountry?: BoolFieldUpdateOperationsInput | boolean
+    showJoined?: BoolFieldUpdateOperationsInput | boolean
+    showBirthday?: BoolFieldUpdateOperationsInput | boolean
+    showGender?: BoolFieldUpdateOperationsInput | boolean
+    showStatistics?: BoolFieldUpdateOperationsInput | boolean
     showActivity?: BoolFieldUpdateOperationsInput | boolean
     showAnimeList?: BoolFieldUpdateOperationsInput | boolean
     showAllCommentsInProfile?: BoolFieldUpdateOperationsInput | boolean
@@ -48752,7 +49490,6 @@ export namespace Prisma {
     showReviews?: BoolFieldUpdateOperationsInput | boolean
     showLatestWatched?: BoolFieldUpdateOperationsInput | boolean
     notificationsOn?: BoolFieldUpdateOperationsInput | boolean
-    preferredGenres?: UserSettingsUpdatepreferredGenresInput | string[]
   }
 
   export type CommentUpsertWithWhereUniqueWithoutUserInput = {

@@ -346,7 +346,15 @@ exports.Prisma.UserSettingsScalarFieldEnum = {
   userId: 'userId',
   theme: 'theme',
   language: 'language',
-  show18plus: 'show18plus',
+  showBio: 'showBio',
+  showFavorites: 'showFavorites',
+  showEmail: 'showEmail',
+  showCity: 'showCity',
+  showCountry: 'showCountry',
+  showJoined: 'showJoined',
+  showBirthday: 'showBirthday',
+  showGender: 'showGender',
+  showStatistics: 'showStatistics',
   showActivity: 'showActivity',
   showAnimeList: 'showAnimeList',
   showAllCommentsInProfile: 'showAllCommentsInProfile',
@@ -355,8 +363,7 @@ exports.Prisma.UserSettingsScalarFieldEnum = {
   showLikedReviews: 'showLikedReviews',
   showReviews: 'showReviews',
   showLatestWatched: 'showLatestWatched',
-  notificationsOn: 'notificationsOn',
-  preferredGenres: 'preferredGenres'
+  notificationsOn: 'notificationsOn'
 };
 
 exports.Prisma.UserScalarFieldEnum = {
@@ -364,8 +371,14 @@ exports.Prisma.UserScalarFieldEnum = {
   username: 'username',
   email: 'email',
   password: 'password',
+  bio: 'bio',
+  gender: 'gender',
+  country: 'country',
+  city: 'city',
+  birthday: 'birthday',
   displayName: 'displayName',
   picture: 'picture',
+  banner: 'banner',
   role: 'role',
   method: 'method',
   isVerified: 'isVerified',
@@ -462,6 +475,12 @@ exports.AnimeCollectionType = exports.$Enums.AnimeCollectionType = {
   DROPPED: 'DROPPED',
   FAVORITE: 'FAVORITE',
   CUSTOM: 'CUSTOM'
+};
+
+exports.UserGender = exports.$Enums.UserGender = {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE',
+  OTHER: 'OTHER'
 };
 
 exports.UserRole = exports.$Enums.UserRole = {

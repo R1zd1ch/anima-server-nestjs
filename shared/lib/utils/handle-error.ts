@@ -18,43 +18,52 @@ export function handleError(
   message: string,
   logger: Logger,
 ): never {
-  logger.error(
-    `${message}: ${e instanceof Error ? e.message : JSON.stringify(e)}`,
-  );
+  const eMessage = e instanceof Error ? e.message : JSON.stringify(e);
+  logger.error(`${message}: ${eMessage}`);
 
   let code: string | number = 'UNEXPECTED_ERROR';
   let details: Record<string, unknown> | null = null;
   let status = HttpStatus.INTERNAL_SERVER_ERROR;
+  let errorMessage = eMessage;
 
   if (e instanceof NotFoundException) {
     code = 'NOT_FOUND';
     status = HttpStatus.NOT_FOUND;
+    errorMessage = 'Ресурс не найден';
   } else if (e instanceof UnauthorizedException) {
     code = 'UNAUTHORIZED';
     status = HttpStatus.UNAUTHORIZED;
+    errorMessage = 'Доступ запрещён';
   } else if (e instanceof PrismaClientKnownRequestError) {
+    details = e.meta ?? null;
+
     switch (e.code) {
       case 'P2002':
         code = 'UNIQUE_CONSTRAINT_FAILED';
-        details = e.meta;
-        message = `Нарушено ограничение уникальности: ${JSON.stringify(e.meta?.target)}`;
         status = HttpStatus.BAD_REQUEST;
+        errorMessage = `Нарушено ограничение уникальности: ${JSON.stringify(e.meta?.target)}`;
         break;
+
+      case 'P2003':
+        code = 'FOREIGN_KEY_CONSTRAINT_FAILED';
+        status = HttpStatus.BAD_REQUEST;
+        errorMessage = `Нарушение внешнего ключа: ${JSON.stringify(e.meta?.field_name)}`;
+        break;
+
       case 'P2016':
         code = 'NOT_FOUND';
         status = HttpStatus.NOT_FOUND;
+        errorMessage = 'Связанный объект не найден';
         break;
-      case 'P2003':
-        code = 'FOREIGN_KEY_CONSTRAINT_FAILED';
-        details = e.meta;
-        message = `Нарушение внешнего ключа: ${JSON.stringify(e.meta?.field_name)}`;
-        status = HttpStatus.BAD_REQUEST;
-        break;
+
       default:
         code = 'PRISMA_CLIENT_KNOWN_ERROR';
         status = HttpStatus.INTERNAL_SERVER_ERROR;
+        errorMessage = 'Произошла ошибка при работе с базой данных';
         break;
     }
+
+    logger.error(`Prisma error details: ${JSON.stringify(details)}`);
   } else if (
     e instanceof PrismaClientUnknownRequestError ||
     e instanceof PrismaClientRustPanicError ||
@@ -62,8 +71,8 @@ export function handleError(
     e instanceof PrismaClientValidationError
   ) {
     code = 'PRISMA_CLIENT_ERROR';
-    message = e.message;
     status = HttpStatus.INTERNAL_SERVER_ERROR;
+    errorMessage = e.message || 'Неизвестная ошибка Prisma';
   }
 
   throw new HttpException(
@@ -71,7 +80,7 @@ export function handleError(
       success: false,
       data: null,
       error: {
-        message,
+        message: errorMessage,
         code,
         details,
       },

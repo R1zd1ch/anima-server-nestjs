@@ -530,7 +530,6 @@ export class UpdateDbService {
       this.processGenres(tx, anime, animeData),
       this.processDemographics(tx, anime, animeData),
       this.processThemes(tx, anime, animeData),
-      // this.processRelatedAnimes(tx, anime, animeData),
       this.processPosters(tx, anime, animeData),
     ]);
 

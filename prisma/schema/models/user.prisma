@@ -5,8 +5,15 @@ model User {
   email    String @unique
   password String
 
+  bio      String?
+  gender   UserGender @default(OTHER)
+  country  String?
+  city     String?
+  birthday DateTime?
+
   displayName String
   picture     String?
+  banner      String?
 
   role     UserRole   @default(REGULAR)
   method   AuthMethod @default(CREDENTIALS)
@@ -28,4 +35,10 @@ model User {
   reviewLikes       ReviewLike[]
 
   @@map("users")
+}
+
+enum UserGender {
+  MALE
+  FEMALE
+  OTHER
 }
