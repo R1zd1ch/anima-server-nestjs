@@ -10,10 +10,11 @@ export const getMicroserviceUrl = (
   config: ConfigService,
 ) => {
   const isDockerEnv = isDocker(config);
-  const isTrue = false; //временно
-  const host = isTrue
-    ? `${config.getOrThrow<string>(hostKey)}`
-    : `${config.getOrThrow<string>('APPLICATION_HOST')}`;
+  const isTrue = false;
+  const host =
+    isDockerEnv || isTrue
+      ? `${config.getOrThrow<string>(hostKey)}`
+      : `${config.getOrThrow<string>('APPLICATION_HOST')}`;
   const port = config.getOrThrow<string>(portKey);
   return `http://${host}:${port}/swagger-json`;
 };

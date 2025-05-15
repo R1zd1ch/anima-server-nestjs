@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Patch } from '@nestjs/common';
 import { SettingsService } from './settings.service';
-import { Authorization } from 'shared/decorators/auth.decorator';
-import { Authorized } from 'shared/decorators/authorized.decorator';
+import { Authorization } from 'apps/user-microservice/src/decorators/auth.decorator';
+import { Authorized } from 'apps/user-microservice/src/decorators/authorized.decorator';
 import { wrapApiResponse } from 'shared/lib/utils/wrap-api-response';
 import { UpdateSettingsDto } from './dto/update-settings.dto';
 

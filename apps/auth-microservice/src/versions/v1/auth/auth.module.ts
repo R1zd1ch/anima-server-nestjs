@@ -11,6 +11,7 @@ import { MailService } from 'apps/auth-microservice/src/libs/mail/mail.service';
 import { EmailConfirmationModule } from './email-confirmation/email-confirmation.module';
 import { TwoFactorAuthService } from './two-factor-auth/two-factor-auth.service';
 import { RabbitMQModule } from 'shared/lib/rabbitmq/rabbitmq.module';
+import { AccountModule } from './account/account.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { RabbitMQModule } from 'shared/lib/rabbitmq/rabbitmq.module';
       queue: 'auth_queue',
     }),
     forwardRef(() => EmailConfirmationModule),
+    AccountModule,
   ],
   controllers: [AuthController],
   providers: [

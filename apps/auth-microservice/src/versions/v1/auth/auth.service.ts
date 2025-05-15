@@ -19,6 +19,7 @@ import { EmailConfirmationService } from './email-confirmation/email-confirmatio
 import { TwoFactorAuthService } from './two-factor-auth/two-factor-auth.service';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
+import { AccountService } from './account/account.service';
 
 @Injectable()
 export class AuthService {
@@ -29,6 +30,7 @@ export class AuthService {
     private readonly providerService: ProviderService,
     private readonly emailConfirmationService: EmailConfirmationService,
     private readonly twoFactorAuthService: TwoFactorAuthService,
+    private readonly accountService: AccountService,
   ) {}
   public async register(dto: RegisterDto) {
     const isExists = await firstValueFrom<User>(
@@ -123,15 +125,12 @@ export class AuthService {
 
     if (user) {
       if (!account) {
-        await this.prismaService.account.create({
-          data: {
-            userId: user.id,
-            type: 'oauth',
-            provider: profile.provider,
-            accessToken: profile.access_token,
-            refreshToken: profile.refresh_token,
-            expiresAt: profile.expires_at,
-          },
+        await this.accountService.linkAccount(user.id, {
+          type: 'oauth',
+          provider: profile.provider,
+          accessToken: profile.access_token,
+          refreshToken: profile.refresh_token,
+          expiresAt: profile.expires_at,
         });
       }
       return this.saveSession(req, user);
@@ -157,18 +156,13 @@ export class AuthService {
       ),
     );
 
-    if (!account) {
-      await this.prismaService.account.create({
-        data: {
-          userId: user.id,
-          type: 'oauth',
-          provider: profile.provider,
-          accessToken: profile.access_token,
-          refreshToken: profile.refresh_token,
-          expiresAt: profile.expires_at,
-        },
-      });
-    }
+    await this.accountService.linkAccount(user.id, {
+      type: 'oauth',
+      provider: profile.provider,
+      accessToken: profile.access_token,
+      refreshToken: profile.refresh_token,
+      expiresAt: profile.expires_at,
+    });
 
     if (!user.isVerified) {
       await this.emailConfirmationService.sendVerificationToken(user.email);

@@ -18,6 +18,9 @@ dev-docs:
 	docker start postgres redis
 	bun run start:dev docs-microservice
 
+install:
+	bun install
+
 prisma-generate: 
 	bunx prisma generate --schema prisma/schema 
 

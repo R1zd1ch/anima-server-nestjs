@@ -6,8 +6,8 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadImageService } from './upload-image.service';
-import { Authorization } from 'shared/decorators/auth.decorator';
-import { Authorized } from 'shared/decorators/authorized.decorator';
+import { Authorization } from 'apps/user-microservice/src/decorators/auth.decorator';
+import { Authorized } from 'apps/user-microservice/src/decorators/authorized.decorator';
 import { wrapApiResponse } from 'shared/lib/utils/wrap-api-response';
 
 @Controller({ path: 'upload-image', version: '1' })

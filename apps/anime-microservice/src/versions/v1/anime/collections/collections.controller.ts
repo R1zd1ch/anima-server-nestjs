@@ -9,13 +9,13 @@ import {
   Query,
 } from '@nestjs/common';
 import { CollectionsService } from './collections.service';
-import { Authorized } from 'apps/anime-microservice/src/decorators/authorized.decorator';
+import { Authorized } from 'shared/decorators/authorized.decorator';
 import { CreateCollectionDto } from './dto/create-collection.dto';
-import { Authorization } from 'apps/anime-microservice/src/decorators/auth.decorator';
+import { Authorization } from 'shared/decorators/auth.decorator';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
 import { UpdateAnimeNoteDto } from './dto/update-anime-note-in-collection.dto';
 import { AddAnimeToCollectionDto } from './dto/add-anime-to-collection.dto';
-import { SoftAuthorization } from 'apps/anime-microservice/src/decorators/soft-auth.decorator';
+import { SoftAuthorization } from 'shared/decorators/soft-auth.decorator';
 import { parsePagination } from 'shared/lib/utils/parse-pagination';
 import { wrapApiResponse } from 'shared/lib/utils/wrap-api-response';
 import {

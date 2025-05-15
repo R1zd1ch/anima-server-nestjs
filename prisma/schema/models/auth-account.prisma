@@ -13,5 +13,6 @@ model Account {
   user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String?  @map("user_id")
 
+  @@unique([userId, provider])
   @@map("accounts")
 }

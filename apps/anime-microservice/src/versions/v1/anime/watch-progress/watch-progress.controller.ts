@@ -8,10 +8,10 @@ import {
   Post,
 } from '@nestjs/common';
 import { WatchProgressService } from './watch-progress.service';
-import { Authorization } from 'apps/anime-microservice/src/decorators/auth.decorator';
-import { Authorized } from 'apps/anime-microservice/src/decorators/authorized.decorator';
+import { Authorization } from 'shared/decorators/auth.decorator';
+import { Authorized } from 'shared/decorators/authorized.decorator';
 import { wrapApiResponse } from 'shared/lib/utils/wrap-api-response';
-import { SoftAuthorization } from 'apps/anime-microservice/src/decorators/soft-auth.decorator';
+import { SoftAuthorization } from 'shared/decorators/soft-auth.decorator';
 import { ProgressUpdateDto } from './dto/response-progress.dto';
 import {
   ApiBody,

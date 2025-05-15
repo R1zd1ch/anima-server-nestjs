@@ -2,7 +2,7 @@ import { applyDecorators, UseGuards } from '@nestjs/common';
 import { UserRole } from '@prisma/__generated__';
 import { Roles } from './roles.decorator';
 import { RolesGuard } from '../guards/roles.guard';
-import { SoftAuthGuard } from '../guards/soft-auth.guard';
+import { SoftAuthGuard } from 'shared/guards/soft-auth.guard';
 
 export function SoftAuthorization(...roles: UserRole[]) {
   if (roles.length > 0) {

@@ -36947,6 +36947,7 @@ export namespace Prisma {
 
   export type AccountWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    userId_provider?: AccountUserIdProviderCompoundUniqueInput
     AND?: AccountWhereInput | AccountWhereInput[]
     OR?: AccountWhereInput[]
     NOT?: AccountWhereInput | AccountWhereInput[]
@@ -36959,7 +36960,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Account"> | Date | string
     userId?: StringNullableFilter<"Account"> | string | null
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-  }, "id">
+  }, "id" | "userId_provider">
 
   export type AccountOrderByWithAggregationInput = {
     id?: SortOrder
@@ -40767,6 +40768,11 @@ export namespace Prisma {
   export type UserNullableScalarRelationFilter = {
     is?: UserWhereInput | null
     isNot?: UserWhereInput | null
+  }
+
+  export type AccountUserIdProviderCompoundUniqueInput = {
+    userId: string
+    provider: string
   }
 
   export type AccountCountOrderByAggregateInput = {

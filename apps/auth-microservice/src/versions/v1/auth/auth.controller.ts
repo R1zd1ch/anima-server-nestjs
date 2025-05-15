@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -29,6 +30,9 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { AccountService } from './account/account.service';
+import { Authorized } from 'shared/decorators/authorized.decorator';
+import { Authorization } from 'shared/decorators/auth.decorator';
 
 @ApiTags('Authentication')
 @Controller({
@@ -40,6 +44,7 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly configService: ConfigService,
     private readonly providerService: ProviderService,
+    private readonly accountService: AccountService,
   ) {}
 
   @Post('register')
@@ -76,6 +81,14 @@ export class AuthController {
   @ApiBody({ type: LoginDto })
   public async login(@Req() req: Request, @Body() dto: LoginDto) {
     return await this.authService.login(req, dto);
+  }
+
+  @Authorization()
+  @Get('accounts')
+  @ApiOperation({ summary: 'Получить список связанных аккаунтов' })
+  @ApiResponse({ status: 200, description: 'Список аккаунтов' })
+  public async getLinkedAccounts(userId: string) {
+    return await this.accountService.getLinkedAccounts(userId);
   }
 
   @Get('/oauth/callback/:provider')
@@ -120,6 +133,20 @@ export class AuthController {
         url: providerInstance.getAuthUrl(),
       }),
     );
+  }
+
+  @Authorization()
+  @Delete('accounts/:provider')
+  @ApiOperation({ summary: 'Отвязать аккаунт' })
+  @ApiParam({
+    name: 'provider',
+    description: 'OAuth провайдер (например, google)',
+  })
+  public async disconnectAccount(
+    @Authorized('id') userId: string,
+    @Param('provider') provider: string,
+  ) {
+    return await this.accountService.unlinkAccount(userId, provider);
   }
 
   @Post('logout')

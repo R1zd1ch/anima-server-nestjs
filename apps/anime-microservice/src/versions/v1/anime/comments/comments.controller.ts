@@ -9,11 +9,11 @@ import {
   Query,
 } from '@nestjs/common';
 import { CommentsService } from './comments.service';
-import { Authorized } from 'apps/anime-microservice/src/decorators/authorized.decorator';
+import { Authorized } from 'shared/decorators/authorized.decorator';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
-import { Authorization } from 'apps/anime-microservice/src/decorators/auth.decorator';
-import { SoftAuthorization } from 'apps/anime-microservice/src/decorators/soft-auth.decorator';
+import { Authorization } from 'shared/decorators/auth.decorator';
+import { SoftAuthorization } from 'shared/decorators/soft-auth.decorator';
 import { wrapApiResponse } from 'shared/lib/utils/wrap-api-response';
 import { parsePagination } from 'shared/lib/utils/parse-pagination';
 import {

@@ -6,6 +6,8 @@ export const Authorized = createParamDecorator(
     const request = ctx.switchToHttp().getRequest<{ user: User }>();
     const user = request.user;
 
+    if (!user) return undefined;
+
     return data ? user[data] : user;
   },
 );
