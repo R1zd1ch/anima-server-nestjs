@@ -1,17 +1,24 @@
 FROM oven/bun:1-slim AS builder
-ARG SERVICE=anime-microservice
+ENV SERVICE=auth-microservice
+
 WORKDIR /app
 
 COPY package.json bun.lock* ./
 RUN apt-get update -y && apt-get install -y openssl
 RUN bun install
 
+COPY prisma/schema ./prisma/schema/
+COPY microservices-start.sh ./start.sh
+RUN bunx prisma generate --schema ./prisma/schema
+
 COPY . .
 
 RUN bun run build ${SERVICE}
 
+# CMD ["./start.sh"]
+
 FROM oven/bun:1-slim AS runnerl
-ARG SERVICE=anime-microservice
+ENV SERVICE=auth-microservice
 WORKDIR /app
 RUN apt-get update -y && apt-get install -y openssl
 
@@ -28,4 +35,8 @@ COPY --from=builder /app/tsconfig.json ./tsconfig.json
 COPY --from=builder /app/.env ./.env
 COPY --from=builder /app/shared ./shared
 
+# ENV NODE_ENV=production
+# ENV SERVICE=${SERVICE}
+
 CMD ["./start.sh"]
+
