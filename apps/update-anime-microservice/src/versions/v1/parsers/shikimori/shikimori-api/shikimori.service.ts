@@ -2,7 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AnimeFromShikimori } from './dto/anime.dto';
-import { animeFields } from './graphql-fields';
+import { animeFields } from './dto/graphql-fields';
 import SearchAnimeParamsDto from './dto/search-anime-params.dto';
 
 @Injectable()

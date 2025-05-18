@@ -16,6 +16,9 @@ async function bootstrap() {
   const config = app.get(ConfigService);
   const redis = new IORedis(config.getOrThrow('REDIS_URI'));
 
+  console.log('Redis connected', config.getOrThrow('REDIS_URI'));
+  console.log(config.getOrThrow('POSTGRES_URI'));
+
   app.use(
     ((cookieParser as (secret: string) => void) ?? (() => {}))(
       config.getOrThrow<string>('COOKIES_SECRET'),

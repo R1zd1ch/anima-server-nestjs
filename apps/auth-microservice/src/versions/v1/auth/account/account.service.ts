@@ -21,7 +21,7 @@ export class AccountService {
     });
   }
 
-  public async unlinkAccount(userId: string, provider: string) {
+  public async unlinkAccount(userId: string, provider: string): Promise<void> {
     const account = await this.prismaService.account.findUnique({
       where: { userId_provider: { userId, provider } },
     });

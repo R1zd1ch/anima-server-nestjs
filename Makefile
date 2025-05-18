@@ -33,5 +33,4 @@ prisma-db-push:
 rebuild:
 	docker-compose up -d --build
 
-
 .PHONY: dev

@@ -94,7 +94,7 @@ export class AuthController {
   @Get('/oauth/callback/:provider')
   @UseGuards(AuthProviderGuard)
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'OAuth Callback' })
+  @ApiOperation({ summary: 'OAuth Callback операция' })
   @ApiParam({
     name: 'provider',
     description: 'OAuth провайдер (например, google)',
@@ -129,9 +129,7 @@ export class AuthController {
     const providerInstance = this.providerService.findByService(provider);
 
     return new Promise((resolve) =>
-      resolve({
-        url: providerInstance.getAuthUrl(),
-      }),
+      resolve({ url: providerInstance.getAuthUrl() }),
     );
   }
 

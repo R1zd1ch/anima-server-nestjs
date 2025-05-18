@@ -13,7 +13,7 @@ import { getVersionModule } from './libs/utils/get-version-module';
       ignoreEnvFile: !IS_DEV_ENV,
       expandVariables: true,
     }),
-    getVersionModule(), // получаем версию апи
+    getVersionModule(),
   ],
 })
 export class AnimeMicroserviceModule {}

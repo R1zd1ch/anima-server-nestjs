@@ -13,6 +13,7 @@ import { KodikCheckService } from '../../../check-cdn/kodik-check.service';
 import { AnilibriaCheckService } from '../../../check-cdn/anilibria-check.service';
 import { getAnimeAliasSync } from 'apps/update-anime-microservice/src/lib/utils/get-anime-alias';
 import { ParsingConfig } from './parsing-config';
+import { handleError } from 'shared/lib/utils/handle-error';
 
 @Injectable()
 export class ParseShikimoriService {
@@ -98,12 +99,12 @@ export class ParseShikimoriService {
 
   private async handleParsingStart(config: ParsingConfig) {
     await this.startParsing(config.type, config.searchParams);
-    return config.successMessage;
+    return { message: config.successMessage };
   }
 
   private async handleParsingResume(config: ParsingConfig) {
     await this.resumeParsing(config.type, config.searchParams);
-    return config.successMessage;
+    return { message: config.successMessage };
   }
 
   private async startParsing(
@@ -173,15 +174,11 @@ export class ParseShikimoriService {
     try {
       await this.processParsing(session, searchParams, type);
     } catch (error) {
-      this.logger.error(
-        `Ошибка парсинга ${type}: ${error instanceof Error ? error.message : error}`,
-        error instanceof Error ? error.stack : undefined,
-      );
       await this.progressService.updateStatus(
         session.id,
         ParsingSessionStatus.FAILED,
       );
-      throw error;
+      handleError(error, `Ошибка парсинга ${type}`, this.logger);
     }
   }
 

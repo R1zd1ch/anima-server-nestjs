@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { ParseShikimoriService } from './parser-shikimori.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { wrapApiResponse } from 'shared/lib/utils/wrap-api-response';
 @ApiTags('Update-anime/Parsers/Shikimori')
 @Controller({ version: '1', path: 'update-anime/parsers/shikimori' })
 export class ParseShikimoriController {
@@ -16,8 +17,10 @@ export class ParseShikimoriController {
     status: 200,
     description: 'Парсинг начальной инициализации успешно запущен.',
   })
-  async getAnimeList() {
-    return this.parseShikimoriService.handleAction('startInitParsing');
+  public async getAnimeList() {
+    const result =
+      await this.parseShikimoriService.handleAction('startInitParsing');
+    return wrapApiResponse(result);
   }
 
   @Get('resume-init')
@@ -29,8 +32,10 @@ export class ParseShikimoriController {
     status: 200,
     description: 'Парсинг начальной инициализации успешно возобновлен.',
   })
-  async resumeParsing() {
-    return this.parseShikimoriService.handleAction('resumeInitParsing');
+  public async resumeParsing() {
+    const result =
+      await this.parseShikimoriService.handleAction('resumeInitParsing');
+    return wrapApiResponse(result);
   }
 
   @Get('start-update-ongoings')
@@ -43,8 +48,11 @@ export class ParseShikimoriController {
     status: 200,
     description: 'Процесс обновления для продолжающихся аниме успешно запущен.',
   })
-  async startUpdateOngoings() {
-    return this.parseShikimoriService.handleAction('startUpdateOngoings');
+  public async startUpdateOngoings() {
+    const result = await this.parseShikimoriService.handleAction(
+      'startUpdateOngoings',
+    );
+    return wrapApiResponse(result);
   }
 
   @Get('resume-update-ongoings')
@@ -57,8 +65,11 @@ export class ParseShikimoriController {
     status: 200,
     description: 'Обновление продолжающихся аниме успешно возобновлено.',
   })
-  async resumeUpdateOngoings() {
-    return this.parseShikimoriService.handleAction('resumeUpdateOngoings');
+  public async resumeUpdateOngoings() {
+    const result = await this.parseShikimoriService.handleAction(
+      'resumeUpdateOngoings',
+    );
+    return wrapApiResponse(result);
   }
 
   @Get('start-update-this-year')
@@ -70,8 +81,11 @@ export class ParseShikimoriController {
     status: 200,
     description: 'Процесс обновления аниме текущего года успешно запущен.',
   })
-  async startUpdateThisYear() {
-    return this.parseShikimoriService.handleAction('startUpdateThisYear');
+  public async startUpdateThisYear() {
+    const result = await this.parseShikimoriService.handleAction(
+      'startUpdateThisYear',
+    );
+    return wrapApiResponse(result);
   }
 
   @Get('resume-update-this-year')
@@ -84,8 +98,11 @@ export class ParseShikimoriController {
     status: 200,
     description: 'Обновление аниме текущего года успешно возобновлено.',
   })
-  async resumeUpdateThisYear() {
-    return this.parseShikimoriService.handleAction('resumeUpdateThisYear');
+  public async resumeUpdateThisYear() {
+    const result = await this.parseShikimoriService.handleAction(
+      'resumeUpdateThisYear',
+    );
+    return wrapApiResponse(result);
   }
 
   @Get('stop-init')
@@ -97,8 +114,10 @@ export class ParseShikimoriController {
     status: 200,
     description: 'Парсинг начальной инициализации успешно остановлен.',
   })
-  async stopInitParsing() {
-    return this.parseShikimoriService.handleAction('stopInitParsing');
+  public async stopInitParsing() {
+    const result =
+      await this.parseShikimoriService.handleAction('stopInitParsing');
+    return wrapApiResponse(result);
   }
 
   @Get('stop-update-ongoings')
@@ -110,8 +129,10 @@ export class ParseShikimoriController {
     status: 200,
     description: 'Обновление онгоингов успешно остановлено.',
   })
-  async stopUpdateOngoings() {
-    return this.parseShikimoriService.handleAction('stopUpdateOngoings');
+  public async stopUpdateOngoings() {
+    const result =
+      await this.parseShikimoriService.handleAction('stopUpdateOngoings');
+    return wrapApiResponse(result);
   }
 
   @Get('stop-update-this-year')
@@ -124,7 +145,9 @@ export class ParseShikimoriController {
     status: 200,
     description: 'Обновление аниме текущего года успешно остановлено.',
   })
-  async stopUpdateThisYear() {
-    return this.parseShikimoriService.handleAction('stopUpdateThisYear');
+  public async stopUpdateThisYear() {
+    const result =
+      await this.parseShikimoriService.handleAction('stopUpdateThisYear');
+    return wrapApiResponse(result);
   }
 }

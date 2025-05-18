@@ -1,6 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ProgressService } from './progress.service';
 import { ApiOperation, ApiResponse, ApiParam, ApiTags } from '@nestjs/swagger';
+import { wrapApiResponse } from 'shared/lib/utils/wrap-api-response';
 
 @ApiTags('Update-anime/Parsers/Progress')
 @Controller({ version: '1', path: 'update-anime/parsers/progress' })
@@ -25,7 +26,8 @@ export class ProgressController {
     status: 404,
     description: 'Парсинг с указанным именем не найден.',
   })
-  async getStatus(@Param('name') name: string) {
-    return this.progressService.getCurrentStatus(name);
+  public async getStatus(@Param('name') name: string) {
+    const result = await this.progressService.getCurrentStatus(name);
+    return wrapApiResponse(result);
   }
 }

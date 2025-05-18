@@ -74,7 +74,7 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management
-    container_name: ${RABBIT_MQ_HOST}
+    container_name: rabbitmq
     ports:
       - '${RABBIT_MQ_PORT}:${RABBIT_MQ_PORT}'
       - '${RABBIT_MQ_MANAGEMENT_PORT}:${RABBIT_MQ_MANAGEMENT_PORT}'

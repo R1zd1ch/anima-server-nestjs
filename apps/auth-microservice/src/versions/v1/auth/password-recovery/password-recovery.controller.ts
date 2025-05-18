@@ -21,7 +21,7 @@ import {
 @ApiTags('Authentication')
 @Controller({ path: 'auth/password-recovery', version: '1' })
 export class PasswordRecoveryController {
-  constructor(
+  public constructor(
     private readonly passwordRecoveryService: PasswordRecoveryService,
   ) {}
 

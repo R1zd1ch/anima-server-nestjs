@@ -14,7 +14,7 @@ import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 @ApiTags('Authentication')
 @Controller({ path: 'auth/email-confirmation', version: '1' })
 export class EmailConfirmationController {
-  constructor(
+  public constructor(
     private readonly emailConfirmationService: EmailConfirmationService,
   ) {}
 
@@ -26,7 +26,10 @@ export class EmailConfirmationController {
     description: 'Токен для подтверждения отправлен на email',
   })
   @ApiBody({ type: ConfirmationDto })
-  async newVerification(@Req() req: Request, @Body() dto: ConfirmationDto) {
+  public async newVerification(
+    @Req() req: Request,
+    @Body() dto: ConfirmationDto,
+  ) {
     return this.emailConfirmationService.newVerificationToken(req, dto);
   }
 }

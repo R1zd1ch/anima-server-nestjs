@@ -64,6 +64,8 @@ async function bootstrap() {
     },
   });
 
+  console.log(config.getOrThrow<string>('RABBIT_MQ_URI'));
+
   app.enableVersioning({
     type: VersioningType.URI,
     prefix: 'v',
