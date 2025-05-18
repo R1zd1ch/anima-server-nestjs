@@ -1,5 +1,5 @@
 FROM oven/bun:1-slim AS builder
-ENV SERVICE=auth-microservice
+ENV SERVICE=anime-microservice
 
 WORKDIR /app
 
@@ -18,7 +18,7 @@ RUN bun run build ${SERVICE}
 # CMD ["./start.sh"]
 
 FROM oven/bun:1-slim AS runnerl
-ENV SERVICE=auth-microservice
+ENV SERVICE=anime-microservice
 WORKDIR /app
 RUN apt-get update -y && apt-get install -y openssl
 
