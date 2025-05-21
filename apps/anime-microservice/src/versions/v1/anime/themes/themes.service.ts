@@ -1,5 +1,8 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import {
+  AnimeCacheKey,
+  getAnimeCacheKey,
+  getAnimeCacheTTL,
   includeAll,
   includeSmall,
   shikimoriScoreNotNull,
@@ -10,6 +13,7 @@ import { Anime } from '@prisma/__generated__';
 import { handleError } from 'shared/lib/utils/handle-error';
 import { buildPagination } from 'shared/lib/utils/build-pagination';
 import { buildMeta } from 'shared/lib/utils/build-meta';
+import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager';
 
 @Injectable()
 export class ThemesService {
@@ -17,6 +21,7 @@ export class ThemesService {
   public constructor(
     private readonly prismaService: PrismaService,
     private readonly episodesService: EpisodesService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
   public async getThemes() {
@@ -44,6 +49,21 @@ export class ThemesService {
 
   public async getThemeById(requestId: number) {
     try {
+      const cacheKey = getAnimeCacheKey(
+        AnimeCacheKey.THEMES,
+        requestId.toString(),
+      );
+
+      const cachedData = await this.cacheManager.get<{
+        id: string;
+        requestId: number;
+        name: string;
+        russian: string;
+        totalAnimes: number;
+      }>(cacheKey);
+
+      if (cachedData) return cachedData;
+
       const totalAnimes = await this.prismaService.anime.count({
         where: {
           ...shikimoriScoreNotNull,
@@ -54,7 +74,16 @@ export class ThemesService {
       const theme = await this.prismaService.theme.findUnique({
         where: { requestId: requestId },
       });
-      return { ...theme, totalAnimes };
+
+      const response = { ...theme, totalAnimes };
+
+      await this.cacheManager.set(
+        cacheKey,
+        response,
+        getAnimeCacheTTL(AnimeCacheKey.THEMES),
+      );
+
+      return response;
     } catch (e) {
       handleError(e, 'Ошибка при получении темы', this.logger);
     }
@@ -96,6 +125,22 @@ export class ThemesService {
       const page = pageFromQuery || 1;
       const limit = Math.min(limitFromQuery || 1, 50);
 
+      const cacheKey = getAnimeCacheKey(
+        AnimeCacheKey.THEMES,
+        `${requestId}-${page}-${limit}`,
+      );
+
+      const cachedData = await this.cacheManager.get<{
+        data: Anime[];
+        meta: {
+          total: number;
+          page: number;
+          limit: number;
+        };
+      }>(cacheKey);
+
+      if (cachedData) return cachedData;
+
       const whereClause = {
         ...shikimoriScoreNotNull,
         theme: { some: { theme: { requestId: requestId } } },
@@ -114,10 +159,18 @@ export class ThemesService {
         }),
       ]);
 
-      return {
+      const response = {
         data: animesFromTheme,
         meta: buildMeta(total, page, limit),
       };
+
+      await this.cacheManager.set(
+        cacheKey,
+        response,
+        getAnimeCacheTTL(AnimeCacheKey.THEMES),
+      );
+
+      return response;
     } catch (e) {
       handleError(e, 'Ошибка при получении аниме по теме', this.logger);
     }

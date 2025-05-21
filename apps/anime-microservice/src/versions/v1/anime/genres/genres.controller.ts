@@ -1,8 +1,14 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseInterceptors } from '@nestjs/common';
 import { GenresService } from './genres.service';
 import { ApiTags, ApiOperation, ApiQuery, ApiParam } from '@nestjs/swagger';
 import { wrapApiResponse } from 'shared/lib/utils/wrap-api-response';
 import { parsePagination } from 'shared/lib/utils/parse-pagination';
+import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
+import {
+  AnimeCacheKey,
+  getAnimeCacheKey,
+  getAnimeCacheTTL,
+} from 'apps/anime-microservice/src/constants';
 
 @ApiTags('Anime/Genres')
 @Controller({
@@ -12,12 +18,16 @@ import { parsePagination } from 'shared/lib/utils/parse-pagination';
 export class GenresController {
   public constructor(private readonly genresService: GenresService) {}
 
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(getAnimeCacheTTL(AnimeCacheKey.GENRES))
+  @CacheKey(getAnimeCacheKey(AnimeCacheKey.GENRES, 'all'))
   @Get()
   @ApiOperation({ summary: 'Получить список жанров' })
   public async getGenres() {
     const result = await this.genresService.getGenres();
     return wrapApiResponse(result);
   }
+
   @Get('random/:requestId')
   @ApiOperation({ summary: 'Получить случайный релиз по жанру' })
   @ApiParam({ name: 'requestId', type: Number, example: 5 })

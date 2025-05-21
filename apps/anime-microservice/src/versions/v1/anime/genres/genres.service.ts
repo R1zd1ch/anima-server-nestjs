@@ -1,6 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Anime } from '@prisma/__generated__';
 import {
+  AnimeCacheKey,
+  getAnimeCacheKey,
+  getAnimeCacheTTL,
   includeAll,
   includeSmall,
   shikimoriScoreNotNull,
@@ -10,6 +13,7 @@ import { EpisodesService } from '../episodes/episodes.service';
 import { buildPagination } from 'shared/lib/utils/build-pagination';
 import { buildMeta } from 'shared/lib/utils/build-meta';
 import { handleError } from 'shared/lib/utils/handle-error';
+import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
 
 @Injectable()
 export class GenresService {
@@ -17,6 +21,7 @@ export class GenresService {
   public constructor(
     private readonly prismaService: PrismaService,
     private readonly episodesService: EpisodesService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
   public async getGenres() {
@@ -44,6 +49,19 @@ export class GenresService {
 
   public async getGenreById(requestId: number) {
     try {
+      const cacheKey = getAnimeCacheKey(
+        AnimeCacheKey.GENRES,
+        requestId.toString(),
+      );
+      const cachedGenre = await this.cacheManager.get<{
+        totalAnimes: number;
+        id: string;
+        requestId: number;
+        name: string;
+        russian: string;
+      }>(cacheKey);
+      if (cachedGenre) return cachedGenre;
+
       const totalAnimes = await this.prismaService.anime.count({
         where: {
           ...shikimoriScoreNotNull,
@@ -53,7 +71,15 @@ export class GenresService {
       const genre = await this.prismaService.genre.findUnique({
         where: { requestId: requestId },
       });
-      return { ...genre, totalAnimes };
+
+      const response = { ...genre, totalAnimes };
+      await this.cacheManager.set(
+        cacheKey,
+        response,
+        getAnimeCacheTTL(AnimeCacheKey.GENRES),
+      );
+
+      return response;
     } catch (e) {
       handleError(e, 'Ошибка при получении жанра по id', this.logger);
     }
@@ -95,7 +121,21 @@ export class GenresService {
       const page = pageFromQuery || 1;
       const limit = Math.min(limitFromQuery || 1, 50);
 
-      this.logger.log(`Getting anime from genreId=${requestId}`);
+      const cacheKey = getAnimeCacheKey(
+        AnimeCacheKey.GENRES,
+        `${requestId}-${page}-${limit}`,
+      );
+
+      const cachedAnimes = await this.cacheManager.get<{
+        data: Anime[];
+        meta: {
+          total: number;
+          page: number;
+          limit: number;
+        };
+      }>(cacheKey);
+
+      if (cachedAnimes) return cachedAnimes;
 
       const whereClause = {
         ...shikimoriScoreNotNull,
@@ -115,10 +155,18 @@ export class GenresService {
         `Found ${animesFromGenre.length} anime(s) for genreId=${requestId}`,
       );
 
-      return {
+      const response = {
         data: animesFromGenre,
-        meta: buildMeta(page, limit, total),
+        meta: buildMeta(total, page, limit),
       };
+
+      await this.cacheManager.set(
+        cacheKey,
+        response,
+        getAnimeCacheTTL(AnimeCacheKey.GENRES),
+      );
+
+      return response;
     } catch (e) {
       handleError(e, 'Ошибка при получении аниме по жанру', this.logger);
     }

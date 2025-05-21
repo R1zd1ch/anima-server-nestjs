@@ -1,8 +1,14 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseInterceptors } from '@nestjs/common';
 import { ThemesService } from './themes.service';
 import { ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { wrapApiResponse } from 'shared/lib/utils/wrap-api-response';
 import { parsePagination } from 'shared/lib/utils/parse-pagination';
+import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
+import {
+  AnimeCacheKey,
+  getAnimeCacheKey,
+  getAnimeCacheTTL,
+} from 'apps/anime-microservice/src/constants';
 
 @ApiTags('Anime/Themes')
 @Controller({
@@ -13,6 +19,9 @@ export class ThemesController {
   public constructor(private readonly themesService: ThemesService) {}
 
   @Get()
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(getAnimeCacheTTL(AnimeCacheKey.THEMES))
+  @CacheKey(getAnimeCacheKey(AnimeCacheKey.THEMES, 'all'))
   @ApiOperation({ summary: 'Получить все темы' })
   public async getThemes() {
     const result = await this.themesService.getThemes();
@@ -35,6 +44,7 @@ export class ThemesController {
     return wrapApiResponse(result);
   }
 
+  @CacheTTL(getAnimeCacheTTL(AnimeCacheKey.THEMES))
   @Get(':requestId')
   @ApiOperation({ summary: 'Получить тему по ID' })
   @ApiParam({ name: 'requestId', type: Number, example: 123 })

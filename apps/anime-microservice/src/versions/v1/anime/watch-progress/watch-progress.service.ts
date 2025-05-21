@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  Inject,
   Injectable,
   Logger,
   NotFoundException,
@@ -7,12 +8,21 @@ import {
 import { PrismaService } from 'shared/lib/prisma/prisma.service';
 import { ProgressUpdateDto } from './dto/response-progress.dto';
 import { handleError } from 'shared/lib/utils/handle-error';
-import { WATCH_PROGRESS_COMMON_INCLUDE } from 'apps/anime-microservice/src/constants';
+import {
+  getUserCacheKey,
+  getUserCacheTTL,
+  UserCacheKey,
+  WATCH_PROGRESS_COMMON_INCLUDE,
+} from 'apps/anime-microservice/src/constants';
+import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
 
 @Injectable()
 export class WatchProgressService {
   private readonly logger = new Logger(WatchProgressService.name);
-  public constructor(private readonly prismaService: PrismaService) {}
+  public constructor(
+    private readonly prismaService: PrismaService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {}
 
   public async updateProgress(
     userId: string,
@@ -31,6 +41,21 @@ export class WatchProgressService {
         dto.isWatched = true;
       }
 
+      const singleCacheKey = getUserCacheKey(
+        UserCacheKey.WATCH_PROGRESS,
+        `${userId}-${animeId}`,
+      );
+      const cacheKey = getUserCacheKey(UserCacheKey.WATCH_PROGRESS, userId);
+
+      const cachedData = await this.cacheManager.get<{
+        any;
+      }>(cacheKey);
+      const singleCachedData = await this.cacheManager.get<{
+        any;
+      }>(singleCacheKey);
+      if (cachedData) await this.cacheManager.del(cacheKey);
+      if (singleCachedData) await this.cacheManager.del(singleCacheKey);
+
       const existingProgress =
         await this.prismaService.animeEpisodeProgress.findUnique({
           where: { userId_animeId: { userId, animeId } },
@@ -47,7 +72,7 @@ export class WatchProgressService {
         };
       }
 
-      return this.prismaService.animeEpisodeProgress.create({
+      const result = await this.prismaService.animeEpisodeProgress.create({
         data: {
           userId,
           animeId,
@@ -57,6 +82,8 @@ export class WatchProgressService {
         },
         include: WATCH_PROGRESS_COMMON_INCLUDE,
       });
+
+      return result;
     } catch (e) {
       handleError(
         e,
@@ -71,12 +98,27 @@ export class WatchProgressService {
       const access = await this.checkAccess(viewerId, userId);
       if (access?.data) return access;
 
-      return this.prismaService.animeEpisodeProgress.findMany({
+      const cacheKey = getUserCacheKey(UserCacheKey.WATCH_PROGRESS, userId);
+
+      const cachedData = await this.cacheManager.get<{
+        any;
+      }>(cacheKey);
+      if (cachedData) return cachedData;
+
+      const response = await this.prismaService.animeEpisodeProgress.findMany({
         where: { userId },
         orderBy: { updatedAt: 'desc' },
         include: WATCH_PROGRESS_COMMON_INCLUDE,
         take: limit,
       });
+
+      await this.cacheManager.set(
+        cacheKey,
+        response,
+        getUserCacheTTL(UserCacheKey.WATCH_PROGRESS),
+      );
+
+      return response;
     } catch (e) {
       handleError(
         e,
@@ -90,13 +132,26 @@ export class WatchProgressService {
     try {
       const anime = await this.existsAnime(animeId);
       await this.existsUser(userId);
-      return this.prismaService.animeEpisodeProgress.update({
+      const singleCacheKey = getUserCacheKey(
+        UserCacheKey.WATCH_PROGRESS,
+        `${userId}-${animeId}`,
+      );
+      const cacheKey = getUserCacheKey(UserCacheKey.WATCH_PROGRESS, userId);
+      const cachedData = await this.cacheManager.get<{
+        any;
+      }>(cacheKey);
+      if (cachedData) await this.cacheManager.del(cacheKey);
+      if (cachedData) await this.cacheManager.del(singleCacheKey);
+
+      const response = await this.prismaService.animeEpisodeProgress.update({
         where: { userId_animeId: { userId, animeId } },
         data: {
           isWatched: true,
           episode: anime.episodesAired || anime.episodes,
         },
       });
+
+      return response;
     } catch (e) {
       handleError(e, 'Ошибка при отметке аниме как просмотренное', this.logger);
     }
@@ -105,10 +160,30 @@ export class WatchProgressService {
   public async getProgressForAnime(userId: string, animeId: string) {
     try {
       await Promise.all([this.existsUser(userId), this.existsAnime(animeId)]);
-      return this.prismaService.animeEpisodeProgress.findUnique({
-        where: { userId_animeId: { userId, animeId } },
-        include: WATCH_PROGRESS_COMMON_INCLUDE,
-      });
+      const cacheKey = getUserCacheKey(
+        UserCacheKey.WATCH_PROGRESS,
+        `${userId}-${animeId}`,
+      );
+      const cachedData = await this.cacheManager.get<{
+        any;
+      }>(cacheKey);
+
+      if (cachedData) return cachedData;
+
+      const response = await this.prismaService.animeEpisodeProgress.findUnique(
+        {
+          where: { userId_animeId: { userId, animeId } },
+          include: WATCH_PROGRESS_COMMON_INCLUDE,
+        },
+      );
+
+      await this.cacheManager.set(
+        cacheKey,
+        response,
+        getUserCacheTTL(UserCacheKey.WATCH_PROGRESS),
+      );
+
+      return response;
     } catch (e) {
       handleError(e, 'Ошибка при получении прогресса по аниме', this.logger);
     }
@@ -117,6 +192,17 @@ export class WatchProgressService {
   public async deleteProgress(userId: string, animeId: string) {
     try {
       await Promise.all([this.existsUser(userId), this.existsAnime(animeId)]);
+
+      const singleCacheKey = getUserCacheKey(
+        UserCacheKey.WATCH_PROGRESS,
+        `${userId}-${animeId}`,
+      );
+      const cacheKey = getUserCacheKey(UserCacheKey.WATCH_PROGRESS, userId);
+      const cachedData = await this.cacheManager.get<{
+        any;
+      }>(cacheKey);
+      if (cachedData) await this.cacheManager.del(cacheKey);
+      if (cachedData) await this.cacheManager.del(singleCacheKey);
 
       const progress = await this.prismaService.animeEpisodeProgress.findUnique(
         { where: { userId_animeId: { userId, animeId } } },

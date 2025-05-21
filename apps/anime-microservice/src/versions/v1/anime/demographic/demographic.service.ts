@@ -1,6 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Anime } from '@prisma/__generated__';
 import {
+  AnimeCacheKey,
+  getAnimeCacheKey,
+  getAnimeCacheTTL,
   includeAll,
   includeSmall,
   shikimoriScoreNotNull,
@@ -11,6 +14,7 @@ import { EpisodesService } from '../episodes/episodes.service';
 import { handleError } from 'shared/lib/utils/handle-error';
 import { buildPagination } from 'shared/lib/utils/build-pagination';
 import { buildMeta } from 'shared/lib/utils/build-meta';
+import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
 
 @Injectable()
 export class DemographicService {
@@ -19,6 +23,7 @@ export class DemographicService {
   public constructor(
     private readonly prismaService: PrismaService,
     private readonly episodesService: EpisodesService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
   public async getDemographics() {
@@ -45,6 +50,18 @@ export class DemographicService {
 
   public async getDemographicById(requestId: number) {
     try {
+      const cacheKey = getAnimeCacheKey(
+        AnimeCacheKey.DEMOGRAPHIC,
+        requestId.toString(),
+      );
+
+      const cachedAnimes = await this.cacheManager.get<{
+        data: Anime[];
+        meta: { total: number; page: number; limit: number };
+      }>(cacheKey);
+
+      if (cachedAnimes) return cachedAnimes;
+
       const totalAnimes = await this.prismaService.anime.count({
         where: {
           ...shikimoriScoreNotNull,
@@ -54,7 +71,16 @@ export class DemographicService {
       const demographic = await this.prismaService.demographic.findUnique({
         where: { requestId: requestId },
       });
-      return { ...demographic, totalAnimes };
+
+      const response = { ...demographic, totalAnimes };
+
+      await this.cacheManager.set(
+        cacheKey,
+        response,
+        getAnimeCacheTTL(AnimeCacheKey.DEMOGRAPHIC),
+      );
+
+      return response;
     } catch (error) {
       handleError(error, 'Ошибка получения демографии', this.logger);
     }
@@ -102,7 +128,17 @@ export class DemographicService {
       const page = pageFromQuery || 1;
       const limit = Math.min(limitFromQuery || 1, 50);
 
-      this.logger.log(`Getting anime from demographicId=${requestId}`);
+      const cacheKey = getAnimeCacheKey(
+        AnimeCacheKey.DEMOGRAPHIC,
+        `${requestId}-${page}-${limit}`,
+      );
+
+      const cachedAnimes = await this.cacheManager.get<{
+        data: Anime[];
+        meta: { total: number; page: number; limit: number };
+      }>(cacheKey);
+
+      if (cachedAnimes) return cachedAnimes;
 
       const whereClause = {
         ...shikimoriScoreNotNull,
@@ -123,10 +159,18 @@ export class DemographicService {
         }),
       ]);
 
-      return {
+      const response = {
         data: animesFromDemographic,
         meta: buildMeta(total, page, limit),
       };
+
+      await this.cacheManager.set(
+        cacheKey,
+        response,
+        getAnimeCacheTTL(AnimeCacheKey.DEMOGRAPHIC),
+      );
+
+      return response;
     } catch (error) {
       handleError(error, 'Ошибка получения аниме по демографии', this.logger);
     }

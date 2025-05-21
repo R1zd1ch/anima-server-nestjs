@@ -1,8 +1,14 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseInterceptors } from '@nestjs/common';
 import { DemographicService } from './demographic.service';
 import { ApiTags, ApiOperation, ApiQuery, ApiParam } from '@nestjs/swagger';
 import { wrapApiResponse } from 'shared/lib/utils/wrap-api-response';
 import { parsePagination } from 'shared/lib/utils/parse-pagination';
+import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
+import {
+  AnimeCacheKey,
+  getAnimeCacheKey,
+  getAnimeCacheTTL,
+} from 'apps/anime-microservice/src/constants';
 
 @ApiTags('Anime/Demographic')
 @Controller({
@@ -12,6 +18,10 @@ import { parsePagination } from 'shared/lib/utils/parse-pagination';
 export class DemographicController {
   public constructor(private readonly demographicService: DemographicService) {}
 
+  @UseInterceptors(CacheInterceptor)
+  @CacheKey(getAnimeCacheKey(AnimeCacheKey.DEMOGRAPHIC, 'all'))
+  @CacheTTL(getAnimeCacheTTL(AnimeCacheKey.DEMOGRAPHIC))
+  @CacheTTL(60 * 60 * 24)
   @Get()
   @ApiOperation({ summary: 'Получить список демографий' })
   public async getDemographics() {

@@ -28,9 +28,8 @@ export class UserService {
         include: { accounts: true },
       });
 
-      if (!user) {
+      if (!user)
         throw new NotFoundException(`Пользователь с id ${id} не найден`);
-      }
 
       return user;
     } catch (e) {
@@ -148,6 +147,9 @@ export class UserService {
           picture,
           method,
           isVerified,
+          settings: {
+            create: {},
+          },
         },
         update: {
           email,
@@ -158,10 +160,11 @@ export class UserService {
           // method,
           isVerified,
         },
-        include: { accounts: true },
+        include: { accounts: true, settings: true },
       });
 
-      await this.settingsService.checkAndCreateUserSettings(user.id);
+      if (!user.settings)
+        await this.settingsService.checkAndCreateUserSettings(user.id);
 
       return user;
     } catch (e) {
