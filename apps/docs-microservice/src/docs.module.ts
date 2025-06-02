@@ -9,6 +9,7 @@ import { HttpModule } from '@nestjs/axios';
       envFilePath: '.env',
       ignoreEnvFile: !IS_DEV_ENV,
       expandVariables: true,
+      isGlobal: true,
     }),
     HttpModule,
   ],

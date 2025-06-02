@@ -23,7 +23,6 @@ export class GenresService {
     private readonly episodesService: EpisodesService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
-
   public async getGenres() {
     try {
       const genres = await this.prismaService.genre.findMany();

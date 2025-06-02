@@ -2,9 +2,9 @@
 
 echo "Starting service: $APP_MODE"
 
-if [ -f .env ]; then
-  export $(grep -v '^#' .env | xargs)
-fi
+# if [ -f .env ]; then
+#   export $(grep -v '^#' .env | xargs)
+# fi
 
 if [ "$APP_MODE" = "auth-microservice" ]; then
   bunx prisma migrate deploy --schema ./prisma/schema

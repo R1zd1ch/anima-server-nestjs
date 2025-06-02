@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { IS_DEV_ENV } from '../../../../../shared/lib/utils/is-dev.util';
 import { PrismaModule } from '../../../../../shared/lib/prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { ProviderModule } from './provider/provider.module';
@@ -11,11 +9,6 @@ import { TwoFactorAuthModule } from './auth/two-factor-auth/two-factor-auth.modu
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      ignoreEnvFile: !IS_DEV_ENV,
-      isGlobal: true,
-      expandVariables: true,
-    }),
     PrismaModule,
     AuthModule,
     ProviderModule,

@@ -10,6 +10,7 @@ import { getVersionModule } from './lib/utils/get-version-module';
     PrismaModule,
     ConfigModule.forRoot({
       envFilePath: '.env',
+      isGlobal: true,
       ignoreEnvFile: !IS_DEV_ENV,
       expandVariables: true,
     }),

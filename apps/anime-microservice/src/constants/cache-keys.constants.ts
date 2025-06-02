@@ -12,6 +12,7 @@ export enum AnimeCacheKey {
 export enum UserCacheKey {
   WATCH_PROGRESS = 'watch-progress',
   COMMENTS = 'comments',
+  REVIEWS = 'reviews',
 }
 
 export const ANIME_CACHE_TTL = {
@@ -23,6 +24,7 @@ export const ANIME_CACHE_TTL = {
 export const USER_CACHE_TTL = {
   [UserCacheKey.WATCH_PROGRESS]: 60_000 * 60,
   [UserCacheKey.COMMENTS]: 60_000 * 60,
+  [UserCacheKey.REVIEWS]: 60_000 * 60,
 } as const;
 
 export const getAnimeCacheKey = (key: AnimeCacheKey, item: string) => {

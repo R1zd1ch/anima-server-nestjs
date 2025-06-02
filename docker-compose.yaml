@@ -98,7 +98,7 @@ services:
     environment:
       - RABBIT_MQ_HOST=rabbitmq
       - APP_MODE=auth-microservice
-      - POSTGRES_HOST=db
+      - POSTGRES_HOST=postgres
       - REDIS_HOST=redis
     depends_on:
       db:
@@ -124,7 +124,7 @@ services:
     environment:
       - RABBIT_MQ_HOST=rabbitmq
       - APP_MODE=user-microservice
-      - POSTGRES_HOST=db
+      - POSTGRES_HOST=postgres
       - REDIS_HOST=redis
     depends_on:
       auth-microservice:
@@ -146,7 +146,7 @@ services:
     environment:
       - RABBIT_MQ_HOST=rabbitmq
       - APP_MODE=update-anime-microservice
-      - POSTGRES_HOST=db
+      - POSTGRES_HOST=postgres
       - REDIS_HOST=redis
     depends_on:
       auth-microservice:
@@ -168,7 +168,7 @@ services:
     environment:
       - RABBIT_MQ_HOST=rabbitmq
       - APP_MODE=anime-microservice
-      - POSTGRES_HOST=db
+      - POSTGRES_HOST=postgres
       - REDIS_HOST=redis
     depends_on:
       auth-microservice:

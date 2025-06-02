@@ -11,6 +11,7 @@ import KeyvRedis, { Keyv } from '@keyv/redis';
   imports: [
     PrismaModule,
     ConfigModule.forRoot({
+      isGlobal: true,
       envFilePath: '.env',
       ignoreEnvFile: !IS_DEV_ENV,
       expandVariables: true,

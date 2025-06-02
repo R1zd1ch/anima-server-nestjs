@@ -11,6 +11,7 @@ import { getVersionModule } from './libs/utils/get-version-module';
     ConfigModule.forRoot({
       envFilePath: '.env',
       ignoreEnvFile: !IS_DEV_ENV,
+      isGlobal: true,
       expandVariables: true,
     }),
     getVersionModule(),

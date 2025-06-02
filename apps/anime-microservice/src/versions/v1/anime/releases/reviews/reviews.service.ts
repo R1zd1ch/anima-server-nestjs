@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  Inject,
   Injectable,
   Logger,
   NotFoundException,
@@ -15,14 +16,21 @@ import {
   COMMON_REVIEW_INCLUDE,
   REVIEW_COMMON_USER_INCLUDE,
   WHERE_TEXT_NOT_NULL,
+  getUserCacheKey,
+  UserCacheKey,
+  getUserCacheTTL,
 } from 'apps/anime-microservice/src/constants';
 import { Anime, User, Review, AnimePoster } from '@prisma/__generated__';
 import { buildPagination } from 'shared/lib/utils/build-pagination';
+import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
 
 @Injectable()
 export class ReviewsService {
   private readonly logger = new Logger(ReviewsService.name);
-  public constructor(private readonly prismaService: PrismaService) {}
+  public constructor(
+    private readonly prismaService: PrismaService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {}
 
   public async getReviewsByReleaseId(
     releaseId: string,
@@ -32,6 +40,21 @@ export class ReviewsService {
     viewerId?: string | null,
   ) {
     try {
+      const cacheKey = getUserCacheKey(
+        UserCacheKey.REVIEWS,
+        `${releaseId}-${page}-${limit}-${sortBy}-${viewerId || ''}`,
+      );
+      const cachedReviews = await this.cacheManager.get<{
+        data: Review[];
+        meta: {
+          total: number;
+          page: number;
+          limit: number;
+          totalPages: number;
+        };
+      }>(cacheKey);
+      if (cachedReviews) return cachedReviews;
+
       const where = { animeId: releaseId, ...WHERE_TEXT_NOT_NULL };
       await this.animeExists(releaseId);
       const reviews = await this.prismaService.review.findMany({
@@ -48,10 +71,18 @@ export class ReviewsService {
       const reviewsWithLikes = this.processReviewLikes(reviews, viewerId);
       const total = await this.prismaService.review.count({ where });
 
-      return {
+      const response = {
         data: reviewsWithLikes,
         meta: buildMeta(total, page, limit),
       };
+
+      await this.cacheManager.set(
+        cacheKey,
+        response,
+        getUserCacheTTL(UserCacheKey.REVIEWS),
+      );
+
+      return response;
     } catch (e) {
       handleError(e, `Ошибка получения оценок`, this.logger);
     }
@@ -68,6 +99,21 @@ export class ReviewsService {
       const access = await this.checkUserAccess(userId, viewerId);
       if (access?.data) return access;
 
+      const cacheKey = getUserCacheKey(
+        UserCacheKey.REVIEWS,
+        `${userId}-${page}-${limit}-${sortBy}-${viewerId || ''}`,
+      );
+      const cachedReviews = await this.cacheManager.get<{
+        data: Review[];
+        meta: {
+          total: number;
+          page: number;
+          limit: number;
+          totalPages: number;
+        };
+      }>(cacheKey);
+      if (cachedReviews) return cachedReviews;
+
       const where = { userId, ...WHERE_TEXT_NOT_NULL };
       const reviews = await this.prismaService.review.findMany({
         where,
@@ -81,10 +127,19 @@ export class ReviewsService {
       });
       const total = await this.prismaService.review.count({ where });
       const reviewsWithLikes = this.processReviewLikes(reviews, viewerId);
-      return {
+
+      const response = {
         data: reviewsWithLikes,
         meta: buildMeta(total, page, limit),
       };
+
+      await this.cacheManager.set(
+        cacheKey,
+        response,
+        getUserCacheTTL(UserCacheKey.REVIEWS),
+      );
+
+      return response;
     } catch (e) {
       return handleError(
         e,
@@ -96,6 +151,13 @@ export class ReviewsService {
 
   public async getReview(reviewId: string, viewerId?: string | null) {
     try {
+      const cacheKey = getUserCacheKey(
+        UserCacheKey.REVIEWS,
+        `${reviewId}-${viewerId || ''}`,
+      );
+      const cachedReview = await this.cacheManager.get<Review>(cacheKey);
+      if (cachedReview) return cachedReview;
+
       const review = await this.prismaService.review.findUnique({
         where: { id: reviewId },
         include: { ...COMMON_REVIEW_INCLUDE },
@@ -106,11 +168,20 @@ export class ReviewsService {
       const isLiked = await this.isReviewLiked(viewerId, reviewId);
 
       const { _count, ...rest } = review;
-      return {
+
+      const response = {
         ...rest,
         isLiked,
         likesCount: _count.reviewLikes,
       };
+
+      await this.cacheManager.set(
+        cacheKey,
+        response,
+        getUserCacheTTL(UserCacheKey.REVIEWS),
+      );
+
+      return response;
     } catch (e) {
       handleError(e, `Ошибка получения оценки`, this.logger);
     }
@@ -118,6 +189,13 @@ export class ReviewsService {
 
   public async getRating(animeId: string) {
     try {
+      const cacheKey = getUserCacheKey(UserCacheKey.REVIEWS, `${animeId}`);
+
+      const cachedRating = await this.cacheManager.get<{ rating: number }>(
+        cacheKey,
+      );
+      if (cachedRating) return cachedRating;
+
       await this.animeExists(animeId);
       const rating = await this.prismaService.review.aggregate({
         where: { animeId },
@@ -126,7 +204,13 @@ export class ReviewsService {
 
       if (!rating) throw new NotFoundException('Рейтинг не найден');
 
-      return { rating: rating._avg.rating };
+      const response = { rating: rating._avg.rating };
+      await this.cacheManager.set(
+        cacheKey,
+        response,
+        getUserCacheTTL(UserCacheKey.REVIEWS),
+      );
+      return response;
     } catch (e) {
       handleError(e, `Ошибка получения рейтинга`, this.logger);
     }
@@ -142,6 +226,29 @@ export class ReviewsService {
     try {
       const access = await this.checkUserAccess(userId, viewerId);
       if (access?.data) return access;
+
+      const cacheKey = getUserCacheKey(
+        UserCacheKey.REVIEWS,
+        `${userId}-${page}-${limit}-${sortBy}-${viewerId || ''}`,
+      );
+
+      const cachedRatings = await this.cacheManager.get<{
+        data: {
+          id: string;
+          rating: number;
+          createdAt: Date;
+          updatedAt: Date;
+          anime: Anime;
+          user: User;
+        }[];
+        meta: {
+          total: number;
+          page: number;
+          limit: number;
+          totalPages: number;
+        };
+      }>(cacheKey);
+      if (cachedRatings) return cachedRatings;
 
       const where = { userId };
       const ratings = await this.prismaService.review.findMany({
@@ -171,13 +278,21 @@ export class ReviewsService {
         _avg: { rating: true },
       });
 
-      return {
+      const response = {
         data: {
           ...proccessedRatings,
           avgRating: avgRating._avg.rating,
         },
         meta: buildMeta(ratings.length, page, limit),
       };
+
+      await this.cacheManager.set(
+        cacheKey,
+        response,
+        getUserCacheTTL(UserCacheKey.REVIEWS),
+      );
+
+      return response;
     } catch (e) {
       return handleError(
         e,
@@ -201,9 +316,13 @@ export class ReviewsService {
         throw new BadRequestException('Вы уже оставили оценку для этого аниме');
       }
 
-      return this.prismaService.review.create({
+      const newReview = await this.prismaService.review.create({
         data: { ...dto, userId, animeId },
       });
+
+      await this.invalidateReviewCache(userId, animeId, newReview.id);
+
+      return newReview;
     } catch (e) {
       handleError(e, `Ошибка создания оценки`, this.logger);
     }
@@ -222,9 +341,13 @@ export class ReviewsService {
       if (review) {
         throw new BadRequestException('Вы уже оставили оценку для этого аниме');
       }
-      return this.prismaService.review.create({
+      const newReview = await this.prismaService.review.create({
         data: { userId, animeId, rating },
       });
+
+      await this.invalidateReviewCache(userId, animeId, newReview.id);
+
+      return newReview;
     } catch (e) {
       handleError(e, `Ошибка создания оценки`, this.logger);
     }
@@ -242,10 +365,14 @@ export class ReviewsService {
       await this.animeExists(animeId);
       if (!review) throw new NotFoundException(`Оценка не найдена`);
 
-      return this.prismaService.review.update({
+      const updatedReview = await this.prismaService.review.update({
         where: { userId_animeId: { userId, animeId } },
         data: dto,
       });
+
+      await this.invalidateReviewCache(userId, animeId, review.id);
+
+      return updatedReview;
     } catch (e) {
       handleError(e, 'Ошибка обновления оценка', this.logger);
     }
@@ -263,6 +390,9 @@ export class ReviewsService {
       await this.prismaService.review.delete({
         where: { userId_animeId: { userId, animeId } },
       });
+
+      await this.invalidateReviewCache(userId, animeId, review.id);
+
       return { message: 'Оценка удалена' };
     } catch (e) {
       handleError(e, 'Ошибка удаления оценки', this.logger);
@@ -282,6 +412,11 @@ export class ReviewsService {
         await this.prismaService.reviewLike.create({
           data: { userId, reviewId },
         });
+        await this.invalidateReviewCache(
+          review.userId,
+          review.animeId,
+          reviewId,
+        );
       }
 
       return { message: 'Оценка лайкнута' };
@@ -303,6 +438,11 @@ export class ReviewsService {
         await this.prismaService.reviewLike.delete({
           where: { userId_reviewId: { userId, reviewId } },
         });
+        await this.invalidateReviewCache(
+          review.userId,
+          review.animeId,
+          reviewId,
+        );
       }
 
       return { message: 'Оценка дизлайкнута' };
@@ -395,6 +535,39 @@ export class ReviewsService {
           meta: buildMeta(0),
         };
       }
+    }
+  }
+
+  private async invalidateReviewCache(
+    userId?: string,
+    animeId?: string,
+    reviewId?: string,
+  ) {
+    try {
+      const patterns: string[] = [];
+
+      if (reviewId) {
+        patterns.push(`${UserCacheKey.REVIEWS}:${reviewId}-*`);
+      }
+
+      if (animeId) {
+        patterns.push(`${UserCacheKey.REVIEWS}:${animeId}`);
+        patterns.push(`${UserCacheKey.REVIEWS}:${animeId}-*`);
+      }
+
+      if (userId) {
+        patterns.push(`${UserCacheKey.REVIEWS}:${userId}-*`);
+      }
+
+      if (!userId && !animeId && !reviewId) {
+        patterns.push(`${UserCacheKey.REVIEWS}:*`);
+      }
+
+      for (const pattern of patterns) {
+        await this.cacheManager.del(pattern);
+      }
+    } catch (error) {
+      handleError(error, 'Ошибка при инвалидации кеша отзывов', this.logger);
     }
   }
 }
