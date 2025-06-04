@@ -6,6 +6,7 @@ WORKDIR /app
 COPY package.json bun.lock* ./
 RUN apt-get update -y && apt-get install -y openssl
 RUN bun install
+RUN bun add @prisma/client
 
 COPY prisma/schema ./prisma/schema/
 COPY microservices-start.sh ./start.sh
