@@ -7,10 +7,8 @@ server {
   keepalive_timeout 15s;
   sendfile on;
 
-  # определяем допустимый origin
   set $cors_origin '';
-
-  if ($http_origin = "http://localhost:3000") {
+  if ($http_origin ~* (http://localhost:3000|http://192.168.0.179:3000)) {
     set $cors_origin $http_origin;
   }
 
@@ -19,7 +17,7 @@ server {
     if ($request_method = OPTIONS) {
       add_header 'Access-Control-Allow-Origin' $cors_origin;
       add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, PATCH, DELETE, OPTIONS';
-			add_header 'Access-Control-Allow-Credentials' 'true' always;
+      add_header 'Access-Control-Allow-Credentials' 'true' always;
       add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, Accept, recaptcha' always;
       add_header 'Access-Control-Max-Age' 1728000;
       add_header 'Content-Length' 0;
@@ -28,7 +26,7 @@ server {
     }
 
     add_header 'Access-Control-Allow-Origin' $cors_origin always;
-		add_header 'Access-Control-Allow-Credentials' 'true' always;
+    add_header 'Access-Control-Allow-Credentials' 'true' always;
     add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, PATCH, DELETE, OPTIONS' always;
     add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, Accept, recaptcha' always;
 
@@ -45,9 +43,8 @@ server {
     if ($request_method = OPTIONS) {
       add_header 'Access-Control-Allow-Origin' $cors_origin;
       add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, PATCH, DELETE, OPTIONS';
-			add_header 'Access-Control-Allow-Credentials' 'true' always;
-			add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, Accept, recaptcha' always;
-
+      add_header 'Access-Control-Allow-Credentials' 'true' always;
+      add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, Accept, recaptcha' always;
       add_header 'Access-Control-Max-Age' 1728000;
       add_header 'Content-Length' 0;
       add_header 'Content-Type' 'text/plain; charset=UTF-8';
@@ -57,9 +54,9 @@ server {
     add_header 'Access-Control-Allow-Origin' $cors_origin always;
     add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, PATCH, DELETE, OPTIONS' always;
     add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, Accept, recaptcha' always;
-		add_header 'Access-Control-Allow-Credentials' 'true' always;
+    add_header 'Access-Control-Allow-Credentials' 'true' always;
 
-    # определяем целевой сервис
+    # Определяем целевой сервис
     set $service_host "";
     if ($uri ~* ^/api/v1/auth) {
       set $service_host ${AUTH_MICROSERVICE_HOST}:${AUTH_MICROSERVICE_PORT};
@@ -74,10 +71,10 @@ server {
       set $service_host ${UPDATE_ANIME_MICROSERVICE_HOST}:${UPDATE_ANIME_MICROSERVICE_PORT};
     }
 
-    # перезапись пути
+    # Перезапись пути
     rewrite ^/api/v1/(.*)$ /v1/$1 break;
 
-    # проксируем запрос
+    # Проксируем запрос
     proxy_pass http://$service_host;
     proxy_http_version 1.1;
     proxy_set_header Host $host;

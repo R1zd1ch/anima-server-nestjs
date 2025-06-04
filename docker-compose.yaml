@@ -40,7 +40,7 @@ services:
     container_name: nginx-gateway
     image: nginx:latest
     ports:
-      - '80:80'
+      - '0.0.0.0:${APPLICATION_PORT}:${APPLICATION_PORT}'
     volumes:
       - ./nginx.conf.template:/etc/nginx/templates/default.conf.template
     environment:

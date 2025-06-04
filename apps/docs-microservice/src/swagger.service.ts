@@ -39,6 +39,9 @@ export class SwaggerService {
       },
       servers: [
         {
+          url: `http://192.168.0.145:8000/api`,
+        },
+        {
           url: `http://${this.configService.getOrThrow<string>('APPLICATION_HOST')}:${this.configService.getOrThrow<string>('APPLICATION_PORT')}/api`,
         },
       ],
