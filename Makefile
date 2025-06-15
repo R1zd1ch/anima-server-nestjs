@@ -30,6 +30,9 @@ prisma-migrate:
 prisma-postgres-push:
 	bunx prisma postgres push --schema prisma/schema
 
+run-all:
+	docker-compose up -d
+
 rebuild:
 	docker-compose up -d --build
 

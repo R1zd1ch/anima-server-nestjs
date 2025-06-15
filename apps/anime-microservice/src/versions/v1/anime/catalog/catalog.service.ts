@@ -27,6 +27,15 @@ export class CatalogService {
       } = { AND: [...shikimoriScoreNotNull.AND] };
       let orderBy: Prisma.AnimeOrderByWithRelationInput = { createdAt: 'desc' };
 
+      if (params.russian) {
+        whereConditions.AND.push({
+          russian: {
+            contains: params.russian,
+            mode: 'insensitive',
+          },
+        });
+      }
+
       if (params.genres?.length) {
         whereConditions.AND.push({
           genres: { some: { genre: { requestId: { in: params.genres } } } },
@@ -53,9 +62,11 @@ export class CatalogService {
         });
       }
 
-      if (params.season) {
+      if (params.seasons?.length) {
         whereConditions.AND.push({
-          season: { startsWith: `${params.season}_` },
+          OR: params.seasons.map((s) => ({
+            season: { startsWith: `${s}_` },
+          })),
         });
       }
 

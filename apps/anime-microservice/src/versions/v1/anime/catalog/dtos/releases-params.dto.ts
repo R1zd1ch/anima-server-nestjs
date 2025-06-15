@@ -45,8 +45,8 @@ export enum AnimeStatus {
 }
 
 export enum SortParams {
-  year_asc = 'year_asc',
-  year_desc = 'year_desc',
+  year_asc = 'airedOn_asc',
+  year_desc = 'airedOn_desc',
   score_asc = 'score_asc',
   score_desc = 'score_desc',
   name_asc = 'name_asc',
@@ -68,6 +68,14 @@ export class ReleasesParamsDto {
   @Min(1)
   @Type(() => Number)
   page?: number = 1;
+
+  @ApiProperty({
+    description: 'Поиск по русскому названию аниме',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  russian?: string;
 
   @ApiProperty({
     description: 'Количество элементов на странице',
@@ -137,13 +145,17 @@ export class ReleasesParamsDto {
   types?: AnimeType[];
 
   @ApiProperty({
-    description: 'Сезон аниме (spring, summer, fall, winter)',
+    description: 'Сезоны аниме (spring, summer, fall, winter)',
     required: false,
+    type: [String],
     enum: AnimeSeason,
   })
   @IsOptional()
   @IsEnum(AnimeSeason, { each: true })
-  season?: AnimeSeason;
+  @Transform(({ value }: { value: string | string[] }) =>
+    typeof value === 'string' ? value.split(',') : value,
+  )
+  seasons?: AnimeSeason[];
 
   @ApiProperty({
     description: 'Минимальный год выпуска аниме',

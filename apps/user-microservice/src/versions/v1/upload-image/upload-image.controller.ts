@@ -10,7 +10,7 @@ import { Authorization } from 'apps/user-microservice/src/decorators/auth.decora
 import { Authorized } from 'apps/user-microservice/src/decorators/authorized.decorator';
 import { wrapApiResponse } from 'shared/lib/utils/wrap-api-response';
 
-@Controller({ path: 'upload-image', version: '1' })
+@Controller({ path: 'user/upload-image', version: '1' })
 export class UploadImageController {
   constructor(private readonly uploadImageService: UploadImageService) {}
 
