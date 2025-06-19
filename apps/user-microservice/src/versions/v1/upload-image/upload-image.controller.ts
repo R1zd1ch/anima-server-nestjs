@@ -18,18 +18,26 @@ export class UploadImageController {
   @Post('avatar')
   @UseInterceptors(FileInterceptor('file'))
   async uploadAvatar(
-    @UploadedFile('file') file: Express.Multer.File,
+    @UploadedFile() file: Express.Multer.File,
     @Authorized('id') userId: string,
   ) {
     const result = await this.uploadImageService.uploadAvatar(file, userId);
     return wrapApiResponse(result);
   }
 
+  @Post('test')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadTest(@UploadedFile() file: Express.Multer.File) {
+    console.log(file);
+
+    return;
+  }
+
   @Authorization()
   @Post('banner')
   @UseInterceptors(FileInterceptor('file'))
   async uploadBanner(
-    @UploadedFile('file') file: Express.Multer.File,
+    @UploadedFile() file: Express.Multer.File,
     @Authorized('id') userId: string,
   ) {
     const result = await this.uploadImageService.uploadBanner(file, userId);

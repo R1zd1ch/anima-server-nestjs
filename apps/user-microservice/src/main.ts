@@ -12,6 +12,7 @@ import * as cookieParser from 'cookie-parser';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Express } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 async function bootstrap() {
   const app = await NestFactory.create(UserMicroserviceModule);

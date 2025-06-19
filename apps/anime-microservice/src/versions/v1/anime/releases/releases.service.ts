@@ -26,9 +26,10 @@ export class ReleasesService {
           airedOn: { not: null },
           episodes: { gt: 0 },
           ...shikimoriScoreNotNull,
+          nextEpisodeAt: { not: null },
         },
         include: includeSmall,
-        orderBy: { airedOn: 'desc' },
+        orderBy: { airedOn: 'desc', nextEpisodeAt: 'desc' },
         take: maxCount,
       });
 

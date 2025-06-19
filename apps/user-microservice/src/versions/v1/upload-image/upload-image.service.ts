@@ -13,6 +13,7 @@ export class UploadImageService {
   public async uploadAvatar(file: Express.Multer.File, userId: string) {
     try {
       const uuid = uuidv4();
+      console.log(file);
       if (!file) throw new BadRequestException('Нет файла аватара');
       const path = `${uuid}_${file.originalname}`;
 

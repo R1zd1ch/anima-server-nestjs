@@ -81,7 +81,6 @@ export class SettingsService {
 
   private async checkUserExists(userId: string) {
     const user = await this.userService.findByEmail(userId);
-    console.log(user);
     if (!user) throw new NotFoundException('Пользователь не найден');
   }
 }

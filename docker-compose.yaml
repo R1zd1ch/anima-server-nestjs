@@ -126,9 +126,9 @@ services:
       - APP_MODE=user-microservice
       - POSTGRES_HOST=postgres
       - REDIS_HOST=redis
-    depends_on:
-      auth-microservice:
-        condition: service_started
+    # depends_on:
+    #   auth-microservice:
+    #     condition: service_started
     networks:
       - backend
 

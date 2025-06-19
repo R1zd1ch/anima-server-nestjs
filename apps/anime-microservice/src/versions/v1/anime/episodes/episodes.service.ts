@@ -57,7 +57,7 @@ export class EpisodesService {
         formattedAlias,
         Number(formattedShikimoriId || 0),
       );
-      return { kodik, anilibiria };
+      return { ...kodik, anilibiria };
     } catch (e) {
       this.logger.error(
         `Ошибка получения эпизодов: ${e instanceof Error ? e.stack : e}`,

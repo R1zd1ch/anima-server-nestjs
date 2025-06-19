@@ -22,12 +22,16 @@ export class SupabaseService implements OnModuleInit {
     bucketName: string,
     path: string,
   ): Promise<string> {
+    console.log(file);
+    console.log(bucketName);
     const { error } = await this.supabase.storage
       .from(bucketName)
       .upload(path, file.buffer, {
         upsert: true,
         contentType: file.mimetype,
       });
+
+    console.log(error);
 
     if (error) throw new Error(`Ошибка загрузки: ${error.message}`);
     const { data } = this.supabase.storage.from(bucketName).getPublicUrl(path);
