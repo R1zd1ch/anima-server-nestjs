@@ -40,20 +40,20 @@ export class ReviewsService {
     viewerId?: string | null,
   ) {
     try {
-      const cacheKey = getUserCacheKey(
-        UserCacheKey.REVIEWS,
-        `${releaseId}-${page}-${limit}-${sortBy}-${viewerId || ''}`,
-      );
-      const cachedReviews = await this.cacheManager.get<{
-        data: Review[];
-        meta: {
-          total: number;
-          page: number;
-          limit: number;
-          totalPages: number;
-        };
-      }>(cacheKey);
-      if (cachedReviews) return cachedReviews;
+      // const cacheKey = getUserCacheKey(
+      //   UserCacheKey.REVIEWS,
+      //   `${releaseId}-${page}-${limit}-${sortBy}-${viewerId || ''}`,
+      // );
+      // const cachedReviews = await this.cacheManager.get<{
+      //   data: Review[];
+      //   meta: {
+      //     total: number;
+      //     page: number;
+      //     limit: number;
+      //     totalPages: number;
+      //   };
+      // }>(cacheKey);
+      // if (cachedReviews) return cachedReviews;
 
       const where = { animeId: releaseId, ...WHERE_TEXT_NOT_NULL };
       await this.animeExists(releaseId);
@@ -72,15 +72,15 @@ export class ReviewsService {
       const total = await this.prismaService.review.count({ where });
 
       const response = {
-        data: reviewsWithLikes,
+        data: await reviewsWithLikes,
         meta: buildMeta(total, page, limit),
       };
 
-      await this.cacheManager.set(
-        cacheKey,
-        response,
-        getUserCacheTTL(UserCacheKey.REVIEWS),
-      );
+      // await this.cacheManager.set(
+      //   cacheKey,
+      //   response,
+      //   getUserCacheTTL(UserCacheKey.REVIEWS),
+      // );
 
       return response;
     } catch (e) {
@@ -99,20 +99,20 @@ export class ReviewsService {
       const access = await this.checkUserAccess(userId, viewerId);
       if (access?.data) return access;
 
-      const cacheKey = getUserCacheKey(
-        UserCacheKey.REVIEWS,
-        `${userId}-${page}-${limit}-${sortBy}-${viewerId || ''}`,
-      );
-      const cachedReviews = await this.cacheManager.get<{
-        data: Review[];
-        meta: {
-          total: number;
-          page: number;
-          limit: number;
-          totalPages: number;
-        };
-      }>(cacheKey);
-      if (cachedReviews) return cachedReviews;
+      // const cacheKey = getUserCacheKey(
+      //   UserCacheKey.REVIEWS,
+      //   `${userId}-${page}-${limit}-${sortBy}-${viewerId || ''}`,
+      // );
+      // const cachedReviews = await this.cacheManager.get<{
+      //   data: Review[];
+      //   meta: {
+      //     total: number;
+      //     page: number;
+      //     limit: number;
+      //     totalPages: number;
+      //   };
+      // }>(cacheKey);
+      // if (cachedReviews) return cachedReviews;
 
       const where = { userId, ...WHERE_TEXT_NOT_NULL };
       const reviews = await this.prismaService.review.findMany({
@@ -129,15 +129,15 @@ export class ReviewsService {
       const reviewsWithLikes = this.processReviewLikes(reviews, viewerId);
 
       const response = {
-        data: reviewsWithLikes,
+        data: await reviewsWithLikes,
         meta: buildMeta(total, page, limit),
       };
 
-      await this.cacheManager.set(
-        cacheKey,
-        response,
-        getUserCacheTTL(UserCacheKey.REVIEWS),
-      );
+      // await this.cacheManager.set(
+      //   cacheKey,
+      //   response,
+      //   getUserCacheTTL(UserCacheKey.REVIEWS),
+      // );
 
       return response;
     } catch (e) {

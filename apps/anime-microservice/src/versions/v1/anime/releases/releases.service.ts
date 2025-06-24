@@ -29,7 +29,7 @@ export class ReleasesService {
           nextEpisodeAt: { not: null },
         },
         include: includeSmall,
-        orderBy: { airedOn: 'desc', nextEpisodeAt: 'desc' },
+        orderBy: { airedOn: 'desc' },
         take: maxCount,
       });
 
@@ -44,7 +44,11 @@ export class ReleasesService {
       let release: Anime | null = null;
       const allIds = await this.prismaService.anime.findMany({
         select: { shikimoriId: true },
-        where: shikimoriScoreNotNull,
+        where: {
+          ...shikimoriScoreNotNull,
+          shikimoriScore: { not: 0.0 },
+          episodesAired: { not: 0 },
+        },
       });
 
       while (release === null || release.shikimoriScore === null) {
